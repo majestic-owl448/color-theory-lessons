@@ -57,10 +57,11 @@ const REGIONS: Region[] = [
 
 interface BeforeAfterToolProps {
   variant?: 'color-function' | 'hierarchy';
+  interactive?: boolean;
   onComplete?: () => void;
 }
 
-export function BeforeAfterTool({ variant = 'color-function', onComplete }: BeforeAfterToolProps) {
+export function BeforeAfterTool({ variant = 'color-function', interactive = true, onComplete }: BeforeAfterToolProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [results, setResults] = useState<Record<string, boolean | null>>({});
   const [triedAnswer, setTriedAnswer] = useState<string | null>(null);
@@ -108,20 +109,22 @@ export function BeforeAfterTool({ variant = 'color-function', onComplete }: Befo
 
   return (
     <div className={shellStyles.shell}>
-      <span className={shellStyles.toolLabel}>click each colored area — what is it doing?</span>
+      <span className={shellStyles.toolLabel}>
+        {interactive ? 'click each colored area — what is it doing?' : 'before / after comparison'}
+      </span>
 
       <div className={styles.pair}>
-        {/* Good mockup — interactive */}
+        {/* Good mockup — interactive when ready */}
         <div className={styles.panel}>
           <span className={styles.panelLabel}>purposeful color</span>
           <div className={`${styles.mockup} ${styles.mockupGood}`}>
             <div
-              className={`${styles.nav} ${styles.region} ${results['nav'] === true ? styles.regionSolved : activeId === 'nav' ? styles.regionActive : ''}`}
-              onClick={() => handleRegionClick('nav')}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && handleRegionClick('nav')}
-              aria-label="Click to identify what the nav bar color is doing"
+              className={`${styles.nav} ${interactive ? styles.region : ''} ${results['nav'] === true ? styles.regionSolved : activeId === 'nav' ? styles.regionActive : ''}`}
+              onClick={() => interactive && handleRegionClick('nav')}
+              role={interactive ? 'button' : undefined}
+              tabIndex={interactive ? 0 : undefined}
+              onKeyDown={(e) => interactive && e.key === 'Enter' && handleRegionClick('nav')}
+              aria-label={interactive ? 'Click to identify what the nav bar color is doing' : undefined}
             >
               <span className={styles.navLogo}>color-quest$</span>
               <span className={styles.navLink}>settings</span>
@@ -131,41 +134,41 @@ export function BeforeAfterTool({ variant = 'color-function', onComplete }: Befo
               <span className={styles.heroHeading}>Learn color theory</span>
               <span className={styles.heroSub}>Six interactive units for developers.</span>
               <span
-                className={`${styles.cta} ${styles.region} ${results['cta'] === true ? styles.regionSolved : activeId === 'cta' ? styles.regionActive : ''}`}
-                onClick={() => handleRegionClick('cta')}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && handleRegionClick('cta')}
-                aria-label="Click to identify what the gold button color is doing"
+                className={`${styles.cta} ${interactive ? styles.region : ''} ${results['cta'] === true ? styles.regionSolved : activeId === 'cta' ? styles.regionActive : ''}`}
+                onClick={() => interactive && handleRegionClick('cta')}
+                role={interactive ? 'button' : undefined}
+                tabIndex={interactive ? 0 : undefined}
+                onKeyDown={(e) => interactive && e.key === 'Enter' && handleRegionClick('cta')}
+                aria-label={interactive ? 'Click to identify what the gold button color is doing' : undefined}
               >
                 start learning
                 {results['cta'] === true && <span className={styles.regionBadge}>✓</span>}
               </span>
             </div>
             <span
-              className={`${styles.successBadge} ${styles.region} ${results['success'] === true ? styles.regionSolved : activeId === 'success' ? styles.regionActive : ''}`}
-              onClick={() => handleRegionClick('success')}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && handleRegionClick('success')}
-              aria-label="Click to identify what the green text color is doing"
+              className={`${styles.successBadge} ${interactive ? styles.region : ''} ${results['success'] === true ? styles.regionSolved : activeId === 'success' ? styles.regionActive : ''}`}
+              onClick={() => interactive && handleRegionClick('success')}
+              role={interactive ? 'button' : undefined}
+              tabIndex={interactive ? 0 : undefined}
+              onKeyDown={(e) => interactive && e.key === 'Enter' && handleRegionClick('success')}
+              aria-label={interactive ? 'Click to identify what the green text color is doing' : undefined}
             >
               ✓ Unit 1 complete
               {results['success'] === true && <span className={styles.regionBadge} style={{ marginLeft: '4px' }}>✓</span>}
             </span>
             <div
-              className={`${styles.card} ${styles.region} ${results['card'] === true ? styles.regionSolved : activeId === 'card' ? styles.regionActive : ''}`}
-              onClick={() => handleRegionClick('card')}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && handleRegionClick('card')}
-              aria-label="Click to identify what the blue card border color is doing"
+              className={`${styles.card} ${interactive ? styles.region : ''} ${results['card'] === true ? styles.regionSolved : activeId === 'card' ? styles.regionActive : ''}`}
+              onClick={() => interactive && handleRegionClick('card')}
+              role={interactive ? 'button' : undefined}
+              tabIndex={interactive ? 0 : undefined}
+              onKeyDown={(e) => interactive && e.key === 'Enter' && handleRegionClick('card')}
+              aria-label={interactive ? 'Click to identify what the blue card border color is doing' : undefined}
             >
               Lesson 2: Hue, saturation, and lightness →
               {results['card'] === true && <span className={styles.regionBadge}>✓</span>}
             </div>
           </div>
-          <p className={styles.hint}>Click each colored element ↑</p>
+          {interactive && <p className={styles.hint}>Click each colored element ↑</p>}
         </div>
 
         {/* Bad mockup — static reference */}
@@ -189,7 +192,7 @@ export function BeforeAfterTool({ variant = 'color-function', onComplete }: Befo
       </div>
 
       {/* Answer panel */}
-      {activeRegion && (
+      {interactive && activeRegion && (
         <div className={styles.answerPanel}>
           <div className={styles.answerHeader}>
             <span className={styles.answerQuestion}>
@@ -235,12 +238,12 @@ export function BeforeAfterTool({ variant = 'color-function', onComplete }: Befo
       )}
 
       {/* Progress */}
-      <div className={styles.progressRow}>
+      {interactive && <div className={styles.progressRow}>
         <span className={styles.score}>{solvedCount} / {REGIONS.length} identified</span>
         {allSolved && (
           <span className={styles.allDone}>All done — challenge complete!</span>
         )}
-      </div>
+      </div>}
     </div>
   );
 }

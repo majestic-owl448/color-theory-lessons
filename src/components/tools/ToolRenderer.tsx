@@ -9,17 +9,21 @@ import shellStyles from './ToolShell.module.css';
 interface ToolRendererProps {
   lesson: LessonConfig;
   phase: 'steps' | 'challenge' | 'quiz' | 'complete';
+  stepIndex: number;
   onChallengeComplete: () => void;
 }
 
-export function ToolRenderer({ lesson, phase, onChallengeComplete }: ToolRendererProps) {
+export function ToolRenderer({ lesson, phase, stepIndex, onChallengeComplete }: ToolRendererProps) {
   const isChallenge = phase === 'challenge';
+  // Tool becomes interactive on the last step or once in challenge/quiz/complete
+  const isInteractive = phase !== 'steps' || stepIndex === lesson.steps.length - 1;
 
   switch (lesson.interactionType) {
     case 'before-after':
       return (
         <BeforeAfterTool
           variant={lesson.id === 'u1-l5' ? 'hierarchy' : 'color-function'}
+          interactive={isInteractive}
           onComplete={isChallenge ? onChallengeComplete : undefined}
         />
       );

@@ -245,6 +245,7 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       <ToolRenderer
         lesson={lesson}
         phase={phase}
+        stepIndex={stepIndex}
         onChallengeComplete={() => setChallengeDone(true)}
       />
     </div>
