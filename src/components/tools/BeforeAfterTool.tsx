@@ -64,33 +64,33 @@ export function BeforeAfterTool({ variant = 'color-function', onComplete }: Befo
         <div className={styles.panel}>
           <span className={styles.panelLabel}>purposeful color</span>
           <div className={`${styles.mockup} ${styles.mockupGood}`}>
-            <div className="nav">
-              <span className="navLogo">color-quest$</span>
-              <span className="navLink">settings</span>
+            <div className={styles.nav}>
+              <span className={styles.navLogo}>color-quest$</span>
+              <span className={styles.navLink}>settings</span>
             </div>
-            <div className="hero">
-              <span className="heroHeading">Learn color theory</span>
-              <span className="heroSub">Six interactive units for developers.</span>
-              <span className="cta">start learning</span>
+            <div className={styles.hero}>
+              <span className={styles.heroHeading}>Learn color theory</span>
+              <span className={styles.heroSub}>Six interactive units for developers.</span>
+              <span className={styles.cta}>start learning</span>
             </div>
-            <span className="successBadge">✓ Unit 1 complete</span>
-            <div className="card">Lesson 2: Hue, saturation, and lightness →</div>
+            <span className={styles.successBadge}>✓ Unit 1 complete</span>
+            <div className={styles.card}>Lesson 2: Hue, saturation, and lightness →</div>
           </div>
         </div>
         <div className={styles.panel}>
           <span className={styles.panelLabel}>noisy color</span>
           <div className={`${styles.mockup} ${styles.mockupBad}`}>
-            <div className="nav">
-              <span className="navLogo">color-quest$</span>
-              <span className="navLink">settings</span>
+            <div className={styles.nav}>
+              <span className={styles.navLogo}>color-quest$</span>
+              <span className={styles.navLink}>settings</span>
             </div>
-            <div className="hero">
-              <span className="heroHeading">Learn color theory</span>
-              <span className="heroSub">Six interactive units for developers.</span>
-              <span className="cta">start learning</span>
+            <div className={styles.hero}>
+              <span className={styles.heroHeading}>Learn color theory</span>
+              <span className={styles.heroSub}>Six interactive units for developers.</span>
+              <span className={styles.cta}>start learning</span>
             </div>
-            <span className="successBadge">✓ Unit 1 complete</span>
-            <div className="card">Lesson 2: Hue, saturation, and lightness →</div>
+            <span className={styles.successBadge}>✓ Unit 1 complete</span>
+            <div className={styles.card}>Lesson 2: Hue, saturation, and lightness →</div>
           </div>
         </div>
       </div>
