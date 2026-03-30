@@ -33,7 +33,7 @@ export const lesson1_1: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'Look at the two interfaces on the right. One uses color purposefully. The other uses it randomly. Click on areas where color is helping or hurting clarity.',
+      text: 'Look at the two interfaces on the right. One uses color purposefully. The other uses it randomly. Click each colored element in the purposeful version and identify what its color is doing.',
     },
   ],
   challenges: [

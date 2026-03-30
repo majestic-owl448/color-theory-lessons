@@ -2,24 +2,58 @@ import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 import styles from './BeforeAfterTool.module.css';
 
-const COLOR_JOBS = ['drawing attention', 'grouping items', 'signaling status', 'separating sections', 'making text hard to read', 'no clear purpose'] as const;
-type ColorJob = typeof COLOR_JOBS[number];
+/* ── Clickable region data ────────────────────────────────────────────── */
 
-interface SpotItem {
+type ColorJob =
+  | 'drawing attention'
+  | 'grouping items'
+  | 'signaling status'
+  | 'separating sections'
+  | 'no clear purpose';
+
+const ALL_JOBS: ColorJob[] = [
+  'drawing attention',
+  'grouping items',
+  'signaling status',
+  'separating sections',
+  'no clear purpose',
+];
+
+interface Region {
   id: string;
-  label: string;
-  swatchColor: string;
+  name: string;
   correctJob: ColorJob;
+  explanation: string;
 }
 
-const SPOT_ITEMS: SpotItem[] = [
-  { id: 'cta', label: 'Gold CTA button on dark surface', swatchColor: '#f1be32', correctJob: 'drawing attention' },
-  { id: 'nav-bg', label: 'Deep navy nav background', swatchColor: '#1b1b32', correctJob: 'separating sections' },
-  { id: 'success', label: 'Green success text after form submit', swatchColor: '#acd157', correctJob: 'signaling status' },
-  { id: 'info-card', label: 'Blue left border on info card', swatchColor: '#99c9ff', correctJob: 'grouping items' },
-  { id: 'muted-help', label: 'Gray helper text below input', swatchColor: '#858591', correctJob: 'making text hard to read' },
-  { id: 'random-hero', label: 'Bright orange hero background', swatchColor: '#ff8c00', correctJob: 'no clear purpose' },
+const REGIONS: Region[] = [
+  {
+    id: 'nav',
+    name: 'dark nav bar',
+    correctJob: 'separating sections',
+    explanation: 'The dark background draws a boundary between navigation and content, creating clear sections without using a visible divider.',
+  },
+  {
+    id: 'cta',
+    name: 'gold CTA button',
+    correctJob: 'drawing attention',
+    explanation: 'Gold on a dark surface has the highest contrast on the screen. Color is being used to tell the user "this is the most important thing to do."',
+  },
+  {
+    id: 'success',
+    name: 'green success text',
+    correctJob: 'signaling status',
+    explanation: 'Green communicates a completed state — a widely learned convention. The color carries a specific meaning: something succeeded.',
+  },
+  {
+    id: 'card',
+    name: 'blue card border',
+    correctJob: 'grouping items',
+    explanation: 'The blue left border marks this element as a distinct type of content. It groups the label and text together as one unit.',
+  },
 ];
+
+/* ── Component ────────────────────────────────────────────────────────── */
 
 interface BeforeAfterToolProps {
   variant?: 'color-function' | 'hierarchy';
@@ -27,23 +61,37 @@ interface BeforeAfterToolProps {
 }
 
 export function BeforeAfterTool({ variant = 'color-function', onComplete }: BeforeAfterToolProps) {
-  const [spotAnswers, setSpotAnswers] = useState<Record<string, ColorJob | ''>>(() =>
-    Object.fromEntries(SPOT_ITEMS.map((s) => [s.id, ''])),
-  );
-  const [done, setDone] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [results, setResults] = useState<Record<string, boolean | null>>({});
+  const [triedAnswer, setTriedAnswer] = useState<string | null>(null);
 
-  const correct = SPOT_ITEMS.filter((s) => spotAnswers[s.id] === s.correctJob).length;
-  const allAnswered = SPOT_ITEMS.every((s) => spotAnswers[s.id] !== '');
-  const enoughCorrect = correct >= 4;
+  const solvedCount = Object.values(results).filter(Boolean).length;
+  const allSolved = solvedCount === REGIONS.length;
 
-  function handleChange(id: string, val: string) {
-    if (done) return;
-    setSpotAnswers((prev) => ({ ...prev, [id]: val as ColorJob }));
+  function handleRegionClick(id: string) {
+    if (results[id] === true) return; // already solved
+    setActiveId(id);
+    setTriedAnswer(null);
   }
 
-  function handleDone() {
-    setDone(true);
-    if (enoughCorrect) onComplete?.();
+  function handleAnswer(regionId: string, job: ColorJob) {
+    const region = REGIONS.find((r) => r.id === regionId)!;
+    const correct = job === region.correctJob;
+    setTriedAnswer(job);
+    if (correct) {
+      const next = { ...results, [regionId]: true };
+      setResults(next);
+      if (Object.values(next).filter(Boolean).length === REGIONS.length) {
+        onComplete?.();
+      }
+    } else {
+      setResults((prev) => ({ ...prev, [regionId]: prev[regionId] === true ? true : false }));
+    }
+  }
+
+  function handleDismiss() {
+    setActiveId(null);
+    setTriedAnswer(null);
   }
 
   if (variant === 'hierarchy') {
@@ -55,28 +103,72 @@ export function BeforeAfterTool({ variant = 'color-function', onComplete }: Befo
     );
   }
 
+  const activeRegion = activeId ? REGIONS.find((r) => r.id === activeId) ?? null : null;
+  const lastAnswerCorrect = triedAnswer !== null && activeRegion?.correctJob === triedAnswer;
+
   return (
     <div className={shellStyles.shell}>
-      <span className={shellStyles.toolLabel}>before / after comparison</span>
+      <span className={shellStyles.toolLabel}>click each colored area — what is it doing?</span>
 
-      {/* Before / After mockups */}
       <div className={styles.pair}>
+        {/* Good mockup — interactive */}
         <div className={styles.panel}>
           <span className={styles.panelLabel}>purposeful color</span>
           <div className={`${styles.mockup} ${styles.mockupGood}`}>
-            <div className={styles.nav}>
+            <div
+              className={`${styles.nav} ${styles.region} ${results['nav'] === true ? styles.regionSolved : activeId === 'nav' ? styles.regionActive : ''}`}
+              onClick={() => handleRegionClick('nav')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handleRegionClick('nav')}
+              aria-label="Click to identify what the nav bar color is doing"
+            >
               <span className={styles.navLogo}>color-quest$</span>
               <span className={styles.navLink}>settings</span>
+              {results['nav'] === true && <span className={styles.regionBadge}>✓</span>}
             </div>
             <div className={styles.hero}>
               <span className={styles.heroHeading}>Learn color theory</span>
               <span className={styles.heroSub}>Six interactive units for developers.</span>
-              <span className={styles.cta}>start learning</span>
+              <span
+                className={`${styles.cta} ${styles.region} ${results['cta'] === true ? styles.regionSolved : activeId === 'cta' ? styles.regionActive : ''}`}
+                onClick={() => handleRegionClick('cta')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && handleRegionClick('cta')}
+                aria-label="Click to identify what the gold button color is doing"
+              >
+                start learning
+                {results['cta'] === true && <span className={styles.regionBadge}>✓</span>}
+              </span>
             </div>
-            <span className={styles.successBadge}>✓ Unit 1 complete</span>
-            <div className={styles.card}>Lesson 2: Hue, saturation, and lightness →</div>
+            <span
+              className={`${styles.successBadge} ${styles.region} ${results['success'] === true ? styles.regionSolved : activeId === 'success' ? styles.regionActive : ''}`}
+              onClick={() => handleRegionClick('success')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handleRegionClick('success')}
+              aria-label="Click to identify what the green text color is doing"
+            >
+              ✓ Unit 1 complete
+              {results['success'] === true && <span className={styles.regionBadge} style={{ marginLeft: '4px' }}>✓</span>}
+            </span>
+            <div
+              className={`${styles.card} ${styles.region} ${results['card'] === true ? styles.regionSolved : activeId === 'card' ? styles.regionActive : ''}`}
+              onClick={() => handleRegionClick('card')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handleRegionClick('card')}
+              aria-label="Click to identify what the blue card border color is doing"
+            >
+              Lesson 2: Hue, saturation, and lightness →
+              {results['card'] === true && <span className={styles.regionBadge}>✓</span>}
+            </div>
           </div>
+          <p className={styles.hint}>Click each colored element ↑</p>
         </div>
+
+        {/* Bad mockup — static reference */}
         <div className={styles.panel}>
           <span className={styles.panelLabel}>noisy color</span>
           <div className={`${styles.mockup} ${styles.mockupBad}`}>
@@ -92,61 +184,63 @@ export function BeforeAfterTool({ variant = 'color-function', onComplete }: Befo
             <span className={styles.successBadge}>✓ Unit 1 complete</span>
             <div className={styles.card}>Lesson 2: Hue, saturation, and lightness →</div>
           </div>
+          <p className={styles.hint}>Reference only — what happens without purpose</p>
         </div>
       </div>
 
-      {/* Spot-the-job activity */}
-      <span className={shellStyles.toolLabel}>spot the job of each color</span>
-      <div className={styles.spotGrid}>
-        {SPOT_ITEMS.map((item) => {
-          const chosen = spotAnswers[item.id];
-          const isCorrect = done && chosen === item.correctJob;
-          const isWrong = done && chosen !== '' && chosen !== item.correctJob;
-          return (
-            <div key={item.id} className={`${styles.spotCard} ${isCorrect ? styles.answered : ''}`}>
-              <div
-                className={styles.spotSwatch}
-                style={{ backgroundColor: item.swatchColor }}
-              />
-              <span className={styles.spotLabel}>{item.label}</span>
-              <select
-                className={styles.spotSelect}
-                value={spotAnswers[item.id]}
-                onChange={(e) => handleChange(item.id, e.target.value)}
-                disabled={done}
-                aria-label={`What is ${item.label} doing?`}
-              >
-                <option value="">— choose —</option>
-                {COLOR_JOBS.map((job) => (
-                  <option key={job} value={job}>{job}</option>
-                ))}
-              </select>
-              {done && (
-                <span className={styles.feedback} style={{ color: isCorrect ? 'var(--green)' : isWrong ? 'var(--red)' : 'var(--muted)' }}>
-                  {isCorrect ? '✓ correct' : isWrong ? `✗ → ${item.correctJob}` : '—'}
-                </span>
+      {/* Answer panel */}
+      {activeRegion && (
+        <div className={styles.answerPanel}>
+          <div className={styles.answerHeader}>
+            <span className={styles.answerQuestion}>
+              What is the <strong>{activeRegion.name}</strong> doing?
+            </span>
+            <button className={styles.dismissBtn} onClick={handleDismiss} aria-label="Close">✕</button>
+          </div>
+
+          {triedAnswer === null || !lastAnswerCorrect ? (
+            <div className={styles.answerChoices}>
+              {ALL_JOBS.map((job) => (
+                <button
+                  key={job}
+                  className={`${styles.answerChoice} ${
+                    triedAnswer === job && !lastAnswerCorrect ? styles.answerWrong : ''
+                  }`}
+                  onClick={() => handleAnswer(activeRegion.id, job)}
+                  disabled={lastAnswerCorrect}
+                >
+                  {job}
+                </button>
+              ))}
+            </div>
+          ) : null}
+
+          {triedAnswer !== null && (
+            <div className={`${styles.answerFeedback} ${lastAnswerCorrect ? styles.answerCorrect : styles.answerIncorrect}`}>
+              {lastAnswerCorrect ? (
+                <>
+                  <span className={styles.answerIcon}>✓</span>
+                  <p>{activeRegion.explanation}</p>
+                  <button className={styles.nextBtn} onClick={handleDismiss}>got it</button>
+                </>
+              ) : (
+                <>
+                  <span className={styles.answerIcon}>✗</span>
+                  <p>Not quite. Try another option.</p>
+                </>
               )}
             </div>
-          );
-        })}
-      </div>
-
-      {!done && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
-          <button
-            className={styles.doneBtn}
-            onClick={handleDone}
-            disabled={!allAnswered}
-          >
-            check answers
-          </button>
-          <span className={styles.score}>{Object.values(spotAnswers).filter(Boolean).length} / {SPOT_ITEMS.length} answered</span>
+          )}
         </div>
       )}
 
-      {done && (
-        <span className={styles.score}>{correct} / {SPOT_ITEMS.length} correct</span>
-      )}
+      {/* Progress */}
+      <div className={styles.progressRow}>
+        <span className={styles.score}>{solvedCount} / {REGIONS.length} identified</span>
+        {allSolved && (
+          <span className={styles.allDone}>All done — challenge complete!</span>
+        )}
+      </div>
     </div>
   );
 }
@@ -183,14 +277,11 @@ function HierarchyDemo({ onComplete }: { onComplete?: () => void }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
-      {/* Live preview */}
       <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '6px', padding: 'var(--spacing-lg)', display: 'flex', gap: 'var(--spacing-sm)', flexWrap: 'wrap' }}>
         {HIERARCHY_ITEMS.map((item) => (
           <button key={item.id} style={btnStyle(roles[item.id])}>{item.label}</button>
         ))}
       </div>
-
-      {/* Controls */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase' }}>assign roles</span>
         {HIERARCHY_ITEMS.map((item) => (
@@ -209,7 +300,6 @@ function HierarchyDemo({ onComplete }: { onComplete?: () => void }) {
           </div>
         ))}
       </div>
-
       {!checked && (
         <button
           onClick={handleCheck}
@@ -218,7 +308,6 @@ function HierarchyDemo({ onComplete }: { onComplete?: () => void }) {
           check hierarchy
         </button>
       )}
-
       {checked && (
         <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: isCorrect ? 'var(--green)' : 'var(--red)' }}>
           {isCorrect
