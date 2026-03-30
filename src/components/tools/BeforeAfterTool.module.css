@@ -1,0 +1,254 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.panelLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.mockup {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Good mockup accent colors */
+.mockupGood .nav {
+  background-color: #1b1b32;
+  border-radius: var(--radius-sm);
+  padding: 0.4rem var(--spacing-sm);
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.mockupGood .navLogo {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--yellow);
+}
+
+.mockupGood .navLink {
+  font-size: 0.75rem;
+  color: var(--gray-45);
+  margin-left: auto;
+}
+
+.mockupGood .hero {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.mockupGood .heroHeading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gray-00);
+}
+
+.mockupGood .heroSub {
+  font-size: 0.8rem;
+  color: var(--gray-15);
+}
+
+.mockupGood .cta {
+  align-self: flex-start;
+  margin-top: var(--spacing-xs);
+  padding: 0.35rem 0.9rem;
+  background-color: var(--yellow);
+  color: var(--gray-90);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+.mockupGood .successBadge {
+  font-size: 0.75rem;
+  color: var(--green);
+  font-family: var(--font-mono);
+}
+
+.mockupGood .card {
+  background-color: #1b1b32;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
+  font-size: 0.8rem;
+  color: var(--gray-10);
+  border-left: 3px solid var(--blue);
+}
+
+/* Bad mockup – visual noise */
+.mockupBad .nav {
+  background-color: #e63946;
+  border-radius: var(--radius-sm);
+  padding: 0.4rem var(--spacing-sm);
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.mockupBad .navLogo {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #ffd700;
+}
+
+.mockupBad .navLink {
+  font-size: 0.75rem;
+  color: #ff69b4;
+  margin-left: auto;
+}
+
+.mockupBad .hero {
+  background-color: #ff8c00;
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+}
+
+.mockupBad .heroHeading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #7fff00;
+}
+
+.mockupBad .heroSub {
+  font-size: 0.8rem;
+  color: #ff1493;
+}
+
+.mockupBad .cta {
+  align-self: flex-start;
+  margin-top: var(--spacing-xs);
+  padding: 0.35rem 0.9rem;
+  background-color: #9400d3;
+  color: #00ff7f;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+.mockupBad .successBadge {
+  font-size: 0.75rem;
+  color: #00bfff;
+  font-family: var(--font-mono);
+}
+
+.mockupBad .card {
+  background-color: #20b2aa;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
+  font-size: 0.8rem;
+  color: #ff6347;
+  border-left: 3px solid #ff1493;
+}
+
+/* Spot-the-job activity */
+.spotGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.spotCard {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.spotCard:hover {
+  border-color: var(--yellow);
+}
+
+.spotCard.answered {
+  border-color: var(--green);
+}
+
+.spotSwatch {
+  width: 100%;
+  height: 36px;
+  border-radius: var(--radius-sm);
+}
+
+.spotLabel {
+  font-size: 0.85rem;
+  color: var(--secondary-foreground);
+}
+
+.spotSelect {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background-color: var(--primary-background);
+  color: var(--primary-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.5rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.spotSelect:focus {
+  outline: 2px solid var(--focus-ring);
+}
+
+.feedback {
+  font-size: 0.85rem;
+  color: var(--green);
+  font-family: var(--font-mono);
+}
+
+.score {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.doneBtn {
+  align-self: flex-start;
+  padding: 0.5rem 1.25rem;
+  background-color: var(--yellow);
+  color: var(--gray-90);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.doneBtn:hover {
+  opacity: 0.88;
+}

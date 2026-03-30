@@ -16,7 +16,7 @@ export function HomePage() {
           Six units of hands-on lessons covering color perception, digital color
           models, accessibility, and design systems — built for people who write code.
         </p>
-        <Link to="/lesson/unit-1-lesson-1" className={styles.startBtn}>
+        <Link to="/lesson/u1-l1" className={styles.startBtn}>
           start learning
         </Link>
       </section>

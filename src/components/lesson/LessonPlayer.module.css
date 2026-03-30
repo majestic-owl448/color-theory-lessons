@@ -1,0 +1,253 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  min-height: 60vh;
+}
+
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: 340px 1fr;
+    align-items: start;
+  }
+}
+
+/* ── Instruction panel ───────────────────────────────────────────────── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  background-color: var(--secondary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+}
+
+.lessonMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.unitLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.lessonTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.progress {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.progressDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--border);
+  transition: background-color 0.2s ease;
+}
+
+.progressDot.done {
+  background-color: var(--green);
+}
+
+.progressDot.current {
+  background-color: var(--yellow);
+}
+
+/* ── Step content ─────────────────────────────────────────────────────── */
+.stepContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.stepNumber {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--yellow);
+}
+
+.stepText {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--primary-foreground);
+}
+
+.stepActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: auto;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1.25rem;
+  background-color: var(--yellow);
+  color: var(--gray-90);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btnPrimary:hover {
+  opacity: 0.88;
+}
+
+.btnSecondary {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: var(--secondary-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btnSecondary:hover {
+  border-color: var(--secondary-foreground);
+  color: var(--primary-foreground);
+}
+
+/* ── Challenge panel ──────────────────────────────────────────────────── */
+.challengePrompt {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--primary-foreground);
+}
+
+.hints {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.hintsLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: var(--secondary-foreground);
+  padding-left: var(--spacing-sm);
+  border-left: 2px solid var(--border);
+}
+
+/* ── Quiz panel ───────────────────────────────────────────────────────── */
+.quizHeader {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.quizPrompt {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: 0.65rem var(--spacing-md);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.95rem;
+  color: var(--primary-foreground);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  width: 100%;
+}
+
+.choice:hover:not(.chosen):not(.correct):not(.incorrect) {
+  border-color: var(--secondary-foreground);
+  background-color: var(--gray-75);
+}
+
+.choice.correct {
+  border-color: var(--green);
+  background-color: color-mix(in srgb, var(--green) 12%, var(--surface));
+}
+
+.choice.incorrect {
+  border-color: var(--red);
+  background-color: color-mix(in srgb, var(--red) 12%, var(--surface));
+}
+
+.choiceKey {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.explanation {
+  font-size: 0.88rem;
+  color: var(--secondary-foreground);
+  margin-top: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--primary-background);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--border);
+  line-height: 1.5;
+}
+
+/* ── Complete state ───────────────────────────────────────────────────── */
+.complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.completeBadge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: color-mix(in srgb, var(--green) 15%, var(--surface));
+  border: 1px solid var(--green);
+  color: var(--green);
+  border-radius: var(--radius-sm);
+}
+
+.completeTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.completeBody {
+  color: var(--secondary-foreground);
+  max-width: 40ch;
+}

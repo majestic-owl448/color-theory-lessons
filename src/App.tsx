@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './state/app-context.tsx';
 import { AppShell } from './components/layout/AppShell.tsx';
 import { HomePage } from './pages/HomePage.tsx';
+import { LessonPage } from './pages/LessonPage.tsx';
 import { PlaceholderPage } from './components/shared/PlaceholderPage.tsx';
 
 export function App() {
@@ -11,15 +12,7 @@ export function App() {
         <AppShell>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route
-              path="/lesson/:lessonId"
-              element={
-                <PlaceholderPage
-                  title="Lesson"
-                  description="Interactive lessons are coming soon."
-                />
-              }
-            />
+            <Route path="/lesson/:lessonId" element={<LessonPage />} />
             <Route
               path="/sandbox"
               element={
