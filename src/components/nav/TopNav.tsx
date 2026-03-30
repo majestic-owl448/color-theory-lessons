@@ -4,7 +4,7 @@ import styles from './TopNav.module.css';
 export function TopNav() {
   return (
     <nav className={styles.nav} aria-label="Main navigation">
-      <NavLink to="/" className={styles.logo}>
+      <NavLink to="/" end className={styles.logo}>
         color-quest$
       </NavLink>
       <ul className={styles.links}>
