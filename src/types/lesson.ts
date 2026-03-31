@@ -35,6 +35,7 @@ export type InteractionType =
   | 'before-after'
   | 'slider-explore'
   | 'additive-sort'
+  | 'logic-fixer'
   | 'none';
 
 export interface LessonStep {

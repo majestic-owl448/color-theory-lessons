@@ -6,6 +6,7 @@ import { TemperatureSorterTool } from './TemperatureSorterTool.tsx';
 import { ColorWheelTool } from './ColorWheelTool.tsx';
 import { AdditiveSortTool } from './AdditiveSortTool.tsx';
 import { RGBMixerTool } from './RGBMixerTool.tsx';
+import { LogicFixerTool } from './LogicFixerTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -45,6 +46,9 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
 
     case 'rgb-mixer':
       return <RGBMixerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'logic-fixer':
+      return <LogicFixerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (
