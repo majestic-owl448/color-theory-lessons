@@ -192,7 +192,9 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
                         ? styles.correct
                         : showResult && isSelected && !choice.isCorrect
                           ? styles.incorrect
-                          : ''
+                          : isSelected && !showResult
+                            ? styles.chosen
+                            : ''
                     }`}
                     onClick={() => handleChoiceSelect(choice.id)}
                     disabled={submitted && !choice.isCorrect && selectedChoice !== choice.id}

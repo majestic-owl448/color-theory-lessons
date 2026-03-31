@@ -193,6 +193,12 @@
   background-color: var(--gray-75);
 }
 
+.choice.chosen {
+  border-color: var(--yellow);
+  background-color: color-mix(in srgb, var(--yellow) 10%, var(--surface));
+  color: var(--primary-foreground);
+}
+
 .choice.correct {
   border-color: var(--green);
   background-color: color-mix(in srgb, var(--green) 12%, var(--surface));
