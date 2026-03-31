@@ -10,14 +10,14 @@ interface Swatch {
 
 const SWATCHES: Swatch[] = [
   { id: 'coral', label: 'Coral', color: '#ff6b6b', correct: 'warm' },
-  { id: 'navy', label: 'Navy', color: '#1a3a6b', correct: 'cool' },
-  { id: 'sand', label: 'Sand', color: '#c9b99a', correct: 'neutral' },
-  { id: 'amber', label: 'Amber', color: '#f59e0b', correct: 'warm' },
   { id: 'teal', label: 'Teal', color: '#14b8a6', correct: 'cool' },
   { id: 'stone', label: 'Stone gray', color: '#78716c', correct: 'neutral' },
+  { id: 'navy', label: 'Navy', color: '#1a3a6b', correct: 'cool' },
   { id: 'rust', label: 'Rust', color: '#c2410c', correct: 'warm' },
-  { id: 'slate', label: 'Slate blue', color: '#475569', correct: 'cool' },
   { id: 'cream', label: 'Cream', color: '#fef9c3', correct: 'neutral' },
+  { id: 'sand', label: 'Sand', color: '#c9b99a', correct: 'neutral' },
+  { id: 'amber', label: 'Amber', color: '#f59e0b', correct: 'warm' },
+  { id: 'slate', label: 'Slate blue', color: '#475569', correct: 'cool' },
 ];
 
 const INTERFACE_GOALS = [
