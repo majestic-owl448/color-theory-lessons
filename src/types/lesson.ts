@@ -34,6 +34,7 @@ export type InteractionType =
   | 'code-playground'
   | 'before-after'
   | 'slider-explore'
+  | 'additive-sort'
   | 'none';
 
 export interface LessonStep {
@@ -56,7 +57,8 @@ export type ChallengeType =
   | 'match-target'
   | 'adjust-contrast'
   | 'identify-problem'
-  | 'code-to-color';
+  | 'code-to-color'
+  | 'sort';
 
 export interface QuizItem {
   id: string;

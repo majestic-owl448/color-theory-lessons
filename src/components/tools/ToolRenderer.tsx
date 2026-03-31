@@ -4,6 +4,7 @@ import { HSLSliderTool } from './HSLSliderTool.tsx';
 import { ContrastTool } from './ContrastTool.tsx';
 import { TemperatureSorterTool } from './TemperatureSorterTool.tsx';
 import { ColorWheelTool } from './ColorWheelTool.tsx';
+import { AdditiveSortTool } from './AdditiveSortTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -37,6 +38,9 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
 
     case 'color-wheel':
       return <ColorWheelTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'additive-sort':
+      return <AdditiveSortTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (
