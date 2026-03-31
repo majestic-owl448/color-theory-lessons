@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
 import { units } from '../data/units.ts';
+import { useAppState } from '../state/app-context.tsx';
 import styles from './HomePage.module.css';
 
 export function HomePage() {
+  const { completedLessons } = useAppState();
+
+  // Find the first lesson the user hasn't completed yet
+  const allLessonIds = units.flatMap((u) => u.lessons);
+  const nextLessonId = allLessonIds.find((id) => !completedLessons.includes(id)) ?? allLessonIds[0];
+
   return (
     <>
       <section className={styles.hero}>
@@ -16,23 +23,51 @@ export function HomePage() {
           Six units of hands-on lessons covering color perception, digital color
           models, accessibility, and design systems — built for people who write code.
         </p>
-        <Link to="/lesson/u1-l1" className={styles.startBtn}>
-          start learning
+        <Link to={`/lesson/${nextLessonId}`} className={styles.startBtn}>
+          {completedLessons.length === 0 ? 'start learning' : 'continue →'}
         </Link>
       </section>
 
       <section>
         <p className={styles.unitsHeading}>units</p>
         <ul className={styles.units}>
-          {units.map((unit, i) => (
-            <li key={unit.id} className={styles.unitCard}>
-              <span className={styles.unitIndex}>{String(i + 1).padStart(2, '0')}</span>
-              <div className={styles.unitInfo}>
-                <span className={styles.unitTitle}>{unit.title}</span>
-                <span className={styles.unitDesc}>{unit.description}</span>
-              </div>
-            </li>
-          ))}
+          {units.map((unit, i) => {
+            const total = unit.lessons.length;
+            const done = unit.lessons.filter((id) => completedLessons.includes(id)).length;
+            const complete = total > 0 && done === total;
+            const started = done > 0 && !complete;
+            const firstLesson = unit.lessons[0];
+            return (
+              <li key={unit.id} className={`${styles.unitCard} ${complete ? styles.unitComplete : ''}`}>
+                <span className={styles.unitIndex}>{String(i + 1).padStart(2, '0')}</span>
+                <div className={styles.unitInfo}>
+                  <span className={styles.unitTitle}>{unit.title}</span>
+                  <span className={styles.unitDesc}>{unit.description}</span>
+                </div>
+                <div className={styles.unitMeta}>
+                  {complete ? (
+                    <span className={styles.unitBadge} style={{ color: 'var(--green)', borderColor: 'var(--green)' }}>
+                      ✓ done
+                    </span>
+                  ) : started ? (
+                    <span className={styles.unitBadge}>
+                      {done}/{total}
+                    </span>
+                  ) : total > 0 ? (
+                    firstLesson && (
+                      <Link to={`/lesson/${firstLesson}`} className={styles.unitStart}>
+                        start →
+                      </Link>
+                    )
+                  ) : (
+                    <span className={styles.unitBadge} style={{ color: 'var(--muted)', borderColor: 'var(--border)' }}>
+                      coming soon
+                    </span>
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </section>
     </>

@@ -69,6 +69,35 @@
   border-radius: var(--radius-md);
 }
 
+.unitComplete {
+  border-color: color-mix(in srgb, var(--green) 40%, var(--border));
+}
+
+.unitMeta {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.unitBadge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+}
+
+.unitStart {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.unitStart:hover {
+  text-decoration: underline;
+}
+
 .unitIndex {
   font-family: var(--font-mono);
   font-size: 0.8rem;

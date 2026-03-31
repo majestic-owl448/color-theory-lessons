@@ -257,3 +257,10 @@
   color: var(--secondary-foreground);
   max-width: 40ch;
 }
+
+.completeActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+}

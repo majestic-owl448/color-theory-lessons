@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import type { LessonConfig } from '../../types/lesson.ts';
 import { useAppDispatch } from '../../state/app-context.tsx';
+import { lessonRegistry } from '../../lessons/lesson-registry.ts';
 import { ToolRenderer } from '../tools/ToolRenderer.tsx';
 import styles from './LessonPlayer.module.css';
 
@@ -231,16 +233,31 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
         )}
 
         {/* ── Complete phase ── */}
-        {phase === 'complete' && (
-          <div className={styles.complete}>
-            <span className={styles.completeBadge}>lesson complete</span>
-            <p className={styles.completeTitle}>{lesson.title}</p>
-            <p className={styles.completeBody}>
-              {answers.filter((a) => a.isCorrect).length} of {lesson.quizItems.length} quiz
-              questions correct.
-            </p>
-          </div>
-        )}
+        {phase === 'complete' && (() => {
+          const idx = lessonRegistry.findIndex((l) => l.id === lesson.id);
+          const nextLesson = idx >= 0 ? lessonRegistry[idx + 1] : undefined;
+          const isSameUnit = nextLesson?.unitId === lesson.unitId;
+          return (
+            <div className={styles.complete}>
+              <span className={styles.completeBadge}>lesson complete</span>
+              <p className={styles.completeTitle}>{lesson.title}</p>
+              <p className={styles.completeBody}>
+                {answers.filter((a) => a.isCorrect).length} of {lesson.quizItems.length} quiz
+                questions correct.
+              </p>
+              <div className={styles.completeActions}>
+                {nextLesson ? (
+                  <Link to={`/lesson/${nextLesson.id}`} className={styles.btnPrimary}>
+                    {isSameUnit ? 'next lesson →' : 'next unit →'}
+                  </Link>
+                ) : null}
+                <Link to="/" className={styles.btnSecondary}>
+                  ← all units
+                </Link>
+              </div>
+            </div>
+          );
+        })()}
       </aside>
 
       {/* ── Right tool panel ── */}
