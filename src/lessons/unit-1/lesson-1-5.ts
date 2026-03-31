@@ -34,7 +34,7 @@ export const lesson1_5: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'Compare the two interfaces. The first version has competing colors. The second makes one action clearly dominant. Identify which design choices make the difference.',
+      text: 'In the exercise ahead, you will see three buttons that all look the same — no hierarchy, no focal point. Your job is to assign each one a role: primary, secondary, or tertiary. One accent, one outline, one text link.',
     },
   ],
   challenges: [
