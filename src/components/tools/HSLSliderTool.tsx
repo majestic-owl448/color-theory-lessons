@@ -18,19 +18,19 @@ interface Target {
 const TARGETS: Target[] = [
   {
     name: 'Match the hue',
-    locked: 'l',
+    locked: 'h',
     target: { h: 200, s: 70, l: 55 },
     start: { h: 0, s: 70, l: 55 },
   },
   {
     name: 'Match the saturation',
-    locked: 'h',
+    locked: 's',
     target: { h: 200, s: 20, l: 55 },
     start: { h: 200, s: 90, l: 55 },
   },
   {
     name: 'Match the lightness',
-    locked: 's',
+    locked: 'l',
     target: { h: 200, s: 70, l: 20 },
     start: { h: 200, s: 70, l: 80 },
   },
