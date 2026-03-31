@@ -74,13 +74,21 @@ export function HomePage() {
                     {unit.lessons.map((lessonId, li) => {
                       const lessonConfig = getLessonById(lessonId);
                       const isDone = completedLessons.includes(lessonId);
+                      const isNext = !isDone && unit.lessons[li - 1] !== undefined && completedLessons.includes(unit.lessons[li - 1]);
+                      const isLocked = !isDone && !isNext;
                       return (
-                        <li key={lessonId} className={styles.lessonRow}>
+                        <li key={lessonId} className={`${styles.lessonRow} ${isLocked ? styles.lessonLocked : ''}`}>
                           <span className={styles.lessonNum}>{String(li + 1).padStart(2, '0')}</span>
                           <span className={styles.lessonName}>{lessonConfig?.title ?? lessonId}</span>
-                          <Link to={`/lesson/${lessonId}`} className={isDone ? styles.lessonRedo : styles.lessonContinue}>
-                            {isDone ? 'redo →' : 'continue →'}
-                          </Link>
+                          {isDone && (
+                            <Link to={`/lesson/${lessonId}`} className={styles.lessonRedo}>redo →</Link>
+                          )}
+                          {isNext && (
+                            <Link to={`/lesson/${lessonId}`} className={styles.lessonContinue}>continue →</Link>
+                          )}
+                          {isLocked && (
+                            <span className={styles.lessonLockedLabel}>locked</span>
+                          )}
                         </li>
                       );
                     })}

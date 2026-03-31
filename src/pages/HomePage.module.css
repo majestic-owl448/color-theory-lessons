@@ -188,3 +188,14 @@
   color: var(--secondary-foreground);
   text-decoration: underline;
 }
+
+.lessonLocked {
+  opacity: 0.45;
+}
+
+.lessonLockedLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
