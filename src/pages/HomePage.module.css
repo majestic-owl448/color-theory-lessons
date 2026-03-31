@@ -59,6 +59,11 @@
   margin-bottom: var(--spacing-xs);
 }
 
+.unitGroup {
+  display: flex;
+  flex-direction: column;
+}
+
 .unitCard {
   display: flex;
   align-items: center;
@@ -67,6 +72,10 @@
   background-color: var(--secondary-background);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+}
+
+.unitExpanded {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
 .unitComplete {
@@ -120,4 +129,62 @@
 .unitDesc {
   font-size: 0.9rem;
   color: var(--secondary-foreground);
+}
+
+.lessonList {
+  display: flex;
+  flex-direction: column;
+  margin-top: calc(var(--spacing-sm) * -1);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  overflow: hidden;
+}
+
+.lessonRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: 0.5rem var(--spacing-lg);
+  background-color: var(--primary-background);
+  border-top: 1px solid var(--border);
+}
+
+.lessonNum {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  width: 2ch;
+  flex-shrink: 0;
+}
+
+.lessonName {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--secondary-foreground);
+}
+
+.lessonContinue {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--yellow);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.lessonContinue:hover {
+  text-decoration: underline;
+}
+
+.lessonRedo {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.lessonRedo:hover {
+  color: var(--secondary-foreground);
+  text-decoration: underline;
 }

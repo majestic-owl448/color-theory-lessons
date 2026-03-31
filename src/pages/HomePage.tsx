@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { units } from '../data/units.ts';
+import { getLessonById } from '../lessons/lesson-registry.ts';
 import { useAppState } from '../state/app-context.tsx';
 import styles from './HomePage.module.css';
 
@@ -30,45 +31,65 @@ export function HomePage() {
 
       <section>
         <p className={styles.unitsHeading}>units</p>
-        <ul className={styles.units}>
+        <div className={styles.units}>
           {units.map((unit, i) => {
             const total = unit.lessons.length;
             const done = unit.lessons.filter((id) => completedLessons.includes(id)).length;
             const complete = total > 0 && done === total;
             const started = done > 0 && !complete;
             const firstLesson = unit.lessons[0];
+            const showLessons = started || complete;
             return (
-              <li key={unit.id} className={`${styles.unitCard} ${complete ? styles.unitComplete : ''}`}>
-                <span className={styles.unitIndex}>{String(i + 1).padStart(2, '0')}</span>
-                <div className={styles.unitInfo}>
-                  <span className={styles.unitTitle}>{unit.title}</span>
-                  <span className={styles.unitDesc}>{unit.description}</span>
+              <div key={unit.id} className={styles.unitGroup}>
+                <div className={`${styles.unitCard} ${complete ? styles.unitComplete : ''} ${showLessons ? styles.unitExpanded : ''}`}>
+                  <span className={styles.unitIndex}>{String(i + 1).padStart(2, '0')}</span>
+                  <div className={styles.unitInfo}>
+                    <span className={styles.unitTitle}>{unit.title}</span>
+                    <span className={styles.unitDesc}>{unit.description}</span>
+                  </div>
+                  <div className={styles.unitMeta}>
+                    {complete ? (
+                      <span className={styles.unitBadge} style={{ color: 'var(--green)', borderColor: 'var(--green)' }}>
+                        ✓ done
+                      </span>
+                    ) : started ? (
+                      <span className={styles.unitBadge}>
+                        {done}/{total}
+                      </span>
+                    ) : total > 0 ? (
+                      firstLesson && (
+                        <Link to={`/lesson/${firstLesson}`} className={styles.unitStart}>
+                          start →
+                        </Link>
+                      )
+                    ) : (
+                      <span className={styles.unitBadge} style={{ color: 'var(--muted)', borderColor: 'var(--border)' }}>
+                        coming soon
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <div className={styles.unitMeta}>
-                  {complete ? (
-                    <span className={styles.unitBadge} style={{ color: 'var(--green)', borderColor: 'var(--green)' }}>
-                      ✓ done
-                    </span>
-                  ) : started ? (
-                    <span className={styles.unitBadge}>
-                      {done}/{total}
-                    </span>
-                  ) : total > 0 ? (
-                    firstLesson && (
-                      <Link to={`/lesson/${firstLesson}`} className={styles.unitStart}>
-                        start →
-                      </Link>
-                    )
-                  ) : (
-                    <span className={styles.unitBadge} style={{ color: 'var(--muted)', borderColor: 'var(--border)' }}>
-                      coming soon
-                    </span>
-                  )}
-                </div>
-              </li>
+                {showLessons && (
+                  <ul className={styles.lessonList}>
+                    {unit.lessons.map((lessonId, li) => {
+                      const lessonConfig = getLessonById(lessonId);
+                      const isDone = completedLessons.includes(lessonId);
+                      return (
+                        <li key={lessonId} className={styles.lessonRow}>
+                          <span className={styles.lessonNum}>{String(li + 1).padStart(2, '0')}</span>
+                          <span className={styles.lessonName}>{lessonConfig?.title ?? lessonId}</span>
+                          <Link to={`/lesson/${lessonId}`} className={isDone ? styles.lessonRedo : styles.lessonContinue}>
+                            {isDone ? 'redo →' : 'continue →'}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
             );
           })}
-        </ul>
+        </div>
       </section>
     </>
   );
