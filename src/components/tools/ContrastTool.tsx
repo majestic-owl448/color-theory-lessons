@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface ProblemArea {
@@ -53,22 +53,16 @@ export function ContrastTool({ interactive = true, onComplete }: ContrastToolPro
 
   const allFixed = AREAS.every(isFixed);
 
-  function handleChange(id: string, val: number) {
-    if (completed) return;
-    setLightness((prev) => {
-      const next = { ...prev, [id]: val };
-      return next;
-    });
-    if (allFixed && !completed) {
+  useEffect(() => {
+    if (interactive && !completed && allFixed) {
       setCompleted(true);
       onComplete?.();
     }
-  }
+  }, [allFixed, completed, interactive, onComplete]);
 
-  // Check after each render too
-  if (!completed && allFixed) {
-    setCompleted(true);
-    onComplete?.();
+  function handleChange(id: string, val: number) {
+    if (completed || !interactive) return;
+    setLightness((prev) => ({ ...prev, [id]: val }));
   }
 
   return (

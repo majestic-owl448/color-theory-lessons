@@ -99,7 +99,7 @@ export function BeforeAfterTool({ variant = 'color-function', interactive = true
     return (
       <div className={shellStyles.shell}>
         <span className={shellStyles.toolLabel}>hierarchy tuner</span>
-        <HierarchyDemo onComplete={onComplete} />
+        <HierarchyDemo interactive={interactive} onComplete={onComplete} />
       </div>
     );
   }
@@ -257,7 +257,7 @@ const HIERARCHY_ITEMS = [
 ] as const;
 type BtnRole = 'primary' | 'secondary' | 'tertiary';
 
-function HierarchyDemo({ onComplete }: { onComplete?: () => void }) {
+function HierarchyDemo({ interactive = true, onComplete }: { interactive?: boolean; onComplete?: () => void }) {
   const [roles, setRoles] = useState<Record<string, BtnRole>>({
     submit: 'secondary',
     draft: 'secondary',
@@ -293,7 +293,7 @@ function HierarchyDemo({ onComplete }: { onComplete?: () => void }) {
             <select
               value={roles[item.id]}
               onChange={(e) => setRoles((r) => ({ ...r, [item.id]: e.target.value as BtnRole }))}
-              disabled={checked}
+              disabled={checked || !interactive}
               style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', background: 'var(--primary-background)', color: 'var(--primary-foreground)', border: '1px solid var(--border)', borderRadius: '3px', padding: '0.3rem 0.5rem' }}
             >
               <option value="primary">primary (accent)</option>
@@ -303,7 +303,7 @@ function HierarchyDemo({ onComplete }: { onComplete?: () => void }) {
           </div>
         ))}
       </div>
-      {!checked && (
+      {interactive && !checked && (
         <button
           onClick={handleCheck}
           style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', background: 'var(--yellow)', color: 'var(--gray-90)', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.85rem', borderRadius: '3px', border: 'none', cursor: 'pointer' }}

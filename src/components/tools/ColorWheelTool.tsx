@@ -220,14 +220,15 @@ export function ColorWheelTool({ interactive = true, onComplete }: ColorWheelToo
         <p style={{ fontSize: '0.9rem', color: 'var(--secondary-foreground)' }}>
           Choose a relationship, adjust the base hue, then lock in your palette.
         </p>
-        {!palette ? (
+        {interactive && !palette && (
           <button
             onClick={buildPalette}
             style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', background: 'var(--yellow)', color: 'var(--gray-90)', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.85rem', borderRadius: 'var(--radius-sm)', border: 'none', cursor: 'pointer' }}
           >
             lock in this palette
           </button>
-        ) : (
+        )}
+        {palette && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
             <div style={{ display: 'flex', gap: '4px', height: '56px' }}>
               <div style={{ flex: 3, borderRadius: 'var(--radius-sm)', backgroundColor: hslToHex(palette.dominant, 70, 50), display: 'flex', alignItems: 'flex-end', padding: '4px 8px' }}>
@@ -246,7 +247,7 @@ export function ColorWheelTool({ interactive = true, onComplete }: ColorWheelToo
             <p style={{ fontSize: '0.8rem', color: 'var(--secondary-foreground)' }}>
               Relationship: <strong style={{ color: 'var(--primary-foreground)' }}>{relationship}</strong>. The accent creates the strongest visual signal.
             </p>
-            {!paletteDone && (
+            {interactive && !paletteDone && (
               <button
                 onClick={handleFinish}
                 style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', background: 'var(--yellow)', color: 'var(--gray-90)', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.85rem', borderRadius: 'var(--radius-sm)', border: 'none', cursor: 'pointer' }}

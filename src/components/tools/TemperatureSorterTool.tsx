@@ -183,9 +183,9 @@ export function TemperatureSorterTool({ interactive = true, onComplete }: Temper
         })}
       </div>
 
-      {!checked && (
+      {interactive && !checked && (
         <button
-          disabled={!allAnswered || !interactive}
+          disabled={!allAnswered}
           onClick={handleCheck}
           style={{
             alignSelf: 'flex-start',
