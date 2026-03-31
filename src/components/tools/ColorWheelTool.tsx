@@ -180,7 +180,8 @@ export function ColorWheelTool({ interactive = true, onComplete }: ColorWheelToo
             {(['analogous', 'complementary', 'triadic'] as Relationship[]).map((r) => (
               <button
                 key={r}
-                onClick={() => setRelationship(r)}
+                onClick={() => interactive && setRelationship(r)}
+                disabled={!interactive}
                 style={{
                   padding: '0.4rem 0.75rem',
                   background: relationship === r ? 'var(--surface)' : 'transparent',
@@ -189,7 +190,7 @@ export function ColorWheelTool({ interactive = true, onComplete }: ColorWheelToo
                   color: relationship === r ? 'var(--yellow)' : 'var(--secondary-foreground)',
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.8rem',
-                  cursor: 'pointer',
+                  cursor: interactive ? 'pointer' : 'not-allowed',
                   textAlign: 'left',
                 }}
               >
