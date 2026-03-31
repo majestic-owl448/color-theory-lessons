@@ -46,37 +46,41 @@ interface HSLSliderToolProps {
 export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolProps) {
   const [targetIdx, setTargetIdx] = useState(0);
   const [current, setCurrent] = useState<HSL>({ ...TARGETS[0].start });
-  const [solved, setSolved] = useState<boolean[]>([false, false, false]);
+  const [checked, setChecked] = useState(false);
   const [allDone, setAllDone] = useState(false);
 
   const target = TARGETS[targetIdx];
 
+  const close =
+    Math.abs(current.h - target.target.h) <= TOLERANCE &&
+    Math.abs(current.s - target.target.s) <= TOLERANCE &&
+    Math.abs(current.l - target.target.l) <= TOLERANCE;
+
   function updateChannel(ch: 'h' | 's' | 'l', val: number) {
-    setCurrent((prev) => {
-      const next = { ...prev, [ch]: val };
-      // Check if close enough to target
-      const close =
-        Math.abs(next.h - target.target.h) <= TOLERANCE &&
-        Math.abs(next.s - target.target.s) <= TOLERANCE &&
-        Math.abs(next.l - target.target.l) <= TOLERANCE;
-      if (close && !solved[targetIdx]) {
-        const newSolved = [...solved];
-        newSolved[targetIdx] = true;
-        setSolved(newSolved);
-        // Auto-advance
-        setTimeout(() => {
-          if (targetIdx < TARGETS.length - 1) {
-            const next2 = targetIdx + 1;
-            setTargetIdx(next2);
-            setCurrent({ ...TARGETS[next2].start });
-          } else {
-            setAllDone(true);
-            onComplete?.();
-          }
-        }, 800);
-      }
-      return next;
-    });
+    if (checked) return;
+    setCurrent((prev) => ({ ...prev, [ch]: val }));
+  }
+
+  function handleCheck() {
+    setChecked(true);
+    if (close) {
+      setTimeout(() => {
+        if (targetIdx < TARGETS.length - 1) {
+          const next = targetIdx + 1;
+          setTargetIdx(next);
+          setCurrent({ ...TARGETS[next].start });
+          setChecked(false);
+        } else {
+          setAllDone(true);
+          onComplete?.();
+        }
+      }, 900);
+    }
+  }
+
+  function handleRetry() {
+    setCurrent({ ...target.start });
+    setChecked(false);
   }
 
   const hueGradient = useMemo(
@@ -87,11 +91,6 @@ export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolP
 
   const satGradient = `linear-gradient(to right, hsl(${current.h},0%,${current.l}%), hsl(${current.h},100%,${current.l}%))`;
   const lightGradient = `linear-gradient(to right, hsl(${current.h},${current.s}%,0%), hsl(${current.h},${current.s}%,50%), hsl(${current.h},${current.s}%,100%))`;
-
-  const close =
-    Math.abs(current.h - target.target.h) <= TOLERANCE &&
-    Math.abs(current.s - target.target.s) <= TOLERANCE &&
-    Math.abs(current.l - target.target.l) <= TOLERANCE;
 
   return (
     <div className={shellStyles.shell}>
@@ -126,7 +125,7 @@ export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolP
           <p style={{ fontSize: '0.85rem', color: 'var(--secondary-foreground)', marginTop: '4px' }}>
             Only the <strong style={{ color: 'var(--primary-foreground)' }}>
               {target.locked === 'h' ? 'hue' : target.locked === 's' ? 'saturation' : 'lightness'}
-            </strong> slider is unlocked.
+            </strong> slider is unlocked. Adjust it to match the target, then check.
           </p>
         </div>
 
@@ -154,7 +153,7 @@ export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolP
                   min={0}
                   max={max}
                   value={current[ch]}
-                  disabled={isLocked || !interactive}
+                  disabled={isLocked || !interactive || checked}
                   style={{ background: gradient }}
                   onChange={(e) => updateChannel(ch, Number(e.target.value))}
                   aria-label={`${label}: ${current[ch]}${unit}`}
@@ -164,12 +163,57 @@ export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolP
           })}
         </div>
 
-        {/* Match result */}
-        {close && !allDone && (
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--green)' }}>
-            ✓ match! advancing…
-          </p>
+        {/* Actions / result */}
+        {!allDone && !checked && (
+          <button
+            onClick={handleCheck}
+            disabled={!interactive}
+            style={{
+              alignSelf: 'flex-start',
+              padding: '0.4rem 1rem',
+              background: 'var(--yellow)',
+              color: 'var(--gray-90)',
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            check
+          </button>
         )}
+
+        {checked && !allDone && (
+          close ? (
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--green)' }}>
+              ✓ match! advancing…
+            </p>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--red)' }}>
+                not quite — try again
+              </p>
+              <button
+                onClick={handleRetry}
+                style={{
+                  padding: '0.3rem 0.75rem',
+                  background: 'transparent',
+                  color: 'var(--secondary-foreground)',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.8rem',
+                  borderRadius: 'var(--radius-sm)',
+                  border: '1px solid var(--border)',
+                  cursor: 'pointer',
+                }}
+              >
+                retry
+              </button>
+            </div>
+          )
+        )}
+
         {allDone && (
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--green)' }}>
             ✓ all three dimensions matched. Great work!
