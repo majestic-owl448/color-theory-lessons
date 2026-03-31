@@ -164,10 +164,10 @@ export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolP
         </div>
 
         {/* Actions / result */}
-        {!allDone && !checked && (
+        {interactive && !allDone && !checked && (
           <button
             onClick={handleCheck}
-            disabled={!interactive}
+            disabled={false}
             style={{
               alignSelf: 'flex-start',
               padding: '0.4rem 1rem',
