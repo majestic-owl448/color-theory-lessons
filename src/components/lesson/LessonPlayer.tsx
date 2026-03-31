@@ -56,6 +56,17 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
     setSelectedChoice(choiceId);
   }
 
+  function handleRedo() {
+    setPhase('steps');
+    setStepIndex(0);
+    setToolUnlocked(false);
+    setChallengeDone(false);
+    setQuizIndex(0);
+    setAnswers([]);
+    setSelectedChoice(null);
+    setSubmitted(false);
+  }
+
   function handleSubmitAnswer() {
     if (!selectedChoice || submitted) return;
     const question = lesson.quizItems[quizIndex];
@@ -253,6 +264,9 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
                     {isSameUnit ? 'next lesson →' : 'next unit →'}
                   </Link>
                 ) : null}
+                <button className={styles.btnSecondary} onClick={handleRedo}>
+                  redo lesson
+                </button>
                 <Link to="/" className={styles.btnSecondary}>
                   ← all units
                 </Link>
