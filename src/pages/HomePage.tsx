@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { units } from '../data/units.ts';
 import { getLessonById } from '../lessons/lesson-registry.ts';
@@ -6,6 +7,7 @@ import styles from './HomePage.module.css';
 
 export function HomePage() {
   const { completedLessons } = useAppState();
+  const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
 
   // Find the first lesson the user hasn't completed yet
   const allLessonIds = units.flatMap((u) => u.lessons);
@@ -38,10 +40,23 @@ export function HomePage() {
             const complete = total > 0 && done === total;
             const started = done > 0 && !complete;
             const firstLesson = unit.lessons[0];
-            const showLessons = started || complete;
+            const canExpand = started || complete;
+            const isExpanded = expandedUnit === unit.id;
+
+            function toggleExpand() {
+              setExpandedUnit((prev) => (prev === unit.id ? null : unit.id));
+            }
+
             return (
               <div key={unit.id} className={styles.unitGroup}>
-                <div className={`${styles.unitCard} ${complete ? styles.unitComplete : ''} ${showLessons ? styles.unitExpanded : ''}`}>
+                <div
+                  className={`${styles.unitCard} ${complete ? styles.unitComplete : ''} ${isExpanded ? styles.unitExpanded : ''}`}
+                  onClick={canExpand ? toggleExpand : undefined}
+                  role={canExpand ? 'button' : undefined}
+                  tabIndex={canExpand ? 0 : undefined}
+                  onKeyDown={(e) => canExpand && e.key === 'Enter' && toggleExpand()}
+                  style={{ cursor: canExpand ? 'pointer' : 'default' }}
+                >
                   <span className={styles.unitIndex}>{String(i + 1).padStart(2, '0')}</span>
                   <div className={styles.unitInfo}>
                     <span className={styles.unitTitle}>{unit.title}</span>
@@ -58,7 +73,11 @@ export function HomePage() {
                       </span>
                     ) : total > 0 ? (
                       firstLesson && (
-                        <Link to={`/lesson/${firstLesson}`} className={styles.unitStart}>
+                        <Link
+                          to={`/lesson/${firstLesson}`}
+                          className={styles.unitStart}
+                          onClick={(e) => e.stopPropagation()}
+                        >
                           start →
                         </Link>
                       )
@@ -67,9 +86,12 @@ export function HomePage() {
                         coming soon
                       </span>
                     )}
+                    {canExpand && (
+                      <span className={styles.expandChevron}>{isExpanded ? '▲' : '▼'}</span>
+                    )}
                   </div>
                 </div>
-                {showLessons && (
+                {isExpanded && (
                   <ul className={styles.lessonList}>
                     {unit.lessons.map((lessonId, li) => {
                       const lessonConfig = getLessonById(lessonId);
