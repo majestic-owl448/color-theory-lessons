@@ -39,10 +39,11 @@ const TARGETS: Target[] = [
 const TOLERANCE = 8;
 
 interface HSLSliderToolProps {
+  interactive?: boolean;
   onComplete?: () => void;
 }
 
-export function HSLSliderTool({ onComplete }: HSLSliderToolProps) {
+export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolProps) {
   const [targetIdx, setTargetIdx] = useState(0);
   const [current, setCurrent] = useState<HSL>({ ...TARGETS[0].start });
   const [solved, setSolved] = useState<boolean[]>([false, false, false]);
@@ -153,7 +154,7 @@ export function HSLSliderTool({ onComplete }: HSLSliderToolProps) {
                   min={0}
                   max={max}
                   value={current[ch]}
-                  disabled={isLocked}
+                  disabled={isLocked || !interactive}
                   style={{ background: gradient }}
                   onChange={(e) => updateChannel(ch, Number(e.target.value))}
                   aria-label={`${label}: ${current[ch]}${unit}`}

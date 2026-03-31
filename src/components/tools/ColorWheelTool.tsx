@@ -29,10 +29,11 @@ function getRelatedHues(baseH: number, rel: Relationship): number[] {
 interface ColorWheelProps {
   baseH: number;
   relatedH: number[];
+  interactive: boolean;
   onChange: (h: number) => void;
 }
 
-function ColorWheel({ baseH, relatedH, onChange }: ColorWheelProps) {
+function ColorWheel({ baseH, relatedH, interactive, onChange }: ColorWheelProps) {
   const size = 200;
   const cx = size / 2;
   const cy = size / 2;
@@ -87,8 +88,8 @@ function ColorWheel({ baseH, relatedH, onChange }: ColorWheelProps) {
       width={size}
       height={size}
       viewBox={`0 0 ${size} ${size}`}
-      onClick={handleClick}
-      style={{ cursor: 'crosshair', flexShrink: 0 }}
+      onClick={interactive ? handleClick : undefined}
+      style={{ cursor: interactive ? 'crosshair' : 'default', flexShrink: 0 }}
       aria-label="Color wheel — click to select base hue"
     >
       {segments.map((seg, i) => (
@@ -107,10 +108,11 @@ function ColorWheel({ baseH, relatedH, onChange }: ColorWheelProps) {
 }
 
 interface ColorWheelToolProps {
+  interactive?: boolean;
   onComplete?: () => void;
 }
 
-export function ColorWheelTool({ onComplete }: ColorWheelToolProps) {
+export function ColorWheelTool({ interactive = true, onComplete }: ColorWheelToolProps) {
   const [baseH, setBaseH] = useState(210);
   const [relationship, setRelationship] = useState<Relationship>('complementary');
   const [palette, setPalette] = useState<{ dominant: number; support: number; accent: number } | null>(null);
@@ -143,7 +145,7 @@ export function ColorWheelTool({ onComplete }: ColorWheelToolProps) {
       <span className={shellStyles.toolLabel}>color wheel explorer</span>
 
       <div style={{ display: 'flex', gap: 'var(--spacing-lg)', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-        <ColorWheel baseH={baseH} relatedH={relatedH} onChange={setBaseH} />
+        <ColorWheel baseH={baseH} relatedH={relatedH} interactive={interactive} onChange={setBaseH} />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)', flex: 1, minWidth: '180px' }}>
           {/* Base hue control */}
@@ -157,7 +159,8 @@ export function ColorWheelTool({ onComplete }: ColorWheelToolProps) {
               min={0}
               max={359}
               value={baseH}
-              onChange={(e) => setBaseH(Number(e.target.value))}
+              onChange={(e) => interactive && setBaseH(Number(e.target.value))}
+              disabled={!interactive}
               style={{
                 width: '100%',
                 background: `linear-gradient(to right, hsl(0,80%,55%), hsl(60,80%,55%), hsl(120,80%,55%), hsl(180,80%,55%), hsl(240,80%,55%), hsl(300,80%,55%), hsl(360,80%,55%))`,

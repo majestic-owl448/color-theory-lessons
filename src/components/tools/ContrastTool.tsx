@@ -34,10 +34,11 @@ function hexToHSL(hex: string): { h: number; s: number; l: number } {
 }
 
 interface ContrastToolProps {
+  interactive?: boolean;
   onComplete?: () => void;
 }
 
-export function ContrastTool({ onComplete }: ContrastToolProps) {
+export function ContrastTool({ interactive = true, onComplete }: ContrastToolProps) {
   const [lightness, setLightness] = useState<Record<string, number>>({
     heading: hexToHSL(AREAS[0].textColor).l,
     helper: hexToHSL(AREAS[1].textColor).l,
@@ -151,7 +152,7 @@ export function ContrastTool({ onComplete }: ContrastToolProps) {
                   min={5}
                   max={95}
                   value={l}
-                  disabled={completed}
+                  disabled={completed || !interactive}
                   style={{
                     width: '100%',
                     background: gradient,

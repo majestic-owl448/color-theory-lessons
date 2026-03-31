@@ -22,6 +22,7 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
   const dispatch = useAppDispatch();
   const [phase, setPhase] = useState<Phase>('steps');
   const [stepIndex, setStepIndex] = useState(0);
+  const [toolUnlocked, setToolUnlocked] = useState(false);
   const [challengeDone, setChallengeDone] = useState(false);
   const [quizIndex, setQuizIndex] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
@@ -32,6 +33,7 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
     if (stepIndex < lesson.steps.length - 1) {
       setStepIndex((i) => i + 1);
     } else {
+      setToolUnlocked(true);
       setPhase('challenge');
     }
   }
@@ -264,7 +266,7 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       <ToolRenderer
         lesson={lesson}
         phase={phase}
-        stepIndex={stepIndex}
+        toolUnlocked={toolUnlocked}
         onChallengeComplete={() => setChallengeDone(true)}
       />
     </div>

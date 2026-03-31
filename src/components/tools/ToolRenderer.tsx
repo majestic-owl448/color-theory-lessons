@@ -9,36 +9,34 @@ import shellStyles from './ToolShell.module.css';
 interface ToolRendererProps {
   lesson: LessonConfig;
   phase: 'steps' | 'challenge' | 'quiz' | 'complete';
-  stepIndex: number;
+  toolUnlocked: boolean;
   onChallengeComplete: () => void;
 }
 
-export function ToolRenderer({ lesson, phase, stepIndex, onChallengeComplete }: ToolRendererProps) {
+export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete }: ToolRendererProps) {
   const isChallenge = phase === 'challenge';
-  // Tool becomes interactive on the last step or once in challenge/quiz/complete
-  const isInteractive = phase !== 'steps' || stepIndex === lesson.steps.length - 1;
 
   switch (lesson.interactionType) {
     case 'before-after':
       return (
         <BeforeAfterTool
           variant={lesson.id === 'u1-l5' ? 'hierarchy' : 'color-function'}
-          interactive={isInteractive}
+          interactive={toolUnlocked}
           onComplete={isChallenge ? onChallengeComplete : undefined}
         />
       );
 
     case 'slider-explore':
-      return <HSLSliderTool onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      return <HSLSliderTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     case 'contrast-checker':
-      return <ContrastTool onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      return <ContrastTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     case 'palette-builder':
-      return <TemperatureSorterTool onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      return <TemperatureSorterTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     case 'color-wheel':
-      return <ColorWheelTool onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      return <ColorWheelTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (

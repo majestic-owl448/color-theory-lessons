@@ -29,10 +29,11 @@ const INTERFACE_GOALS = [
 type Temperature = 'warm' | 'cool' | 'neutral';
 
 interface TemperatureSorterToolProps {
+  interactive?: boolean;
   onComplete?: () => void;
 }
 
-export function TemperatureSorterTool({ onComplete }: TemperatureSorterToolProps) {
+export function TemperatureSorterTool({ interactive = true, onComplete }: TemperatureSorterToolProps) {
   const [swatchAnswers, setSwatchAnswers] = useState<Record<string, Temperature | ''>>(() =>
     Object.fromEntries(SWATCHES.map((s) => [s.id, ''])),
   );
@@ -98,7 +99,7 @@ export function TemperatureSorterTool({ onComplete }: TemperatureSorterToolProps
                 <span style={{ fontSize: '0.8rem', color: 'var(--secondary-foreground)' }}>{s.label}</span>
                 <select
                   value={swatchAnswers[s.id]}
-                  disabled={checked}
+                  disabled={checked || !interactive}
                   onChange={(e) => setSwatchAnswers((prev) => ({ ...prev, [s.id]: e.target.value as Temperature }))}
                   style={{
                     fontFamily: 'var(--font-mono)',
@@ -153,7 +154,7 @@ export function TemperatureSorterTool({ onComplete }: TemperatureSorterToolProps
               <span style={{ flex: 1, fontSize: '0.9rem' }}>{g.label}</span>
               <select
                 value={goalAnswers[g.id]}
-                disabled={checked}
+                disabled={checked || !interactive}
                 onChange={(e) => setGoalAnswers((prev) => ({ ...prev, [g.id]: e.target.value as Temperature }))}
                 style={{
                   fontFamily: 'var(--font-mono)',
@@ -184,7 +185,7 @@ export function TemperatureSorterTool({ onComplete }: TemperatureSorterToolProps
 
       {!checked && (
         <button
-          disabled={!allAnswered}
+          disabled={!allAnswered || !interactive}
           onClick={handleCheck}
           style={{
             alignSelf: 'flex-start',
