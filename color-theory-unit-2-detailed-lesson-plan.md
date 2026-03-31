@@ -1,5 +1,22 @@
 # Unit 2 Detailed Lesson Plan: Additive and Subtractive Color
 
+## Implementation decisions (agreed before build)
+
+| Lesson | Challenge tool | interactionType |
+|--------|---------------|-----------------|
+| L1 | Toggle comparison + classify-examples drag-to-column sort | `additive-sort` |
+| L2 | RGB target matcher — recreate 5 target swatches with R/G/B sliders + check button | `rgb-mixer` |
+| L3 | Pick-the-correct-rewrite — wrong statement shown, learner picks which of 4 rewrites uses screen/additive logic | `logic-fixer` |
+| L4 | Pick-reasons multi-select — given a screen-vs-print mismatch scenario, learner selects correct explanations | `mismatch-explainer` |
+| L5 | Background-shift challenge — same accent shown on dark and light UI, learner picks which feels stronger and why (multiple choice) | `background-shift` |
+| L6 | Interface tuning lab — minimal UI mockup (nav + card + button) with R/G/B sliders per role; learner tunes until balance thresholds pass | `interface-tuner` |
+
+**L5 steps also include:** a simplified pixel zoom explorer (CSS grid, zoom-in/zoom-out button) — purely visual, no challenge completion logic.
+**Milestone:** folded into L6 (no separate route). Consistent with Unit 1.
+**L4 lighting simulation:** simplified — static screen swatch vs CSS-filter-approximated print swatch side by side.
+
+---
+
 ## Unit summary
 This unit teaches the learner the practical difference between color made from light and color made from pigment. The goal is not to turn beginner designers into scientists. The goal is to help them stop carrying paint logic into screen design.
 
