@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { units } from '../data/units.ts';
 import { getLessonById } from '../lessons/lesson-registry.ts';
+import { getMilestoneById } from '../data/milestones.ts';
 import { useAppState } from '../state/app-context.tsx';
 import styles from './HomePage.module.css';
 
 export function HomePage() {
-  const { completedLessons } = useAppState();
+  const { completedLessons, completedMilestones } = useAppState();
   const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
 
   // Find the first lesson the user hasn't completed yet
@@ -114,6 +115,32 @@ export function HomePage() {
                         </li>
                       );
                     })}
+                    {unit.milestoneId && (() => {
+                      const milestone = getMilestoneById(unit.milestoneId);
+                      if (!milestone) return null;
+                      const allLessonsDone = total > 0 && done === total;
+                      const milestoneDone = completedMilestones.includes(unit.milestoneId);
+                      const milestoneNext = allLessonsDone && !milestoneDone;
+                      const milestoneLocked = !allLessonsDone && !milestoneDone;
+                      return (
+                        <li
+                          key={unit.milestoneId}
+                          className={`${styles.lessonRow} ${styles.milestoneRow} ${milestoneLocked ? styles.lessonLocked : ''}`}
+                        >
+                          <span className={`${styles.lessonNum} ${styles.milestoneIcon}`}>★</span>
+                          <span className={styles.lessonName}>{milestone.title}</span>
+                          {milestoneDone && (
+                            <Link to={`/milestone/${unit.milestoneId}`} className={styles.lessonRedo}>redo →</Link>
+                          )}
+                          {milestoneNext && (
+                            <Link to={`/milestone/${unit.milestoneId}`} className={styles.lessonContinue}>start →</Link>
+                          )}
+                          {milestoneLocked && (
+                            <span className={styles.lessonLockedLabel}>locked</span>
+                          )}
+                        </li>
+                      );
+                    })()}
                   </ul>
                 )}
               </div>

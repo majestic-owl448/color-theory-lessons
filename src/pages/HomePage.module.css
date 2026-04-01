@@ -207,3 +207,15 @@
   color: var(--muted);
   flex-shrink: 0;
 }
+
+/* Milestone row — visually distinct from lesson rows */
+.milestoneRow {
+  background-color: color-mix(in srgb, var(--yellow) 5%, var(--primary-background));
+  border-top: 1px solid color-mix(in srgb, var(--yellow) 25%, var(--border));
+}
+
+.milestoneIcon {
+  color: var(--yellow);
+  font-size: 0.7rem;
+  width: auto;
+}
