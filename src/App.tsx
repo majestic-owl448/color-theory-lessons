@@ -5,6 +5,7 @@ import { HomePage } from './pages/HomePage.tsx';
 import { LessonPage } from './pages/LessonPage.tsx';
 import { MilestonePage } from './pages/MilestonePage.tsx';
 import { PlaceholderPage } from './components/shared/PlaceholderPage.tsx';
+import { SettingsPage } from './pages/SettingsPage.tsx';
 
 export function App() {
   return (
@@ -15,15 +16,7 @@ export function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/lesson/:lessonId" element={<LessonPage />} />
             <Route path="/milestone/:milestoneId" element={<MilestonePage />} />
-            <Route
-              path="/sandbox"
-              element={
-                <PlaceholderPage
-                  title="Sandbox"
-                  description="Free-play with all color tools in one place."
-                />
-              }
-            />
+
             <Route
               path="/quiz/:quizId"
               element={
@@ -60,15 +53,7 @@ export function App() {
                 />
               }
             />
-            <Route
-              path="/settings"
-              element={
-                <PlaceholderPage
-                  title="Settings"
-                  description="Accessibility preferences and progress management."
-                />
-              }
-            />
+            <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </AppShell>
       </HashRouter>

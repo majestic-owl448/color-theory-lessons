@@ -9,14 +9,14 @@ export function TopNav() {
       </NavLink>
       <ul className={styles.links}>
         <li>
-          <NavLink
-            to="/sandbox"
-            className={({ isActive }) =>
-              isActive ? `${styles.link} ${styles.active}` : styles.link
-            }
+          <a
+            href="https://majestic-owl448.github.io/palette-contrast-checker/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.link}
           >
-            sandbox
-          </NavLink>
+            contrast checker ↗
+          </a>
         </li>
         <li>
           <NavLink

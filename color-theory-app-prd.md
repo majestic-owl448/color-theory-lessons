@@ -245,13 +245,15 @@ Because the target platform is GitHub Pages:
 - Home
 - World map / progression map
 - Lesson view
-- Sandbox / color lab
 - Quiz mode
 - Project mode
 - Review mode
 - Glossary
-- Settings
+- Settings (reset progress)
 - Accessibility tools
+- Contrast checker (external link to palette-contrast-checker app)
+
+Note: a free-play sandbox was considered but dropped. The interactive tools already appear in lesson context where they are most meaningful. A standalone sandbox would decouple the tools from the learning material without adding value. Instead, the "contrast checker" nav link opens the companion palette-contrast-checker app (https://majestic-owl448.github.io/palette-contrast-checker/) in a new tab.
 
 ## 14. UX requirements
 - visually rich but not cluttered
