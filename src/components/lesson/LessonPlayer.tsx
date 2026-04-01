@@ -106,7 +106,9 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       {/* ── Left instruction panel ── */}
       <aside className={styles.panel}>
         <div className={styles.lessonMeta}>
-          <span className={styles.unitLabel}>Unit 1 · Lesson {lesson.id.split('-')[1]}</span>
+          <span className={styles.unitLabel}>
+            Unit {lesson.unitId.split('-')[1]} · Lesson {lesson.id.split('-')[1].replace('l', '')}
+          </span>
           <h1 className={styles.lessonTitle}>{lesson.title}</h1>
         </div>
 
