@@ -11,6 +11,7 @@ import { MismatchExplainerTool } from './MismatchExplainerTool.tsx';
 import { BackgroundShiftTool } from './BackgroundShiftTool.tsx';
 import { InterfaceTunerTool } from './InterfaceTunerTool.tsx';
 import { FormatRevealTool } from './FormatRevealTool.tsx';
+import { HexRgbEditorTool } from './HexRgbEditorTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -67,6 +68,8 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
       return <FormatRevealTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     case 'hex-rgb-editor':
+      return <HexRgbEditorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
     case 'hsl-playground':
     case 'alpha-layer':
     case 'theme-sandbox':
