@@ -39,6 +39,13 @@ export type InteractionType =
   | 'mismatch-explainer'
   | 'background-shift'
   | 'interface-tuner'
+  | 'format-reveal'
+  | 'hex-rgb-editor'
+  | 'hsl-playground'
+  | 'alpha-layer'
+  | 'theme-sandbox'
+  | 'token-map'
+  | 'color-space-lab'
   | 'none';
 
 export interface LessonStep {

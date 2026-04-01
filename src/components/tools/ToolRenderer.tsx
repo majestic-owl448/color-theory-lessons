@@ -62,6 +62,22 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
     case 'interface-tuner':
       return <InterfaceTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
+    case 'format-reveal':
+    case 'hex-rgb-editor':
+    case 'hsl-playground':
+    case 'alpha-layer':
+    case 'theme-sandbox':
+    case 'token-map':
+    case 'color-space-lab':
+      return (
+        <div className={shellStyles.shell}>
+          <span className={shellStyles.toolLabel}>coming soon</span>
+          <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>
+            Tool for <code>{lesson.interactionType}</code> is being built.
+          </p>
+        </div>
+      );
+
     default:
       return (
         <div className={shellStyles.shell}>
