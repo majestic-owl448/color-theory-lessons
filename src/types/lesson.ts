@@ -38,6 +38,7 @@ export type InteractionType =
   | 'logic-fixer'
   | 'mismatch-explainer'
   | 'background-shift'
+  | 'interface-tuner'
   | 'none';
 
 export interface LessonStep {

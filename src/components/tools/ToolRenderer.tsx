@@ -9,6 +9,7 @@ import { RGBMixerTool } from './RGBMixerTool.tsx';
 import { LogicFixerTool } from './LogicFixerTool.tsx';
 import { MismatchExplainerTool } from './MismatchExplainerTool.tsx';
 import { BackgroundShiftTool } from './BackgroundShiftTool.tsx';
+import { InterfaceTunerTool } from './InterfaceTunerTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -57,6 +58,9 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
 
     case 'background-shift':
       return <BackgroundShiftTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'interface-tuner':
+      return <InterfaceTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (
