@@ -314,6 +314,8 @@ By the end of this lesson, the learner should be able to:
 - Pigments and inks do not shine light out at the viewer.
 - They reflect some wavelengths and absorb others.
 - Because of this, physical color depends on both the material and the light hitting it.
+- Screens also vary in calibration and gamut, so no single screen preview is a reliable reference for what ink on paper will look like.
+- Physical standards like Pantone exist to give everyone in a production chain a shared ground truth — a numbered swatch that looks the same regardless of the screen used to design it.
 - Digital designers may notice this when comparing a screen mockup to packaging, posters, or branded merchandise.
 - Understanding subtractive color prevents unrealistic expectations about perfect visual matching.
 

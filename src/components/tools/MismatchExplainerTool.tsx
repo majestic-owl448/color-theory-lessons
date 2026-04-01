@@ -34,7 +34,7 @@ const SCENARIOS: Scenario[] = [
       { id: 'a', label: 'Paint pigments absorb and reflect light differently than RGB screen channels.', isCorrect: true },
       { id: 'b', label: 'The wall surface and finish affect how ambient light reflects off the color.', isCorrect: true },
       { id: 'c', label: 'Phones always show color more accurately than any other medium.', isCorrect: false },
-      { id: 'd', label: 'The green is not a standard web-safe color.', isCorrect: false },
+      { id: 'd', label: 'The two phones were calibrated to the same color profile, so they agreed on the result.', isCorrect: false },
     ],
   },
   {
