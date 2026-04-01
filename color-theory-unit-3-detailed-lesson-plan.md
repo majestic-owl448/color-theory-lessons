@@ -92,6 +92,8 @@ By the end of this lesson, the learner should be able to:
 - token
 - color picker
 
+**Adds to glossary:** color format, color value, implementation, token
+
 ## Lesson explanation outline
 - In digital products, the computer needs explicit instructions.
 - A design tool might show a swatch, but the product needs a value such as HEX, RGB, or HSL.

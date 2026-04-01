@@ -201,7 +201,8 @@ No certification. Instead:
 - chapter completion markers
 - mastery markers for each skill area
 - final capstone completion screen
-- optional “review mode” for spaced practice
+- review mode showing learning goals from completed lessons, grouped by topic (not lesson order)
+- glossary accumulating definitions as lessons are completed, shown in alphabetical order
 
 ## 10. Content structure
 Each lesson object should support:
@@ -247,8 +248,8 @@ Because the target platform is GitHub Pages:
 - Lesson view
 - Quiz mode
 - Project mode
-- Review mode
-- Glossary
+- Review (learning goals from completed lessons, grouped by topic)
+- Glossary (terms from completed lessons, alphabetical)
 - Settings (reset progress)
 - Accessibility tools
 - Contrast checker (external link to palette-contrast-checker app)

@@ -6,6 +6,8 @@ import { LessonPage } from './pages/LessonPage.tsx';
 import { MilestonePage } from './pages/MilestonePage.tsx';
 import { PlaceholderPage } from './components/shared/PlaceholderPage.tsx';
 import { SettingsPage } from './pages/SettingsPage.tsx';
+import { GlossaryPage } from './pages/GlossaryPage.tsx';
+import { ReviewPage } from './pages/ReviewPage.tsx';
 
 export function App() {
   return (
@@ -26,24 +28,8 @@ export function App() {
                 />
               }
             />
-            <Route
-              path="/glossary"
-              element={
-                <PlaceholderPage
-                  title="Glossary"
-                  description="Definitions for every color theory term used in the course."
-                />
-              }
-            />
-            <Route
-              path="/review"
-              element={
-                <PlaceholderPage
-                  title="Review"
-                  description="Spaced-repetition review of completed lessons."
-                />
-              }
-            />
+            <Route path="/glossary" element={<GlossaryPage />} />
+            <Route path="/review" element={<ReviewPage />} />
             <Route
               path="/capstone"
               element={

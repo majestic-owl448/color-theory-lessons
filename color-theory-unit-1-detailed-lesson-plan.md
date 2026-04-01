@@ -66,6 +66,8 @@ By the end of this lesson, the learner should be able to:
 - visual cue
 - readability
 
+**Adds to glossary:** emphasis, grouping, readability, status color, visual cue
+
 ## Lesson explanation outline
 - Designers do not use color only to make things look nice.
 - In digital products, color helps users notice what matters first.
@@ -146,6 +148,8 @@ By the end of this lesson, the learner should be able to:
 - tint
 - shade
 
+**Adds to glossary:** hue, lightness, muted, saturation, shade, tint, value, vivid
+
 ## Lesson explanation outline
 - Hue answers the question: which color family is it?
 - Saturation answers the question: how intense or muted is it?
@@ -219,6 +223,8 @@ By the end of this lesson, the learner should be able to:
 - low contrast
 - high contrast
 
+**Adds to glossary:** background, contrast, foreground, legibility *(readability added by L1)*
+
 ## Lesson explanation outline
 - Two colors can be different without creating strong usable contrast.
 - Contrast matters for text, icons, controls, dividers, and emphasis.
@@ -286,6 +292,8 @@ By the end of this lesson, the learner should be able to:
 - energetic
 - calm
 - palette mood
+
+**Adds to glossary:** cool, neutral, palette mood, warm
 
 ## Lesson explanation outline
 - Warm colors often feel more active or urgent.
@@ -358,6 +366,8 @@ By the end of this lesson, the learner should be able to:
 - accent color
 - de-emphasis
 
+**Adds to glossary:** accent color, focal point, hierarchy, primary action, secondary action
+
 ## Lesson explanation outline
 - Not all elements should compete equally for attention.
 - Color is one of several hierarchy tools, alongside size, spacing, and position.
@@ -425,6 +435,8 @@ By the end of this lesson, the learner should be able to:
 - palette
 - harmony
 - balance
+
+**Adds to glossary:** analogous, balance, complementary, harmony, palette, triadic
 
 ## Lesson explanation outline
 - Some colors feel related because they sit near each other conceptually.

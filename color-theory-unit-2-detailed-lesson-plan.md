@@ -84,6 +84,8 @@ By the end of this lesson, the learner should be able to:
 - emit
 - RGB
 
+**Adds to glossary:** additive color, pigment, RGB, subtractive color
+
 ## Lesson explanation outline
 - Additive color starts from darkness and adds light.
 - When more colored light is added, the result gets brighter.
@@ -158,6 +160,8 @@ By the end of this lesson, the learner should be able to:
 - additive primary
 - white light
 - black background
+
+**Adds to glossary:** additive primary, blue channel, channel intensity, green channel, red channel *(RGB added by L1)*
 
 ## Lesson explanation outline
 - On a screen, color is built by controlling the intensity of red, green, and blue light.
@@ -238,6 +242,8 @@ By the end of this lesson, the learner should be able to:
 - reflected color
 - emitted color
 
+**Adds to glossary:** mental model, paint logic, screen logic
+
 ## Lesson explanation outline
 - Many beginners think screen color should behave like paint because paint is familiar.
 - This leads to wrong guesses about mixing, contrast, and brightness.
@@ -309,6 +315,8 @@ By the end of this lesson, the learner should be able to:
 - medium
 - print preview
 - material color
+
+**Adds to glossary:** absorption, color gamut, reflection, subtractive primary
 
 ## Lesson explanation outline
 - Pigments and inks do not shine light out at the viewer.
@@ -387,6 +395,8 @@ By the end of this lesson, the learner should be able to:
 - dark interface
 - accent color
 
+**Adds to glossary:** dark interface, luminous color, pixel *(accent color added by U1-L5)*
+
 ## Lesson explanation outline
 - A display does not paint a flat surface. It controls many tiny color-producing elements.
 - From normal viewing distance, the eye blends these into a single visible color.
@@ -456,6 +466,8 @@ By the end of this lesson, the learner should be able to:
 - muted
 - screen-first decision
 - palette balance
+
+**Adds to glossary:** palette balance, screen-first decision, surface color *(accent color, muted, neutral, vivid added by earlier lessons)*
 
 ## Lesson explanation outline
 - Designers rarely work with single colors in isolation.
