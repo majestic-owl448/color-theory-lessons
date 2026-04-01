@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import type { LessonConfig } from '../../types/lesson.ts';
 import { useAppDispatch } from '../../state/app-context.tsx';
 import { lessonRegistry } from '../../lessons/lesson-registry.ts';
+import { units } from '../../data/units.ts';
 import { ToolRenderer } from '../tools/ToolRenderer.tsx';
 import styles from './LessonPlayer.module.css';
 
@@ -252,6 +253,12 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
           const idx = lessonRegistry.findIndex((l) => l.id === lesson.id);
           const nextLesson = idx >= 0 ? lessonRegistry[idx + 1] : undefined;
           const isSameUnit = nextLesson?.unitId === lesson.unitId;
+          const currentUnit = units.find((u) => u.id === lesson.unitId);
+          const isLastInUnit = !isSameUnit;
+          const milestoneLink =
+            isLastInUnit && currentUnit?.milestoneId
+              ? `/milestone/${currentUnit.milestoneId}`
+              : null;
           return (
             <div className={styles.complete}>
               <span className={styles.completeBadge}>lesson complete</span>
@@ -261,9 +268,17 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
                 questions correct.
               </p>
               <div className={styles.completeActions}>
-                {nextLesson ? (
+                {isSameUnit && nextLesson ? (
                   <Link to={`/lesson/${nextLesson.id}`} className={styles.btnPrimary}>
-                    {isSameUnit ? 'next lesson →' : 'next unit →'}
+                    next lesson →
+                  </Link>
+                ) : milestoneLink ? (
+                  <Link to={milestoneLink} className={styles.btnPrimary}>
+                    start milestone →
+                  </Link>
+                ) : nextLesson ? (
+                  <Link to={`/lesson/${nextLesson.id}`} className={styles.btnPrimary}>
+                    next unit →
                   </Link>
                 ) : null}
                 <button className={styles.btnSecondary} onClick={handleRedo}>

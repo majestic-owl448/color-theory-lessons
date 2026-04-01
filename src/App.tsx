@@ -3,6 +3,7 @@ import { AppProvider } from './state/app-context.tsx';
 import { AppShell } from './components/layout/AppShell.tsx';
 import { HomePage } from './pages/HomePage.tsx';
 import { LessonPage } from './pages/LessonPage.tsx';
+import { MilestonePage } from './pages/MilestonePage.tsx';
 import { PlaceholderPage } from './components/shared/PlaceholderPage.tsx';
 
 export function App() {
@@ -13,6 +14,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/lesson/:lessonId" element={<LessonPage />} />
+            <Route path="/milestone/:milestoneId" element={<MilestonePage />} />
             <Route
               path="/sandbox"
               element={

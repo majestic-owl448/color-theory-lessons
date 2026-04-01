@@ -1,0 +1,369 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  min-height: 60vh;
+}
+
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: 340px 1fr;
+    align-items: start;
+  }
+}
+
+/* ── Instruction panel ───────────────────────────────────────────────── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  background-color: var(--secondary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+}
+
+.milestoneMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.unitLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.milestoneTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* ── Part progress dots ──────────────────────────────────────────────── */
+.progress {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.progressDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--border);
+  transition: background-color 0.2s ease;
+}
+
+.progressDot.done {
+  background-color: var(--green);
+}
+
+.progressDot.current {
+  background-color: var(--yellow);
+}
+
+/* ── Question meta ───────────────────────────────────────────────────── */
+.stepContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.questionMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.partLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.questionCounter {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.questionPrompt {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--primary-foreground);
+}
+
+/* ── Choices ─────────────────────────────────────────────────────────── */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: 0.65rem var(--spacing-md);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--primary-foreground);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  width: 100%;
+}
+
+.choice:hover:not(.chosen):not(.correct):not(.incorrect) {
+  border-color: var(--secondary-foreground);
+  background-color: var(--gray-75);
+}
+
+.choice.chosen {
+  border-color: var(--yellow);
+  background-color: color-mix(in srgb, var(--yellow) 10%, var(--surface));
+}
+
+.choice.correct {
+  border-color: var(--green);
+  background-color: color-mix(in srgb, var(--green) 12%, var(--surface));
+}
+
+.choice.incorrect {
+  border-color: var(--red);
+  background-color: color-mix(in srgb, var(--red) 12%, var(--surface));
+}
+
+.choiceKey {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.explanation {
+  font-size: 0.88rem;
+  color: var(--secondary-foreground);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--primary-background);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--border);
+  line-height: 1.5;
+}
+
+/* ── Actions ─────────────────────────────────────────────────────────── */
+.stepActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: auto;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1.25rem;
+  background-color: var(--yellow);
+  color: var(--gray-90);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btnPrimary:hover {
+  opacity: 0.88;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: var(--secondary-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btnSecondary:hover {
+  border-color: var(--secondary-foreground);
+  color: var(--primary-foreground);
+}
+
+/* ── Part summary ─────────────────────────────────────────────────────── */
+.partSummary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.partSummaryBadge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: color-mix(in srgb, var(--blue) 15%, var(--surface));
+  border: 1px solid var(--blue);
+  color: var(--blue);
+  border-radius: var(--radius-sm);
+}
+
+.partSummaryTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.partSummaryScore {
+  color: var(--secondary-foreground);
+}
+
+/* ── Milestone complete ───────────────────────────────────────────────── */
+.complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.completeBadge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.completeBadgePassed {
+  background-color: color-mix(in srgb, var(--green) 15%, var(--surface));
+  border: 1px solid var(--green);
+  color: var(--green);
+}
+
+.completeBadgeFailed {
+  background-color: color-mix(in srgb, var(--yellow) 15%, var(--surface));
+  border: 1px solid var(--yellow);
+  color: var(--yellow);
+}
+
+.completeTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.completeScore {
+  color: var(--secondary-foreground);
+  max-width: 36ch;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.completeActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Right context panel ──────────────────────────────────────────────── */
+.contextPanel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Generic context card (for parts without a dedicated visual) */
+.contextCard {
+  background-color: var(--secondary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.contextCardLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.contextCardTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.contextCardDesc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--secondary-foreground);
+}
+
+/* ── Swatch panel (Unit 2 Part 2) ─────────────────────────────────────── */
+.swatchPanel {
+  background-color: var(--secondary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.swatchLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  align-self: flex-start;
+}
+
+.swatch {
+  width: 100%;
+  height: 140px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.swatchHex {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--primary-foreground);
+  letter-spacing: 0.08em;
+}
+
+.swatchHint {
+  font-size: 0.88rem;
+  color: var(--secondary-foreground);
+  text-align: center;
+  max-width: 32ch;
+  line-height: 1.5;
+}
