@@ -177,6 +177,8 @@ By the end of this lesson, the learner should be able to:
 - shorthand HEX
 - neutral
 
+**Adds to glossary:** channel, HEX, RGBA, shorthand HEX *(RGB added by U2-L1; blue channel, green channel, red channel added by U2-L2; neutral added by U1-L4)*
+
 ## Lesson explanation outline
 - RGB expresses color through red, green, and blue channel values.
 - This aligns closely with additive screen color from Unit 2.
@@ -271,6 +273,8 @@ By the end of this lesson, the learner should be able to:
 - tonal variation
 - color family
 
+**Adds to glossary:** alpha, color family, HSL, HSLA, tonal variation *(hue, lightness, saturation added by U1-L2)*
+
 ## Lesson explanation outline
 - Unit 1 already introduced hue, saturation, and lightness as visible properties.
 - HSL turns those same properties into a practical editing model.
@@ -361,6 +365,8 @@ By the end of this lesson, the learner should be able to:
 - layered interface
 - scrim
 
+**Adds to glossary:** blend perception, layered interface, opacity, overlay, scrim, transparency *(alpha added by U3-L3)*
+
 ## Lesson explanation outline
 - A fully opaque color blocks what is underneath.
 - A semi-transparent color mixes visually with the background beneath it.
@@ -443,6 +449,8 @@ By the end of this lesson, the learner should be able to:
 - accent color
 - semantic color
 - theme
+
+**Adds to glossary:** border color, gradient, linear gradient, radial gradient, semantic color, text color, theme *(accent color added by U1-L5; surface color added by U2-L6)*
 
 ## Lesson explanation outline
 - A product uses colors in roles: text, surfaces, borders, interactive accents, success states, warning states, and more.
@@ -533,6 +541,8 @@ By the end of this lesson, the learner should be able to:
 - role token
 - theme propagation
 
+**Adds to glossary:** alias token, design token, role token, theme propagation, variable *(token added by U3-L1)*
+
 ## Lesson explanation outline
 - Tokens help teams manage color at scale.
 - Instead of writing the same raw value everywhere, the system can define roles such as primary text or interactive accent.
@@ -619,6 +629,8 @@ By the end of this lesson, the learner should be able to:
 - SVG
 - WebGL
 - contrast checker
+
+**Adds to glossary:** Canvas, color space, contrast checker, Display P3, sRGB, SVG, WebGL *(color gamut added by U2-L4)*
 
 ## Lesson explanation outline
 - sRGB is the practical default for most web interfaces and the safe baseline.

@@ -72,6 +72,8 @@ By the end of this lesson, the learner should be able to:
 - state indicator
 - visual affordance
 
+**Adds to glossary:** accessibility, color-only meaning, state indicator, usability, visual affordance *(contrast added by U1-L3; readability added by U1-L1)*
+
 ## Lesson explanation outline
 - Many interface tasks depend on being able to read text, identify controls, and distinguish states.
 - Poor color choices can break these tasks even when the overall design looks attractive.
@@ -159,6 +161,8 @@ By the end of this lesson, the learner should be able to:
 - contrast ratio
 - pass
 - fail
+
+**Adds to glossary:** contrast ratio, fail, large text, normal text, pass, text contrast *(background, foreground added by U1-L3)*
 
 ## Lesson explanation outline
 - For most practical beginner workflows, the learner should remember three common thresholds:
@@ -254,6 +258,8 @@ By the end of this lesson, the learner should be able to:
 - icon contrast
 - state visibility
 
+**Adds to glossary:** boundary, focus indicator, graphical object, icon contrast, non-text contrast, outline, state visibility, user interface component
+
 ## Lesson explanation outline
 - Accessibility failures often happen in subtle UI elements rather than main text.
 - Common examples include low-contrast input borders, invisible toggle states, faint icons, and weak focus outlines.
@@ -346,6 +352,8 @@ By the end of this lesson, the learner should be able to:
 - status message
 - validation state
 
+**Adds to glossary:** redundant cue, status message, validation state *(icon, label, pattern, semantic state, use of color added by U4-L4)*
+
 ## Lesson explanation outline
 - A red error message and a green success message may seem obvious to one designer but not to all users.
 - Problems worsen when no label, icon, border change, or message text supports the color.
@@ -435,6 +443,8 @@ By the end of this lesson, the learner should be able to:
 - context
 - priority element
 - verification
+
+**Adds to glossary:** audit, checker, context, priority element, verification *(pass, fail added by U5-L2; simulation added by U4-L2; workflow added by U4-L6)*
 
 ## Lesson explanation outline
 - A good beginner workflow should feel manageable, not overwhelming.
@@ -532,6 +542,8 @@ By the end of this lesson, the learner should be able to:
 - legend
 - dashboard
 - pattern library
+
+**Adds to glossary:** alert, chart palette, dashboard, form validation, inline error, link distinction, notification, pattern library *(legend added by U4-L3)*
 
 ## Lesson explanation outline
 - Common interface accessibility problems often appear in repeated patterns.

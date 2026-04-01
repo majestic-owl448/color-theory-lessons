@@ -70,6 +70,8 @@ By the end of this lesson, the learner should be able to:
 - visual system
 - color vision
 
+**Adds to glossary:** color perception, color vision, cone, optic nerve, retina, rod, visual system
+
 ## Lesson explanation outline
 - A digital screen emits light, but the human eye and brain interpret that light.
 - The retina contains rods and cones.
@@ -156,6 +158,8 @@ By the end of this lesson, the learner should be able to:
 - deficiency
 - simulation
 
+**Adds to glossary:** achromatopsia, color vision deficiency, deuteranomaly, deuteranopia, protanomaly, protanopia, simulation, tritanomaly, tritanopia
+
 ## Lesson explanation outline
 - Color vision deficiency is a broad term for differences in how some colors are distinguished.
 - The most commonly discussed cases involve red-green distinctions, but that is not the whole story.
@@ -241,6 +245,8 @@ By the end of this lesson, the learner should be able to:
 - legend
 - redundancy
 - backup cue
+
+**Adds to glossary:** backup cue, chart key, deutan, legend, protan, redundancy, tritan *(achromatopsia added by U4-L2; status color added by U1-L1)*
 
 ## Lesson explanation outline
 - The unit should explain categories using plain language and real examples.
@@ -332,6 +338,8 @@ By the end of this lesson, the learner should be able to:
 - selected state
 - semantic state
 
+**Adds to glossary:** icon, label, pattern, selected state, semantic state, use of color *(backup cue, redundancy added by U4-L3)*
+
 ## Lesson explanation outline
 - A common design mistake is to use hue as the only carrier of meaning.
 - Examples include:
@@ -419,6 +427,8 @@ By the end of this lesson, the learner should be able to:
 - annotation
 - pattern fill
 - validation feedback
+
+**Adds to glossary:** annotation, chart series, direct label, error state, info state, pattern fill, success state, validation feedback, warning state *(semantic color added by U3-L5)*
 
 ## Lesson explanation outline
 - Beginners often learn color by thinking of fixed semantic hues: red means error, green means success, yellow means warning.
@@ -510,6 +520,8 @@ By the end of this lesson, the learner should be able to:
 - inclusive design
 - user test
 - robustness
+
+**Adds to glossary:** approximation, inclusive design, review pass, robustness, task check, user test, workflow *(simulation added by U4-L2)*
 
 ## Lesson explanation outline
 - A simulation tool can help a designer see likely problem areas.

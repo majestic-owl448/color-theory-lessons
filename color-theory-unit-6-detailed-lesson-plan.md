@@ -74,6 +74,8 @@ By the end of this lesson, the learner should be able to:
 - hierarchy
 - consistency
 
+**Adds to glossary:** color system, consistency, semantic role *(accent color added by U1-L5; hierarchy added by U1-L5; surface color added by U2-L6; token added by U3-L1)*
+
 ## Lesson explanation outline
 - Designers often begin by choosing colors visually, but products quickly become messy when every screen invents its own palette.
 - A color system assigns jobs to colors. For example, one color may be used for primary actions, another for critical errors, another for subdued borders.
@@ -165,6 +167,8 @@ By the end of this lesson, the learner should be able to:
 - hover
 - focus
 - disabled
+
+**Adds to glossary:** component state, disabled, elevated surface, hover, primary text, secondary text, semantic status *(accent color added by U1-L5; focus indicator added by U5-L3; semantic role added by U6-L1; surface color added by U2-L6)*
 
 ## Lesson explanation outline
 - A minimal UI system should usually account for at least these groups:
@@ -259,6 +263,8 @@ By the end of this lesson, the learner should be able to:
 - neutral system
 - accent overuse
 
+**Adds to glossary:** accent overuse, brand color, supporting palette, tonal scale *(emphasis added by U1-L1; hierarchy added by U1-L5; neutral added by U1-L4)*
+
 ## Lesson explanation outline
 - Many beginners want to build an interface entirely from a favorite brand hue.
 - In practice, products need neutrals, tonal steps, and semantic roles that support reading and interaction.
@@ -341,6 +347,8 @@ By the end of this lesson, the learner should be able to:
 - surface depth
 - inverse text
 - mode adaptation
+
+**Adds to glossary:** dark mode, inverse text, light mode, mode adaptation, surface depth, theme pairing, tonal separation *(dark interface added by U2-L5)*
 
 ## Lesson explanation outline
 - Dark mode is not a one-click inversion of a light theme.
@@ -433,6 +441,8 @@ By the end of this lesson, the learner should be able to:
 - visual grouping
 - chart contrast
 
+**Adds to glossary:** categorical palette, chart contrast, data emphasis, encoding, sequential palette, visual grouping *(contrast added by U1-L3; legend added by U4-L3)*
+
 ## Lesson explanation outline
 - Interface colors and chart colors do related but different jobs.
 - In charts, color often represents groups, ranges, or emphasis.
@@ -516,6 +526,8 @@ By the end of this lesson, the learner should be able to:
 - system review
 - stress test
 - consistency audit
+
+**Adds to glossary:** consistency audit, context effect, simultaneous contrast, stress test, system review, wide-gamut display *(color gamut added by U2-L4)*
 
 ## Lesson explanation outline
 - A color swatch on a blank white page may look different on a dark card, near a strong accent, or on a vivid modern display.
