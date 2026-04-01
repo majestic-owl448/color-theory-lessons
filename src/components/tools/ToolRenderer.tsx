@@ -10,6 +10,7 @@ import { LogicFixerTool } from './LogicFixerTool.tsx';
 import { MismatchExplainerTool } from './MismatchExplainerTool.tsx';
 import { BackgroundShiftTool } from './BackgroundShiftTool.tsx';
 import { InterfaceTunerTool } from './InterfaceTunerTool.tsx';
+import { FormatRevealTool } from './FormatRevealTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -63,6 +64,8 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
       return <InterfaceTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     case 'format-reveal':
+      return <FormatRevealTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
     case 'hex-rgb-editor':
     case 'hsl-playground':
     case 'alpha-layer':

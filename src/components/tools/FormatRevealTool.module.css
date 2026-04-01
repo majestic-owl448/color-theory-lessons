@@ -1,0 +1,273 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+}
+
+@media (min-width: 640px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* ── Mockup side ─────────────────────────────────────────────────────── */
+.mockupWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.instruction {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mockup {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  user-select: none;
+}
+
+/* Clickable elements get a ring on selected/visited */
+.selected {
+  outline: 2px solid var(--yellow) !important;
+  outline-offset: -2px;
+  z-index: 1;
+  position: relative;
+}
+
+.visited {
+  outline: 1px solid var(--green) !important;
+  outline-offset: -1px;
+}
+
+/* When both visited and selected, selected wins */
+.selected.visited {
+  outline: 2px solid var(--yellow) !important;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────────────── */
+.nav {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: opacity 0.1s ease;
+}
+
+.nav:hover {
+  opacity: 0.92;
+}
+
+.navText {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 2px;
+  padding: 1px 3px;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+.hero {
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.heroTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e293b;
+  pointer-events: none;
+}
+
+.cta {
+  align-self: flex-start;
+  padding: 0.35rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+.card {
+  padding: 0.65rem 1rem;
+  border-top: 1px solid #cbd5e1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cardBorder {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #94a3b8;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 3px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.accent {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+  padding: 1px 3px;
+}
+
+/* ── Legend ───────────────────────────────────────────────────────────── */
+.legend {
+  padding: 0.4rem 1rem;
+  background-color: var(--primary-background);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 1rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Format panel ─────────────────────────────────────────────────────── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  background-color: var(--primary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  min-height: 280px;
+}
+
+.swatchRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.swatchMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.elementLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--primary-foreground);
+  font-weight: 600;
+}
+
+.elementDesc {
+  font-size: 0.8rem;
+  color: var(--secondary-foreground);
+  line-height: 1.45;
+}
+
+/* Format blocks */
+.formats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.formatBlock {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--secondary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.formatName {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.formatValue {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--yellow);
+  letter-spacing: 0.03em;
+}
+
+.formatNote {
+  font-size: 0.75rem;
+  color: var(--secondary-foreground);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.formatFooter {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: center;
+  border-top: 1px solid var(--border);
+  padding-top: var(--spacing-sm);
+}
+
+/* Empty state */
+.emptyPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  text-align: center;
+  padding: var(--spacing-xl);
+}
+
+.emptyIcon {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  color: var(--muted);
+}
+
+.emptyText {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 26ch;
+}

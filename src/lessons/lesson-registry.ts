@@ -11,6 +11,7 @@ import { lesson2_3 } from './unit-2/lesson-2-3.ts';
 import { lesson2_4 } from './unit-2/lesson-2-4.ts';
 import { lesson2_5 } from './unit-2/lesson-2-5.ts';
 import { lesson2_6 } from './unit-2/lesson-2-6.ts';
+import { lesson3_1 } from './unit-3/lesson-3-1.ts';
 
 export const lessonRegistry: LessonConfig[] = [
   lesson1_1,
@@ -25,6 +26,7 @@ export const lessonRegistry: LessonConfig[] = [
   lesson2_4,
   lesson2_5,
   lesson2_6,
+  lesson3_1,
 ];
 
 export function getLessonById(id: string): LessonConfig | undefined {
