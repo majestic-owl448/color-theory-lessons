@@ -81,4 +81,11 @@ export const lesson1_4: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Warm colors (reds, oranges, yellows) tend to feel energetic, active, or urgent.',
+    'Cool colors (blues, greens, purples) tend to feel calm, reassuring, or receding.',
+    'Temperature affects perceived emotional tone and can influence brand personality.',
+    'Neutrals can lean warm (beige, warm gray) or cool (blue-gray) — they are not temperature-neutral by default.',
+    'Temperature tendencies are starting points, not fixed rules; context and pairing always shape the final effect.',
+  ],
 };

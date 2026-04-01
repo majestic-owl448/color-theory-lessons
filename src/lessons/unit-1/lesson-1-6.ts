@@ -82,4 +82,11 @@ export const lesson1_6: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Analogous colors sit adjacent on the color wheel and feel naturally harmonious.',
+    'Complementary colors are opposite on the wheel and create strong contrast when paired.',
+    'Triadic colors are three hues evenly spaced at 120° intervals, producing vibrant and balanced palettes.',
+    'Harmony comes from intentional relationships between colors — not from luck or random selection.',
+    'Palette balance means no single color dominates unintentionally; variety and repetition are both tools for balance.',
+  ],
 };

@@ -80,4 +80,11 @@ export const lesson2_6: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Screen-first thinking means choosing colors with backlit display rendering as the primary context.',
+    'Surface colors set the base against which all other colors in the UI are perceived.',
+    'Palette balance means no single color dominates unintentionally — tested in context, not in isolation.',
+    'A color that looks balanced in a swatch may look dominant or invisible when placed in actual UI.',
+    'Screen color decisions should always be validated on the target screen, not assumed from static design files.',
+  ],
 };

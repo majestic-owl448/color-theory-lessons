@@ -202,4 +202,11 @@ export const lesson3_2: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'RGB describes color as three channel values — red, green, blue — each from 0 (none) to 255 (full).',
+    'Equal channel values always produce a neutral: rgb(0,0,0) is black, rgb(255,255,255) is white, anything in between with equal values is a gray.',
+    'HEX encodes the same three channels as base-16 pairs: the first two digits are red, next two green, last two blue.',
+    'Shorthand HEX (#ABC) is valid only when each pair in the full six-character form is a repeated digit — #ABC expands to #AABBCC.',
+    'RGBA adds a fourth value (0–1) for opacity; rgba(30, 64, 175, 0.5) is that same blue at 50% transparency.',
+  ],
 };

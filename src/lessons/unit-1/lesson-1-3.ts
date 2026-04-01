@@ -80,4 +80,11 @@ export const lesson1_3: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Contrast is the perceptible difference between foreground and background — primarily driven by lightness difference.',
+    'Low contrast degrades readability, especially for users with low vision or in bright ambient light.',
+    'Contrast is a property of a color pair, not a single color — a color can be high-contrast on one background and invisible on another.',
+    'Both light-on-dark and dark-on-light can achieve good readability when lightness difference is sufficient.',
+    'Foreground includes text, icons, and any meaningful graphic that must be distinguishable from its background.',
+  ],
 };

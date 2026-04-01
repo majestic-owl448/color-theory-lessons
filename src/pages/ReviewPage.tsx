@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { lessonRegistry } from '../lessons/lesson-registry.ts';
 import { useAppState } from '../state/app-context.tsx';
 import styles from './ReviewPage.module.css';
@@ -39,8 +38,7 @@ const TAG_LABELS: Record<string, string> = {
 interface ReviewEntry {
   lessonId: string;
   title: string;
-  learningGoal: string;
-  unitId: string;
+  keyPoints: string[];
 }
 
 export function ReviewPage() {
@@ -51,24 +49,22 @@ export function ReviewPage() {
 
     for (const lesson of lessonRegistry) {
       if (!completedLessons.includes(lesson.id)) continue;
+      if (!lesson.keyPoints || lesson.keyPoints.length === 0) continue;
 
       const entry: ReviewEntry = {
         lessonId: lesson.id,
         title: lesson.title,
-        learningGoal: lesson.learningGoal,
-        unitId: lesson.unitId,
+        keyPoints: lesson.keyPoints,
       };
 
       for (const tag of lesson.reviewTags) {
         if (!map.has(tag)) map.set(tag, []);
-        // Avoid duplicates within the same tag group
         if (!map.get(tag)!.some((e) => e.lessonId === lesson.id)) {
           map.get(tag)!.push(entry);
         }
       }
     }
 
-    // Sort tags alphabetically, using human labels where available
     return Array.from(map.entries()).sort(([a], [b]) => {
       const labelA = TAG_LABELS[a] ?? a;
       const labelB = TAG_LABELS[b] ?? b;
@@ -80,7 +76,7 @@ export function ReviewPage() {
     <div className={styles.container}>
       <h1 className={styles.heading}>review</h1>
       <p className={styles.subtitle}>
-        Key learning goals from completed lessons, grouped by topic.
+        Key facts from completed lessons, grouped by topic.
       </p>
 
       {topicMap.length === 0 ? (
@@ -94,17 +90,18 @@ export function ReviewPage() {
               <h2 className={styles.topicHeading}>
                 {TAG_LABELS[tag] ?? tag}
               </h2>
-              <ul className={styles.entryList}>
+              <div className={styles.entryList}>
                 {entries.map((entry) => (
-                  <li key={`${tag}-${entry.lessonId}`} className={styles.entry}>
+                  <div key={`${tag}-${entry.lessonId}`} className={styles.entry}>
                     <span className={styles.entryTitle}>{entry.title}</span>
-                    <span className={styles.entryGoal}>{entry.learningGoal}</span>
-                    <Link to={`/lesson/${entry.lessonId}`} className={styles.entryLink}>
-                      redo →
-                    </Link>
-                  </li>
+                    <ul className={styles.pointList}>
+                      {entry.keyPoints.map((point, i) => (
+                        <li key={i} className={styles.point}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </section>
           ))}
         </div>

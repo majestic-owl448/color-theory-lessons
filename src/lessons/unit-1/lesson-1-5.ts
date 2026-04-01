@@ -82,4 +82,11 @@ export const lesson1_5: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Visual hierarchy means the most important element receives the most visual weight; everything else is subordinate.',
+    'Primary actions get the most prominent color; secondary actions are quieter; tertiary actions recede further.',
+    'A focal point is created by giving one element a distinctly different color from its surroundings.',
+    'Accent colors lose their impact if overused — restraint is what makes an accent read as emphasis.',
+    'Hierarchy works not because some colors are inherently louder, but because they stand out relative to the rest.',
+  ],
 };

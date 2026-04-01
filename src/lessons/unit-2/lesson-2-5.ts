@@ -82,4 +82,11 @@ export const lesson2_5: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Dark interfaces use near-black or very dark surfaces as primary backgrounds.',
+    'A dark background amplifies perceived saturation — colors that look moderate on white can appear intense on dark.',
+    'Luminous colors (light, warm, or vivid values on very dark surfaces) can cause eye strain and feel harsh.',
+    'Color choices made on a light canvas may need significant adjustment before they work on a dark interface.',
+    'Testing on the actual dark background is the only reliable way to evaluate colors for dark mode.',
+  ],
 };

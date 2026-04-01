@@ -82,4 +82,11 @@ export const lesson1_2: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Hue is the color family — red, orange, blue, green. It is measured as a degree on a 360° wheel.',
+    'Saturation is intensity: fully saturated colors are vivid; fully desaturated colors are neutral grays.',
+    'Lightness is brightness: 0% is black, 100% is white, 50% with full saturation is the purest form of a hue.',
+    'Tints are lighter versions of a hue (adding white); shades are darker versions (adding black).',
+    'Each HSL axis can be adjusted independently — changing one does not automatically change the others.',
+  ],
 };

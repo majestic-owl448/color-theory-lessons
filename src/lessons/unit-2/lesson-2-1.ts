@@ -81,4 +81,11 @@ export const lesson2_1: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Screens use additive color: red, green, and blue light are combined to make colors.',
+    'Adding all three RGB primaries at full intensity produces white — the presence of all light.',
+    'Physical materials use subtractive color: pigments absorb (subtract) wavelengths and reflect the rest.',
+    'Mixing all subtractive primaries fully produces black — all wavelengths absorbed.',
+    'The two models are opposites: more light is added on screens; more wavelengths are removed in pigments.',
+  ],
 };

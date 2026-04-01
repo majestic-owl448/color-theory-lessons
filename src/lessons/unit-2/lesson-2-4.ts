@@ -86,4 +86,11 @@ export const lesson2_4: LessonConfig = {
       ],
     },
   ],
+  keyPoints: [
+    'Color gamut is the full range of colors a device or medium can reproduce.',
+    'Screens generally have a wider gamut than print — some screen colors simply cannot be reproduced in ink.',
+    'Pigments absorb certain wavelengths; the wavelengths not absorbed are what the eye perceives as color.',
+    'Subtractive primaries (cyan, magenta, yellow) each absorb one third of white light when fully applied.',
+    'Pantone is a standardized physical color reference system used to communicate exact color intent across screens and print, where screen preview cannot be trusted.',
+  ],
 };

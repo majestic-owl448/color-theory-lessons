@@ -21,6 +21,7 @@ export interface LessonConfig {
   quizItems: QuizItem[];
   glossaryTerms: string[];
   reviewTags: string[];
+  keyPoints?: string[];
 }
 
 export type InteractionType =
