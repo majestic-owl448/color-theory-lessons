@@ -32,7 +32,12 @@ export const lesson2_4: LessonConfig = {
       text: 'For screen-first designers, this matters whenever work crosses into physical materials — packaging, printed cards, branded merchandise, signage. The difference is not a printing error. It is a fundamental difference between two color models.',
     },
     {
-      id: 's5',
+      id: 's5-pantone',
+      text: 'Because screens vary in calibration and gamut, no screen preview is a reliable reference for what ink on paper will look like. Physical color standards like Pantone exist to solve this: a numbered swatch looks the same regardless of which screen was used to design it, giving everyone in the production chain a shared ground truth.',
+      highlights: ['Pantone'],
+    },
+    {
+      id: 's6',
       text: 'The comparison on the right shows the same color as a screen swatch and an approximation of how it might appear in print. In the challenge, you will identify the correct reasons why the two versions differ.',
     },
   ],
