@@ -22,12 +22,32 @@ By the end of Unit 3, the learner should be able to:
 - understand why color in code still needs accessibility checking and visual testing
 - build a small UI palette using token-style thinking
 
+## Implementation decisions (agreed before build)
+
+| Lesson | Challenge tool | interactionType |
+|--------|---------------|-----------------|
+| L1 | Clickable UI card: click an element to reveal its HEX, RGB, and HSL in a side panel | `format-reveal` |
+| L2 | HEX + RGB dual editor — edit RGB sliders and see HEX update, or type HEX and see channels update | `hex-rgb-editor` |
+| L3 | HSL playground — sliders for hue, saturation, lightness; shows HEX, RGB, and HSL simultaneously | `hsl-playground` |
+| L4 | Layer stack simulator — foreground color with alpha over selectable backgrounds | `alpha-layer` |
+| L5 | Theme sandbox with token-like roles including gradient editor (required, not optional) | `theme-sandbox` |
+| L6 | Token map — change a base value and see all roles update; includes sort activity | `token-map` |
+| L7 | Color space and context awareness lab — sRGB vs P3 preview, CSS/SVG/Canvas panel, sort activity | `color-space-lab` |
+
+**L3 HSL tool:** renders all three formats (HSL, HEX, RGB) simultaneously. New tool — does not reuse the Unit 1 `HSLSliderTool`.
+**L5 gradient editor:** required, not optional. Applies to a hero or chart card role in the theme sandbox.
+**Original L6 is split into L6 (tokens) and L7 (color spaces + implementation contexts).** Unit 3 therefore has 7 lessons.
+**Milestone:** has its own route (`/milestone/unit-3`). Not folded into L7.
+
+---
+
 ## Unit structure
-- **Target lesson count:** 6 lessons
+- **Target lesson count:** 7 lessons
 - **Estimated lesson length:** 12 to 18 minutes each
-- **Estimated unit duration:** 2 to 2.5 hours including milestone
+- **Estimated unit duration:** 2.5 to 3 hours including milestone
 - **Unit milestone:** Build a UI Palette in Code
 - **Milestone badge/title:** UI Color Coder
+- **Milestone route:** `/milestone/unit-3` (own route, not folded into last lesson)
 
 ## Pedagogical approach
 This unit should teach through translation and manipulation:
@@ -263,8 +283,9 @@ By the end of this lesson, the learner should be able to:
 ## Primary interaction
 **HSL playground**
 - The learner manipulates hue, saturation, and lightness sliders.
-- The app shows the same color in HSL, HEX, and RGB simultaneously.
-- Optional comparison mode lets the learner try to make the same change in RGB and HSL to see which feels more direct.
+- The app shows the same color in HSL, HEX, and RGB simultaneously — all three always visible, not toggled.
+- A comparison panel lets the learner observe the same change in RGB and HSL side by side to see which is more direct for each task.
+- This is a new tool (`hsl-playground`); it does not reuse the Unit 1 `HSLSliderTool`.
 
 ## Guided activity
 **Pick the better tool**
@@ -440,7 +461,7 @@ By the end of this lesson, the learner should be able to:
   - success
   - warning
   - error
-- An optional gradient editor applies to a hero panel or chart card.
+- A gradient editor applies to a hero panel or chart card. This is required, not optional.
 
 ## Guided activity
 **Value versus role**
@@ -481,26 +502,106 @@ The learner can explain role-based color usage and build a simple, coherent them
 
 ---
 
-# Lesson 6: Design Tokens, Color Spaces, and Practical Implementation Awareness
+# Lesson 6: Design Tokens and Role-Based Color Systems
 
 ## Lesson purpose
-Introduce learners to token-style color systems and give them lightweight awareness of sRGB, Display P3, Canvas, SVG, WebGL, and code-based contrast workflows.
+Introduce learners to token-style color systems and the idea that color roles are separate from raw values.
 
 ## Duration
-16 to 18 minutes
+14 to 16 minutes
 
 ## Learning objectives
 By the end of this lesson, the learner should be able to:
 - explain what a design token does at a practical level
 - distinguish a token name from its current assigned value
+- explain why role-based naming makes themes and updates easier to manage
+- demonstrate how changing one base value propagates through multiple interface roles
+
+## Key concepts
+- tokens separate meaning from raw values
+- a token can change value while keeping the same product role
+- role names describe usage, not appearance
+- token systems make dark mode, brand changes, and scaling easier
+- alias tokens and role tokens serve different levels of abstraction
+
+## Key terms
+- design token
+- variable
+- alias token
+- role token
+- theme propagation
+
+## Lesson explanation outline
+- Tokens help teams manage color at scale.
+- Instead of writing the same raw value everywhere, the system can define roles such as primary text or interactive accent.
+- This makes updates easier, especially for dark mode and theme changes.
+- A token name describes the role; the value can be swapped without breaking the naming system.
+- Alias tokens point to a base value; role tokens assign meaning to an alias.
+
+## Primary interaction
+**Token map**
+- A simple token file appears on one side with a small interface preview on the other.
+- The learner changes a base value and sees all roles that reference it update across the interface.
+- A sort activity asks the learner to classify items as raw value, alias token, or role token.
+
+## Guided activity
+**Meaning versus value**
+The learner sorts items into two buckets: raw value or semantic role:
+- `#0B57D0`
+- `--color-text-primary`
+- `rgb(34, 34, 34)`
+- `--color-success-bg`
+- `--color-border`
+- `#1a1a1a`
+
+## Practice task
+**Make the system flexible**
+The learner starts with hard-coded values and converts them into a small token structure for:
+- text
+- surface
+- border
+- primary accent
+- success state
+- error state
+Then they swap to a dark theme and observe how token changes propagate.
+
+## Quiz/check for understanding
+- What problem do design tokens help solve?
+- What stays the same when a token value changes but the token's role does not?
+- Which is more scalable: storing one-off button colors on every screen, or defining shared theme roles?
+- True or false: A token role name describes how a color is used, not what it looks like.
+
+## Success criteria
+The learner can explain tokens, use role-based naming correctly, and demonstrate how token propagation works.
+
+## Common mistakes to anticipate
+- thinking tokens are only for large engineering teams
+- confusing the role name with the actual visible value
+- creating tokens without clear usage roles (token for every shade rather than every purpose)
+
+## Suggested feedback lines
+- "Correct. A token stores meaning in a reusable way, even when the underlying value changes."
+- "Try naming the token by what it does, not what it looks like."
+- "Good. One value change updated the whole system because your roles point to the same base."
+
+---
+
+# Lesson 7: Color Spaces and Practical Implementation Awareness
+
+## Lesson purpose
+Give learners lightweight awareness of sRGB, Display P3, Canvas, SVG, WebGL, and why code-defined color still needs accessibility checking and visual testing.
+
+## Duration
+13 to 16 minutes
+
+## Learning objectives
+By the end of this lesson, the learner should be able to:
 - describe sRGB and Display P3 in simple product-oriented terms
 - explain why colors may appear differently across devices or contexts
 - recognize that browser graphics contexts such as Canvas, SVG, and WebGL still rely on explicit digital color values
 - understand that code-defined color still needs accessibility checking and visual testing
 
 ## Key concepts
-- tokens separate meaning from raw values
-- a token can change value while keeping the same product role
 - sRGB is the common baseline color space for most web work
 - Display P3 can represent a wider range of colors on supported displays
 - not every screen shows color the same way
@@ -508,33 +609,27 @@ By the end of this lesson, the learner should be able to:
 - contrast tools and visual testing remain necessary even with precise values
 
 ## Key terms
-- design token
-- variable
-- alias token
-- role token
 - sRGB
 - Display P3
 - color space
+- color gamut
 - Canvas
 - SVG
 - WebGL
 - contrast checker
 
 ## Lesson explanation outline
-- Tokens help teams manage color at scale.
-- Instead of writing the same raw value everywhere, the system can define roles such as primary text or interactive accent.
-- This makes updates easier, especially for dark mode and theme changes.
-- sRGB is the practical default for most web interfaces.
+- sRGB is the practical default for most web interfaces and the safe baseline.
 - Display P3 can show more vivid colors on supported devices, but support and consistency still matter.
-- Canvas, SVG, and WebGL may render graphics differently in form, but they still depend on explicit color values and testing.
+- Canvas, SVG, and WebGL each use explicit color values; the rendering context changes but the need for careful color decisions does not.
 - Accessibility does not happen automatically just because a value is valid code.
+- Wide-gamut colors that look vivid on one screen may clip or look different on another.
 
 ## Primary interaction
-**Token map and device awareness lab**
-- A simple token file appears on one side.
-- The learner changes a base value and sees multiple interface roles update.
-- A color-space preview simulates how a vivid accent might clip or simplify in a narrower display environment.
-- A small panel shows the same color applied in CSS UI, SVG icon, and Canvas chart example.
+**Color space and context awareness lab**
+- A swatch shows a vivid accent in sRGB and simulated Display P3 side by side.
+- A panel shows the same color applied in a CSS UI element, an SVG icon, and a Canvas chart bar.
+- The learner can adjust the accent and observe where clipping or inconsistency might occur.
 
 ## Guided activity
 **Meaning versus value versus context**
@@ -552,35 +647,30 @@ Examples:
 - SVG icon fill
 
 ## Practice task
-**Make the system flexible**
-The learner starts with hard-coded values and converts them into a small token structure for:
-- text
-- surface
-- border
-- primary accent
-- success state
-- error state
-Then they swap to a dark theme or alternate theme and observe how token changes propagate.
+**Where does this color go?**
+For each of three scenarios (CSS UI, SVG icon, Canvas chart), the learner identifies:
+- which format is appropriate
+- whether the color needs an accessibility check
+- whether a wide-gamut value is safe or risky in that context
 
 ## Quiz/check for understanding
-- What problem do design tokens help solve?
 - Which is the safer default baseline for most web design work: sRGB or Display P3?
 - True or false: If a color compiles in code, it is automatically accessible.
-- What stays the same when a token value changes but the token's role does not?
+- Why might a vivid Display P3 color look different on a device that only supports sRGB?
+- Does the rendering context (Canvas, SVG, HTML) change whether color choices need testing?
 
 ## Success criteria
-The learner can explain tokens, identify the practical default role of sRGB, and recognize that coded color choices still require testing and accessibility review.
+The learner can describe the practical role of sRGB as a baseline, explain why Display P3 requires caution, and recognize that all digital color contexts still need accessibility review.
 
 ## Common mistakes to anticipate
-- thinking tokens are only for large engineering teams
 - treating Display P3 as always better rather than context-dependent
 - assuming graphics contexts handle accessibility for the designer
-- confusing the role name with the actual visible value
+- thinking color choices are final once they render correctly in code
 
 ## Suggested feedback lines
-- "Correct. A token stores meaning in a reusable way, even when the underlying value changes."
 - "Good. Wider color capability is useful, but consistency across real devices still matters."
 - "A valid color value is not the same thing as a usable design decision."
+- "The format compiles correctly — but has it been checked for contrast and meaning?"
 
 ---
 
@@ -617,6 +707,8 @@ Require the learner to apply Unit 3 knowledge by building a small but coherent d
 
 ## Estimated time
 20 to 30 minutes
+
+**Route:** `/milestone/unit-3` — own dedicated route, not folded into the last lesson.
 
 ## Milestone scenario
 The learner is given a simple app screen, such as a task manager, onboarding page, or dashboard card layout. The current interface uses scattered hard-coded colors and inconsistent emphasis. The learner must rebuild it into a small, role-based color system suitable for implementation.
