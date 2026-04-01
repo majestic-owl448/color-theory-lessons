@@ -73,6 +73,11 @@ export const glossary: GlossaryTerm[] = [
     relatedLessons: ['u1-l2'],
   },
   {
+    term: 'HEX',
+    definition: 'A color format that encodes RGB channel values as a six-character base-16 string, e.g. #1E40AF. The first two characters are red, the middle two are green, and the last two are blue. Compact and widely used in CSS and design tools.',
+    relatedLessons: ['u3-l2'],
+  },
+  {
     term: 'legibility',
     definition: 'The ease with which individual characters or glyphs can be distinguished. Legibility is affected by typeface choice but is also degraded by low contrast between text and background.',
     relatedLessons: ['u1-l3'],
@@ -185,6 +190,11 @@ export const glossary: GlossaryTerm[] = [
     relatedLessons: ['u2-l2'],
   },
   {
+    term: 'channel',
+    definition: 'One of the three independent color components in the RGB model: red, green, and blue. Each channel is a number from 0 to 255, and the combination of all three channels produces a specific color.',
+    relatedLessons: ['u3-l2'],
+  },
+  {
     term: 'channel intensity',
     definition: 'The strength of a single color channel in an RGB value, expressed as a number from 0 (off) to 255 (full). Combining three channel intensities produces a specific screen color.',
     relatedLessons: ['u2-l2'],
@@ -245,6 +255,11 @@ export const glossary: GlossaryTerm[] = [
     relatedLessons: ['u2-l4'],
   },
   {
+    term: 'RGBA',
+    definition: 'An extension of RGB that adds a fourth value for the alpha (opacity) channel, e.g. rgba(30, 64, 175, 0.5). The alpha value ranges from 0 (fully transparent) to 1 (fully opaque).',
+    relatedLessons: ['u3-l2'],
+  },
+  {
     term: 'RGB',
     definition: 'A color model that describes colors using three channels: Red, Green, and Blue, each ranging from 0 to 255. RGB is the native model for screens and is the basis for HEX and HSL color notation.',
     relatedLessons: ['u2-l1', 'u2-l2'],
@@ -258,6 +273,11 @@ export const glossary: GlossaryTerm[] = [
     term: 'screen-first decision',
     definition: 'A color choice made with screen rendering as the primary context. Screen-first thinking considers how colors will look on backlit displays rather than assuming print or physical material behavior.',
     relatedLessons: ['u2-l6'],
+  },
+  {
+    term: 'shorthand HEX',
+    definition: 'A three-character HEX notation valid when each pair in the six-character form is a repeated digit, e.g. #ABC expands to #AABBCC. Not applicable when any pair has two different digits.',
+    relatedLessons: ['u3-l2'],
   },
   {
     term: 'subtractive color',
