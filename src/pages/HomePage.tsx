@@ -42,6 +42,16 @@ export function HomePage() {
             const started = done > 0 && !complete;
             const firstLesson = unit.lessons[0];
             const canExpand = started || complete;
+
+            const prevUnit = i > 0 ? units[i - 1] : null;
+            const prevUnitLessonsDone = prevUnit
+              ? prevUnit.lessons.every((id) => completedLessons.includes(id))
+              : true;
+            const prevUnitMilestoneDone = prevUnit?.milestoneId
+              ? completedMilestones.includes(prevUnit.milestoneId)
+              : true;
+            const prevUnitComplete = prevUnitLessonsDone && prevUnitMilestoneDone;
+            const isUnlocked = i === 0 || prevUnitComplete;
             const isExpanded = expandedUnit === unit.id;
 
             function toggleExpand() {
@@ -73,7 +83,7 @@ export function HomePage() {
                         {done}/{total}
                       </span>
                     ) : total > 0 ? (
-                      firstLesson && (
+                      firstLesson && isUnlocked ? (
                         <Link
                           to={`/lesson/${firstLesson}`}
                           className={styles.unitStart}
@@ -81,6 +91,10 @@ export function HomePage() {
                         >
                           start →
                         </Link>
+                      ) : (
+                        <span className={styles.unitBadge} style={{ color: 'var(--muted)', borderColor: 'var(--border)' }}>
+                          locked
+                        </span>
                       )
                     ) : (
                       <span className={styles.unitBadge} style={{ color: 'var(--muted)', borderColor: 'var(--border)' }}>
