@@ -12,7 +12,7 @@
 | L6 | Interface tuning lab — minimal UI mockup (nav + card + button) with R/G/B sliders per role; learner tunes until balance thresholds pass | `interface-tuner` |
 
 **L5 steps also include:** a simplified pixel zoom explorer (CSS grid, zoom-in/zoom-out button) — purely visual, no challenge completion logic.
-**Milestone:** folded into L6 (no separate route). Consistent with Unit 1.
+**Milestone:** own route `/milestone/milestone-2`. Consistent with Unit 1 and planned Unit 3 milestone structure.
 **L4 lighting simulation:** simplified — static screen swatch vs CSS-filter-approximated print swatch side by side.
 
 ---

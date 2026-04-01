@@ -24,6 +24,7 @@ By the end of Unit 1, the learner should be able to:
 - **Estimated unit duration:** 90 to 120 minutes including milestone
 - **Unit milestone:** Read the Interface
 - **Milestone badge/title:** Color Observer
+- **Milestone route:** `/milestone/milestone-1` (own route)
 
 ## Pedagogical approach
 This unit should teach through rapid cycles of:

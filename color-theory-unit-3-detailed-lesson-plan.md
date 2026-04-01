@@ -37,7 +37,7 @@ By the end of Unit 3, the learner should be able to:
 **L3 HSL tool:** renders all three formats (HSL, HEX, RGB) simultaneously. New tool — does not reuse the Unit 1 `HSLSliderTool`.
 **L5 gradient editor:** required, not optional. Applies to a hero or chart card role in the theme sandbox.
 **Original L6 is split into L6 (tokens) and L7 (color spaces + implementation contexts).** Unit 3 therefore has 7 lessons.
-**Milestone:** has its own route (`/milestone/unit-3`). Not folded into L7.
+**Milestone:** has its own route (`/milestone/milestone-3`). Not folded into L7.
 
 ---
 
@@ -47,7 +47,7 @@ By the end of Unit 3, the learner should be able to:
 - **Estimated unit duration:** 2.5 to 3 hours including milestone
 - **Unit milestone:** Build a UI Palette in Code
 - **Milestone badge/title:** UI Color Coder
-- **Milestone route:** `/milestone/unit-3` (own route, not folded into last lesson)
+- **Milestone route:** `/milestone/milestone-3` (own route, not folded into last lesson)
 
 ## Pedagogical approach
 This unit should teach through translation and manipulation:
@@ -708,7 +708,7 @@ Require the learner to apply Unit 3 knowledge by building a small but coherent d
 ## Estimated time
 20 to 30 minutes
 
-**Route:** `/milestone/unit-3` — own dedicated route, not folded into the last lesson.
+**Route:** `/milestone/milestone-3` — own dedicated route, not folded into the last lesson.
 
 ## Milestone scenario
 The learner is given a simple app screen, such as a task manager, onboarding page, or dashboard card layout. The current interface uses scattered hard-coded colors and inconsistent emphasis. The learner must rebuild it into a small, role-based color system suitable for implementation.
