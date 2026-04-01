@@ -8,6 +8,7 @@ import { AdditiveSortTool } from './AdditiveSortTool.tsx';
 import { RGBMixerTool } from './RGBMixerTool.tsx';
 import { LogicFixerTool } from './LogicFixerTool.tsx';
 import { MismatchExplainerTool } from './MismatchExplainerTool.tsx';
+import { BackgroundShiftTool } from './BackgroundShiftTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -54,6 +55,8 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
     case 'mismatch-explainer':
       return <MismatchExplainerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
+    case 'background-shift':
+      return <BackgroundShiftTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (

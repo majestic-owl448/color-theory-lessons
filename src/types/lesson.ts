@@ -36,6 +36,8 @@ export type InteractionType =
   | 'slider-explore'
   | 'additive-sort'
   | 'logic-fixer'
+  | 'mismatch-explainer'
+  | 'background-shift'
   | 'none';
 
 export interface LessonStep {
