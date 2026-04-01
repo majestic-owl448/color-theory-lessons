@@ -1,3 +1,5 @@
+The file `/color-theory-lessons/CLAUDE.md` must be updated as the app status changes so that the infos in it are based on the current status of the app.
+
 # Color Theory Lessons (Color Quest)
 
 Interactive color theory learning app. React 19 + TypeScript + Vite, deployed to GitHub Pages at `/color-theory-lessons/`.
@@ -24,5 +26,3 @@ Client-side HTML/CSS/JavaScript, no backend. GitHub Pages deployment. Design sys
 ## Learning Outcomes
 
 By completion, learners should be able to: explain additive vs subtractive color, build usable palettes for digital interfaces, understand RGB/HEX/HSL/HSV/alpha, identify accessibility mistakes, design with awareness of color blindness and low contrast, apply WCAG guidance, and make strong UI color choices for hierarchy, emphasis, readability, and feedback states.
-
-This file must be updated as the app status changes
