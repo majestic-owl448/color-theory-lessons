@@ -22,7 +22,6 @@ type Action =
   | { type: 'START_QUIZ'; quizId: string }
   | { type: 'COMPLETE_QUIZ'; quizId: string; score: number }
   | { type: 'COMPLETE_MILESTONE'; milestoneId: string }
-  | { type: 'EARN_BADGE'; badgeId: string }
   | { type: 'ADD_GLOSSARY_TERMS'; terms: string[] }
   | { type: 'SET_PREFERENCE'; key: string; value: string | boolean | null }
   | { type: 'RESET_PROGRESS' };
@@ -78,13 +77,6 @@ function appReducer(state: AppState, action: Action): AppState {
         completedMilestones: [...state.completedMilestones, action.milestoneId],
       };
 
-    case 'EARN_BADGE':
-      if (state.earnedBadges.includes(action.badgeId)) return state;
-      return {
-        ...state,
-        earnedBadges: [...state.earnedBadges, action.badgeId],
-      };
-
     case 'ADD_GLOSSARY_TERMS': {
       const newTerms = action.terms.filter(
         (t) => !state.glossaryTermsSeen.includes(t),
@@ -112,7 +104,6 @@ function appReducer(state: AppState, action: Action): AppState {
         completedQuizzes: [],
         quizBestScores: {},
         completedMilestones: [],
-        earnedBadges: [],
         glossaryTermsSeen: [],
       };
 
@@ -133,7 +124,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       completedQuizzes: state.completedQuizzes,
       quizBestScores: state.quizBestScores,
       completedMilestones: state.completedMilestones,
-      earnedBadges: state.earnedBadges,
       glossaryTermsSeen: state.glossaryTermsSeen,
     };
     saveState(progress, state.preferences);
@@ -142,7 +132,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
     state.completedQuizzes,
     state.quizBestScores,
     state.completedMilestones,
-    state.earnedBadges,
     state.glossaryTermsSeen,
     state.preferences,
   ]);

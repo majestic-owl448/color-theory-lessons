@@ -22,7 +22,7 @@ export function SettingsPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionHeading}>progress</h2>
         <p className={styles.sectionDesc}>
-          Reset all completed lessons, milestones, and badges. This cannot be undone.
+          Reset all completed lessons and milestones. This cannot be undone.
         </p>
         <button
           className={`${styles.resetBtn} ${confirmed ? styles.resetBtnConfirm : ''}`}

@@ -2,7 +2,6 @@ export interface UnitConfig {
   id: string;
   title: string;
   description: string;
-  badgeTitle: string;
   lessons: string[];
   milestoneId: string;
 }

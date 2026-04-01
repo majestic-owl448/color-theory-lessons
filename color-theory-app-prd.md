@@ -198,7 +198,7 @@ Examples:
 
 ### F. Completion milestones
 No certification. Instead:
-- chapter completion badges
+- chapter completion markers
 - mastery markers for each skill area
 - final capstone completion screen
 - optional “review mode” for spaced practice

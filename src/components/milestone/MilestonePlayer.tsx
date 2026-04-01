@@ -227,14 +227,14 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
             <span
               className={`${styles.completeBadge} ${passed ? styles.completeBadgePassed : styles.completeBadgeFailed}`}
             >
-              {passed ? `badge earned: ${milestone.badgeTitle}` : 'milestone complete'}
+              {passed ? 'milestone passed' : 'milestone complete'}
             </span>
             <p className={styles.completeTitle}>{milestone.title}</p>
             <p className={styles.completeScore}>
               {totalCorrect} / {totalQuestions} correct
               {passed
                 ? ` — you passed (needed ${milestone.passThreshold})`
-                : ` — needed ${milestone.passThreshold} to earn the badge`}
+                : ` — needed ${milestone.passThreshold} to pass`}
             </p>
             <div className={styles.completeActions}>
               {nextUnitFirstLesson && (

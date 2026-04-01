@@ -6,7 +6,6 @@ const milestone1: MilestoneConfig = {
   title: 'Read the Interface',
   description:
     'Apply your Unit 1 vocabulary to analyze a real interface mockup. Use the panel on the right to answer each question.',
-  badgeTitle: 'Color Observer',
   estimatedMinutes: 15,
   heroVisual: 'interface-mockup',
   passThreshold: 4,
@@ -236,7 +235,6 @@ const milestone2: MilestoneConfig = {
   title: 'Mix for Screen',
   description:
     'Prove that you can classify color models, read RGB channel values, and reason about screen-first color decisions.',
-  badgeTitle: 'Screen Mixer',
   estimatedMinutes: 20,
   passThreshold: 9,
   parts: [

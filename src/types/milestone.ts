@@ -18,14 +18,13 @@ export interface MilestoneConfig {
   unitId: string;
   title: string;
   description: string;
-  badgeTitle: string;
   estimatedMinutes: number;
   /**
    * Optional persistent visual shown in the right panel for the entire milestone.
    * Individual questions can also specify a `swatchColor` which takes precedence.
    */
   heroVisual?: 'interface-mockup';
-  /** Minimum number of correct answers required to earn the badge. */
+  /** Minimum number of correct answers required to pass. */
   passThreshold: number;
   parts: MilestonePart[];
 }
