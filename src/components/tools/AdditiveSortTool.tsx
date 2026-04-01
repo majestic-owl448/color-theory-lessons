@@ -13,11 +13,11 @@ const ITEMS: SortItem[] = [
   { id: 'phone', label: 'Phone screen', correct: 'additive' },
   { id: 'watercolor', label: 'Watercolor painting', correct: 'subtractive' },
   { id: 'led', label: 'LED billboard', correct: 'additive' },
+  { id: 'oil', label: 'Oil painting', correct: 'subtractive' },
   { id: 'magazine', label: 'Printed magazine', correct: 'subtractive' },
   { id: 'laptop', label: 'Laptop display', correct: 'additive' },
-  { id: 'oil', label: 'Oil painting', correct: 'subtractive' },
-  { id: 'projector', label: 'Projector beam', correct: 'additive' },
   { id: 'flyer', label: 'Printed flyer', correct: 'subtractive' },
+  { id: 'projector', label: 'Projector beam', correct: 'additive' },
 ];
 
 const PASS_THRESHOLD = 6;
