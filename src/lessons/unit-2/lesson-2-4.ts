@@ -1,0 +1,84 @@
+import type { LessonConfig } from '../../types/lesson.ts';
+
+export const lesson2_4: LessonConfig = {
+  id: 'u2-l4',
+  unitId: 'unit-2',
+  title: 'Subtractive Color for Digital Designers',
+  description: 'Understand why physical materials can look different from on-screen previews — and why that gap is not a mistake.',
+  learningGoal: 'Explain why a screen color and its printed equivalent differ, using the correct model for each.',
+  estimatedMinutes: 11,
+  prerequisites: ['u2-l3'],
+  conceptsIntroduced: ['subtractive primary', 'absorption', 'reflection', 'surface', 'medium', 'print preview', 'material color', 'color gamut'],
+  interactionType: 'mismatch-explainer',
+  glossaryTerms: ['absorption', 'reflection', 'color gamut', 'subtractive primary'],
+  reviewTags: ['subtractive', 'print', 'color-models', 'practical'],
+  steps: [
+    {
+      id: 's1',
+      text: 'Pigments and inks do not shine light out at the viewer. They absorb some wavelengths of incoming light and reflect others back to your eye. The result depends on both the material and the quality of the light hitting it.',
+      highlights: ['absorb', 'reflect'],
+    },
+    {
+      id: 's2',
+      text: 'A screen can display extremely vivid colors because it emits light directly. Print inks and paint can only reflect incoming light — they cannot reproduce that brightness. This creates a predictable gap between screen previews and physical results.',
+    },
+    {
+      id: 's3',
+      text: 'The range of colors a device or medium can reproduce is called its gamut. Screens have a wide gamut because they emit light. Most print processes have a narrower gamut — some screen colors simply cannot be recreated with ink.',
+      highlights: ['gamut'],
+    },
+    {
+      id: 's4',
+      text: 'For screen-first designers, this matters whenever work crosses into physical materials — packaging, printed cards, branded merchandise, signage. The difference is not a printing error. It is a fundamental difference between two color models.',
+    },
+    {
+      id: 's5',
+      text: 'The comparison on the right shows the same color as a screen swatch and an approximation of how it might appear in print. In the challenge, you will identify the correct reasons why the two versions differ.',
+    },
+  ],
+  challenges: [
+    {
+      id: 'c1',
+      prompt: 'For each scenario, select all the correct reasons why the screen color and the physical version look different. Some reasons are wrong — do not select those.',
+      type: 'identify-problem',
+      hints: [
+        'Think about what each medium is actually doing: emitting light vs reflecting it.',
+        'The gap is not always a mistake — it can be a natural consequence of different models.',
+        'Surface finish, ambient lighting, and gamut limits are all real factors.',
+      ],
+      successCriteria: 'All correct reasons selected and no incorrect reasons selected across all scenarios.',
+    },
+  ],
+  quizItems: [
+    {
+      id: 'q1',
+      prompt: 'A printed brochure shows a company\'s brand color. Which color model best describes how that color is produced?',
+      choices: [
+        { id: 'a', label: 'Additive — the ink emits RGB light', isCorrect: false, explanation: 'Ink does not emit light. It absorbs some wavelengths and reflects others.' },
+        { id: 'b', label: 'Subtractive — the ink absorbs some wavelengths and reflects others', isCorrect: true, explanation: 'Print is a subtractive process. The ink absorbs certain wavelengths of incoming light and reflects the rest to the viewer\'s eye.' },
+        { id: 'c', label: 'Neither — print uses a completely separate model', isCorrect: false, explanation: 'Print is a classic example of subtractive color, using CMYK inks that absorb light selectively.' },
+        { id: 'd', label: 'Both equally', isCorrect: false, explanation: 'Print is subtractive. Screens are additive. They are distinct models, not a mix.' },
+      ],
+    },
+    {
+      id: 'q2',
+      prompt: 'A designer previews a vivid teal on their monitor. The printed version arrives looking duller and slightly different. What is the most likely explanation?',
+      choices: [
+        { id: 'a', label: 'The printer made an error and should be recalibrated.', isCorrect: false, explanation: 'Printers can be miscalibrated, but the more fundamental reason is that screens emit light while print can only reflect it — some screen colors are outside the print gamut.' },
+        { id: 'b', label: 'The screen\'s emitted light cannot be matched by ink reflecting ambient light.', isCorrect: true, explanation: 'This is the core reason. Vivid screen colors often exceed what ink can reflect — the print gamut is narrower than the screen gamut for many saturated colors.' },
+        { id: 'c', label: 'Teal is not a printable color.', isCorrect: false, explanation: 'Teal is printable, but some specific teal values — especially very vivid ones — may fall outside the print gamut.' },
+        { id: 'd', label: 'The designer should have used CMYK values on screen.', isCorrect: false, explanation: 'Screen design uses RGB. The solution is to understand that a gap will exist, not to design in CMYK on a screen.' },
+      ],
+    },
+    {
+      id: 'q3',
+      prompt: 'A developer says: "I only build web apps, so subtractive color has nothing to teach me." What is the strongest counterargument?',
+      choices: [
+        { id: 'a', label: 'Web apps sometimes use blue, which is a subtractive primary.', isCorrect: false, explanation: 'This is unrelated — blue in RGB is an additive primary, not a subtractive one.' },
+        { id: 'b', label: 'Understanding the subtractive model explains why screen-to-physical gaps exist, which matters whenever work crosses media.', isCorrect: true, explanation: 'Even screen-first designers encounter physical color — icons become stickers, brand colors go on merchandise, app colors appear in print. Knowing why the gap exists prevents false expectations.' },
+        { id: 'c', label: 'Subtractive color affects how browsers render colors.', isCorrect: false, explanation: 'Browsers render using additive RGB. Subtractive color is not part of the browser rendering model.' },
+        { id: 'd', label: 'You need to know CMYK to pass design job interviews.', isCorrect: false, explanation: 'This may or may not be true, but it is not the conceptual reason why subtractive color matters to screen designers.' },
+      ],
+    },
+  ],
+};
