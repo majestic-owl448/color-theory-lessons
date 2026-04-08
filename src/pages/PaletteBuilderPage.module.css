@@ -1,0 +1,448 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  max-width: var(--max-content-width);
+}
+
+.heading {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-foreground);
+  font-family: var(--font-mono);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--secondary-foreground);
+  font-family: var(--font-sans);
+  margin-top: calc(-1 * var(--spacing-md));
+}
+
+/* ── A. Color Input ────────────────────────────────────────────────────────── */
+
+.inputBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.colorPicker {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  cursor: pointer;
+  background: var(--primary-background);
+}
+
+.hexInput {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--primary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--primary-foreground);
+  width: 10ch;
+}
+
+.hexInputInvalid {
+  border-color: var(--accent-danger);
+}
+
+.swatchPreview {
+  width: 80px;
+  height: 80px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.hslReadout {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+/* ── B. Harmony Selector ───────────────────────────────────────────────────── */
+
+.harmonyGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.harmonyButtons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.harmonyBtn {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--secondary-foreground);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.harmonyBtn:hover {
+  border-color: var(--secondary-foreground);
+  color: var(--primary-foreground);
+}
+
+.harmonyBtnActive {
+  background: var(--surface);
+  color: var(--primary-foreground);
+  border-color: var(--primary-foreground);
+}
+
+.harmonyDesc {
+  font-size: 1rem;
+  color: var(--secondary-foreground);
+  font-family: var(--font-sans);
+}
+
+/* ── C. Palette Grid ───────────────────────────────────────────────────────── */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sectionHeading {
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.paletteGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.swatchColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.swatchColumnLabel {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.swatch {
+  height: 120px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.swatchHex {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--primary-foreground);
+}
+
+.variantRow {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.variantSwatch {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.variantBlock {
+  width: 100%;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.variantLabel {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.variantHex {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--secondary-foreground);
+}
+
+/* ── D. Contrast Matrix ────────────────────────────────────────────────────── */
+
+.matrixWrap {
+  overflow-x: auto;
+}
+
+.matrix {
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  min-width: max-content;
+}
+
+.matrixHeader {
+  background: var(--secondary-background);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.matrixHeaderSwatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.matrixCell {
+  padding: var(--spacing-sm);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border-top: 1px solid var(--border);
+}
+
+.matrixCellEven {
+  background: var(--surface);
+}
+
+.matrixCellOdd {
+  background: var(--secondary-background);
+}
+
+.matrixRatio {
+  font-size: 0.85rem;
+  color: var(--secondary-foreground);
+}
+
+.matrixSelf {
+  color: var(--muted);
+  padding: var(--spacing-sm);
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.badgeAaa {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-success);
+}
+
+.badgeAa {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-cta);
+}
+
+.badgeFail {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-danger);
+}
+
+/* ── E. Dark + Light Mode Arranger ─────────────────────────────────────────── */
+
+.arrangerRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 700px) {
+  .arrangerRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modePanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.roleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.roleLabel {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--secondary-foreground);
+  width: 14ch;
+  flex-shrink: 0;
+}
+
+.roleSwatch {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: outline 0.1s;
+  flex-shrink: 0;
+}
+
+.roleSwatch:hover {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 2px;
+}
+
+.roleHex {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.rolePickerPopover {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: var(--spacing-sm);
+  background: var(--secondary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.rolePickerSwatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.rolePickerSwatch:hover {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 1px;
+}
+
+/* ── Mini Preview ──────────────────────────────────────────────────────────── */
+
+.miniPreview {
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.miniPreviewHeading {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.miniPreviewBody {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.miniPreviewBtn {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: default;
+  width: fit-content;
+}
+
+/* ── Contrast Checks ───────────────────────────────────────────────────────── */
+
+.contrastChecks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--secondary-foreground);
+}
+
+/* ── Suggestion Box ────────────────────────────────────────────────────────── */
+
+.suggestion {
+  padding: var(--spacing-md);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--accent-cta);
+}
+
+.suggestionColor {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.suggestionSwatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@media (max-width: 500px) {
+  .paletteGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .matrixWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

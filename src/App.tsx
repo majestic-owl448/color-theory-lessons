@@ -8,6 +8,7 @@ import { PlaceholderPage } from './components/shared/PlaceholderPage.tsx';
 import { SettingsPage } from './pages/SettingsPage.tsx';
 import { GlossaryPage } from './pages/GlossaryPage.tsx';
 import { ReviewPage } from './pages/ReviewPage.tsx';
+import { PaletteBuilderPage } from './pages/PaletteBuilderPage.tsx';
 
 export function App() {
   return (
@@ -28,6 +29,7 @@ export function App() {
                 />
               }
             />
+            <Route path="/palette-builder" element={<PaletteBuilderPage />} />
             <Route path="/glossary" element={<GlossaryPage />} />
             <Route path="/review" element={<ReviewPage />} />
             <Route

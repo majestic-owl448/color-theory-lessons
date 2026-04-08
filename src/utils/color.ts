@@ -126,3 +126,24 @@ export function getRelatedHues(baseH: number, rel: Relationship): number[] {
       return [(baseH + 120) % 360, (baseH + 240) % 360];
   }
 }
+
+/** WCAG 2.x relative luminance with proper sRGB linearization. */
+export function luminanceWcag({ r, g, b }: RGB): number {
+  const lin = (c: number) => {
+    const s = c / 255;
+    return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+}
+
+/** WCAG contrast ratio using proper sRGB luminance. */
+export function contrastRatioWcag(a: RGB, b: RGB): number {
+  const la = luminanceWcag(a);
+  const lb = luminanceWcag(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+/** Clamp a number to [min, max]. */
+export function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
