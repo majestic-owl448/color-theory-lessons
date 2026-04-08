@@ -52,6 +52,12 @@ export type InteractionType =
   | 'color-only-detector'
   | 'state-workshop'
   | 'inclusive-review'
+  | 'broken-usable-cards'
+  | 'text-contrast-lab'
+  | 'component-checker'
+  | 'color-alone-rebuild'
+  | 'audit-flow'
+  | 'pattern-repair'
   | 'none';
 
 export interface LessonStep {
@@ -77,7 +83,9 @@ export type ChallengeType =
   | 'code-to-color'
   | 'sort'
   | 'explore-all'
-  | 'add-cues';
+  | 'add-cues'
+  | 'audit'
+  | 'repair';
 
 export interface QuizItem {
   id: string;

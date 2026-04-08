@@ -693,4 +693,181 @@ export const glossary: GlossaryTerm[] = [
     definition: 'A repeatable sequence of steps used to accomplish a design task. In inclusive design, a workflow for color review includes simulation, task-checking, and redundant cue verification.',
     relatedLessons: ['u4-l6'],
   },
+
+  // ── Unit 5 ──────────────────────────────────────────────────────────────────
+  {
+    term: 'accessibility',
+    definition: 'The practice of designing digital products so they can be used by people with a range of abilities, including those with low vision, color vision deficiency, motor differences, and cognitive differences.',
+    relatedLessons: ['u5-l1'],
+  },
+  {
+    term: 'alert',
+    definition: 'A UI pattern that delivers time-sensitive or important information, such as a success confirmation, warning notice, or error message. Should combine color, icon, and structured text.',
+    relatedLessons: ['u5-l6'],
+  },
+  {
+    term: 'audit',
+    definition: 'A structured review of a design artifact against a defined set of accessibility or quality criteria. A color audit typically checks contrast, color-only patterns, and component visibility.',
+    relatedLessons: ['u5-l5'],
+  },
+  {
+    term: 'boundary',
+    definition: 'The edge or border of a UI component that defines its visible extent and helps users identify it as interactive. A low-contrast boundary makes a control harder to locate.',
+    relatedLessons: ['u5-l3'],
+  },
+  {
+    term: 'chart palette',
+    definition: 'A set of colors chosen for a data visualization. Accessible chart palettes maintain distinguishability under CVD simulation, use sufficient contrast between adjacent series, and are supplemented by direct labels or patterns.',
+    relatedLessons: ['u5-l6'],
+  },
+  {
+    term: 'checker',
+    definition: 'A tool that evaluates color pairs for contrast ratio. A checker provides data but not judgment — the designer must still decide how to apply the results.',
+    relatedLessons: ['u5-l5'],
+  },
+  {
+    term: 'color-only meaning',
+    definition: 'A design pattern where information is communicated exclusively through color, with no supporting label, icon, shape, or text. A failure mode under WCAG 1.4.1.',
+    relatedLessons: ['u5-l1'],
+  },
+  {
+    term: 'context',
+    definition: 'The actual use condition of a color pair — the surrounding colors, element size, font weight, and user context. Color decisions made without context may pass a checker but fail in practice.',
+    relatedLessons: ['u5-l5'],
+  },
+  {
+    term: 'contrast ratio',
+    definition: 'A number from 1:1 (no contrast) to 21:1 (maximum contrast) expressing the luminance difference between two colors. Used to evaluate color pair accessibility.',
+    relatedLessons: ['u5-l2'],
+  },
+  {
+    term: 'dashboard',
+    definition: 'A screen layout that presents multiple data summaries, often using charts, indicators, and status panels. Dashboards often contain multiple accessibility risks including color-only charts and low-contrast small labels.',
+    relatedLessons: ['u5-l6'],
+  },
+  {
+    term: 'fail',
+    definition: 'A contrast pair that falls below the target ratio. A failing pair may cause readability or usability problems for users with low vision or CVD.',
+    relatedLessons: ['u5-l2'],
+  },
+  {
+    term: 'focus indicator',
+    definition: 'A visible outline or highlight that shows which interactive element is currently focused during keyboard navigation. Must be clearly visible to support keyboard accessibility.',
+    relatedLessons: ['u5-l3'],
+  },
+  {
+    term: 'form validation',
+    definition: 'The process and visual design of informing users whether their form input meets requirements, and providing clear guidance for correction. Accessible validation combines color, icon, and text.',
+    relatedLessons: ['u5-l6'],
+  },
+  {
+    term: 'graphical object',
+    definition: 'A visual element — icon, chart mark, or meaningful image — that conveys information not conveyed in text. Graphical objects need sufficient contrast when they carry essential meaning.',
+    relatedLessons: ['u5-l3'],
+  },
+  {
+    term: 'icon contrast',
+    definition: 'The contrast between a meaningful icon and its background. Icons that communicate important information — such as a warning or a download action — need sufficient contrast to be reliably identified.',
+    relatedLessons: ['u5-l3'],
+  },
+  {
+    term: 'inline error',
+    definition: 'An error message displayed adjacent to the specific form field where the error occurred, rather than in a general banner. Should include icon, field reference, and actionable description.',
+    relatedLessons: ['u5-l6'],
+  },
+  {
+    term: 'large text',
+    definition: 'Text at 18pt or above in regular weight, or 14pt and above in bold weight. Large text can meet a lower contrast threshold of 3:1 because its size supports legibility.',
+    relatedLessons: ['u5-l2'],
+  },
+  {
+    term: 'link distinction',
+    definition: 'The visual difference between a hyperlink and surrounding non-link text. Links in body text should be identified by underline or another non-color cue to avoid color-only identification.',
+    relatedLessons: ['u5-l6'],
+  },
+  {
+    term: 'non-text contrast',
+    definition: 'The contrast requirement for user interface components and graphical objects that are not text — such as input borders, icons, focus rings, and chart marks. The practical target is 3:1 against adjacent colors.',
+    relatedLessons: ['u5-l3'],
+  },
+  {
+    term: 'normal text',
+    definition: 'Body-sized text — typically under 18pt regular weight or under 14pt bold — which requires a minimum contrast ratio of 4.5:1 in typical accessibility guidance.',
+    relatedLessons: ['u5-l2'],
+  },
+  {
+    term: 'notification',
+    definition: 'A message that informs the user of a relevant event or change, such as a new message, task completion, or system update. Should be identifiable beyond background color alone.',
+    relatedLessons: ['u5-l6'],
+  },
+  {
+    term: 'outline',
+    definition: 'A visual stroke around an element. Used as a focus indicator, active state, or input border. Outlines need sufficient contrast to be seen reliably.',
+    relatedLessons: ['u5-l3'],
+  },
+  {
+    term: 'pass',
+    definition: 'A contrast pair that meets or exceeds the target ratio for its use case. A passing pair is reliably readable or identifiable for most users.',
+    relatedLessons: ['u5-l2'],
+  },
+  {
+    term: 'pattern library',
+    definition: 'A shared collection of reusable, defined interface patterns with specified visual rules. Accessible pattern libraries embed contrast and redundancy rules into each component definition, scaling accessibility across an entire product.',
+    relatedLessons: ['u5-l6'],
+  },
+  {
+    term: 'priority element',
+    definition: 'An interface element that users depend on to complete a task, such as a heading, body text, button, input, status indicator, or chart mark. Priority elements should be audited first.',
+    relatedLessons: ['u5-l5'],
+  },
+  {
+    term: 'redundant cue',
+    definition: 'A design approach in which the same meaning is communicated through two or more channels — color plus icon, plus label, plus shape — so that the meaning survives if any one channel is unavailable.',
+    relatedLessons: ['u5-l4'],
+  },
+  {
+    term: 'state indicator',
+    definition: 'A visual element that communicates the current condition of an interface element or system, such as active, disabled, error, or success. Should not rely on color alone.',
+    relatedLessons: ['u5-l1'],
+  },
+  {
+    term: 'state visibility',
+    definition: 'The clarity with which different states of a component — default, hover, active, focus, error, success — are visually distinguishable from one another.',
+    relatedLessons: ['u5-l3'],
+  },
+  {
+    term: 'status message',
+    definition: 'A short text that communicates the outcome of an action or the current state of a system. A status message is more robust than a color-only indicator.',
+    relatedLessons: ['u5-l4'],
+  },
+  {
+    term: 'text contrast',
+    definition: 'The measured luminance difference between text and its background, expressed as a ratio. Determines readability for a given text size and weight.',
+    relatedLessons: ['u5-l2'],
+  },
+  {
+    term: 'user interface component',
+    definition: 'An interactive control in a digital interface, such as a button, input, checkbox, toggle, or dropdown. Components need sufficient contrast between their boundaries and adjacent backgrounds.',
+    relatedLessons: ['u5-l3'],
+  },
+  {
+    term: 'usability',
+    definition: 'The quality of a design that makes it easy and reliable for people to complete tasks. Accessibility failures are usability failures.',
+    relatedLessons: ['u5-l1'],
+  },
+  {
+    term: 'validation state',
+    definition: 'The visual treatment applied to a form field or input to indicate whether the value meets requirements. Should include color, icon, and text message — not color alone.',
+    relatedLessons: ['u5-l4'],
+  },
+  {
+    term: 'verification',
+    definition: 'The step in an audit workflow where the designer confirms that a repair actually solves the problem — not just that the ratio passes, but that the design communicates clearly in context.',
+    relatedLessons: ['u5-l5'],
+  },
+  {
+    term: 'visual affordance',
+    definition: 'A visual property that suggests how an interface element can be used — such as a button shape suggesting it is clickable. Weak visual affordances make interfaces harder to use.',
+    relatedLessons: ['u5-l1'],
+  },
 ];

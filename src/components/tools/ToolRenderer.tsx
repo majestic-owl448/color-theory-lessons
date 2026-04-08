@@ -23,6 +23,12 @@ import { InterfaceGalleryTool } from './InterfaceGalleryTool.tsx';
 import { ColorOnlyDetectorTool } from './ColorOnlyDetectorTool.tsx';
 import { StateWorkshopTool } from './StateWorkshopTool.tsx';
 import { InclusiveReviewTool } from './InclusiveReviewTool.tsx';
+import { BrokenUsableCardsTool } from './BrokenUsableCardsTool.tsx';
+import { TextContrastLabTool } from './TextContrastLabTool.tsx';
+import { ComponentCheckerTool } from './ComponentCheckerTool.tsx';
+import { ColorAloneRebuildTool } from './ColorAloneRebuildTool.tsx';
+import { AuditFlowTool } from './AuditFlowTool.tsx';
+import { PatternRepairTool } from './PatternRepairTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -113,6 +119,24 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
 
     case 'inclusive-review':
       return <InclusiveReviewTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'broken-usable-cards':
+      return <BrokenUsableCardsTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'text-contrast-lab':
+      return <TextContrastLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'component-checker':
+      return <ComponentCheckerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'color-alone-rebuild':
+      return <ColorAloneRebuildTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'audit-flow':
+      return <AuditFlowTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'pattern-repair':
+      return <PatternRepairTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (
