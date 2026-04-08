@@ -91,6 +91,15 @@ function buildPalette(
   });
 }
 
+function buildSingleColor(hex: string): PaletteColor {
+  const variants = buildVariants(hex);
+  return { hex, label: 'primary', ...variants };
+}
+
+function buildSuggestions(primaryHex: string, harmony: Relationship): PaletteColor[] {
+  return buildPalette(primaryHex, harmony).slice(1);
+}
+
 function allPaletteHexes(palette: PaletteColor[]): string[] {
   const out: string[] = [];
   for (const c of palette) {
@@ -185,7 +194,7 @@ export function PaletteBuilderPage() {
   const [primaryHex, setPrimaryHex] = useState('#3B82F6');
   const [harmony, setHarmony] = useState<Relationship>('analogous');
   const [paletteColors, setPaletteColors] = useState<PaletteColor[]>(() =>
-    buildPalette('#3B82F6', 'analogous'),
+    [buildSingleColor('#3B82F6')],
   );
   const [paletteIsCustom, setPaletteIsCustom] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -214,9 +223,19 @@ export function PaletteBuilderPage() {
     [lightRoles, paletteColors],
   );
 
+  const suggestions = useMemo(
+    () => buildSuggestions(primaryHex, harmony),
+    [primaryHex, harmony],
+  );
+
+  const paletteHexSet = useMemo(
+    () => new Set(paletteColors.map((c) => c.hex.toUpperCase())),
+    [paletteColors],
+  );
+
   const applyPrimary = (hex: string) => {
     setPrimaryHex(hex);
-    setPaletteColors(buildPalette(hex, harmony));
+    setPaletteColors([buildSingleColor(hex)]);
     setPaletteIsCustom(false);
     setEditingIndex(null);
     setDarkRoles(null);
@@ -245,9 +264,6 @@ export function PaletteBuilderPage() {
 
   const handleHarmonyChange = (h: Relationship) => {
     setHarmony(h);
-    setPaletteColors(buildPalette(primaryHex, h));
-    setPaletteIsCustom(false);
-    setEditingIndex(null);
     setDarkRoles(null);
     setLightRoles(null);
     setOpenPicker(null);
@@ -288,11 +304,11 @@ export function PaletteBuilderPage() {
     setPaletteIsCustom(true);
   };
 
-  const addPaletteColor = (hex = '#808080') => {
+  const addPaletteColor = (hex = '#808080', label?: string) => {
     const variants = buildVariants(hex);
     setPaletteColors((prev) => {
       const customCount = prev.filter((c) => c.label.startsWith('custom')).length;
-      return [...prev, { hex, label: `custom ${customCount + 1}`, ...variants }];
+      return [...prev, { hex, label: label ?? `custom ${customCount + 1}`, ...variants }];
     });
     setPaletteIsCustom(true);
     setEditingIndex(null);
@@ -307,7 +323,7 @@ export function PaletteBuilderPage() {
   };
 
   const handleResetPalette = () => {
-    setPaletteColors(buildPalette(primaryHex, harmony));
+    setPaletteColors([buildSingleColor(primaryHex)]);
     setPaletteIsCustom(false);
     setEditingIndex(null);
   };
@@ -443,7 +459,67 @@ export function PaletteBuilderPage() {
         <p className={styles.harmonyDesc}>{HARMONY_DESC[harmony]}</p>
       </div>
 
-      {/* ── C. Palette Grid ─────────────────────────────────────────────── */}
+      {/* ── C. Color Suggestions ────────────────────────────────────────── */}
+      <div className={styles.section}>
+        <h2 className={styles.sectionHeading}>color suggestions</h2>
+        <div className={styles.suggestionsGrid}>
+          {suggestions.map((color) => {
+            const isAdded = paletteHexSet.has(color.hex.toUpperCase());
+            return (
+              <div key={color.hex} className={styles.suggestionCard}>
+                <div className={styles.swatchColumnHeader}>
+                  <span className={styles.swatchColumnLabel}>{color.label}</span>
+                </div>
+                <div
+                  className={styles.suggestMainSwatch}
+                  style={{ backgroundColor: color.hex }}
+                />
+                <span className={styles.swatchHex}>{color.hex.toUpperCase()}</span>
+                <button
+                  className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
+                  onClick={() => { if (!isAdded) addPaletteColor(color.hex, color.label); }}
+                  disabled={isAdded}
+                  aria-label={isAdded ? `${color.label} already in palette` : `Add ${color.label} to palette`}
+                >
+                  {isAdded ? '✓ added' : '+ add to palette'}
+                </button>
+                <div className={styles.variantRow}>
+                  {(
+                    [
+                      ['lighter', color.lighter],
+                      ['darker', color.darker],
+                      ['muted', color.muted],
+                    ] as const
+                  ).map(([label, hex]) => {
+                    const varAdded = paletteHexSet.has(hex.toUpperCase());
+                    return (
+                      <div key={label} className={styles.variantSwatch}>
+                        <div
+                          className={styles.variantBlock}
+                          style={{ backgroundColor: hex }}
+                        />
+                        <span className={styles.variantLabel}>{label}</span>
+                        <span className={styles.variantHex}>{hex.toUpperCase()}</span>
+                        <button
+                          className={`${styles.variantPromoteBtn} ${varAdded ? styles.variantPromoAdded : ''}`}
+                          onClick={() => { if (!varAdded) addPaletteColor(hex); }}
+                          disabled={varAdded}
+                          title={varAdded ? `${hex.toUpperCase()} already in palette` : `Add ${hex.toUpperCase()} as palette color`}
+                          aria-label={varAdded ? `${label} already in palette` : `Add ${label} variant as palette color`}
+                        >
+                          {varAdded ? '✓' : '+ add'}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── D. Palette Grid ─────────────────────────────────────────────── */}
       <div className={styles.section}>
         <div className={styles.sectionHeaderRow}>
           <h2 className={styles.sectionHeading}>palette</h2>
@@ -564,7 +640,7 @@ export function PaletteBuilderPage() {
         </button>
       </div>
 
-      {/* ── D. Contrast Matrix ──────────────────────────────────────────── */}
+      {/* ── E. Contrast Matrix ──────────────────────────────────────────── */}
       <div className={styles.section}>
         <h2 className={styles.sectionHeading}>contrast pairings</h2>
         {matrixPairs.length === 0 ? (
@@ -634,7 +710,7 @@ export function PaletteBuilderPage() {
         )}
       </div>
 
-      {/* ── E. Dark + Light Mode Arranger ───────────────────────────────── */}
+      {/* ── F. Dark + Light Mode Arranger ───────────────────────────────── */}
       <div className={styles.section}>
         <h2 className={styles.sectionHeading}>theme arranger</h2>
         <div className={styles.arrangerRow}>

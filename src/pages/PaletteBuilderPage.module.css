@@ -540,6 +540,35 @@
   color: var(--secondary-foreground);
 }
 
+/* ── Color Suggestions ─────────────────────────────────────────────────────── */
+
+.suggestionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.suggestionCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.suggestMainSwatch {
+  height: 100px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.variantPromoAdded {
+  opacity: 0.5;
+  cursor: default;
+}
+
 /* ── Suggestion Box ────────────────────────────────────────────────────────── */
 
 .suggestion {
