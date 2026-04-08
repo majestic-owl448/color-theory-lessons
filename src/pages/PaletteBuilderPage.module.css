@@ -578,6 +578,66 @@
   font-family: var(--font-mono);
   font-size: 1rem;
   color: var(--accent-cta);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.a11ySuggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.a11ySuggestionMsg {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-cta);
+  margin: 0;
+}
+
+.a11ySuggestionFix {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.a11ySuggestionSwatch {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.a11ySuggestionHex {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--primary-foreground);
+}
+
+.a11ySuggestionFixLabel {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.a11ySuggestionApply {
+  background: transparent;
+  border: 1px solid var(--accent-cta);
+  border-radius: var(--radius-sm);
+  color: var(--accent-cta);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 2px var(--spacing-sm);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.a11ySuggestionApply:hover {
+  background: var(--accent-cta);
+  color: var(--primary-background);
 }
 
 .suggestionColor {

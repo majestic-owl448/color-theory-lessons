@@ -187,6 +187,32 @@ function ratioOf(a: string, b: string) {
   return contrastRatioWcag(hexToRgb(a), hexToRgb(b));
 }
 
+/** Step `fgHex` lightness toward `direction` until it meets `targetRatio` against `bgHex`. */
+function findAccessibleVariant(
+  fgHex: string,
+  bgHex: string,
+  targetRatio: number,
+  direction: 'lighten' | 'darken',
+): string | null {
+  const { h, s } = hexToHsl(fgHex);
+  let { l } = hexToHsl(fgHex);
+  const step = direction === 'lighten' ? 1 : -1;
+  for (let i = 0; i < 101; i++) {
+    l = clamp(l + step, 0, 100);
+    const candidate = hslToHex(h, s, l);
+    if (ratioOf(candidate, bgHex) >= targetRatio) return candidate;
+    if (l <= 0 || l >= 100) break;
+  }
+  return null;
+}
+
+interface AccessibilitySuggestion {
+  msg: string;
+  role: RoleKey;
+  suggestedHex: string;
+  suggestedLabel: string;
+}
+
 /* ── Component ────────────────────────────────────────────────────────────── */
 
 export function PaletteBuilderPage() {
@@ -358,46 +384,108 @@ export function PaletteBuilderPage() {
 
   /* ── Suggestions ────────────────────────────────────────────────────────── */
 
-  const darkSuggestions = useMemo(() => {
-    const msgs: string[] = [];
+  const darkSuggestions = useMemo((): AccessibilitySuggestion[] => {
+    const out: AccessibilitySuggestion[] = [];
     const r = effectiveDark;
+
     const txtBg = ratioOf(r.primaryText, r.background);
-    if (txtBg < 7)
-      msgs.push(
-        `Primary text on background is ${txtBg.toFixed(1)}:1 (needs 7:1 for AAA). Try a lighter text or darker background.`,
-      );
+    if (txtBg < 7) {
+      const fix = findAccessibleVariant(r.primaryText, r.background, 7, 'lighten')
+        ?? findAccessibleVariant(r.background, r.primaryText, 7, 'darken');
+      const fixRole: RoleKey = findAccessibleVariant(r.primaryText, r.background, 7, 'lighten')
+        ? 'primaryText' : 'background';
+      if (fix) {
+        out.push({
+          msg: `Primary text/bg is ${txtBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          role: fixRole,
+          suggestedHex: fix,
+          suggestedLabel: fixRole === 'primaryText' ? 'lighter text' : 'darker background',
+        });
+      }
+    }
+
     const txtSurf = ratioOf(r.secondaryText, r.surface);
-    if (txtSurf < 4.5)
-      msgs.push(
-        `Secondary text on surface is ${txtSurf.toFixed(1)}:1 (needs 4.5:1). Try adjusting surface or text lightness.`,
-      );
+    if (txtSurf < 4.5) {
+      const fix = findAccessibleVariant(r.secondaryText, r.surface, 4.5, 'lighten')
+        ?? findAccessibleVariant(r.surface, r.secondaryText, 4.5, 'darken');
+      const fixRole: RoleKey = findAccessibleVariant(r.secondaryText, r.surface, 4.5, 'lighten')
+        ? 'secondaryText' : 'surface';
+      if (fix) {
+        out.push({
+          msg: `Secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 4.5:1 for AA.`,
+          role: fixRole,
+          suggestedHex: fix,
+          suggestedLabel: fixRole === 'secondaryText' ? 'lighter text' : 'darker surface',
+        });
+      }
+    }
+
     const accBg = ratioOf(r.accent, r.background);
-    if (accBg < 4.5)
-      msgs.push(
-        `Accent on background is ${accBg.toFixed(1)}:1 (needs 4.5:1). Try a brighter accent.`,
-      );
-    return msgs;
+    if (accBg < 4.5) {
+      const fix = findAccessibleVariant(r.accent, r.background, 4.5, 'lighten');
+      if (fix) {
+        out.push({
+          msg: `Accent/bg is ${accBg.toFixed(1)}:1 — needs 4.5:1 for AA.`,
+          role: 'accent',
+          suggestedHex: fix,
+          suggestedLabel: 'lighter accent',
+        });
+      }
+    }
+
+    return out;
   }, [effectiveDark]);
 
-  const lightSuggestions = useMemo(() => {
-    const msgs: string[] = [];
+  const lightSuggestions = useMemo((): AccessibilitySuggestion[] => {
+    const out: AccessibilitySuggestion[] = [];
     const r = effectiveLight;
+
     const txtBg = ratioOf(r.primaryText, r.background);
-    if (txtBg < 7)
-      msgs.push(
-        `Primary text on background is ${txtBg.toFixed(1)}:1 (needs 7:1 for AAA). Try a darker text or lighter background.`,
-      );
+    if (txtBg < 7) {
+      const fix = findAccessibleVariant(r.primaryText, r.background, 7, 'darken')
+        ?? findAccessibleVariant(r.background, r.primaryText, 7, 'lighten');
+      const fixRole: RoleKey = findAccessibleVariant(r.primaryText, r.background, 7, 'darken')
+        ? 'primaryText' : 'background';
+      if (fix) {
+        out.push({
+          msg: `Primary text/bg is ${txtBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          role: fixRole,
+          suggestedHex: fix,
+          suggestedLabel: fixRole === 'primaryText' ? 'darker text' : 'lighter background',
+        });
+      }
+    }
+
     const txtSurf = ratioOf(r.secondaryText, r.surface);
-    if (txtSurf < 4.5)
-      msgs.push(
-        `Secondary text on surface is ${txtSurf.toFixed(1)}:1 (needs 4.5:1). Try adjusting surface or text lightness.`,
-      );
+    if (txtSurf < 4.5) {
+      const fix = findAccessibleVariant(r.secondaryText, r.surface, 4.5, 'darken')
+        ?? findAccessibleVariant(r.surface, r.secondaryText, 4.5, 'lighten');
+      const fixRole: RoleKey = findAccessibleVariant(r.secondaryText, r.surface, 4.5, 'darken')
+        ? 'secondaryText' : 'surface';
+      if (fix) {
+        out.push({
+          msg: `Secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 4.5:1 for AA.`,
+          role: fixRole,
+          suggestedHex: fix,
+          suggestedLabel: fixRole === 'secondaryText' ? 'darker text' : 'lighter surface',
+        });
+      }
+    }
+
     const accBg = ratioOf(r.accent, r.background);
-    if (accBg < 4.5)
-      msgs.push(
-        `Accent on background is ${accBg.toFixed(1)}:1 (needs 4.5:1). Try a darker accent.`,
-      );
-    return msgs;
+    if (accBg < 4.5) {
+      const fix = findAccessibleVariant(r.accent, r.background, 4.5, 'darken');
+      if (fix) {
+        out.push({
+          msg: `Accent/bg is ${accBg.toFixed(1)}:1 — needs 4.5:1 for AA.`,
+          role: 'accent',
+          suggestedHex: fix,
+          suggestedLabel: 'darker accent',
+        });
+      }
+    }
+
+    return out;
   }, [effectiveLight]);
 
   /* ── Render ─────────────────────────────────────────────────────────────── */
@@ -824,8 +912,29 @@ export function PaletteBuilderPage() {
               {/* Suggestions */}
               {suggestions.length > 0 && (
                 <div className={styles.suggestion}>
-                  {suggestions.map((msg, i) => (
-                    <p key={i}>{msg}</p>
+                  {suggestions.map((s, i) => (
+                    <div key={i} className={styles.a11ySuggestion}>
+                      <p className={styles.a11ySuggestionMsg}>{s.msg}</p>
+                      <div className={styles.a11ySuggestionFix}>
+                        <div
+                          className={styles.a11ySuggestionSwatch}
+                          style={{ backgroundColor: s.suggestedHex }}
+                        />
+                        <span className={styles.a11ySuggestionHex}>
+                          {s.suggestedHex.toUpperCase()}
+                        </span>
+                        <span className={styles.a11ySuggestionFixLabel}>
+                          {s.suggestedLabel}
+                        </span>
+                        <button
+                          className={styles.a11ySuggestionApply}
+                          onClick={() => handleRolePick(mode, s.role, s.suggestedHex)}
+                          aria-label={`Apply ${s.suggestedHex.toUpperCase()} as ${ROLE_LABELS[s.role]}`}
+                        >
+                          apply
+                        </button>
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
