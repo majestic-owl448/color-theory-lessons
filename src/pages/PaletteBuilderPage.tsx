@@ -63,8 +63,8 @@ const HARMONY_DESC: Record<Relationship, string> = {
 function buildVariants(hex: string) {
   const { h, s, l } = hexToHsl(hex);
   return {
-    lighter: hslToHex(h, s, clamp(l + 25, 0, 100)),
-    darker: hslToHex(h, s, clamp(l - 25, 0, 100)),
+    lighter: hslToHex(h, s, clamp(l + 25, 0, 96)),
+    darker: hslToHex(h, s, clamp(l - 25, 5, 100)),
     muted: hslToHex(h, Math.round(s * 0.4), l),
   };
 }
