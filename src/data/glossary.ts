@@ -468,6 +468,7 @@ export const glossary: GlossaryTerm[] = [
     definition: 'A tool that calculates the contrast ratio between a foreground and background color and reports whether the pair meets WCAG accessibility thresholds. Essential for verifying readability.',
     relatedLessons: ['u3-l7'],
   },
+  // ── Unit 4 ──────────────────────────────────────────────────────────────────
   {
     term: 'color perception',
     definition: 'The process by which the human eye and brain convert light signals into the experience of color. Perception is constructed by the visual system and varies between individuals.',
@@ -891,6 +892,7 @@ export const glossary: GlossaryTerm[] = [
     definition: 'The degree to which chart series are visually distinguishable from each other and from the chart background. Adequate chart contrast is necessary for accessibility under both normal and CVD conditions.',
     relatedLessons: ['u6-l5'],
   },
+  // ── Unit 6 ──────────────────────────────────────────────────────────────────
   {
     term: 'color system',
     definition: 'A structured approach to color usage in a product, assigning colors to named roles with defined purposes. A color system promotes consistency and makes design decisions scalable.',
