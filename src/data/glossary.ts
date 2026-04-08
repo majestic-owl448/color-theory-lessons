@@ -870,4 +870,165 @@ export const glossary: GlossaryTerm[] = [
     definition: 'A visual property that suggests how an interface element can be used — such as a button shape suggesting it is clickable. Weak visual affordances make interfaces harder to use.',
     relatedLessons: ['u5-l1'],
   },
+  // Unit 6 terms
+  {
+    term: 'accent overuse',
+    definition: 'Applying an accent color to too many elements so that it loses its ability to signal importance or draw attention. When everything is accented, nothing stands out.',
+    relatedLessons: ['u6-l3'],
+  },
+  {
+    term: 'brand color',
+    definition: 'A color defined by brand guidelines as representing an organization\'s visual identity. In product design, the brand color must be adapted to serve both brand and functional requirements.',
+    relatedLessons: ['u6-l3'],
+  },
+  {
+    term: 'categorical palette',
+    definition: 'A set of distinct hues used to represent unordered groups in data visualizations. Categorical palettes encode identity, not quantity.',
+    relatedLessons: ['u6-l5'],
+  },
+  {
+    term: 'chart contrast',
+    definition: 'The degree to which chart series are visually distinguishable from each other and from the chart background. Adequate chart contrast is necessary for accessibility under both normal and CVD conditions.',
+    relatedLessons: ['u6-l5'],
+  },
+  {
+    term: 'color system',
+    definition: 'A structured approach to color usage in a product, assigning colors to named roles with defined purposes. A color system promotes consistency and makes design decisions scalable.',
+    relatedLessons: ['u6-l1'],
+  },
+  {
+    term: 'component state',
+    definition: 'A distinct visual condition of a UI component, such as default, hover, active, focused, or disabled. Each state must be visually distinguishable using color and non-color cues.',
+    relatedLessons: ['u6-l2'],
+  },
+  {
+    term: 'consistency',
+    definition: 'The property of using the same visual treatment for the same element or role throughout a product. Color consistency builds user trust and makes interfaces predictable.',
+    relatedLessons: ['u6-l1'],
+  },
+  {
+    term: 'consistency audit',
+    definition: 'A review process that checks whether a color role is applied uniformly across all screens and components, identifying instances where the same role uses different values.',
+    relatedLessons: ['u6-l6'],
+  },
+  {
+    term: 'context effect',
+    definition: 'A perceptual phenomenon where the same color appears different depending on its surrounding colors. Context effect means hex values alone do not determine perceived color.',
+    relatedLessons: ['u6-l6'],
+  },
+  {
+    term: 'dark mode',
+    definition: 'An interface theme that uses dark backgrounds and lighter foreground colors, reducing luminance in dim environments. Dark mode requires deliberate color role adaptation, not simple value inversion.',
+    relatedLessons: ['u6-l4'],
+  },
+  {
+    term: 'data emphasis',
+    definition: 'Highlighting a specific data point or series in a chart using a more vivid or contrasting color while reducing visual weight of the others, to guide viewer attention.',
+    relatedLessons: ['u6-l5'],
+  },
+  {
+    term: 'disabled',
+    definition: 'A component state indicating an element is not interactive. Disabled elements typically use reduced opacity or muted color values to communicate their inactive status.',
+    relatedLessons: ['u6-l2'],
+  },
+  {
+    term: 'elevated surface',
+    definition: 'A UI surface that appears above the base page background, such as a modal or floating card. In dark mode, elevation is communicated by stepping surfaces lighter rather than darker.',
+    relatedLessons: ['u6-l2'],
+  },
+  {
+    term: 'encoding',
+    definition: 'Using a visual property such as color, shape, or size to represent a data attribute in a visualization. Robust encoding uses more than one property simultaneously to support CVD users.',
+    relatedLessons: ['u6-l5'],
+  },
+  {
+    term: 'hover',
+    definition: 'A component state triggered when the pointer is over an interactive element. Hover state should be visually distinct from the default state to confirm interactivity.',
+    relatedLessons: ['u6-l2'],
+  },
+  {
+    term: 'inverse text',
+    definition: 'Text color that is lighter on dark backgrounds. In dark mode, text roles must invert relative to light mode to maintain readability against darker surfaces.',
+    relatedLessons: ['u6-l4'],
+  },
+  {
+    term: 'light mode',
+    definition: 'An interface theme using light backgrounds and dark foreground content, the default for most web products. Color roles designed for light mode do not automatically work in dark mode.',
+    relatedLessons: ['u6-l4'],
+  },
+  {
+    term: 'mode adaptation',
+    definition: 'The deliberate redesign of color role values for a different interface theme, such as translating a light-mode palette into a dark-mode equivalent while preserving hierarchy and meaning.',
+    relatedLessons: ['u6-l4'],
+  },
+  {
+    term: 'primary text',
+    definition: 'The highest-contrast text color in a palette, used for headings and body copy that must be clearly legible against the page or surface background.',
+    relatedLessons: ['u6-l2'],
+  },
+  {
+    term: 'secondary text',
+    definition: 'A lower-contrast text color used for supporting labels, metadata, and less critical information. Secondary text must still meet contrast thresholds for its context.',
+    relatedLessons: ['u6-l2'],
+  },
+  {
+    term: 'semantic role',
+    definition: 'A named purpose assigned to a color in a design system, such as "action", "success", or "error". Semantic roles describe what a color does, not what value it is.',
+    relatedLessons: ['u6-l1'],
+  },
+  {
+    term: 'semantic status',
+    definition: 'A category of color role reserved for communicating system feedback states: success, warning, error, and informational. Semantic status colors must be consistently applied.',
+    relatedLessons: ['u6-l2'],
+  },
+  {
+    term: 'sequential palette',
+    definition: 'A set of colors that step from light to dark (or low to high saturation) to represent ordered or quantitative data. Sequential palettes encode magnitude, not category.',
+    relatedLessons: ['u6-l5'],
+  },
+  {
+    term: 'stress test',
+    definition: 'A systematic review of a color system across multiple contexts (light, dark, charts, alerts, CVD simulation) to reveal weaknesses that are invisible in any single view.',
+    relatedLessons: ['u6-l6'],
+  },
+  {
+    term: 'supporting palette',
+    definition: 'A set of colors that complement the primary brand color in a product, providing range for semantic roles, neutrals, and secondary actions without overusing the brand hue.',
+    relatedLessons: ['u6-l3'],
+  },
+  {
+    term: 'surface depth',
+    definition: 'The visual layering of surfaces in an interface where backgrounds, cards, and elevated panels appear at progressively different lightness levels to create perceived depth.',
+    relatedLessons: ['u6-l4'],
+  },
+  {
+    term: 'system review',
+    definition: 'A structured evaluation of a color system after launch or feature additions, checking for consistency drift, contrast failures, and semantic dilution.',
+    relatedLessons: ['u6-l6'],
+  },
+  {
+    term: 'theme pairing',
+    definition: 'The practice of designing light and dark mode color roles in parallel so that both themes have equivalent hierarchy, readability, and semantic clarity.',
+    relatedLessons: ['u6-l4'],
+  },
+  {
+    term: 'tonal scale',
+    definition: 'A sequence of lightness steps derived from a base hue, used to generate a range of values for a role (such as action-100 through action-900) without changing hue.',
+    relatedLessons: ['u6-l3'],
+  },
+  {
+    term: 'tonal separation',
+    definition: 'Sufficient lightness difference between adjacent surfaces to communicate their layering relationship, even in dark mode where contrast differences are smaller.',
+    relatedLessons: ['u6-l4'],
+  },
+  {
+    term: 'visual grouping',
+    definition: 'Using color (and other Gestalt cues) to make related data elements appear to belong together in a chart or layout, aiding comprehension of structure.',
+    relatedLessons: ['u6-l5'],
+  },
+  {
+    term: 'wide-gamut display',
+    definition: 'A screen technology that can show more colors than the standard sRGB range, making highly saturated colors appear more vivid. Designs should use moderate saturation to remain consistent across display types.',
+    relatedLessons: ['u6-l6'],
+  },
 ];

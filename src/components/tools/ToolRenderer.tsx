@@ -29,6 +29,12 @@ import { ComponentCheckerTool } from './ComponentCheckerTool.tsx';
 import { ColorAloneRebuildTool } from './ColorAloneRebuildTool.tsx';
 import { AuditFlowTool } from './AuditFlowTool.tsx';
 import { PatternRepairTool } from './PatternRepairTool.tsx';
+import { SystemComparisonTool } from './SystemComparisonTool.tsx';
+import { RoleBuilderTool } from './RoleBuilderTool.tsx';
+import { BrandPressureTool } from './BrandPressureTool.tsx';
+import { DarkTranslatorTool } from './DarkTranslatorTool.tsx';
+import { ChartTunerTool } from './ChartTunerTool.tsx';
+import { SystemStressTestTool } from './SystemStressTestTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -137,6 +143,24 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
 
     case 'pattern-repair':
       return <PatternRepairTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'system-comparison':
+      return <SystemComparisonTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'role-builder':
+      return <RoleBuilderTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'brand-pressure':
+      return <BrandPressureTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'dark-translator':
+      return <DarkTranslatorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'chart-tuner':
+      return <ChartTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'system-stress':
+      return <SystemStressTestTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (

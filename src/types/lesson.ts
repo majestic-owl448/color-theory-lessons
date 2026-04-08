@@ -58,6 +58,12 @@ export type InteractionType =
   | 'color-alone-rebuild'
   | 'audit-flow'
   | 'pattern-repair'
+  | 'system-comparison'
+  | 'role-builder'
+  | 'brand-pressure'
+  | 'dark-translator'
+  | 'chart-tuner'
+  | 'system-stress'
   | 'none';
 
 export interface LessonStep {
@@ -85,7 +91,8 @@ export type ChallengeType =
   | 'explore-all'
   | 'add-cues'
   | 'audit'
-  | 'repair';
+  | 'repair'
+  | 'system-build';
 
 export interface QuizItem {
   id: string;

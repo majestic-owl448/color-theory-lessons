@@ -999,7 +999,227 @@ const milestone5: MilestoneConfig = {
   ],
 };
 
-const milestoneRegistry: MilestoneConfig[] = [milestone1, milestone2, milestone3, milestone4, milestone5];
+const milestone6: MilestoneConfig = {
+  id: 'milestone-6',
+  unitId: 'unit-6',
+  title: 'Color System Capstone',
+  description: 'Demonstrate your mastery of applied color systems. Answer questions across color roles, dark mode, chart accessibility, brand constraints, and system review.',
+  estimatedMinutes: 25,
+  heroVisual: 'interface-mockup',
+  passThreshold: 12,
+  parts: [
+    {
+      id: 'm6-p1',
+      title: 'Color Systems and Roles',
+      description: 'Test your understanding of semantic color roles and system thinking.',
+      questions: [
+        {
+          id: 'm6-q1',
+          prompt: 'What is the main advantage of assigning semantic color roles over choosing hex values case by case?',
+          choices: [
+            { id: 'a', label: 'Semantic roles guarantee better contrast ratios automatically', isCorrect: false, explanation: 'Roles do not auto-fix contrast — they provide a consistent vocabulary. Contrast must still be verified.' },
+            { id: 'b', label: 'Semantic roles make color decisions consistent and reusable across the entire product', isCorrect: true, explanation: 'Correct. Roles like "action" or "surface" let you update one value and propagate it everywhere, reducing inconsistency.' },
+            { id: 'c', label: 'Semantic roles eliminate the need for design tokens', isCorrect: false, explanation: 'Design tokens are how semantic roles are typically implemented — they work together, not against each other.' },
+            { id: 'd', label: 'Semantic roles reduce the number of colors a designer has to choose', isCorrect: false, explanation: 'You still choose values for each role. The benefit is clarity of purpose, not fewer decisions.' },
+          ],
+        },
+        {
+          id: 'm6-q2',
+          prompt: 'A "success" role currently maps to teal (#14b8a6). A developer uses it for both success alerts and a decorative teal accent. What problem does this create?',
+          choices: [
+            { id: 'a', label: 'The teal color is not accessible', isCorrect: false, explanation: 'Accessibility depends on contrast, not the color itself.' },
+            { id: 'b', label: 'The semantic meaning of "success" is diluted when the same color is used decoratively', isCorrect: true, explanation: 'Correct. When a semantic color appears in unrelated contexts, users lose confidence in what it means.' },
+            { id: 'c', label: 'Two different components cannot share the same hex value', isCorrect: false, explanation: 'The same value can appear in multiple places — the problem is semantic confusion, not the value itself.' },
+            { id: 'd', label: 'Teal is not appropriate for success states', isCorrect: false, explanation: 'The role value choice is independent of the semantic confusion issue.' },
+          ],
+        },
+        {
+          id: 'm6-q3',
+          prompt: 'A minimal color system needs at least which set of semantic roles?',
+          choices: [
+            { id: 'a', label: 'Primary, secondary, tertiary, and quaternary', isCorrect: false, explanation: 'These are generic labels, not semantic roles. "Secondary" does not tell you what the color does.' },
+            { id: 'b', label: 'Page background, surface, primary text, secondary text, action, success, warning, error', isCorrect: true, explanation: 'Correct. This set covers the core structural and feedback needs of most interfaces.' },
+            { id: 'c', label: 'Brand color, highlight, and shadow', isCorrect: false, explanation: 'These are descriptive but incomplete — they miss structural roles like surface and text.' },
+            { id: 'd', label: 'A color system needs at least 24 named roles to be useful', isCorrect: false, explanation: 'A compact 8–12 role system can fully support most product components and states.' },
+          ],
+        },
+        {
+          id: 'm6-q4',
+          prompt: 'When a designer updates the "action" token value from blue to indigo in a design system, what happens to all buttons using that token?',
+          choices: [
+            { id: 'a', label: 'Nothing — each button must be updated individually', isCorrect: false, explanation: 'That would be true if hex values were hardcoded, not tokens.' },
+            { id: 'b', label: 'All buttons update automatically because they reference the same token', isCorrect: true, explanation: 'Correct. This is the primary efficiency benefit of a token-based color system.' },
+            { id: 'c', label: 'Only buttons in the design file update, not in code', isCorrect: false, explanation: 'A shared token system propagates to code as well when properly implemented.' },
+            { id: 'd', label: 'Tokens only affect new components, not existing ones', isCorrect: false, explanation: 'Existing components referencing the token update when the token value changes.' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'm6-p2',
+      title: 'Brand Constraints and Dark Mode',
+      description: 'Apply brand pressure and dark mode adaptation principles.',
+      questions: [
+        {
+          id: 'm6-q5',
+          prompt: "A brand's primary color is a bright yellow (#facc15). It is used as button background with white text. What is the likely failure?",
+          choices: [
+            { id: 'a', label: 'Yellow is not a professional brand color', isCorrect: false, explanation: 'Brand color perception is subjective — accessibility is the objective issue.' },
+            { id: 'b', label: 'White text on bright yellow likely fails contrast — dark text would work better', isCorrect: true, explanation: 'Correct. Bright yellow has high luminance; white text often fails 4.5:1. Dark text is the correct pair.' },
+            { id: 'c', label: 'Buttons should never use the primary brand color', isCorrect: false, explanation: 'Brand color on buttons is common — the issue is the text contrast choice.' },
+            { id: 'd', label: 'Yellow buttons confuse users about the primary action', isCorrect: false, explanation: 'Yellow is a bold choice but not inherently confusing — contrast is the failure.' },
+          ],
+        },
+        {
+          id: 'm6-q6',
+          prompt: 'A brand accent is used everywhere: buttons, links, headings, card borders, dividers. What is the most likely problem?',
+          choices: [
+            { id: 'a', label: 'The accent color becomes invisible from overuse and loses its ability to signal importance', isCorrect: true, explanation: 'Correct. Accent overuse dilutes the attention signal — when everything is accented, nothing is.' },
+            { id: 'b', label: 'The brand palette becomes too consistent', isCorrect: false, explanation: 'Consistency is a goal, not a problem. Over-application of a single color is the issue.' },
+            { id: 'c', label: 'Users will memorize the brand color more easily', isCorrect: false, explanation: 'Memorability is not the failure mode here — signal dilution is.' },
+            { id: 'd', label: 'The accent creates too much contrast on most elements', isCorrect: false, explanation: 'High contrast is usually desirable. The problem is semantic dilution.' },
+          ],
+        },
+        {
+          id: 'm6-q7',
+          prompt: 'Why does a light-mode surface color (#f9fafb) usually fail in dark mode when applied directly?',
+          choices: [
+            { id: 'a', label: 'Light colors are not supported in dark mode', isCorrect: false, explanation: 'Any color can technically be applied — the problem is perceptual.' },
+            { id: 'b', label: 'A near-white surface in a dark context creates blinding contrast and destroys hierarchy', isCorrect: true, explanation: 'Correct. Dark mode surfaces should step from dark, not use light-mode values.' },
+            { id: 'c', label: 'Light surfaces are always too transparent in dark mode', isCorrect: false, explanation: 'Transparency is a separate concern — luminance clash is the primary issue.' },
+            { id: 'd', label: 'Light colors render differently on dark displays', isCorrect: false, explanation: 'Rendering differences are minor — the perceptual hierarchy issue is the core problem.' },
+          ],
+        },
+        {
+          id: 'm6-q8',
+          prompt: 'What technique ensures a dark mode system maintains depth hierarchy without using the same color values as light mode?',
+          choices: [
+            { id: 'a', label: 'Invert all light-mode hex values', isCorrect: false, explanation: 'Simple inversion often produces ugly or inaccessible results — tonal stepping is more reliable.' },
+            { id: 'b', label: 'Step surfaces upward in lightness — page bg darkest, cards lighter, elevated panels lightest', isCorrect: true, explanation: 'Correct. Tonal stepping within the dark range preserves depth without using light-mode values.' },
+            { id: 'c', label: 'Use identical dark gray for all surfaces to look more refined', isCorrect: false, explanation: 'Identical surfaces flatten hierarchy — users cannot distinguish cards from background.' },
+            { id: 'd', label: 'Reduce saturation of all colors to near-zero in dark mode', isCorrect: false, explanation: 'Zero saturation removes personality and makes semantic colors hard to distinguish.' },
+          ],
+        },
+        {
+          id: 'm6-q9',
+          prompt: 'A dark mode design has a blue action color (#1e40af) carried over from light mode. What is likely wrong?',
+          choices: [
+            { id: 'a', label: 'Blue is not permitted in dark mode', isCorrect: false, explanation: 'Blue can work in dark mode — the specific value is the issue.' },
+            { id: 'b', label: '#1e40af is too dark to be visible on dark backgrounds — a lighter blue is needed', isCorrect: true, explanation: 'Correct. Dark blue on dark surface has low contrast. Dark mode actions typically need lighter, more luminous values.' },
+            { id: 'c', label: 'The button will automatically lighten in dark mode', isCorrect: false, explanation: 'Dark mode adaptation requires explicit design decisions — values do not self-adapt.' },
+            { id: 'd', label: 'Dark mode should use green for actions instead of blue', isCorrect: false, explanation: 'Hue is not the issue — luminance contrast with the dark background is.' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'm6-p3',
+      title: 'Charts and Data Visualization',
+      description: 'Apply color accessibility thinking to data visualization contexts.',
+      questions: [
+        {
+          id: 'm6-q10',
+          prompt: 'A line chart with 5 series uses only hue to distinguish them. Under deuteranopia simulation, red and green lines look identical. What is the best fix?',
+          choices: [
+            { id: 'a', label: 'Remove one of the series', isCorrect: false, explanation: 'Removing series loses information — the design should support all series accessibly.' },
+            { id: 'b', label: 'Add direct data labels and use different line styles (dashed, dotted, solid)', isCorrect: true, explanation: 'Correct. Direct labels eliminate legend dependency. Line styles distinguish series by shape, not hue.' },
+            { id: 'c', label: 'Change to a pie chart instead', isCorrect: false, explanation: 'Pie charts have their own accessibility challenges — this does not solve the CVD issue.' },
+            { id: 'd', label: 'Use a bright red-green pair with higher saturation', isCorrect: false, explanation: 'Higher saturation does not help under CVD — red and green merge regardless of saturation.' },
+          ],
+        },
+        {
+          id: 'm6-q11',
+          prompt: 'When is a sequential palette more appropriate than a categorical palette in data visualization?',
+          choices: [
+            { id: 'a', label: 'When the data has no natural ordering', isCorrect: false, explanation: 'Unordered data calls for categorical palettes, not sequential ones.' },
+            { id: 'b', label: 'When representing ordered or quantitative data (e.g., heatmaps, density, intensity scales)', isCorrect: true, explanation: 'Correct. Sequential palettes encode magnitude — dark to light or vice versa for ordered data.' },
+            { id: 'c', label: 'Always — sequential palettes are more accessible than categorical ones', isCorrect: false, explanation: 'Sequential palettes are appropriate for ordered data. For categories, sequential palettes mislead users into seeing false order.' },
+            { id: 'd', label: 'When you need more than 6 series', isCorrect: false, explanation: 'Number of series is not the deciding factor — data structure (ordered vs unordered) is.' },
+          ],
+        },
+        {
+          id: 'm6-q12',
+          prompt: 'A pie chart has 7 slices with very similar hues. What is the most robust fix?',
+          choices: [
+            { id: 'a', label: 'Use a wider hue range and higher saturation', isCorrect: false, explanation: 'Wider hue range helps somewhat but still relies on color alone, especially with many slices.' },
+            { id: 'b', label: 'Label each slice directly with its value and name; use a table for precise values', isCorrect: true, explanation: 'Correct. Direct labels and supplementary tables eliminate color-only identification and aid precision.' },
+            { id: 'c', label: 'Reduce to a maximum of 4 slices by hiding the rest', isCorrect: false, explanation: 'Hiding data is a last resort — labels and tables are more informative solutions.' },
+            { id: 'd', label: 'Animate each slice to draw attention', isCorrect: false, explanation: 'Animation does not help distinguish 7 similar-hued slices and may cause accessibility issues.' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'm6-p4',
+      title: 'System Review and Stress Testing',
+      description: 'Evaluate a color system holistically across contexts, modes, and simulation.',
+      questions: [
+        {
+          id: 'm6-q13',
+          prompt: 'What does a "color system stress test" check that a single-screen contrast check does not?',
+          choices: [
+            { id: 'a', label: 'Exact hex values used across the codebase', isCorrect: false, explanation: 'A stress test is about visual and semantic performance, not code auditing.' },
+            { id: 'b', label: 'Whether the system holds up across multiple contexts — light, dark, charts, alerts, and CVD simulation', isCorrect: true, explanation: 'Correct. A stress test exposes failures invisible in any single view.' },
+            { id: 'c', label: 'Whether the brand guidelines were followed exactly', isCorrect: false, explanation: 'Brand compliance is separate from system robustness.' },
+            { id: 'd', label: 'The number of tokens defined in the system', isCorrect: false, explanation: 'Token count does not indicate system quality — contextual performance does.' },
+          ],
+        },
+        {
+          id: 'm6-q14',
+          prompt: 'A consistency audit finds that the primary button uses #1e40af on 3 screens and #3b82f6 on 2 screens. What should happen?',
+          choices: [
+            { id: 'a', label: 'Accept the variation — slight differences are unnoticeable', isCorrect: false, explanation: 'Slight differences accumulate into inconsistency and erode user confidence in the design.' },
+            { id: 'b', label: 'Consolidate to one value via the action token and update all instances', isCorrect: true, explanation: 'Correct. The token should carry the single canonical value and all instances should reference it.' },
+            { id: 'c', label: 'Choose the more popular value and manually change the others', isCorrect: false, explanation: 'Manual changes are error-prone — a token ensures future consistency automatically.' },
+            { id: 'd', label: 'Use both values as aliases for the same role', isCorrect: false, explanation: 'Two values for one role reintroduces inconsistency. One role, one value.' },
+          ],
+        },
+        {
+          id: 'm6-q15',
+          prompt: 'Why can the same hex value look different across two screens in the same app?',
+          choices: [
+            { id: 'a', label: 'The browser renders colors differently per page', isCorrect: false, explanation: 'Browser rendering is consistent per display — perception is the varying factor.' },
+            { id: 'b', label: 'Context effect — the surrounding colors change how a color is perceived', isCorrect: true, explanation: 'Correct. A blue on a warm background reads differently than the same blue on a cool background due to simultaneous contrast.' },
+            { id: 'c', label: 'Different monitors show different colors', isCorrect: false, explanation: 'Monitor variation is a factor, but context effect explains perceptual differences on the same display.' },
+            { id: 'd', label: 'CSS applies different rendering passes per component', isCorrect: false, explanation: 'CSS rendering does not vary between components — context effect is perceptual.' },
+          ],
+        },
+        {
+          id: 'm6-q16',
+          prompt: 'Before shipping, which five areas should a final color review cover?',
+          choices: [
+            { id: 'a', label: 'Font size, border radius, spacing, shadows, and animation timing', isCorrect: false, explanation: 'These are important design properties but not specifically color review areas.' },
+            { id: 'b', label: 'Hierarchy, text readability, semantic clarity, dark mode, chart readability, and CVD robustness', isCorrect: true, explanation: 'Correct. These six areas together cover the key failure modes of a color system.' },
+            { id: 'c', label: 'Brand guidelines, marketing approval, client review, developer handoff, and QA sign-off', isCorrect: false, explanation: 'These are process steps, not color review criteria.' },
+            { id: 'd', label: 'Number of colors, token count, palette size, theme support, and documentation', isCorrect: false, explanation: 'Documentation and quantity are secondary to functional review criteria.' },
+          ],
+        },
+        {
+          id: 'm6-q17',
+          prompt: 'A wide-gamut display shows an interface with highly saturated accent colors as intended. A user on a standard sRGB display sees muted versions of those colors. What approach reduces this problem?',
+          choices: [
+            { id: 'a', label: 'Use maximum saturation so colors remain vivid even when muted', isCorrect: false, explanation: 'Maximum saturation on wide-gamut displays creates extremely vivid results on wide-gamut while still muting on sRGB — the gap widens.' },
+            { id: 'b', label: 'Use moderate saturation that remains readable across display types', isCorrect: true, explanation: 'Correct. Moderate saturation ensures the design holds across both standard and wide-gamut displays.' },
+            { id: 'c', label: 'Avoid color entirely and use only grayscale', isCorrect: false, explanation: 'Grayscale removes all color signal — moderation is the goal, not elimination.' },
+            { id: 'd', label: 'Wide-gamut issues resolve automatically in modern browsers', isCorrect: false, explanation: 'Browsers do not automatically compensate — designers must make intentional saturation choices.' },
+          ],
+        },
+        {
+          id: 'm6-q18',
+          prompt: 'A designer completes a color system for a product. What is the single most important ongoing practice after launch?',
+          choices: [
+            { id: 'a', label: 'Adding new accent colors regularly to keep the design fresh', isCorrect: false, explanation: 'Adding colors without purpose grows entropy — consistency requires discipline.' },
+            { id: 'b', label: 'Reviewing new components and feature additions against the system to maintain consistency', isCorrect: true, explanation: 'Correct. Systems decay when new work bypasses them. Regular review keeps the system alive.' },
+            { id: 'c', label: 'Redesigning the color system annually', isCorrect: false, explanation: 'Annual redesigns are disruptive — incremental review and refinement is more sustainable.' },
+            { id: 'd', label: 'Locking all tokens so no one can change them', isCorrect: false, explanation: 'Lock-down prevents evolution — a governance process with review is more practical.' },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const milestoneRegistry: MilestoneConfig[] = [milestone1, milestone2, milestone3, milestone4, milestone5, milestone6];
 
 export function getMilestoneById(id: string): MilestoneConfig | undefined {
   return milestoneRegistry.find((m) => m.id === id);

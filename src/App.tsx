@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './state/app-context.tsx';
 import { AppShell } from './components/layout/AppShell.tsx';
 import { HomePage } from './pages/HomePage.tsx';
@@ -32,12 +32,7 @@ export function App() {
             <Route path="/review" element={<ReviewPage />} />
             <Route
               path="/capstone"
-              element={
-                <PlaceholderPage
-                  title="Capstone"
-                  description="Apply everything you've learned in a final project."
-                />
-              }
+              element={<Navigate to="/milestone/milestone-6" replace />}
             />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>

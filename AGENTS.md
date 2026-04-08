@@ -16,9 +16,10 @@ Browser-based learning app teaching practical color theory for digital design. S
 - **Unit 3** — Color Relationships and Harmony (7 lessons, milestone, glossary, tools: hsl-playground, alpha-layer, theme-sandbox, token-map, color-space-lab)
 - **Unit 4** — Color in UI Design (6 lessons, milestone, glossary, tools: eye-diagram, vision-cards, interface-gallery, color-only-detector, state-workshop, inclusive-review)
 - **Unit 5** — Accessibility and Inclusive Color (6 lessons, milestone, 34 glossary terms, tools: broken-usable-cards, text-contrast-lab, component-checker, color-alone-rebuild, audit-flow, pattern-repair)
+- **Unit 6** — Applied Design Systems (6 lessons, milestone-6 capstone, 30 glossary terms, tools: system-comparison, role-builder, brand-pressure, dark-translator, chart-tuner, system-stress)
 
-### Pending Units
-- Unit 6 — Building and Evaluating Palettes (not yet built)
+### App Completeness
+All 6 units fully built and wired. 37 total lessons, 23 tool components, 6 milestones. The `/capstone` route redirects to `milestone-6`. `npm run build` passes with zero TypeScript errors.
 
 ## Key Source Locations
 

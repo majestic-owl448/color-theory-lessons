@@ -30,6 +30,12 @@ import { lesson5_3 } from './unit-5/lesson-5-3.ts';
 import { lesson5_4 } from './unit-5/lesson-5-4.ts';
 import { lesson5_5 } from './unit-5/lesson-5-5.ts';
 import { lesson5_6 } from './unit-5/lesson-5-6.ts';
+import { lesson6_1 } from './unit-6/lesson-6-1.ts';
+import { lesson6_2 } from './unit-6/lesson-6-2.ts';
+import { lesson6_3 } from './unit-6/lesson-6-3.ts';
+import { lesson6_4 } from './unit-6/lesson-6-4.ts';
+import { lesson6_5 } from './unit-6/lesson-6-5.ts';
+import { lesson6_6 } from './unit-6/lesson-6-6.ts';
 
 export const lessonRegistry: LessonConfig[] = [
   lesson1_1,
@@ -63,6 +69,12 @@ export const lessonRegistry: LessonConfig[] = [
   lesson5_4,
   lesson5_5,
   lesson5_6,
+  lesson6_1,
+  lesson6_2,
+  lesson6_3,
+  lesson6_4,
+  lesson6_5,
+  lesson6_6,
 ];
 
 export function getLessonById(id: string): LessonConfig | undefined {

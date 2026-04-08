@@ -1,0 +1,169 @@
+import { useState, useRef } from 'react';
+import shellStyles from './ToolShell.module.css';
+
+interface ChartTunerToolProps {
+  interactive?: boolean;
+  onComplete?: () => void;
+}
+
+const SERIES = ['Revenue', 'Expenses', 'Profit', 'Forecast'];
+
+const DEFAULTS = ['#3b82f6', '#ef4444', '#22c55e', '#f59e0b'];
+
+// Simple deuteranopia approximation matrix applied via canvas-less approximation
+function simulateDeuteranopia(hex: string): string {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+  const sr = Math.min(1, r * 0.367 + g * 0.861 - b * 0.228);
+  const sg = Math.min(1, r * 0.280 + g * 0.673 + b * 0.047);
+  const sb = Math.min(1, -r * 0.012 + g * 0.043 + b * 0.969);
+  const toHex = (v: number) => Math.round(Math.min(255, v * 255)).toString(16).padStart(2, '0');
+  return `#${toHex(sr)}${toHex(sg)}${toHex(sb)}`;
+}
+
+function hexToRgb(hex: string) {
+  return { r: parseInt(hex.slice(1, 3), 16), g: parseInt(hex.slice(3, 5), 16), b: parseInt(hex.slice(5, 7), 16) };
+}
+
+function colorDiff(a: string, b: string): number {
+  const ra = hexToRgb(a), rb = hexToRgb(b);
+  return Math.sqrt((ra.r - rb.r) ** 2 + (ra.g - rb.g) ** 2 + (ra.b - rb.b) ** 2);
+}
+
+const CHART_DATA = [
+  [80, 60, 20, 75],
+  [65, 55, 10, 68],
+  [90, 70, 20, 85],
+  [72, 64, 8, 78],
+  [88, 68, 20, 82],
+];
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
+
+const MIN_DIFF = 80;
+
+function ChartBars({ colors, simulated }: { colors: string[]; simulated: boolean }) {
+  const displayColors = simulated ? colors.map(simulateDeuteranopia) : colors;
+  const maxVal = 100;
+  return (
+    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-end', height: 100 }}>
+      {MONTHS.map((month, mi) => (
+        <div key={month} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+          <div style={{ display: 'flex', gap: 1, alignItems: 'flex-end', height: 80 }}>
+            {SERIES.map((_, si) => {
+              const h = (CHART_DATA[mi][si] / maxVal) * 80;
+              return (
+                <div
+                  key={si}
+                  style={{ width: 8, height: h, background: displayColors[si], borderRadius: '2px 2px 0 0', flexShrink: 0 }}
+                  title={`${SERIES[si]}: ${CHART_DATA[mi][si]}`}
+                />
+              );
+            })}
+          </div>
+          <span style={{ fontSize: '0.6rem', color: 'var(--muted)', fontFamily: 'var(--font-mono)' }}>{month}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }
+
+export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerToolProps) {
+  const [colors, setColors] = useState<string[]>(DEFAULTS);
+  const [simulated, setSimulated] = useState(false);
+  const completed = useRef(false);
+
+  function update(i: number, val: string) {
+    if (!interactive) return;
+    const next = [...colors];
+    next[i] = val;
+    setColors(next);
+
+    if (!completed.current && isValidHex(val)) {
+      const pairs = [];
+      for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++) pairs.push([next[a], next[b]]);
+      const simPairs = pairs.map(([a, b]) => [simulateDeuteranopia(a), simulateDeuteranopia(b)]);
+      const allOk = pairs.every(([a, b]) => colorDiff(a, b) >= MIN_DIFF) &&
+        simPairs.every(([a, b]) => colorDiff(a, b) >= MIN_DIFF);
+      if (allOk) {
+        completed.current = true;
+        onComplete?.();
+      }
+    }
+  }
+
+  const simColors = colors.map(simulateDeuteranopia);
+
+  return (
+    <div className={shellStyles.shell}>
+      <span className={shellStyles.toolLabel}>chart tuner</span>
+
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+        <button
+          onClick={() => setSimulated(false)}
+          disabled={!interactive}
+          style={{
+            fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: 4, cursor: interactive ? 'pointer' : 'default',
+            background: !simulated ? 'var(--accent, #f59e0b)' : 'var(--border)', color: !simulated ? '#000' : 'var(--fg)',
+            border: 'none',
+          }}
+        >
+          Normal
+        </button>
+        <button
+          onClick={() => setSimulated(true)}
+          disabled={!interactive}
+          style={{
+            fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: 4, cursor: interactive ? 'pointer' : 'default',
+            background: simulated ? 'var(--accent, #f59e0b)' : 'var(--border)', color: simulated ? '#000' : 'var(--fg)',
+            border: 'none',
+          }}
+        >
+          Deuteranopia sim
+        </button>
+      </div>
+
+      <ChartBars colors={colors} simulated={simulated} />
+
+      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: '0.75rem' }}>
+        {SERIES.map((name, i) => (
+          <div key={name} style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem' }}>
+            <div style={{ width: 12, height: 12, background: simulated ? simColors[i] : colors[i], borderRadius: 2, flexShrink: 0 }} />
+            <span style={{ color: 'var(--muted)', fontFamily: 'var(--font-mono)' }}>{name}</span>
+            {interactive && (
+              <input
+                type="color"
+                value={isValidHex(colors[i]) ? colors[i] : '#000000'}
+                onChange={e => update(i, e.target.value)}
+                style={{ width: 22, height: 22, padding: 0, border: 'none', cursor: 'pointer', background: 'transparent' }}
+                title={`Pick color for ${name}`}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {interactive && (
+        <div style={{ marginTop: '0.75rem', fontSize: '0.78rem', color: 'var(--muted)' }}>
+          {(() => {
+            const pairs: [number, number][] = [];
+            for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++) pairs.push([a, b]);
+            const weak = pairs.filter(([a, b]) => colorDiff(simColors[a], simColors[b]) < MIN_DIFF);
+            return weak.length > 0
+              ? <span style={{ color: 'var(--warning, #f59e0b)' }}>⚠ Under simulation: {weak.map(([a, b]) => `${SERIES[a]}/${SERIES[b]}`).join(', ')} are hard to distinguish</span>
+              : <span style={{ color: 'var(--success, #22c55e)' }}>✓ All series distinguishable in both views</span>;
+          })()}
+        </div>
+      )}
+
+      {completed.current && (
+        <p style={{ color: 'var(--success, #22c55e)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+          Chart palette passes normal and CVD simulation — series are distinguishable in both views.
+        </p>
+      )}
+    </div>
+  );
+}

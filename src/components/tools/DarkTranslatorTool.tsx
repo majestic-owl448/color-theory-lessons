@@ -1,0 +1,178 @@
+import { useState, useRef } from 'react';
+import { hexToRgb, contrastRatio } from '../../utils/color.ts';
+import shellStyles from './ToolShell.module.css';
+
+interface DarkTranslatorToolProps {
+  interactive?: boolean;
+  onComplete?: () => void;
+}
+
+type RoleKey = 'page-bg' | 'surface' | 'primary-text' | 'secondary-text' | 'action' | 'success' | 'error';
+
+const LIGHT_THEME: Record<RoleKey, string> = {
+  'page-bg': '#f9fafb',
+  'surface': '#ffffff',
+  'primary-text': '#111827',
+  'secondary-text': '#6b7280',
+  'action': '#2563eb',
+  'success': '#16a34a',
+  'error': '#dc2626',
+};
+
+const DARK_DEFAULTS: Record<RoleKey, string> = {
+  'page-bg': '#ffffff',
+  'surface': '#f9fafb',
+  'primary-text': '#111827',
+  'secondary-text': '#6b7280',
+  'action': '#2563eb',
+  'success': '#16a34a',
+  'error': '#dc2626',
+};
+
+function getContrast(fg: string, bg: string): number {
+  try { return contrastRatio(hexToRgb(fg), hexToRgb(bg)); } catch { return 1; }
+}
+
+function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }
+
+export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTranslatorToolProps) {
+  const [dark, setDark] = useState<Record<RoleKey, string>>(DARK_DEFAULTS);
+  const [preview, setPreview] = useState<'light' | 'dark'>('light');
+  const completed = useRef(false);
+
+  function update(key: RoleKey, val: string) {
+    if (!interactive) return;
+    setDark(prev => ({ ...prev, [key]: val }));
+  }
+
+  const d = dark;
+  const primaryContrast = getContrast(d['primary-text'], d['page-bg']);
+  const secondaryContrast = getContrast(d['secondary-text'], d['surface']);
+  const surfaceContrast = getContrast(d['surface'], d['page-bg']);
+  const actionContrast = getContrast('#ffffff', d['action']);
+
+  const primaryOk = primaryContrast >= 4.5;
+  const secondaryOk = secondaryContrast >= 3.0;
+  const surfaceOk = surfaceContrast >= 1.1;
+  const actionOk = actionContrast >= 4.5;
+  const allPass = primaryOk && secondaryOk && surfaceOk && actionOk;
+
+  if (interactive && allPass && !completed.current) {
+    completed.current = true;
+    onComplete?.();
+  }
+
+  const roles = preview === 'light' ? LIGHT_THEME : dark;
+  const bg = isValidHex(roles['page-bg']) ? roles['page-bg'] : '#1e293b';
+  const surf = isValidHex(roles['surface']) ? roles['surface'] : '#334155';
+  const pt = isValidHex(roles['primary-text']) ? roles['primary-text'] : '#f8fafc';
+  const st = isValidHex(roles['secondary-text']) ? roles['secondary-text'] : '#94a3b8';
+  const act = isValidHex(roles['action']) ? roles['action'] : '#3b82f6';
+  const suc = isValidHex(roles['success']) ? roles['success'] : '#22c55e';
+  const err = isValidHex(roles['error']) ? roles['error'] : '#ef4444';
+
+  const KEYS = Object.keys(DARK_DEFAULTS) as RoleKey[];
+
+  return (
+    <div className={shellStyles.shell}>
+      <span className={shellStyles.toolLabel}>dark translator</span>
+
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        {/* Light theme (read-only) */}
+        <div style={{ flex: '0 0 200px' }}>
+          <p style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', marginBottom: '0.5rem' }}>LIGHT (fixed)</p>
+          {KEYS.map(key => (
+            <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem', opacity: 0.7 }}>
+              <div style={{ width: 16, height: 16, borderRadius: 3, background: LIGHT_THEME[key], border: '1px solid #e5e7eb', flexShrink: 0 }} />
+              <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', width: 100, flexShrink: 0 }}>{key}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--foreground)' }}>{LIGHT_THEME[key]}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Dark theme (editable) */}
+        <div style={{ flex: '0 0 220px' }}>
+          <p style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', marginBottom: '0.5rem' }}>
+            DARK {interactive ? '(edit)' : '(default — failing)'}
+          </p>
+          {KEYS.map(key => {
+            const val = dark[key];
+            return (
+              <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem' }}>
+                <div style={{ width: 16, height: 16, borderRadius: 3, background: isValidHex(val) ? val : '#888', border: '1px solid var(--border)', flexShrink: 0 }} />
+                <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', width: 100, flexShrink: 0 }}>{key}</span>
+                <input
+                  type="text"
+                  value={val}
+                  onChange={e => update(key, e.target.value)}
+                  disabled={!interactive}
+                  maxLength={7}
+                  style={{
+                    fontFamily: 'var(--font-mono)', fontSize: '0.72rem',
+                    background: 'var(--surface, #1e293b)', color: 'var(--foreground)',
+                    border: `1px solid ${isValidHex(val) ? 'var(--border)' : '#ef4444'}`,
+                    borderRadius: 3, padding: '0.15rem 0.3rem', width: 80,
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Preview + checks */}
+        <div style={{ flex: '1 1 200px' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+            {(['light', 'dark'] as const).map(m => (
+              <button
+                key={m}
+                onClick={() => setPreview(m)}
+                style={{
+                  padding: '0.2rem 0.6rem', fontSize: '0.75rem', borderRadius: 4, cursor: 'pointer',
+                  background: preview === m ? 'var(--accent, #7c3aed)' : 'var(--surface, #1e293b)',
+                  color: preview === m ? '#fff' : 'var(--foreground)',
+                  border: '1px solid var(--border)',
+                }}
+              >
+                {m} mode
+              </button>
+            ))}
+          </div>
+
+          <div style={{ background: bg, padding: '0.75rem', borderRadius: 6, border: '1px solid #4a4a6a', marginBottom: '0.5rem' }}>
+            <div style={{ background: surf, borderRadius: 4, padding: '0.4rem 0.5rem', border: '1px solid rgba(128,128,128,0.2)' }}>
+              <div style={{ color: pt, fontWeight: 600, fontSize: '0.83rem' }}>Card Title</div>
+              <div style={{ color: st, fontSize: '0.75rem' }}>Supporting detail</div>
+              <div style={{ display: 'flex', gap: '0.3rem', marginTop: '0.3rem', flexWrap: 'wrap' }}>
+                <button style={{ background: act, color: '#fff', border: 'none', borderRadius: 4, padding: '0.2rem 0.5rem', fontSize: '0.72rem', cursor: 'default' }}>Action</button>
+                <span style={{ background: suc, color: '#fff', borderRadius: 99, padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>OK</span>
+                <span style={{ background: err, color: '#fff', borderRadius: 99, padding: '0.1rem 0.4rem', fontSize: '0.7rem' }}>Error</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Dark mode validation */}
+          <p style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', marginBottom: '0.25rem' }}>DARK CHECKS</p>
+          {[
+            { label: 'Primary text / page-bg (4.5:1)', pass: primaryOk, ratio: primaryContrast },
+            { label: 'Secondary text / surface (3:1)', pass: secondaryOk, ratio: secondaryContrast },
+            { label: 'Surface ≠ page-bg (1.1:1)', pass: surfaceOk, ratio: surfaceContrast },
+            { label: 'White / action (4.5:1)', pass: actionOk, ratio: actionContrast },
+          ].map(({ label, pass, ratio }) => (
+            <div key={label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', padding: '0.15rem 0' }}>
+              <span style={{ color: 'var(--foreground)' }}>{label}</span>
+              <span style={{ color: pass ? '#22c55e' : '#ef4444', fontFamily: 'var(--font-mono)' }}>
+                {pass ? '✓' : '✗'} {ratio.toFixed(1)}:1
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {completed.current && (
+        <p style={{ color: 'var(--success, #22c55e)', fontSize: '0.85rem' }}>
+          Both themes show readable hierarchy. Dark mode is properly adapted, not just inverted.
+        </p>
+      )}
+    </div>
+  );
+}
