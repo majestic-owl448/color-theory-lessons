@@ -18,6 +18,12 @@ import { lesson3_4 } from './unit-3/lesson-3-4.ts';
 import { lesson3_5 } from './unit-3/lesson-3-5.ts';
 import { lesson3_6 } from './unit-3/lesson-3-6.ts';
 import { lesson3_7 } from './unit-3/lesson-3-7.ts';
+import { lesson4_1 } from './unit-4/lesson-4-1.ts';
+import { lesson4_2 } from './unit-4/lesson-4-2.ts';
+import { lesson4_3 } from './unit-4/lesson-4-3.ts';
+import { lesson4_4 } from './unit-4/lesson-4-4.ts';
+import { lesson4_5 } from './unit-4/lesson-4-5.ts';
+import { lesson4_6 } from './unit-4/lesson-4-6.ts';
 
 export const lessonRegistry: LessonConfig[] = [
   lesson1_1,
@@ -39,6 +45,12 @@ export const lessonRegistry: LessonConfig[] = [
   lesson3_5,
   lesson3_6,
   lesson3_7,
+  lesson4_1,
+  lesson4_2,
+  lesson4_3,
+  lesson4_4,
+  lesson4_5,
+  lesson4_6,
 ];
 
 export function getLessonById(id: string): LessonConfig | undefined {

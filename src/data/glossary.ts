@@ -468,4 +468,229 @@ export const glossary: GlossaryTerm[] = [
     definition: 'A tool that calculates the contrast ratio between a foreground and background color and reports whether the pair meets WCAG accessibility thresholds. Essential for verifying readability.',
     relatedLessons: ['u3-l7'],
   },
+  {
+    term: 'color perception',
+    definition: 'The process by which the human eye and brain convert light signals into the experience of color. Perception is constructed by the visual system and varies between individuals.',
+    relatedLessons: ['u4-l1'],
+  },
+  {
+    term: 'color vision',
+    definition: 'The ability to distinguish colors. Depends on functioning cone cells in the retina and correct processing in the visual cortex.',
+    relatedLessons: ['u4-l1'],
+  },
+  {
+    term: 'cone',
+    definition: 'A type of photoreceptor cell in the retina that is sensitive to color. Humans typically have three cone types, each most responsive to a different range of wavelengths.',
+    relatedLessons: ['u4-l1'],
+  },
+  {
+    term: 'rod',
+    definition: 'A photoreceptor cell in the retina that is more sensitive to low light than to color. Rods are concentrated toward the edges of the retina and are less relevant to everyday color design.',
+    relatedLessons: ['u4-l1'],
+  },
+  {
+    term: 'retina',
+    definition: 'The light-sensitive layer at the back of the eye that contains rods and cones. The retina converts incoming light into electrical signals sent to the brain.',
+    relatedLessons: ['u4-l1'],
+  },
+  {
+    term: 'optic nerve',
+    definition: 'The nerve that carries visual signals from the retina to the brain for interpretation.',
+    relatedLessons: ['u4-l1'],
+  },
+  {
+    term: 'visual system',
+    definition: 'The network of eye, optic nerve, and brain regions that together process incoming light and construct the experience of vision, including color.',
+    relatedLessons: ['u4-l1'],
+  },
+  {
+    term: 'color vision deficiency',
+    definition: 'A condition in which certain color distinctions are harder or impossible to perceive, due to differences in cone function. Not a single condition — includes multiple types and severities.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'protanopia',
+    definition: 'A form of CVD with absent red-sensitive cone function. Reds appear very dark and red-green distinctions are severely weakened.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'protanomaly',
+    definition: 'A form of CVD with reduced red cone sensitivity. Milder than protanopia, but red-green distinctions are still weakened.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'deuteranopia',
+    definition: 'A form of CVD with absent green-sensitive cone function. Red-green distinctions are severely weakened.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'deuteranomaly',
+    definition: 'The most common form of CVD. Reduced green cone sensitivity weakens red-green distinctions.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'tritanopia',
+    definition: 'A form of CVD affecting blue-sensitive cones. Blue and yellow distinctions are weakened.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'tritanomaly',
+    definition: 'A rare form of CVD with reduced blue cone sensitivity. Blue-yellow distinctions are mildly weakened.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'achromatopsia',
+    definition: 'A rare condition with very limited or absent cone function. Only brightness is perceived — hues appear as shades of gray.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'simulation',
+    definition: 'A visual filter or transformation that approximates how a CVD viewer might perceive an interface. Useful for quick design review, though not a perfect replacement for user testing.',
+    relatedLessons: ['u4-l2'],
+  },
+  {
+    term: 'protan',
+    definition: 'Referring to the protan category of CVD (protanopia and protanomaly), affecting red-sensitive cones.',
+    relatedLessons: ['u4-l3'],
+  },
+  {
+    term: 'deutan',
+    definition: 'Referring to the deutan category of CVD (deuteranopia and deuteranomaly), affecting green-sensitive cones.',
+    relatedLessons: ['u4-l3'],
+  },
+  {
+    term: 'tritan',
+    definition: 'Referring to the tritan category of CVD (tritanopia and tritanomaly), affecting blue-sensitive cones.',
+    relatedLessons: ['u4-l3'],
+  },
+  {
+    term: 'backup cue',
+    definition: 'A secondary visual signal — such as an icon, label, pattern, or shape — that carries the same meaning as a color change, so meaning survives if color is hard to perceive.',
+    relatedLessons: ['u4-l3'],
+  },
+  {
+    term: 'redundancy',
+    definition: 'In inclusive design, providing meaning through more than one visual channel so that losing any one channel does not break the design.',
+    relatedLessons: ['u4-l3'],
+  },
+  {
+    term: 'chart key',
+    definition: 'A legend that maps symbols, colors, or patterns to data categories in a chart or graph.',
+    relatedLessons: ['u4-l4'],
+  },
+  {
+    term: 'legend',
+    definition: 'A key that explains the visual encoding of a chart or map. A color-only legend is fragile; adding patterns or direct labels makes it more robust.',
+    relatedLessons: ['u4-l4'],
+  },
+  {
+    term: 'icon',
+    definition: 'A small visual symbol used to reinforce meaning. Icons are valuable backup cues because they carry semantic meaning independently of color.',
+    relatedLessons: ['u4-l4'],
+  },
+  {
+    term: 'label',
+    definition: 'A text string attached to an interface element that explains its state, category, or value. Labels provide a non-color channel of information.',
+    relatedLessons: ['u4-l4'],
+  },
+  {
+    term: 'pattern',
+    definition: 'A repeating visual texture or fill used to differentiate areas or series without relying solely on hue. Useful in charts and maps for CVD robustness.',
+    relatedLessons: ['u4-l4'],
+  },
+  {
+    term: 'selected state',
+    definition: 'The visual treatment indicating an interface element is currently chosen or active. Relying only on color for selected state is a common design problem.',
+    relatedLessons: ['u4-l4'],
+  },
+  {
+    term: 'semantic state',
+    definition: 'A named state with a conventional meaning in an interface — such as success, warning, error, or info — typically associated with a color but ideally reinforced with icons and text.',
+    relatedLessons: ['u4-l4'],
+  },
+  {
+    term: 'use of color',
+    definition: 'WCAG 1.4.1 — a principle that color must not be the only visual means of conveying information, indicating an action, prompting a response, or distinguishing a visual element.',
+    relatedLessons: ['u4-l4'],
+  },
+  {
+    term: 'annotation',
+    definition: 'A text or symbol note added directly to a chart or diagram to label data points without requiring the viewer to cross-reference a separate legend.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'chart series',
+    definition: 'A single data set in a multi-series chart. Series are typically differentiated by color, but robust charts also use patterns, direct labels, or different line styles.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'direct label',
+    definition: 'A label placed adjacent to a data line or bar, eliminating the need for a separate legend. Direct labels are more readable and more CVD-robust than color-coded legends.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'error state',
+    definition: 'A UI state indicating that an action failed or a field contains invalid input. Should be communicated through color + icon + text, not color alone.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'info state',
+    definition: 'A UI state conveying neutral informational context. Should use icon + color, not color alone.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'pattern fill',
+    definition: 'A repeating texture or hatch pattern applied to a chart bar, area, or region to make it distinguishable from adjacent elements without relying solely on hue.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'success state',
+    definition: 'A UI state confirming that an action completed correctly. Should include a success icon and confirmation text, not just a green color change.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'validation feedback',
+    definition: 'Visual and textual messages that inform users whether their input is valid or what correction is needed. Effective feedback combines border state, icon, and a clear error message.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'warning state',
+    definition: 'A UI state alerting the user to a potential problem that has not yet caused failure. Should use a warning icon and text alongside a color indicator.',
+    relatedLessons: ['u4-l5'],
+  },
+  {
+    term: 'approximation',
+    definition: 'In the context of CVD simulation, a computed transformation of colors that resembles what a CVD viewer might see. Useful but not identical to actual human perception.',
+    relatedLessons: ['u4-l6'],
+  },
+  {
+    term: 'inclusive design',
+    definition: 'An approach to design that proactively considers a wide range of human abilities and situations, rather than designing for an assumed default user.',
+    relatedLessons: ['u4-l6'],
+  },
+  {
+    term: 'review pass',
+    definition: 'A structured inspection of a design artifact against a specific set of criteria — such as color robustness, contrast, or label coverage.',
+    relatedLessons: ['u4-l6'],
+  },
+  {
+    term: 'robustness',
+    definition: 'The quality of a design that remains usable and understandable across a wide range of conditions and user differences.',
+    relatedLessons: ['u4-l6'],
+  },
+  {
+    term: 'task check',
+    definition: 'A method of reviewing an interface by asking whether a user can complete a specific task, rather than asking only whether visual elements look correct.',
+    relatedLessons: ['u4-l6'],
+  },
+  {
+    term: 'user test',
+    definition: 'A method of evaluating a design by observing real users attempting to complete tasks. More accurate than simulation alone for assessing CVD robustness.',
+    relatedLessons: ['u4-l6'],
+  },
+  {
+    term: 'workflow',
+    definition: 'A repeatable sequence of steps used to accomplish a design task. In inclusive design, a workflow for color review includes simulation, task-checking, and redundant cue verification.',
+    relatedLessons: ['u4-l6'],
+  },
 ];

@@ -46,6 +46,12 @@ export type InteractionType =
   | 'theme-sandbox'
   | 'token-map'
   | 'color-space-lab'
+  | 'eye-diagram'
+  | 'vision-cards'
+  | 'interface-gallery'
+  | 'color-only-detector'
+  | 'state-workshop'
+  | 'inclusive-review'
   | 'none';
 
 export interface LessonStep {
@@ -69,7 +75,9 @@ export type ChallengeType =
   | 'adjust-contrast'
   | 'identify-problem'
   | 'code-to-color'
-  | 'sort';
+  | 'sort'
+  | 'explore-all'
+  | 'add-cues';
 
 export interface QuizItem {
   id: string;

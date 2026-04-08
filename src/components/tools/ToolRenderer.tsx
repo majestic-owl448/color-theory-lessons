@@ -17,6 +17,12 @@ import { AlphaLayerTool } from './AlphaLayerTool.tsx';
 import { ThemeSandboxTool } from './ThemeSandboxTool.tsx';
 import { TokenMapTool } from './TokenMapTool.tsx';
 import { ColorSpaceLabTool } from './ColorSpaceLabTool.tsx';
+import { EyeDiagramTool } from './EyeDiagramTool.tsx';
+import { VisionCardsTool } from './VisionCardsTool.tsx';
+import { InterfaceGalleryTool } from './InterfaceGalleryTool.tsx';
+import { ColorOnlyDetectorTool } from './ColorOnlyDetectorTool.tsx';
+import { StateWorkshopTool } from './StateWorkshopTool.tsx';
+import { InclusiveReviewTool } from './InclusiveReviewTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -89,6 +95,24 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
 
     case 'color-space-lab':
       return <ColorSpaceLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'eye-diagram':
+      return <EyeDiagramTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'vision-cards':
+      return <VisionCardsTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'interface-gallery':
+      return <InterfaceGalleryTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'color-only-detector':
+      return <ColorOnlyDetectorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'state-workshop':
+      return <StateWorkshopTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
+    case 'inclusive-review':
+      return <InclusiveReviewTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (

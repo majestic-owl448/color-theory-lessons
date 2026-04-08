@@ -791,7 +791,170 @@ const milestone3: MilestoneConfig = {
   ],
 };
 
-const milestoneRegistry: MilestoneConfig[] = [milestone1, milestone2, milestone3];
+const milestone4: MilestoneConfig = {
+  id: 'milestone-4',
+  unitId: 'unit-4',
+  title: 'Design Beyond Your Own Eyes',
+  description:
+    'Apply your Unit 4 knowledge to identify and improve a flawed interface. Use the panel on the right to answer each question.',
+  estimatedMinutes: 20,
+  heroVisual: 'interface-mockup',
+  passThreshold: 8,
+  parts: [
+    {
+      id: 'm4-p1',
+      title: 'Vision Science and CVD Types',
+      description:
+        'Answer questions about color perception and the types of color vision deficiency.',
+      questions: [
+        {
+          id: 'm4-q1',
+          prompt: 'Which cells in the retina are primarily responsible for color perception?',
+          choices: [
+            { id: 'a', label: 'Rods', isCorrect: false, explanation: 'Rods respond to low-light conditions and are not primarily responsible for color vision.' },
+            { id: 'b', label: 'Cones', isCorrect: true, explanation: 'Cones are the photoreceptor cells responsible for color vision. Humans typically have three types, each sensitive to a different range of wavelengths.' },
+            { id: 'c', label: 'The optic nerve', isCorrect: false, explanation: 'The optic nerve carries signals from the retina to the brain — it does not process color itself.' },
+            { id: 'd', label: 'The cornea', isCorrect: false, explanation: 'The cornea focuses light onto the retina but does not play a role in color processing.' },
+          ],
+        },
+        {
+          id: 'm4-q2',
+          prompt: 'What does color vision deficiency mean?',
+          choices: [
+            { id: 'a', label: 'Complete inability to see any color', isCorrect: false, explanation: 'Only achromatopsia involves very limited hue perception. Most CVD types reduce specific color distinctions, not all color.' },
+            { id: 'b', label: 'A difference in how some color distinctions are perceived, due to variation in cone function', isCorrect: true, explanation: 'CVD describes a range of conditions where certain color distinctions are harder to perceive because of differences in cone sensitivity.' },
+            { id: 'c', label: 'A medical condition that only affects one eye', isCorrect: false, explanation: 'CVD is typically a property of the visual system as a whole, not limited to one eye.' },
+            { id: 'd', label: 'The inability to perceive lightness differences', isCorrect: false, explanation: 'CVD affects hue distinctions, not lightness perception. Luminance contrast is generally preserved in most CVD types.' },
+          ],
+        },
+        {
+          id: 'm4-q3',
+          prompt: 'Which is the most common form of CVD?',
+          choices: [
+            { id: 'a', label: 'Protanopia', isCorrect: false, explanation: 'Protanopia is relatively rare. Deuteranomaly is the most common form.' },
+            { id: 'b', label: 'Tritanopia', isCorrect: false, explanation: 'Tritan types affecting blue-yellow are quite rare. Deuteranomaly is far more common.' },
+            { id: 'c', label: 'Deuteranomaly — reduced green cone sensitivity', isCorrect: true, explanation: 'Deuteranomaly affects roughly 5–8% of males with Northern European ancestry, making it the most common form of CVD.' },
+            { id: 'd', label: 'Achromatopsia', isCorrect: false, explanation: 'Achromatopsia is a rare condition. Deuteranomaly is substantially more common.' },
+          ],
+        },
+        {
+          id: 'm4-q4',
+          prompt: 'Which CVD type affects blue-yellow distinctions?',
+          choices: [
+            { id: 'a', label: 'Protan types', isCorrect: false, explanation: 'Protan types affect red-sensitive cones, weakening red-green distinctions.' },
+            { id: 'b', label: 'Deutan types', isCorrect: false, explanation: 'Deutan types affect green-sensitive cones, also weakening red-green distinctions.' },
+            { id: 'c', label: 'Tritan types — tritanopia and tritanomaly', isCorrect: true, explanation: 'Tritan types affect the blue-sensitive cone. Blue and yellow become harder to distinguish.' },
+            { id: 'd', label: 'Achromatopsia', isCorrect: false, explanation: 'Achromatopsia involves very limited cone function overall, not specifically blue-yellow.' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'm4-p2',
+      title: 'Color-Only Failures',
+      description:
+        'Identify design failures that rely on color alone and understand why they fail.',
+      questions: [
+        {
+          id: 'm4-q5',
+          prompt:
+            'A designer marks required form fields with red text and nothing else. What is the problem?',
+          choices: [
+            { id: 'a', label: 'Red text is too bright and distracting', isCorrect: false, explanation: 'Brightness is not the issue here. The problem is that color is the only signal.' },
+            { id: 'b', label: 'Color alone carries the meaning — users with CVD or in high-contrast environments may not distinguish required fields', isCorrect: true, explanation: 'If the only difference is the hue of the text, that difference may not be perceivable for users with CVD or in conditions that reduce color fidelity.' },
+            { id: 'c', label: 'Red is not a valid CSS color for form labels', isCorrect: false, explanation: 'Red is a perfectly valid CSS color. The issue is how meaning is communicated, not the CSS syntax.' },
+            { id: 'd', label: 'Required fields should always be indicated with an asterisk in the label', isCorrect: false, explanation: 'An asterisk is one good solution, but the question is about identifying the problem — which is color-only communication.' },
+          ],
+        },
+        {
+          id: 'm4-q6',
+          prompt:
+            'A bar chart uses red, green, and orange to distinguish three data series, with no labels. What is the main risk?',
+          choices: [
+            { id: 'a', label: 'The chart will not render in older browsers', isCorrect: false, explanation: 'Browser rendering is not the concern here. The accessibility risk is the relevant issue.' },
+            { id: 'b', label: 'Under protan or deutan simulation, red and green look very similar, making the series indistinguishable', isCorrect: true, explanation: 'Protan and deutan conditions both affect the red-green axis. Without labels, pattern fills, or direct labels, two of the three series become ambiguous.' },
+            { id: 'c', label: 'Too many colors in one chart looks cluttered', isCorrect: false, explanation: 'Clutter is a design concern but not the accessibility risk being asked about.' },
+            { id: 'd', label: 'Orange is too similar to yellow to be used in charts', isCorrect: false, explanation: 'The main risk is the red-green confusion under CVD, not orange-yellow similarity.' },
+          ],
+        },
+        {
+          id: 'm4-q7',
+          prompt:
+            'A "selected" tab is shown only by a blue highlight. No other visual change occurs. What is the problem?',
+          choices: [
+            { id: 'a', label: 'Blue is not a good color for selected states', isCorrect: false, explanation: 'Blue is commonly used for selected states. The problem is not the color choice but the absence of other cues.' },
+            { id: 'b', label: 'Color is the only cue — there is no shape, border, or label change to support it', isCorrect: true, explanation: 'If the only difference between selected and unselected tabs is a hue change, users who cannot perceive that hue difference have no way to know which tab is active.' },
+            { id: 'c', label: 'Tabs should not be highlighted at all', isCorrect: false, explanation: 'Highlighting the selected tab is correct behavior. The problem is relying only on color to communicate the selection.' },
+            { id: 'd', label: 'The tab text is too small to read', isCorrect: false, explanation: 'Text size is a separate concern. The color-only selection state is the specific problem being asked about.' },
+          ],
+        },
+        {
+          id: 'm4-q8',
+          prompt:
+            'Why is color-only design a usability issue even for users without CVD?',
+          choices: [
+            { id: 'a', label: 'It is not — color-only design only affects users with CVD', isCorrect: false, explanation: 'Color perception is reduced in many situations: bright sunlight, low-quality displays, grayscale printing, and simple inattention.' },
+            { id: 'b', label: 'Multiple cues benefit all users — in bright sunlight, on grayscale printouts, or when scanning quickly', isCorrect: true, explanation: 'Any condition that reduces effective color perception — physical or contextual — benefits from redundant cues. Good inclusive design helps everyone.' },
+            { id: 'c', label: 'All users prefer monochromatic interfaces', isCorrect: false, explanation: 'User preference is not the issue. The point is that multiple cues improve robustness in real-world conditions for all users.' },
+            { id: 'd', label: 'Color-only design increases file size', isCorrect: false, explanation: 'File size is unrelated to this accessibility concern.' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'm4-p3',
+      title: 'Repair Strategies',
+      description:
+        'Choose appropriate cues and fixes to make interfaces more inclusive.',
+      questions: [
+        {
+          id: 'm4-q9',
+          prompt:
+            'A form has a red border on invalid fields. What is the strongest improvement?',
+          choices: [
+            { id: 'a', label: 'Change the border to a different shade of red', isCorrect: false, explanation: 'A different shade still relies only on color. The improvement needs to add a non-color channel.' },
+            { id: 'b', label: 'Add an error icon and a clear error message text below the field', isCorrect: true, explanation: 'Three channels — color, icon shape, and text — ensure the error state is communicated even if any one channel is lost.' },
+            { id: 'c', label: 'Remove the colored border entirely', isCorrect: false, explanation: 'Color reinforcement is valuable. The fix is to add backup cues alongside it, not to remove color.' },
+            { id: 'd', label: 'Make the border thicker', isCorrect: false, explanation: 'A thicker border is still a color-only signal. It does not add a new communication channel.' },
+          ],
+        },
+        {
+          id: 'm4-q10',
+          prompt:
+            'A line chart has 5 series distinguished only by hue. Which two approaches would most improve it?',
+          choices: [
+            { id: 'a', label: 'Add a color legend and make the lines thicker', isCorrect: false, explanation: 'A color-only legend still relies on hue. Thicker lines improve visibility but do not add a non-color channel.' },
+            { id: 'b', label: 'Use direct data labels on each line; use different line styles such as dashed, dotted, or solid', isCorrect: true, explanation: 'Direct labels eliminate the need for a legend. Different line styles make series distinguishable through shape, not just hue.' },
+            { id: 'c', label: 'Reduce to 2 series and remove the others', isCorrect: false, explanation: 'Fewer series may help readability, but this avoids the problem rather than solving it. Labels and patterns work with any number of series.' },
+            { id: 'd', label: 'Use only grayscale colors for all series', isCorrect: false, explanation: 'Grayscale removes hue but still relies on luminance alone. Adding direct labels or line style variation is a more robust approach.' },
+          ],
+        },
+        {
+          id: 'm4-q11',
+          prompt: 'What is simulation useful for in inclusive design?',
+          choices: [
+            { id: 'a', label: 'Replacing the need for user testing with real CVD users', isCorrect: false, explanation: 'Simulation is a fast first-pass check, not a replacement for real user testing, which captures individual variation and real task behavior.' },
+            { id: 'b', label: 'Revealing which interface areas will confuse users under CVD conditions — a fast first-pass check', isCorrect: true, explanation: 'Simulation shows which elements lose meaning when color distinctions are reduced. It is quick to apply and catches obvious problems early.' },
+            { id: 'c', label: 'Automatically applying WCAG-compliant color choices', isCorrect: false, explanation: 'Simulation is a visual diagnostic tool. It does not automatically change colors or guarantee WCAG compliance.' },
+            { id: 'd', label: 'Checking whether a design meets contrast ratio requirements', isCorrect: false, explanation: 'Contrast ratio checking is a separate tool. Simulation is for identifying color-only meaning problems, not contrast measurements.' },
+          ],
+        },
+        {
+          id: 'm4-q12',
+          prompt: 'When should inclusive color review happen in the design process?',
+          choices: [
+            { id: 'a', label: 'Only as a final compliance check before shipping', isCorrect: false, explanation: 'Late compliance checks catch problems when structural fixes are most expensive. Inclusive review should be integrated throughout.' },
+            { id: 'b', label: 'Early and repeatedly — not only as a final compliance check after the design is locked', isCorrect: true, explanation: 'Structural fixes are cheap in design files and expensive in shipped products. Early, repeated checks make inclusive design practical.' },
+            { id: 'c', label: 'Only when a client specifically requests it', isCorrect: false, explanation: 'Inclusive design is a baseline quality concern, not an optional client request.' },
+            { id: 'd', label: 'Only during development, not during design', isCorrect: false, explanation: 'Color decisions are made during design. Waiting until development to check them means the hardest decisions have already been locked.' },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const milestoneRegistry: MilestoneConfig[] = [milestone1, milestone2, milestone3, milestone4];
 
 export function getMilestoneById(id: string): MilestoneConfig | undefined {
   return milestoneRegistry.find((m) => m.id === id);
