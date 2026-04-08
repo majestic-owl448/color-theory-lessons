@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, Fragment } from 'react';
+import { useState, useMemo, Fragment } from 'react';
 import {
   hexToRgb,
   hexToHsl,
@@ -184,6 +184,12 @@ export function PaletteBuilderPage() {
   const [hexInput, setHexInput] = useState('#3B82F6');
   const [primaryHex, setPrimaryHex] = useState('#3B82F6');
   const [harmony, setHarmony] = useState<Relationship>('analogous');
+  const [paletteColors, setPaletteColors] = useState<PaletteColor[]>(() =>
+    buildPalette('#3B82F6', 'analogous'),
+  );
+  const [paletteIsCustom, setPaletteIsCustom] = useState(false);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editHexInput, setEditHexInput] = useState('');
   const [darkRoles, setDarkRoles] = useState<Record<RoleKey, string> | null>(
     null,
   );
@@ -197,32 +203,26 @@ export function PaletteBuilderPage() {
 
   const isValid = parseHex(hexInput) !== null;
 
-  const palette = useMemo(
-    () => buildPalette(primaryHex, harmony),
-    [primaryHex, harmony],
-  );
-
-  const allColors = useMemo(() => allPaletteHexes(palette), [palette]);
+  const allColors = useMemo(() => allPaletteHexes(paletteColors), [paletteColors]);
 
   const effectiveDark = useMemo(
-    () => darkRoles ?? autoAssignRoles(palette, 'dark'),
-    [darkRoles, palette],
+    () => darkRoles ?? autoAssignRoles(paletteColors, 'dark'),
+    [darkRoles, paletteColors],
   );
   const effectiveLight = useMemo(
-    () => lightRoles ?? autoAssignRoles(palette, 'light'),
-    [lightRoles, palette],
+    () => lightRoles ?? autoAssignRoles(paletteColors, 'light'),
+    [lightRoles, paletteColors],
   );
 
-  // Reset role overrides when palette changes
-  const applyPrimary = useCallback(
-    (hex: string) => {
-      setPrimaryHex(hex);
-      setDarkRoles(null);
-      setLightRoles(null);
-      setOpenPicker(null);
-    },
-    [],
-  );
+  const applyPrimary = (hex: string) => {
+    setPrimaryHex(hex);
+    setPaletteColors(buildPalette(hex, harmony));
+    setPaletteIsCustom(false);
+    setEditingIndex(null);
+    setDarkRoles(null);
+    setLightRoles(null);
+    setOpenPicker(null);
+  };
 
   const handleHexBlur = () => {
     const parsed = parseHex(hexInput);
@@ -245,6 +245,9 @@ export function PaletteBuilderPage() {
 
   const handleHarmonyChange = (h: Relationship) => {
     setHarmony(h);
+    setPaletteColors(buildPalette(primaryHex, h));
+    setPaletteIsCustom(false);
+    setEditingIndex(null);
     setDarkRoles(null);
     setLightRoles(null);
     setOpenPicker(null);
@@ -273,6 +276,40 @@ export function PaletteBuilderPage() {
       setLightRoles((prev) => ({ ...(prev ?? effectiveLight), [role]: hex }));
     }
     setOpenPicker(null);
+  };
+
+  /* ── Palette edit helpers ───────────────────────────────────────────────── */
+
+  const updatePaletteColor = (index: number, newHex: string) => {
+    const variants = buildVariants(newHex);
+    setPaletteColors((prev) =>
+      prev.map((c, i) => (i === index ? { ...c, hex: newHex, ...variants } : c)),
+    );
+    setPaletteIsCustom(true);
+  };
+
+  const addPaletteColor = (hex = '#808080') => {
+    const variants = buildVariants(hex);
+    setPaletteColors((prev) => {
+      const customCount = prev.filter((c) => c.label.startsWith('custom')).length;
+      return [...prev, { hex, label: `custom ${customCount + 1}`, ...variants }];
+    });
+    setPaletteIsCustom(true);
+    setEditingIndex(null);
+  };
+
+  const removePaletteColor = (index: number) => {
+    setPaletteColors((prev) => prev.filter((_, i) => i !== index));
+    setPaletteIsCustom(true);
+    setEditingIndex((prev) =>
+      prev === index ? null : prev !== null && prev > index ? prev - 1 : prev,
+    );
+  };
+
+  const handleResetPalette = () => {
+    setPaletteColors(buildPalette(primaryHex, harmony));
+    setPaletteIsCustom(false);
+    setEditingIndex(null);
   };
 
   /* ── Contrast matrix data ───────────────────────────────────────────────── */
@@ -408,15 +445,88 @@ export function PaletteBuilderPage() {
 
       {/* ── C. Palette Grid ─────────────────────────────────────────────── */}
       <div className={styles.section}>
-        <h2 className={styles.sectionHeading}>palette</h2>
+        <div className={styles.sectionHeaderRow}>
+          <h2 className={styles.sectionHeading}>palette</h2>
+          {paletteIsCustom && (
+            <button className={styles.resetBtn} onClick={handleResetPalette}>
+              ↺ reset to harmony
+            </button>
+          )}
+        </div>
         <div className={styles.paletteGrid}>
-          {palette.map((color) => (
-            <div key={color.label} className={styles.swatchColumn}>
-              <span className={styles.swatchColumnLabel}>{color.label}</span>
-              <div
-                className={styles.swatch}
+          {paletteColors.map((color, i) => (
+            <div key={i} className={styles.swatchColumn}>
+              <div className={styles.swatchColumnHeader}>
+                <span className={styles.swatchColumnLabel}>{color.label}</span>
+                {paletteColors.length > 1 && (
+                  <button
+                    className={styles.removeBtn}
+                    onClick={() => removePaletteColor(i)}
+                    aria-label={`Remove ${color.label}`}
+                    title="Remove color"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+              <button
+                className={styles.swatchEditable}
                 style={{ backgroundColor: color.hex }}
+                onClick={() => {
+                  if (editingIndex === i) {
+                    setEditingIndex(null);
+                  } else {
+                    setEditingIndex(i);
+                    setEditHexInput(color.hex.toUpperCase());
+                  }
+                }}
+                aria-label={`Edit ${color.label} — ${color.hex.toUpperCase()}`}
+                title="Click to edit"
               />
+              {editingIndex === i && (
+                <div className={styles.editInline}>
+                  <input
+                    type="color"
+                    className={styles.editInlinePicker}
+                    value={editHexInput.toLowerCase()}
+                    onChange={(e) => {
+                      const val = e.target.value.toUpperCase();
+                      setEditHexInput(val);
+                      updatePaletteColor(i, val);
+                    }}
+                    aria-label="Pick color"
+                  />
+                  <input
+                    type="text"
+                    className={`${styles.editInlineInput} ${parseHex(editHexInput) === null ? styles.hexInputInvalid : ''}`}
+                    value={editHexInput}
+                    onChange={(e) => setEditHexInput(e.target.value)}
+                    onBlur={() => {
+                      const parsed = parseHex(editHexInput);
+                      if (parsed) {
+                        const canonical = rgbToHex(parsed);
+                        setEditHexInput(canonical);
+                        updatePaletteColor(i, canonical);
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        const parsed = parseHex(editHexInput);
+                        if (parsed) {
+                          const canonical = rgbToHex(parsed);
+                          setEditHexInput(canonical);
+                          updatePaletteColor(i, canonical);
+                          setEditingIndex(null);
+                        }
+                      }
+                      if (e.key === 'Escape') setEditingIndex(null);
+                    }}
+                    autoFocus
+                    aria-label="Hex color value"
+                    spellCheck={false}
+                  />
+                </div>
+              )}
               <span className={styles.swatchHex}>{color.hex.toUpperCase()}</span>
               <div className={styles.variantRow}>
                 {(
@@ -435,12 +545,23 @@ export function PaletteBuilderPage() {
                     <span className={styles.variantHex}>
                       {hex.toUpperCase()}
                     </span>
+                    <button
+                      className={styles.variantPromoteBtn}
+                      onClick={() => addPaletteColor(hex)}
+                      title={`Add ${hex.toUpperCase()} as palette color`}
+                      aria-label={`Add ${label} variant as palette color`}
+                    >
+                      + add
+                    </button>
                   </div>
                 ))}
               </div>
             </div>
           ))}
         </div>
+        <button className={styles.addColorBtn} onClick={() => addPaletteColor()}>
+          + add color
+        </button>
       </div>
 
       {/* ── D. Contrast Matrix ──────────────────────────────────────────── */}

@@ -109,6 +109,31 @@
   font-family: var(--font-sans);
 }
 
+/* ── Section header row ────────────────────────────────────────────────────── */
+
+.sectionHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.resetBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.resetBtn:hover {
+  color: var(--accent-cta);
+  border-color: var(--accent-cta);
+}
+
 /* ── C. Palette Grid ───────────────────────────────────────────────────────── */
 
 .section {
@@ -142,6 +167,28 @@
   border-radius: var(--radius-md);
 }
 
+.swatchColumnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.removeBtn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0 2px;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+}
+
+.removeBtn:hover {
+  color: var(--accent-danger);
+}
+
 .swatchColumnLabel {
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -154,6 +201,51 @@
   height: 120px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
+}
+
+.swatchEditable {
+  height: 120px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  width: 100%;
+  transition: outline 0.1s;
+}
+
+.swatchEditable:hover {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 2px;
+}
+
+/* ── Inline editor ─────────────────────────────────────────────────────────── */
+
+.editInline {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.editInlinePicker {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  cursor: pointer;
+  background: var(--primary-background);
+  flex-shrink: 0;
+}
+
+.editInlineInput {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--primary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--primary-foreground);
+  flex: 1;
+  min-width: 0;
 }
 
 .swatchHex {
@@ -192,6 +284,44 @@
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--secondary-foreground);
+}
+
+.variantPromoteBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 1px 4px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.variantPromoteBtn:hover {
+  color: var(--accent-link);
+  border-color: var(--accent-link);
+}
+
+/* ── Add color button ──────────────────────────────────────────────────────── */
+
+.addColorBtn {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.addColorBtn:hover {
+  color: var(--accent-link);
+  border-color: var(--accent-link);
 }
 
 /* ── D. Contrast Matrix ────────────────────────────────────────────────────── */
