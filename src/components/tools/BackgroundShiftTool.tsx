@@ -16,7 +16,7 @@ const SUBPIXEL_COLORS = [
 const GRID_COLS = 6;
 const GRID_ROWS = 4;
 
-function PixelZoomExplorer() {
+function PixelZoomExplorer({ interactive }: { interactive: boolean }) {
   const [zoomed, setZoomed] = useState(false);
 
   return (
@@ -51,7 +51,8 @@ function PixelZoomExplorer() {
           pixel explorer
         </span>
         <button
-          onClick={() => setZoomed((z) => !z)}
+          onClick={() => interactive && setZoomed((z) => !z)}
+          disabled={!interactive}
           style={{
             padding: '0.2rem 0.6rem',
             fontFamily: 'var(--font-mono)',
@@ -60,7 +61,8 @@ function PixelZoomExplorer() {
             color: 'var(--yellow)',
             border: '1px solid var(--yellow)',
             borderRadius: '3px',
-            cursor: 'pointer',
+            cursor: interactive ? 'pointer' : 'not-allowed',
+            opacity: interactive ? 1 : 0.4,
           }}
         >
           {zoomed ? 'zoom out' : 'zoom in'}
@@ -276,7 +278,7 @@ export function BackgroundShiftTool({ interactive = true, onComplete }: Backgrou
       <span className={shellStyles.toolLabel}>pixels &amp; background shift</span>
 
       {/* Pixel explorer — always visible */}
-      <PixelZoomExplorer />
+      <PixelZoomExplorer interactive={interactive} />
 
       {/* Background shift challenge — only when interactive */}
       {interactive && (
