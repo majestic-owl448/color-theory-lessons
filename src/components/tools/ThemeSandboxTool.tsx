@@ -1,0 +1,187 @@
+import { useState, useRef } from 'react';
+import { hexToRgb, contrastRatio } from '../../utils/color.ts';
+import shellStyles from './ToolShell.module.css';
+
+interface RoleDef {
+  key: string;
+  label: string;
+  defaultValue: string;
+}
+
+const ROLES: RoleDef[] = [
+  { key: 'bg',        label: 'Background',    defaultValue: '#1a1a2e' },
+  { key: 'surface',   label: 'Surface',       defaultValue: '#252542' },
+  { key: 'textPri',   label: 'Primary text',  defaultValue: '#e0e0e0' },
+  { key: 'textSec',   label: 'Secondary text', defaultValue: '#8888a0' },
+  { key: 'border',    label: 'Border',        defaultValue: '#3a3a55' },
+  { key: 'accent',    label: 'Primary action', defaultValue: '#6366f1' },
+  { key: 'success',   label: 'Success',       defaultValue: '#22c55e' },
+  { key: 'warning',   label: 'Warning',       defaultValue: '#eab308' },
+  { key: 'error',     label: 'Error',         defaultValue: '#ef4444' },
+];
+
+const GRADIENT_DEFAULTS = { start: '#4f46e5', end: '#7c3aed' };
+
+interface ThemeSandboxToolProps {
+  interactive?: boolean;
+  onComplete?: () => void;
+}
+
+export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandboxToolProps) {
+  const [colors, setColors] = useState<Record<string, string>>(
+    Object.fromEntries(ROLES.map((r) => [r.key, r.defaultValue]))
+  );
+  const [gradStart, setGradStart] = useState(GRADIENT_DEFAULTS.start);
+  const [gradEnd, setGradEnd] = useState(GRADIENT_DEFAULTS.end);
+  const completed = useRef(false);
+
+  function setColor(key: string, value: string) {
+    setColors((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function checkTheme() {
+    if (!interactive || completed.current) return;
+    const bgRgb = hexToRgb(colors.bg);
+    const surfRgb = hexToRgb(colors.surface);
+    const textPriRgb = hexToRgb(colors.textPri);
+    const textSecRgb = hexToRgb(colors.textSec);
+
+    const priOnBg = contrastRatio(textPriRgb, bgRgb);
+    const priOnSurf = contrastRatio(textPriRgb, surfRgb);
+    const secOnSurf = contrastRatio(textSecRgb, surfRgb);
+
+    const passes = priOnBg >= 4.5 && priOnSurf >= 4.5 && secOnSurf >= 3;
+    if (passes) {
+      completed.current = true;
+      onComplete?.();
+    }
+  }
+
+  const bgRgb = hexToRgb(colors.bg);
+  const surfRgb = hexToRgb(colors.surface);
+  const textPriRgb = hexToRgb(colors.textPri);
+  const textSecRgb = hexToRgb(colors.textSec);
+  const priOnBg = contrastRatio(textPriRgb, bgRgb);
+  const priOnSurf = contrastRatio(textPriRgb, surfRgb);
+  const secOnSurf = contrastRatio(textSecRgb, surfRgb);
+  const allPass = priOnBg >= 4.5 && priOnSurf >= 4.5 && secOnSurf >= 3;
+
+  return (
+    <div className={shellStyles.shell}>
+      <span className={shellStyles.toolLabel}>theme sandbox</span>
+
+      {/* Live preview */}
+      <div style={{
+        background: colors.bg, borderRadius: 'var(--radius-md)', padding: '0.75rem',
+        border: `1px solid ${colors.border}`, marginBottom: '0.75rem',
+      }}>
+        {/* Hero gradient */}
+        <div style={{
+          background: `linear-gradient(135deg, ${gradStart}, ${gradEnd})`,
+          borderRadius: 'var(--radius-sm)', padding: '1rem', marginBottom: '0.6rem',
+        }}>
+          <span style={{ color: '#fff', fontFamily: 'var(--font-mono)', fontSize: '0.82rem' }}>
+            Hero gradient
+          </span>
+        </div>
+
+        {/* Card */}
+        <div style={{
+          background: colors.surface, borderRadius: 'var(--radius-sm)', padding: '0.75rem',
+          border: `1px solid ${colors.border}`,
+        }}>
+          <p style={{ color: colors.textPri, fontSize: '0.85rem', margin: '0 0 0.3rem' }}>
+            Primary text on surface
+          </p>
+          <p style={{ color: colors.textSec, fontSize: '0.78rem', margin: '0 0 0.5rem' }}>
+            Secondary text for supporting details
+          </p>
+          <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+            <span style={{
+              padding: '0.2rem 0.5rem', borderRadius: 3, fontSize: '0.72rem',
+              background: colors.accent, color: '#fff', fontFamily: 'var(--font-mono)',
+            }}>Action</span>
+            <span style={{
+              padding: '0.2rem 0.5rem', borderRadius: 3, fontSize: '0.72rem',
+              background: colors.success, color: '#111', fontFamily: 'var(--font-mono)',
+            }}>Success</span>
+            <span style={{
+              padding: '0.2rem 0.5rem', borderRadius: 3, fontSize: '0.72rem',
+              background: colors.warning, color: '#111', fontFamily: 'var(--font-mono)',
+            }}>Warning</span>
+            <span style={{
+              padding: '0.2rem 0.5rem', borderRadius: 3, fontSize: '0.72rem',
+              background: colors.error, color: '#fff', fontFamily: 'var(--font-mono)',
+            }}>Error</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Color role editors */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.35rem 0.75rem', marginBottom: '0.6rem' }}>
+        {ROLES.map((role) => (
+          <label key={role.key} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem' }}>
+            <input type="color" value={colors[role.key]}
+              disabled={!interactive || completed.current}
+              onChange={(e) => setColor(role.key, e.target.value)}
+              style={{ width: 24, height: 24, border: 'none', padding: 0, cursor: interactive ? 'pointer' : 'default' }}
+              aria-label={role.label}
+            />
+            <span style={{ color: 'var(--muted)' }}>{role.label}</span>
+          </label>
+        ))}
+      </div>
+
+      {/* Gradient editors */}
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.6rem', alignItems: 'center' }}>
+        <label style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.78rem' }}>
+          <input type="color" value={gradStart} disabled={!interactive || completed.current}
+            onChange={(e) => setGradStart(e.target.value)}
+            style={{ width: 24, height: 24, border: 'none', padding: 0 }}
+            aria-label="Gradient start"
+          />
+          <span style={{ color: 'var(--muted)' }}>Grad start</span>
+        </label>
+        <label style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.78rem' }}>
+          <input type="color" value={gradEnd} disabled={!interactive || completed.current}
+            onChange={(e) => setGradEnd(e.target.value)}
+            style={{ width: 24, height: 24, border: 'none', padding: 0 }}
+            aria-label="Gradient end"
+          />
+          <span style={{ color: 'var(--muted)' }}>Grad end</span>
+        </label>
+      </div>
+
+      {/* Contrast readout */}
+      <div style={{ fontSize: '0.78rem', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem' }}>
+        <div style={{ color: priOnBg >= 4.5 ? 'var(--green)' : 'var(--red)' }}>
+          {priOnBg >= 4.5 ? '✓' : '✗'} Primary text on bg: {priOnBg.toFixed(1)}:1
+        </div>
+        <div style={{ color: priOnSurf >= 4.5 ? 'var(--green)' : 'var(--red)' }}>
+          {priOnSurf >= 4.5 ? '✓' : '✗'} Primary text on surface: {priOnSurf.toFixed(1)}:1
+        </div>
+        <div style={{ color: secOnSurf >= 3 ? 'var(--green)' : 'var(--red)' }}>
+          {secOnSurf >= 3 ? '✓' : '✗'} Secondary text on surface: {secOnSurf.toFixed(1)}:1
+        </div>
+      </div>
+
+      {interactive && !completed.current && (
+        <button onClick={checkTheme} disabled={!allPass} style={{
+          padding: '0.4rem 1rem', background: allPass ? 'var(--yellow)' : 'var(--surface)',
+          color: allPass ? '#111' : 'var(--muted)',
+          border: 'none', borderRadius: 'var(--radius-sm)',
+          cursor: allPass ? 'pointer' : 'not-allowed',
+          fontFamily: 'var(--font-mono)', fontSize: '0.82rem',
+        }}>
+          {allPass ? 'submit theme' : 'fix contrast to submit'}
+        </button>
+      )}
+
+      {completed.current && (
+        <p style={{ color: 'var(--green)', fontSize: '0.85rem' }}>
+          Theme complete. Your roles are coherent and text is readable.
+        </p>
+      )}
+    </div>
+  );
+}

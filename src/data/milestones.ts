@@ -644,7 +644,154 @@ const milestone2: MilestoneConfig = {
   ],
 };
 
-const milestoneRegistry: MilestoneConfig[] = [milestone1, milestone2];
+const milestone3: MilestoneConfig = {
+  id: 'milestone-3',
+  unitId: 'unit-3',
+  title: 'Build a UI Palette in Code',
+  description:
+    'Apply your Unit 3 knowledge to build a small but coherent digital color system using implementation-style thinking.',
+  estimatedMinutes: 25,
+  passThreshold: 8,
+  parts: [
+    {
+      id: 'm3-p1',
+      title: 'Color Formats and Conversion',
+      description:
+        'Demonstrate your understanding of HEX, RGB, HSL, and alpha by answering practical format questions.',
+      questions: [
+        {
+          id: 'm3-q1',
+          prompt: 'Which format is often easiest for making a color more muted without changing the hue?',
+          choices: [
+            { id: 'a', label: 'HEX', isCorrect: false, explanation: 'HEX encodes RGB channels in base-16. Muting a color in HEX requires calculating which channels to adjust — less intuitive than HSL.' },
+            { id: 'b', label: 'RGB', isCorrect: false, explanation: 'RGB requires changing multiple channels in a balanced way to reduce saturation.' },
+            { id: 'c', label: 'HSL', isCorrect: true, explanation: 'In HSL, lowering saturation mutes the color directly without affecting hue or lightness.' },
+            { id: 'd', label: 'RGBA', isCorrect: false, explanation: 'The alpha channel controls transparency, not saturation or mutedness.' },
+          ],
+        },
+        {
+          id: 'm3-q2',
+          prompt: 'What does rgba(0, 0, 0, 0.5) describe?',
+          choices: [
+            { id: 'a', label: 'A medium gray at full opacity', isCorrect: false, explanation: 'The RGB channels are all 0, which is black — not gray. The 0.5 is alpha, not brightness.' },
+            { id: 'b', label: 'Black at 50% transparency', isCorrect: true, explanation: 'rgb(0, 0, 0) is black. The alpha of 0.5 makes it 50% transparent — commonly used for scrims and overlays.' },
+            { id: 'c', label: 'A dark color that is half as saturated', isCorrect: false, explanation: 'Alpha controls transparency, not saturation. The visual result depends on the background underneath.' },
+            { id: 'd', label: 'An invalid value — alpha must be a percentage', isCorrect: false, explanation: 'Alpha as a decimal from 0 to 1 is standard and valid in CSS.' },
+          ],
+        },
+        {
+          id: 'm3-q3',
+          prompt: 'Why does the same 50% transparent overlay look different on a white background versus a dark background?',
+          choices: [
+            { id: 'a', label: 'Because the browser adjusts alpha differently for each background', isCorrect: false, explanation: 'The browser renders alpha consistently. The visual difference comes from the blend of foreground and background colors.' },
+            { id: 'b', label: 'Because the perceived result is a blend of the overlay and the background', isCorrect: true, explanation: 'A dark overlay on white produces a visible gray tint, while the same overlay on a dark background is barely noticeable.' },
+            { id: 'c', label: 'Because transparency values are measured relative to the background lightness', isCorrect: false, explanation: 'Alpha is absolute — 0.5 always means 50% transparent regardless of the background.' },
+            { id: 'd', label: 'It does not — the result always looks the same', isCorrect: false, explanation: 'The visual result changes significantly because the blended color depends on both the foreground and the background.' },
+          ],
+        },
+        {
+          id: 'm3-q4',
+          prompt: 'Which HEX value is closest to white?',
+          swatchColor: '#F0F0F0',
+          choices: [
+            { id: 'a', label: '#F0F0F0', isCorrect: true, explanation: 'F0 in hex is 240 in decimal — very close to the maximum of 255. Equal high channel values produce a near-white neutral.' },
+            { id: 'b', label: '#303030', isCorrect: false, explanation: '30 in hex is 48 in decimal — a very dark neutral, far from white.' },
+            { id: 'c', label: '#808080', isCorrect: false, explanation: '80 in hex is 128 — a medium gray, exactly between black and white.' },
+            { id: 'd', label: '#101010', isCorrect: false, explanation: '10 in hex is 16 — nearly black.' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'm3-p2',
+      title: 'Themes and Token Thinking',
+      description:
+        'Show that you understand role-based color systems, design tokens, and how theme propagation works.',
+      questions: [
+        {
+          id: 'm3-q5',
+          prompt: 'What makes --color-text-primary a better token name than --dark-gray?',
+          choices: [
+            { id: 'a', label: 'It is shorter', isCorrect: false, explanation: 'Length is not the issue. The advantage is that role names stay meaningful even when the value changes.' },
+            { id: 'b', label: 'It describes what the color does, not what it looks like — so it stays useful even if the value changes', isCorrect: true, explanation: 'In a dark theme, primary text might be light — but --color-text-primary still makes sense. --dark-gray would not.' },
+            { id: 'c', label: 'CSS requires dashes in variable names', isCorrect: false, explanation: 'Both names use valid CSS custom property syntax. The issue is semantic clarity, not syntax.' },
+            { id: 'd', label: 'It loads faster because it references a system color', isCorrect: false, explanation: 'Token naming has no impact on loading speed. The advantage is maintainability and semantic clarity.' },
+          ],
+        },
+        {
+          id: 'm3-q6',
+          prompt: 'What happens when you change a base alias token that multiple role tokens reference?',
+          choices: [
+            { id: 'a', label: 'Only the first component using it updates', isCorrect: false, explanation: 'Token references propagate to all consumers. Every component referencing the updated alias will update.' },
+            { id: 'b', label: 'Every role token that references that alias updates automatically', isCorrect: true, explanation: 'This is the power of token systems — one change propagates through every role that references the base value.' },
+            { id: 'c', label: 'Nothing — role tokens store a copy of the value, not a reference', isCorrect: false, explanation: 'Role tokens reference aliases. Changing the alias changes the resolved value for all referencing roles.' },
+            { id: 'd', label: 'The system throws an error because multiple tokens cannot share a base', isCorrect: false, explanation: 'Sharing base tokens is exactly the intended usage pattern. It enables consistent, cascading updates.' },
+          ],
+        },
+        {
+          id: 'm3-q7',
+          prompt: 'Which of these is NOT a color role you would typically find in a theme?',
+          choices: [
+            { id: 'a', label: 'Surface background', isCorrect: false, explanation: 'Surface background is a standard structural role in most design systems.' },
+            { id: 'b', label: 'Error state', isCorrect: false, explanation: 'Error is a standard semantic status role.' },
+            { id: 'c', label: 'Hover animation timing', isCorrect: true, explanation: 'Animation timing is a motion property, not a color role. Color themes define values like surfaces, text, borders, and semantic states.' },
+            { id: 'd', label: 'Primary action', isCorrect: false, explanation: 'Primary action is a standard interactive role for buttons, links, and focus indicators.' },
+          ],
+        },
+        {
+          id: 'm3-q8',
+          prompt: 'Why are gradients sometimes problematic for text readability?',
+          choices: [
+            { id: 'a', label: 'Because gradients cannot be used in CSS backgrounds', isCorrect: false, explanation: 'CSS fully supports gradient backgrounds. The issue is that contrast varies across the gradient.' },
+            { id: 'b', label: 'Because the background color varies, making contrast unpredictable across the area', isCorrect: true, explanation: 'Text may pass contrast in one region of the gradient but fail in another where the background is lighter or darker.' },
+            { id: 'c', label: 'Because screen readers cannot process gradient backgrounds', isCorrect: false, explanation: 'Screen readers process text content regardless of background style. The issue is visual readability for sighted users.' },
+            { id: 'd', label: 'Because gradients always reduce contrast by blending toward gray', isCorrect: false, explanation: 'Gradients blend between whatever colors you choose — they do not inherently reduce contrast.' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'm3-p3',
+      title: 'Color Spaces and Implementation Awareness',
+      description:
+        'Demonstrate practical awareness of sRGB, Display P3, and the need for accessibility checking in all contexts.',
+      questions: [
+        {
+          id: 'm3-q9',
+          prompt: 'Which color space is the safer default baseline for most web design?',
+          choices: [
+            { id: 'a', label: 'Display P3', isCorrect: false, explanation: 'P3 offers wider gamut but is not universally supported. sRGB is the universal baseline.' },
+            { id: 'b', label: 'sRGB', isCorrect: true, explanation: 'sRGB is supported by virtually all screens and is the default color space for standard CSS color functions.' },
+            { id: 'c', label: 'Adobe RGB', isCorrect: false, explanation: 'Adobe RGB is primarily used in photography and print workflows, not web design.' },
+            { id: 'd', label: 'It depends on which browser is being used', isCorrect: false, explanation: 'sRGB is universally supported across all modern browsers. It is the safe baseline regardless of browser choice.' },
+          ],
+        },
+        {
+          id: 'm3-q10',
+          prompt: 'A color compiles correctly in your CSS file. Is it automatically accessible?',
+          choices: [
+            { id: 'a', label: 'Yes — if the syntax is valid, accessibility is handled', isCorrect: false, explanation: 'Valid syntax only means the browser can render it. Contrast, readability, and color-only meaning still need checking.' },
+            { id: 'b', label: 'No — you still need to check contrast, readability, and whether meaning depends on color alone', isCorrect: true, explanation: 'A vivid yellow text on white background is perfectly valid CSS but nearly unreadable. Accessibility requires design judgment, not just valid code.' },
+            { id: 'c', label: 'Only if you used HSL format, which is inherently more accessible', isCorrect: false, explanation: 'No format is inherently more accessible. Accessibility depends on the actual color values and their usage in context.' },
+            { id: 'd', label: 'Yes — modern browsers auto-correct poor contrast', isCorrect: false, explanation: 'Browsers render exactly what you specify. They do not auto-correct accessibility issues.' },
+          ],
+        },
+        {
+          id: 'm3-q11',
+          prompt: 'Why might a vivid Display P3 color look different on a device that only supports sRGB?',
+          choices: [
+            { id: 'a', label: 'The device will show an error message', isCorrect: false, explanation: 'Devices do not show errors for out-of-gamut colors. They silently clip or map the color to the nearest displayable value.' },
+            { id: 'b', label: 'The color gets clipped to the nearest sRGB equivalent, which may look less vivid', isCorrect: true, explanation: 'Colors outside the sRGB gamut are mapped to the closest representable value, which can reduce vividness or shift hue slightly.' },
+            { id: 'c', label: 'It will look identical — all modern screens support P3', isCorrect: false, explanation: 'Many screens, especially older or budget displays, do not support Display P3.' },
+            { id: 'd', label: 'The browser converts it to grayscale automatically', isCorrect: false, explanation: 'Out-of-gamut colors are clipped to the nearest in-gamut color, not converted to grayscale.' },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const milestoneRegistry: MilestoneConfig[] = [milestone1, milestone2, milestone3];
 
 export function getMilestoneById(id: string): MilestoneConfig | undefined {
   return milestoneRegistry.find((m) => m.id === id);

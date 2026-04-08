@@ -12,6 +12,11 @@ import { BackgroundShiftTool } from './BackgroundShiftTool.tsx';
 import { InterfaceTunerTool } from './InterfaceTunerTool.tsx';
 import { FormatRevealTool } from './FormatRevealTool.tsx';
 import { HexRgbEditorTool } from './HexRgbEditorTool.tsx';
+import { HslPlaygroundTool } from './HslPlaygroundTool.tsx';
+import { AlphaLayerTool } from './AlphaLayerTool.tsx';
+import { ThemeSandboxTool } from './ThemeSandboxTool.tsx';
+import { TokenMapTool } from './TokenMapTool.tsx';
+import { ColorSpaceLabTool } from './ColorSpaceLabTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
 interface ToolRendererProps {
@@ -71,18 +76,19 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
       return <HexRgbEditorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     case 'hsl-playground':
+      return <HslPlaygroundTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
     case 'alpha-layer':
+      return <AlphaLayerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
     case 'theme-sandbox':
+      return <ThemeSandboxTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
     case 'token-map':
+      return <TokenMapTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+
     case 'color-space-lab':
-      return (
-        <div className={shellStyles.shell}>
-          <span className={shellStyles.toolLabel}>coming soon</span>
-          <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>
-            Tool for <code>{lesson.interactionType}</code> is being built.
-          </p>
-        </div>
-      );
+      return <ColorSpaceLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
 
     default:
       return (

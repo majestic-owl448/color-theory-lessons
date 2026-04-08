@@ -316,4 +316,156 @@ export const glossary: GlossaryTerm[] = [
     definition: 'A named variable that stores a color value (or other design property) and can be referenced by name in code. Tokens separate the meaning of a color (e.g. "brand-primary") from its raw value (e.g. #2563eb).',
     relatedLessons: ['u3-l1'],
   },
+
+  // ── Unit 3 continued (L3–L7) ──────────────────────────────────────────────
+  {
+    term: 'HSL',
+    definition: 'A color format that describes a color as hue (0–360°), saturation (0–100%), and lightness (0–100%). HSL maps directly to how designers describe visible changes and is often easier than RGB for tasks like muting or lightening a color.',
+    relatedLessons: ['u3-l3'],
+  },
+  {
+    term: 'HSLA',
+    definition: 'HSL with an added alpha channel (0–1) controlling transparency. hsla(220, 60%, 50%, 0.5) is a blue at 50% opacity. Works the same way as RGBA but uses the HSL model.',
+    relatedLessons: ['u3-l3'],
+  },
+  {
+    term: 'alpha',
+    definition: 'A value from 0 (fully transparent) to 1 (fully opaque) that controls how much of a color is visible versus how much the background shows through. Used in RGBA and HSLA color formats.',
+    relatedLessons: ['u3-l3', 'u3-l4'],
+  },
+  {
+    term: 'color family',
+    definition: 'A group of colors that share the same hue but vary in saturation and lightness. For example, navy, sky blue, and baby blue all belong to the blue color family.',
+    relatedLessons: ['u3-l3'],
+  },
+  {
+    term: 'tonal variation',
+    definition: 'A lighter, darker, more vivid, or more muted version of the same base color. Created by adjusting saturation and lightness while keeping the hue constant.',
+    relatedLessons: ['u3-l3'],
+  },
+  {
+    term: 'opacity',
+    definition: 'How opaque a color or layer is. Full opacity (1) blocks everything behind it. Lower opacity lets the background show through. Controlled by the alpha channel in RGBA and HSLA.',
+    relatedLessons: ['u3-l4'],
+  },
+  {
+    term: 'transparency',
+    definition: 'The opposite of opacity. A transparent layer lets the background show through. In CSS, transparency is controlled by the alpha channel or the opacity property.',
+    relatedLessons: ['u3-l4'],
+  },
+  {
+    term: 'overlay',
+    definition: 'A semi-transparent layer placed over other content. Used for hover states, modal backdrops, image text areas, and disabled states. The perceived color depends on both the overlay and the background.',
+    relatedLessons: ['u3-l4'],
+  },
+  {
+    term: 'scrim',
+    definition: 'A semi-transparent overlay — usually dark — placed behind a modal or dialog to dim the background content and focus user attention on the foreground.',
+    relatedLessons: ['u3-l4'],
+  },
+  {
+    term: 'blend perception',
+    definition: 'The way a semi-transparent color appears to the eye as a mix of the foreground and the background. The same overlay can look very different on light vs dark backgrounds because the blended result changes.',
+    relatedLessons: ['u3-l4'],
+  },
+  {
+    term: 'layered interface',
+    definition: 'An interface design that uses stacked visual layers — such as page background, card surface, overlay, and modal — often relying on transparency and depth cues to create spatial hierarchy.',
+    relatedLessons: ['u3-l4'],
+  },
+  {
+    term: 'gradient',
+    definition: 'A smooth transition between two or more colors. In CSS, gradients can be linear (direction-based) or radial (center-outward). Used for backgrounds, hero sections, and data visualization.',
+    relatedLessons: ['u3-l5'],
+  },
+  {
+    term: 'linear gradient',
+    definition: 'A gradient that transitions along a straight line — for example, from left to right or from top to bottom. Defined in CSS as linear-gradient(direction, color1, color2).',
+    relatedLessons: ['u3-l5'],
+  },
+  {
+    term: 'radial gradient',
+    definition: 'A gradient that transitions outward from a center point in a circular or elliptical pattern. Defined in CSS as radial-gradient(shape, color1, color2).',
+    relatedLessons: ['u3-l5'],
+  },
+  {
+    term: 'border color',
+    definition: 'The color applied to the border of an interface element such as a card, input field, or button. Border colors help define edges, separate regions, and indicate states like focus or error.',
+    relatedLessons: ['u3-l5'],
+  },
+  {
+    term: 'text color',
+    definition: 'The color applied to text content. Effective text color depends on sufficient contrast against the background to ensure readability.',
+    relatedLessons: ['u3-l5'],
+  },
+  {
+    term: 'semantic color',
+    definition: 'A color assigned to a specific meaning or role in an interface — such as red for errors, green for success, or yellow for warnings. Semantic colors communicate status, not just style.',
+    relatedLessons: ['u3-l5'],
+  },
+  {
+    term: 'theme',
+    definition: 'A coordinated set of color role assignments that can be applied across a product. Switching themes (e.g. light to dark) means reassigning the values behind the roles, not rewriting every component.',
+    relatedLessons: ['u3-l5'],
+  },
+  {
+    term: 'design token',
+    definition: 'A named variable in a design system that stores a specific value — often a color — and can be referenced by name across components. Tokens separate meaning from raw values, making updates and theming easier.',
+    relatedLessons: ['u3-l6'],
+  },
+  {
+    term: 'variable',
+    definition: 'A named container that holds a value, such as a CSS custom property (--color-primary: #2563eb). Variables allow the same value to be reused and updated from a single location.',
+    relatedLessons: ['u3-l6'],
+  },
+  {
+    term: 'alias token',
+    definition: 'A token that points to a base palette value, such as --blue-600: #1E40AF. Alias tokens name palette steps without assigning interface meaning.',
+    relatedLessons: ['u3-l6'],
+  },
+  {
+    term: 'role token',
+    definition: 'A token that assigns interface meaning to a color, such as --color-action-primary: var(--blue-600). Role tokens describe usage, not appearance, and stay meaningful across themes.',
+    relatedLessons: ['u3-l6'],
+  },
+  {
+    term: 'theme propagation',
+    definition: 'The automatic updating of all interface elements when a base or alias token value changes. Because role tokens reference aliases, one base change can cascade to every component in the system.',
+    relatedLessons: ['u3-l6'],
+  },
+  {
+    term: 'sRGB',
+    definition: 'The standard color space for most web and screen work. sRGB defines the range of colors that virtually all displays can reproduce and is the default for CSS color functions.',
+    relatedLessons: ['u3-l7'],
+  },
+  {
+    term: 'Display P3',
+    definition: 'A wider color space available on many modern screens (especially Apple devices) that can represent more vivid colors than sRGB. Colors outside sRGB may be clipped on devices that do not support P3.',
+    relatedLessons: ['u3-l7'],
+  },
+  {
+    term: 'color space',
+    definition: 'A defined range of colors that a system can represent. sRGB and Display P3 are two common color spaces for digital design. Wider spaces can represent more vivid colors but may not be universally supported.',
+    relatedLessons: ['u3-l7'],
+  },
+  {
+    term: 'Canvas',
+    definition: 'An HTML element that provides a drawing surface for graphics rendered via JavaScript. Canvas uses explicit color values for fills and strokes and is commonly used for charts, games, and custom visualizations.',
+    relatedLessons: ['u3-l7'],
+  },
+  {
+    term: 'SVG',
+    definition: 'Scalable Vector Graphics — an XML-based format for vector images in the browser. SVG elements use fill and stroke attributes with color values in HEX, RGB, HSL, or named colors.',
+    relatedLessons: ['u3-l7'],
+  },
+  {
+    term: 'WebGL',
+    definition: 'A JavaScript API for rendering 3D and 2D graphics in the browser. WebGL uses explicit color values for surfaces, lights, and materials. Color decisions in WebGL still need accessibility consideration.',
+    relatedLessons: ['u3-l7'],
+  },
+  {
+    term: 'contrast checker',
+    definition: 'A tool that calculates the contrast ratio between a foreground and background color and reports whether the pair meets WCAG accessibility thresholds. Essential for verifying readability.',
+    relatedLessons: ['u3-l7'],
+  },
 ];
