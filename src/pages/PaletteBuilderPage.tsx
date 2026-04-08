@@ -405,14 +405,14 @@ export function PaletteBuilderPage() {
     }
 
     const txtSurf = ratioOf(r.secondaryText, r.surface);
-    if (txtSurf < 4.5) {
-      const fix = findAccessibleVariant(r.secondaryText, r.surface, 4.5, 'lighten')
-        ?? findAccessibleVariant(r.surface, r.secondaryText, 4.5, 'darken');
-      const fixRole: RoleKey = findAccessibleVariant(r.secondaryText, r.surface, 4.5, 'lighten')
+    if (txtSurf < 7) {
+      const fix = findAccessibleVariant(r.secondaryText, r.surface, 7, 'lighten')
+        ?? findAccessibleVariant(r.surface, r.secondaryText, 7, 'darken');
+      const fixRole: RoleKey = findAccessibleVariant(r.secondaryText, r.surface, 7, 'lighten')
         ? 'secondaryText' : 'surface';
       if (fix) {
         out.push({
-          msg: `Secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 4.5:1 for AA.`,
+          msg: `Secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: fixRole,
           suggestedHex: fix,
           suggestedLabel: fixRole === 'secondaryText' ? 'lighter text' : 'darker surface',
@@ -421,11 +421,11 @@ export function PaletteBuilderPage() {
     }
 
     const accBg = ratioOf(r.accent, r.background);
-    if (accBg < 4.5) {
-      const fix = findAccessibleVariant(r.accent, r.background, 4.5, 'lighten');
+    if (accBg < 7) {
+      const fix = findAccessibleVariant(r.accent, r.background, 7, 'lighten');
       if (fix) {
         out.push({
-          msg: `Accent/bg is ${accBg.toFixed(1)}:1 — needs 4.5:1 for AA.`,
+          msg: `Accent/bg is ${accBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: 'accent',
           suggestedHex: fix,
           suggestedLabel: 'lighter accent',
@@ -457,14 +457,14 @@ export function PaletteBuilderPage() {
     }
 
     const txtSurf = ratioOf(r.secondaryText, r.surface);
-    if (txtSurf < 4.5) {
-      const fix = findAccessibleVariant(r.secondaryText, r.surface, 4.5, 'darken')
-        ?? findAccessibleVariant(r.surface, r.secondaryText, 4.5, 'lighten');
-      const fixRole: RoleKey = findAccessibleVariant(r.secondaryText, r.surface, 4.5, 'darken')
+    if (txtSurf < 7) {
+      const fix = findAccessibleVariant(r.secondaryText, r.surface, 7, 'darken')
+        ?? findAccessibleVariant(r.surface, r.secondaryText, 7, 'lighten');
+      const fixRole: RoleKey = findAccessibleVariant(r.secondaryText, r.surface, 7, 'darken')
         ? 'secondaryText' : 'surface';
       if (fix) {
         out.push({
-          msg: `Secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 4.5:1 for AA.`,
+          msg: `Secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: fixRole,
           suggestedHex: fix,
           suggestedLabel: fixRole === 'secondaryText' ? 'darker text' : 'lighter surface',
@@ -473,11 +473,11 @@ export function PaletteBuilderPage() {
     }
 
     const accBg = ratioOf(r.accent, r.background);
-    if (accBg < 4.5) {
-      const fix = findAccessibleVariant(r.accent, r.background, 4.5, 'darken');
+    if (accBg < 7) {
+      const fix = findAccessibleVariant(r.accent, r.background, 7, 'darken');
       if (fix) {
         out.push({
-          msg: `Accent/bg is ${accBg.toFixed(1)}:1 — needs 4.5:1 for AA.`,
+          msg: `Accent/bg is ${accBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: 'accent',
           suggestedHex: fix,
           suggestedLabel: 'darker accent',
