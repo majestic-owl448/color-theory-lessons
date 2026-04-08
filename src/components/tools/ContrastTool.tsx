@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
 interface ProblemArea {
@@ -16,23 +17,6 @@ const AREAS: ProblemArea[] = [
   { id: 'button', label: 'Submit button', textColor: '#ffffff', bgColor: '#4a4a60', fixBg: true, minL: 35 },
 ];
 
-function hexToHSL(hex: string): { h: number; s: number; l: number } {
-  const r = parseInt(hex.slice(1, 3), 16) / 255;
-  const g = parseInt(hex.slice(3, 5), 16) / 255;
-  const b = parseInt(hex.slice(5, 7), 16) / 255;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const l = (max + min) / 2;
-  if (max === min) return { h: 0, s: 0, l: Math.round(l * 100) };
-  const d = max - min;
-  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-  const h =
-    max === r ? ((g - b) / d + (g < b ? 6 : 0)) / 6 :
-    max === g ? ((b - r) / d + 2) / 6 :
-    ((r - g) / d + 4) / 6;
-  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
-}
-
 interface ContrastToolProps {
   interactive?: boolean;
   onComplete?: () => void;
@@ -40,9 +24,9 @@ interface ContrastToolProps {
 
 export function ContrastTool({ interactive = true, onComplete }: ContrastToolProps) {
   const [lightness, setLightness] = useState<Record<string, number>>({
-    heading: hexToHSL(AREAS[0].textColor).l,
-    helper: hexToHSL(AREAS[1].textColor).l,
-    button: hexToHSL(AREAS[2].bgColor).l,
+    heading: hexToHsl(AREAS[0].textColor).l,
+    helper: hexToHsl(AREAS[1].textColor).l,
+    button: hexToHsl(AREAS[2].bgColor).l,
   });
   const [completed, setCompleted] = useState(false);
 
@@ -79,8 +63,8 @@ export function ContrastTool({ interactive = true, onComplete }: ContrastToolPro
 
           // Compute displayed color
           const baseHSL = area.fixBg
-            ? hexToHSL(area.bgColor)
-            : hexToHSL(area.textColor);
+            ? hexToHsl(area.bgColor)
+            : hexToHsl(area.textColor);
 
           const displayedColor = `hsl(${baseHSL.h}, ${baseHSL.s}%, ${l}%)`;
           const textColor = area.fixBg ? area.textColor : displayedColor;

@@ -1,12 +1,8 @@
 import { useState, useMemo } from 'react';
+import type { HSL } from '../../utils/color.ts';
+import { hslString } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 import styles from './HSLSliderTool.module.css';
-
-interface HSL { h: number; s: number; l: number }
-
-function hslString({ h, s, l }: HSL) {
-  return `hsl(${h}, ${s}%, ${l}%)`;
-}
 
 interface Target {
   name: string;

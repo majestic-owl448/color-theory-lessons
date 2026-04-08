@@ -1,51 +1,8 @@
 import { useState } from 'react';
+import type { RGB } from '../../utils/color.ts';
+import { rgbToHex, parseHex, rgbString, colorDistance } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 import styles from './HexRgbEditorTool.module.css';
-
-// ─── Types ──────────────────────────────────────────────────────────────
-
-interface RGB { r: number; g: number; b: number }
-
-// ─── Conversion helpers ─────────────────────────────────────────────────
-
-function rgbToHex({ r, g, b }: RGB): string {
-  return (
-    '#' +
-    [r, g, b]
-      .map((v) => v.toString(16).padStart(2, '0').toUpperCase())
-      .join('')
-  );
-}
-
-/** Parse a 3- or 6-char HEX string (with or without #) into RGB. Returns null if invalid. */
-function parseHex(raw: string): RGB | null {
-  const s = raw.replace(/^#/, '').trim().toUpperCase();
-  if (s.length === 3 && /^[0-9A-F]{3}$/.test(s)) {
-    return {
-      r: parseInt(s[0] + s[0], 16),
-      g: parseInt(s[1] + s[1], 16),
-      b: parseInt(s[2] + s[2], 16),
-    };
-  }
-  if (s.length === 6 && /^[0-9A-F]{6}$/.test(s)) {
-    return {
-      r: parseInt(s.slice(0, 2), 16),
-      g: parseInt(s.slice(2, 4), 16),
-      b: parseInt(s.slice(4, 6), 16),
-    };
-  }
-  return null;
-}
-
-function rgbString({ r, g, b }: RGB): string {
-  return `rgb(${r}, ${g}, ${b})`;
-}
-
-function colorDistance(a: RGB, b: RGB): number {
-  return Math.sqrt(
-    (a.r - b.r) ** 2 + (a.g - b.g) ** 2 + (a.b - b.b) ** 2,
-  );
-}
 
 // ─── Presets ─────────────────────────────────────────────────────────────
 

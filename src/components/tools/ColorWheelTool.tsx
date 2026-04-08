@@ -1,30 +1,7 @@
 import { useState, useMemo } from 'react';
+import type { Relationship } from '../../utils/color.ts';
+import { hslToHex, getRelatedHues } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
-
-type Relationship = 'analogous' | 'complementary' | 'triadic';
-
-function hslToHex(h: number, s: number, l: number): string {
-  s /= 100;
-  l /= 100;
-  const a = s * Math.min(l, 1 - l);
-  const f = (n: number) => {
-    const k = (n + h / 30) % 12;
-    const col = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * col).toString(16).padStart(2, '0');
-  };
-  return `#${f(0)}${f(8)}${f(4)}`;
-}
-
-function getRelatedHues(baseH: number, rel: Relationship): number[] {
-  switch (rel) {
-    case 'analogous':
-      return [(baseH + 30) % 360, (baseH - 30 + 360) % 360];
-    case 'complementary':
-      return [(baseH + 180) % 360];
-    case 'triadic':
-      return [(baseH + 120) % 360, (baseH + 240) % 360];
-  }
-}
 
 interface ColorWheelProps {
   baseH: number;

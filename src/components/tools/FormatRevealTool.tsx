@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { hexToRgb, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 import styles from './FormatRevealTool.module.css';
 
@@ -7,30 +8,6 @@ interface ColorElement {
   label: string;
   hex: string;
   description: string;
-}
-
-// hex → { r, g, b }
-function hexToRgb(hex: string): { r: number; g: number; b: number } {
-  const n = parseInt(hex.slice(1), 16);
-  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
-}
-
-// hex → { h, s, l } (h: 0-360, s/l: 0-100)
-function hexToHsl(hex: string): { h: number; s: number; l: number } {
-  const { r, g, b } = hexToRgb(hex);
-  const rn = r / 255, gn = g / 255, bn = b / 255;
-  const max = Math.max(rn, gn, bn), min = Math.min(rn, gn, bn);
-  const l = (max + min) / 2;
-  if (max === min) return { h: 0, s: 0, l: Math.round(l * 100) };
-  const d = max - min;
-  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-  let h: number;
-  switch (max) {
-    case rn: h = ((gn - bn) / d + (gn < bn ? 6 : 0)) / 6; break;
-    case gn: h = ((bn - rn) / d + 2) / 6; break;
-    default:  h = ((rn - gn) / d + 4) / 6;
-  }
-  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
 }
 
 const ELEMENTS: ColorElement[] = [

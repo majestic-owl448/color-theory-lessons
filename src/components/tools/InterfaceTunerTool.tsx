@@ -1,28 +1,7 @@
 import { useState } from 'react';
+import type { RGB } from '../../utils/color.ts';
+import { rgbString, luminance, contrastRatio as contrast, channelSpread } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
-
-interface RGB { r: number; g: number; b: number }
-
-function rgbString({ r, g, b }: RGB) {
-  return `rgb(${r}, ${g}, ${b})`;
-}
-
-function luminance({ r, g, b }: RGB): number {
-  return 0.2126 * (r / 255) + 0.7152 * (g / 255) + 0.0722 * (b / 255);
-}
-
-function contrast(a: RGB, b: RGB): number {
-  const la = luminance(a);
-  const lb = luminance(b);
-  const lighter = Math.max(la, lb);
-  const darker = Math.min(la, lb);
-  return (lighter + 0.05) / (darker + 0.05);
-}
-
-// How "neutral" a color is: max channel spread (0 = perfectly neutral)
-function channelSpread({ r, g, b }: RGB): number {
-  return Math.max(r, g, b) - Math.min(r, g, b);
-}
 
 const CHANNEL_META = [
   { key: 'r' as const, label: 'R', color: '#e03030' },
