@@ -901,21 +901,29 @@ export function PaletteBuilderPage() {
             <div key={type} className={styles.harmonySection}>
               <h2 className={styles.sectionHeading}>{type}</h2>
               <div className={styles.harmonySwatches}>
-                {colors.map((color) => {
-                  const isAdded = paletteHexSet.has(color.hex.toUpperCase());
-                  return (
-                    <button
-                      key={color.hex}
-                      className={`${styles.harmonySwatch} ${isAdded ? styles.harmonySwatchAdded : ''}`}
-                      style={{ backgroundColor: color.hex }}
-                      onClick={() => { if (!isAdded) addPaletteColor(color.hex, color.label); }}
-                      disabled={isAdded}
-                      title={isAdded ? `${color.label} — already added` : `${color.label} — ${color.hex.toUpperCase()} — click to add`}
-                      aria-label={isAdded ? `${color.label} already in palette` : `Add ${color.label} to palette`}
-                    >
-                      {isAdded && <span className={styles.harmonySwatchCheck}>✓</span>}
-                    </button>
-                  );
+                {colors.flatMap((color) => {
+                  const variants = [
+                    { hex: color.hex, label: color.label },
+                    { hex: color.lighter, label: `${color.label} lighter` },
+                    { hex: color.darker, label: `${color.label} darker` },
+                    { hex: color.muted, label: `${color.label} muted` },
+                  ];
+                  return variants.map(({ hex, label }) => {
+                    const isAdded = paletteHexSet.has(hex.toUpperCase());
+                    return (
+                      <button
+                        key={hex}
+                        className={`${styles.harmonySwatch} ${isAdded ? styles.harmonySwatchAdded : ''}`}
+                        style={{ backgroundColor: hex }}
+                        onClick={() => { if (!isAdded) addPaletteColor(hex, label); }}
+                        disabled={isAdded}
+                        title={isAdded ? `${label} — already added` : `${label} — ${hex.toUpperCase()} — click to add`}
+                        aria-label={isAdded ? `${label} already in palette` : `Add ${label} to palette`}
+                      >
+                        {isAdded && <span className={styles.harmonySwatchCheck}>✓</span>}
+                      </button>
+                    );
+                  });
                 })}
               </div>
             </div>
