@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xl);
-  max-width: var(--max-content-width);
+  max-width: 1200px;
 }
 
 .heading {
@@ -17,6 +17,39 @@
   color: var(--secondary-foreground);
   font-family: var(--font-sans);
   margin-top: calc(-1 * var(--spacing-md));
+}
+
+/* ── Two-Column Layout ────────────────────────────────────────────────────── */
+
+.twoColumn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+
+.suggestionsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.paletteColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  position: sticky;
+  top: var(--spacing-md);
+}
+
+@media (max-width: 800px) {
+  .twoColumn {
+    grid-template-columns: 1fr;
+  }
+
+  .paletteColumn {
+    position: static;
+  }
 }
 
 /* ── A. Color Input ────────────────────────────────────────────────────────── */
@@ -67,49 +100,22 @@
   color: var(--muted);
 }
 
-/* ── B. Harmony Selector ───────────────────────────────────────────────────── */
+/* ── Section generics ─────────────────────────────────────────────────────── */
 
-.harmonyGroup {
+.section {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
 }
 
-.harmonyButtons {
-  display: flex;
-  gap: var(--spacing-sm);
-}
-
-.harmonyBtn {
+.sectionHeading {
+  font-size: 0.85rem;
   font-family: var(--font-mono);
-  font-size: 1rem;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--secondary-foreground);
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
 }
-
-.harmonyBtn:hover {
-  border-color: var(--secondary-foreground);
-  color: var(--primary-foreground);
-}
-
-.harmonyBtnActive {
-  background: var(--surface);
-  color: var(--primary-foreground);
-  border-color: var(--primary-foreground);
-}
-
-.harmonyDesc {
-  font-size: 1rem;
-  color: var(--secondary-foreground);
-  font-family: var(--font-sans);
-}
-
-/* ── Section header row ────────────────────────────────────────────────────── */
 
 .sectionHeaderRow {
   display: flex;
@@ -134,30 +140,21 @@
   border-color: var(--accent-cta);
 }
 
-/* ── C. Palette Grid ───────────────────────────────────────────────────────── */
-
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
+.harmonyDesc {
+  font-size: 1rem;
+  color: var(--secondary-foreground);
+  font-family: var(--font-sans);
 }
 
-.sectionHeading {
-  font-size: 0.85rem;
-  font-family: var(--font-mono);
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0;
-}
+/* ── Suggestions Grid ─────────────────────────────────────────────────────── */
 
-.paletteGrid {
+.suggestionsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: var(--spacing-md);
 }
 
-.swatchColumn {
+.suggestionCard {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
@@ -167,26 +164,16 @@
   border-radius: var(--radius-md);
 }
 
+.suggestMainSwatch {
+  height: 80px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
 .swatchColumnHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.removeBtn {
-  background: transparent;
-  border: none;
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 1.2rem;
-  line-height: 1;
-  padding: 0 2px;
-  border-radius: var(--radius-sm);
-  transition: color 0.15s;
-}
-
-.removeBtn:hover {
-  color: var(--accent-danger);
 }
 
 .swatchColumnLabel {
@@ -195,57 +182,6 @@
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-}
-
-.swatch {
-  height: 120px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-
-.swatchEditable {
-  height: 120px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  cursor: pointer;
-  width: 100%;
-  transition: outline 0.1s;
-}
-
-.swatchEditable:hover {
-  outline: 2px solid var(--accent-link);
-  outline-offset: 2px;
-}
-
-/* ── Inline editor ─────────────────────────────────────────────────────────── */
-
-.editInline {
-  display: flex;
-  gap: var(--spacing-sm);
-  align-items: center;
-}
-
-.editInlinePicker {
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 2px;
-  cursor: pointer;
-  background: var(--primary-background);
-  flex-shrink: 0;
-}
-
-.editInlineInput {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--primary-background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--primary-foreground);
-  flex: 1;
-  min-width: 0;
 }
 
 .swatchHex {
@@ -304,6 +240,90 @@
   border-color: var(--accent-link);
 }
 
+.variantPromoAdded {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ── Palette Grid ─────────────────────────────────────────────────────────── */
+
+.paletteGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.swatchColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.removeBtn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0 2px;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+}
+
+.removeBtn:hover {
+  color: var(--accent-danger);
+}
+
+.swatchEditable {
+  height: 100px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  width: 100%;
+  transition: outline 0.1s;
+}
+
+.swatchEditable:hover {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 2px;
+}
+
+/* ── Inline editor ─────────────────────────────────────────────────────────── */
+
+.editInline {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.editInlinePicker {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  cursor: pointer;
+  background: var(--primary-background);
+  flex-shrink: 0;
+}
+
+.editInlineInput {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--primary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--primary-foreground);
+  flex: 1;
+  min-width: 0;
+}
+
 /* ── Add color button ──────────────────────────────────────────────────────── */
 
 .addColorBtn {
@@ -324,7 +344,7 @@
   border-color: var(--accent-link);
 }
 
-/* ── D. Contrast Matrix ────────────────────────────────────────────────────── */
+/* ── Contrast Matrix ──────────────────────────────────────────────────────── */
 
 .matrixWrap {
   overflow-x: auto;
@@ -383,13 +403,6 @@
   color: var(--secondary-foreground);
 }
 
-.matrixSelf {
-  color: var(--muted);
-  padding: var(--spacing-sm);
-  text-align: center;
-  border-top: 1px solid var(--border);
-}
-
 .badgeAaa {
   font-size: 0.85rem;
   font-weight: 700;
@@ -408,7 +421,7 @@
   color: var(--accent-danger);
 }
 
-/* ── E. Dark + Light Mode Arranger ─────────────────────────────────────────── */
+/* ── Theme Arranger ───────────────────────────────────────────────────────── */
 
 .arrangerRow {
   display: grid;
@@ -416,7 +429,7 @@
   gap: var(--spacing-md);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .arrangerRow {
     grid-template-columns: 1fr;
   }
@@ -523,7 +536,7 @@
   width: fit-content;
 }
 
-/* ── Contrast Checks ───────────────────────────────────────────────────────── */
+/* ── Contrast Checks ──────────────────────────────────────────────────────── */
 
 .contrastChecks {
   display: flex;
@@ -540,36 +553,7 @@
   color: var(--secondary-foreground);
 }
 
-/* ── Color Suggestions ─────────────────────────────────────────────────────── */
-
-.suggestionsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--spacing-md);
-}
-
-.suggestionCard {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-}
-
-.suggestMainSwatch {
-  height: 100px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-
-.variantPromoAdded {
-  opacity: 0.5;
-  cursor: default;
-}
-
-/* ── Suggestion Box ────────────────────────────────────────────────────────── */
+/* ── Suggestion Box ───────────────────────────────────────────────────────── */
 
 .suggestion {
   padding: var(--spacing-md);
@@ -638,21 +622,6 @@
 .a11ySuggestionApply:hover {
   background: var(--accent-cta);
   color: var(--primary-background);
-}
-
-.suggestionColor {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-
-.suggestionSwatch {
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  border: 1px solid var(--border);
-  display: inline-block;
-  vertical-align: middle;
 }
 
 @media (max-width: 500px) {

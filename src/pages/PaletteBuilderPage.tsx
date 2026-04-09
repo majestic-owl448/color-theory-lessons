@@ -18,9 +18,6 @@ import styles from './PaletteBuilderPage.module.css';
 interface PaletteColor {
   hex: string;
   label: string;
-  lighter: string;
-  darker: string;
-  muted: string;
 }
 
 type RoleKey =
@@ -49,15 +46,6 @@ const ROLE_KEYS: RoleKey[] = [
   'accentSecondary',
 ];
 
-const HARMONY_DESC: Record<Relationship, string> = {
-  analogous:
-    'Colors adjacent on the wheel (30 degrees apart). Harmonious and low-contrast palette, great for cohesive UI themes.',
-  complementary:
-    'Colors opposite on the wheel (180 degrees apart). High contrast and vibrant, ideal for accent vs. background pairings.',
-  triadic:
-    'Three colors evenly spaced (120 degrees apart). Balanced variety, good for multi-role systems with distinct semantic zones.',
-};
-
 /* ── Helpers ──────────────────────────────────────────────────────────────── */
 
 function buildVariants(hex: string) {
@@ -69,43 +57,33 @@ function buildVariants(hex: string) {
   };
 }
 
-function buildPalette(
+interface HarmonySuggestion {
+  hex: string;
+  label: string;
+  lighter: string;
+  darker: string;
+  muted: string;
+}
+
+function buildHarmonySuggestions(
   primaryHex: string,
   harmony: Relationship,
-): PaletteColor[] {
+): HarmonySuggestion[] {
   const { h, s, l } = hexToHsl(primaryHex);
   const relatedHues = getRelatedHues(h, harmony);
 
-  const baseHues = [h, ...relatedHues];
   const labels =
     harmony === 'analogous'
-      ? ['primary', 'analogous +30', 'analogous -30']
+      ? ['analogous +30', 'analogous −30']
       : harmony === 'complementary'
-        ? ['primary', 'complement']
-        : ['primary', 'triadic +120', 'triadic +240'];
+        ? ['complement']
+        : ['triadic +120', 'triadic +240'];
 
-  return baseHues.map((hue, i) => {
+  return relatedHues.map((hue, i) => {
     const hex = hslToHex(hue, s, l);
     const variants = buildVariants(hex);
     return { hex, label: labels[i], ...variants };
   });
-}
-
-function buildSingleColor(hex: string): PaletteColor {
-  const variants = buildVariants(hex);
-  return { hex, label: 'primary', ...variants };
-}
-
-function buildSuggestions(primaryHex: string, harmony: Relationship): PaletteColor[] {
-  return buildPalette(primaryHex, harmony).slice(1);
-}
-
-function allPaletteHexes(palette: PaletteColor[]): string[] {
-  const out: string[] = [];
-  for (const c of palette) {
-    out.push(c.hex, c.lighter, c.darker, c.muted);
-  }
-  return out;
 }
 
 function lum(hex: string) {
@@ -122,18 +100,17 @@ function autoAssignRoles(
   palette: PaletteColor[],
   mode: 'dark' | 'light',
 ): Record<RoleKey, string> {
-  const all = allPaletteHexes(palette);
+  const all = palette.map((c) => c.hex);
   const sorted = sortByLuminance(all, true); // darkest first
 
   if (mode === 'dark') {
     const bg = sorted[0] ?? '#0a0a23';
-    const surface = sorted[1] ?? '#1b1b32';
+    const surface = sorted[1] ?? sorted[0] ?? '#1b1b32';
     const primaryText = sorted[sorted.length - 1] ?? '#ffffff';
-    const secondaryText = sorted[sorted.length - 2] ?? '#d0d0d5';
+    const secondaryText = sorted[sorted.length - 2] ?? sorted[sorted.length - 1] ?? '#d0d0d5';
     const accent = palette[0]?.hex ?? '#3b82f6';
     const accentSecondary = palette[1]?.hex ?? palette[0]?.hex ?? '#3b82f6';
 
-    // If bg is too light (L>20), synthesize a darker one
     const bgHsl = hexToHsl(bg);
     const finalBg = bgHsl.l > 20 ? hslToHex(bgHsl.h, bgHsl.s, 8) : bg;
     const surfaceHsl = hexToHsl(surface);
@@ -150,14 +127,12 @@ function autoAssignRoles(
     };
   } else {
     const bg = sorted[sorted.length - 1] ?? '#ffffff';
-    const surface = sorted[sorted.length - 2] ?? '#f5f6f7';
+    const surface = sorted[sorted.length - 2] ?? sorted[sorted.length - 1] ?? '#f5f6f7';
     const primaryText = sorted[0] ?? '#0a0a23';
-    const secondaryText = sorted[1] ?? '#1b1b32';
-    const accent = palette[0]?.darker ?? palette[0]?.hex ?? '#3b82f6';
-    const accentSecondary =
-      palette[1]?.darker ?? palette[1]?.hex ?? palette[0]?.hex ?? '#3b82f6';
+    const secondaryText = sorted[1] ?? sorted[0] ?? '#1b1b32';
+    const accent = palette[0]?.hex ?? '#3b82f6';
+    const accentSecondary = palette[1]?.hex ?? palette[0]?.hex ?? '#3b82f6';
 
-    // If bg is too dark, synthesize
     const bgHsl = hexToHsl(bg);
     const finalBg = bgHsl.l < 85 ? hslToHex(bgHsl.h, bgHsl.s, 97) : bg;
     const surfaceHsl = hexToHsl(surface);
@@ -187,7 +162,6 @@ function ratioOf(a: string, b: string) {
   return contrastRatioWcag(hexToRgb(a), hexToRgb(b));
 }
 
-/** Step `fgHex` lightness toward `direction` until it meets `targetRatio` against `bgHex`. */
 function findAccessibleVariant(
   fgHex: string,
   bgHex: string,
@@ -217,11 +191,8 @@ interface AccessibilitySuggestion {
 
 export function PaletteBuilderPage() {
   const [hexInput, setHexInput] = useState('#3B82F6');
-  const [primaryHex, setPrimaryHex] = useState('#3B82F6');
-  const [harmony, setHarmony] = useState<Relationship>('analogous');
-  const [paletteColors, setPaletteColors] = useState<PaletteColor[]>(() =>
-    [buildSingleColor('#3B82F6')],
-  );
+  const [primaryHex, setPrimaryHex] = useState<string | null>(null);
+  const [paletteColors, setPaletteColors] = useState<PaletteColor[]>([]);
   const [paletteIsCustom, setPaletteIsCustom] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editHexInput, setEditHexInput] = useState('');
@@ -238,30 +209,124 @@ export function PaletteBuilderPage() {
 
   const isValid = parseHex(hexInput) !== null;
 
-  const allColors = useMemo(() => allPaletteHexes(paletteColors), [paletteColors]);
+  const paletteHexes = useMemo(
+    () => paletteColors.map((c) => c.hex),
+    [paletteColors],
+  );
 
   const effectiveDark = useMemo(
-    () => darkRoles ?? autoAssignRoles(paletteColors, 'dark'),
+    () => darkRoles ?? (paletteColors.length > 0 ? autoAssignRoles(paletteColors, 'dark') : null),
     [darkRoles, paletteColors],
   );
   const effectiveLight = useMemo(
-    () => lightRoles ?? autoAssignRoles(paletteColors, 'light'),
+    () => lightRoles ?? (paletteColors.length > 0 ? autoAssignRoles(paletteColors, 'light') : null),
     [lightRoles, paletteColors],
   );
 
-  const suggestions = useMemo(
-    () => buildSuggestions(primaryHex, harmony),
-    [primaryHex, harmony],
-  );
+  /* ── All harmony suggestions (all three types at once) ─────────────────── */
+
+  const allHarmonySuggestions = useMemo(() => {
+    if (!primaryHex) return [];
+    return [
+      { type: 'analogous' as Relationship, colors: buildHarmonySuggestions(primaryHex, 'analogous') },
+      { type: 'complementary' as Relationship, colors: buildHarmonySuggestions(primaryHex, 'complementary') },
+      { type: 'triadic' as Relationship, colors: buildHarmonySuggestions(primaryHex, 'triadic') },
+    ];
+  }, [primaryHex]);
+
+  const HARMONY_DESC: Record<Relationship, string> = {
+    analogous:
+      'Colors adjacent on the wheel (30° apart). Harmonious and low-contrast, great for cohesive themes.',
+    complementary:
+      'Colors opposite on the wheel (180° apart). High contrast and vibrant, ideal for accent pairings.',
+    triadic:
+      'Three colors evenly spaced (120° apart). Balanced variety for multi-role systems.',
+  };
 
   const paletteHexSet = useMemo(
     () => new Set(paletteColors.map((c) => c.hex.toUpperCase())),
     [paletteColors],
   );
 
+  /* ── Lighter / darker / neutral suggestions ────────────────────────────── */
+
+  const missingLighter = useMemo(() => {
+    if (paletteColors.length < 2 || !primaryHex) return [];
+    const hasLight = paletteColors.some((c) => hexToHsl(c.hex).l > 75);
+    if (hasLight) return [];
+
+    const sources = [...paletteHexes];
+    for (const group of allHarmonySuggestions) {
+      for (const c of group.colors) sources.push(c.hex);
+    }
+    const seen = new Set(paletteHexSet);
+    const suggestions: { hex: string; from: string }[] = [];
+    for (const src of sources) {
+      const v = buildVariants(src);
+      const upper = v.lighter.toUpperCase();
+      if (!seen.has(upper) && hexToHsl(v.lighter).l > 75) {
+        seen.add(upper);
+        suggestions.push({ hex: v.lighter, from: src });
+      }
+    }
+    return suggestions;
+  }, [paletteColors, primaryHex, paletteHexes, paletteHexSet, allHarmonySuggestions]);
+
+  const missingDarker = useMemo(() => {
+    if (paletteColors.length < 2 || !primaryHex) return [];
+    const hasDark = paletteColors.some((c) => hexToHsl(c.hex).l < 25);
+    if (hasDark) return [];
+
+    const sources = [...paletteHexes];
+    for (const group of allHarmonySuggestions) {
+      for (const c of group.colors) sources.push(c.hex);
+    }
+    const seen = new Set(paletteHexSet);
+    const suggestions: { hex: string; from: string }[] = [];
+    for (const src of sources) {
+      const v = buildVariants(src);
+      const upper = v.darker.toUpperCase();
+      if (!seen.has(upper) && hexToHsl(v.darker).l < 25) {
+        seen.add(upper);
+        suggestions.push({ hex: v.darker, from: src });
+      }
+    }
+    return suggestions;
+  }, [paletteColors, primaryHex, paletteHexes, paletteHexSet, allHarmonySuggestions]);
+
+  const missingNeutrals = useMemo(() => {
+    if (paletteColors.length < 2 || !primaryHex) return [];
+    const hasNeutral = paletteColors.some((c) => hexToHsl(c.hex).s < 20);
+    if (hasNeutral) return [];
+
+    const sources = [...paletteHexes];
+    for (const group of allHarmonySuggestions) {
+      for (const c of group.colors) sources.push(c.hex);
+    }
+    const seen = new Set(paletteHexSet);
+    const suggestions: { hex: string; from: string }[] = [];
+    for (const src of sources) {
+      const v = buildVariants(src);
+      const upper = v.muted.toUpperCase();
+      if (!seen.has(upper) && hexToHsl(v.muted).s < 20) {
+        seen.add(upper);
+        suggestions.push({ hex: v.muted, from: src });
+      }
+    }
+    return suggestions;
+  }, [paletteColors, primaryHex, paletteHexes, paletteHexSet, allHarmonySuggestions]);
+
+  /* ── Primary color actions ─────────────────────────────────────────────── */
+
   const applyPrimary = (hex: string) => {
     setPrimaryHex(hex);
-    setPaletteColors([buildSingleColor(hex)]);
+    if (paletteColors.length === 0) {
+      setPaletteColors([{ hex, label: 'primary' }]);
+    } else {
+      setPaletteColors((prev) =>
+        prev.map((c, i) => (i === 0 ? { hex, label: 'primary' } : c)),
+      );
+    }
     setPaletteIsCustom(false);
     setEditingIndex(null);
     setDarkRoles(null);
@@ -288,13 +353,6 @@ export function PaletteBuilderPage() {
     applyPrimary(val);
   };
 
-  const handleHarmonyChange = (h: Relationship) => {
-    setHarmony(h);
-    setDarkRoles(null);
-    setLightRoles(null);
-    setOpenPicker(null);
-  };
-
   const handleRoleClick = (mode: 'dark' | 'light', role: RoleKey) => {
     if (
       openPicker &&
@@ -313,9 +371,9 @@ export function PaletteBuilderPage() {
     hex: string,
   ) => {
     if (mode === 'dark') {
-      setDarkRoles((prev) => ({ ...(prev ?? effectiveDark), [role]: hex }));
+      setDarkRoles((prev) => ({ ...(prev ?? effectiveDark!), [role]: hex }));
     } else {
-      setLightRoles((prev) => ({ ...(prev ?? effectiveLight), [role]: hex }));
+      setLightRoles((prev) => ({ ...(prev ?? effectiveLight!), [role]: hex }));
     }
     setOpenPicker(null);
   };
@@ -323,18 +381,16 @@ export function PaletteBuilderPage() {
   /* ── Palette edit helpers ───────────────────────────────────────────────── */
 
   const updatePaletteColor = (index: number, newHex: string) => {
-    const variants = buildVariants(newHex);
     setPaletteColors((prev) =>
-      prev.map((c, i) => (i === index ? { ...c, hex: newHex, ...variants } : c)),
+      prev.map((c, i) => (i === index ? { ...c, hex: newHex } : c)),
     );
     setPaletteIsCustom(true);
   };
 
   const addPaletteColor = (hex = '#808080', label?: string) => {
-    const variants = buildVariants(hex);
     setPaletteColors((prev) => {
       const customCount = prev.filter((c) => c.label.startsWith('custom')).length;
-      return [...prev, { hex, label: label ?? `custom ${customCount + 1}`, ...variants }];
+      return [...prev, { hex, label: label ?? `custom ${customCount + 1}` }];
     });
     setPaletteIsCustom(true);
     setEditingIndex(null);
@@ -349,7 +405,11 @@ export function PaletteBuilderPage() {
   };
 
   const handleResetPalette = () => {
-    setPaletteColors([buildSingleColor(primaryHex)]);
+    if (primaryHex) {
+      setPaletteColors([{ hex: primaryHex, label: 'primary' }]);
+    } else {
+      setPaletteColors([]);
+    }
     setPaletteIsCustom(false);
     setEditingIndex(null);
   };
@@ -358,13 +418,13 @@ export function PaletteBuilderPage() {
 
   const uniqueColors = useMemo(() => {
     const seen = new Set<string>();
-    return allColors.filter((c) => {
+    return paletteHexes.filter((c) => {
       const upper = c.toUpperCase();
       if (seen.has(upper)) return false;
       seen.add(upper);
       return true;
     });
-  }, [allColors]);
+  }, [paletteHexes]);
 
   const matrixPairs = useMemo(() => {
     const pairs: { fg: string; bg: string; ratio: number }[] = [];
@@ -382,9 +442,10 @@ export function PaletteBuilderPage() {
     return pairs;
   }, [uniqueColors]);
 
-  /* ── Suggestions ────────────────────────────────────────────────────────── */
+  /* ── Accessibility suggestions ──────────────────────────────────────────── */
 
   const darkSuggestions = useMemo((): AccessibilitySuggestion[] => {
+    if (!effectiveDark) return [];
     const out: AccessibilitySuggestion[] = [];
     const r = effectiveDark;
 
@@ -396,7 +457,7 @@ export function PaletteBuilderPage() {
         ? 'primaryText' : 'background';
       if (fix) {
         out.push({
-          msg: `Primary text/bg is ${txtBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          msg: `Dark: primary text/bg is ${txtBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: fixRole,
           suggestedHex: fix,
           suggestedLabel: fixRole === 'primaryText' ? 'lighter text' : 'darker background',
@@ -412,7 +473,7 @@ export function PaletteBuilderPage() {
         ? 'secondaryText' : 'surface';
       if (fix) {
         out.push({
-          msg: `Secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          msg: `Dark: secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: fixRole,
           suggestedHex: fix,
           suggestedLabel: fixRole === 'secondaryText' ? 'lighter text' : 'darker surface',
@@ -425,7 +486,7 @@ export function PaletteBuilderPage() {
       const fix = findAccessibleVariant(r.accent, r.background, 7, 'lighten');
       if (fix) {
         out.push({
-          msg: `Accent/bg is ${accBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          msg: `Dark: accent/bg is ${accBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: 'accent',
           suggestedHex: fix,
           suggestedLabel: 'lighter accent',
@@ -437,6 +498,7 @@ export function PaletteBuilderPage() {
   }, [effectiveDark]);
 
   const lightSuggestions = useMemo((): AccessibilitySuggestion[] => {
+    if (!effectiveLight) return [];
     const out: AccessibilitySuggestion[] = [];
     const r = effectiveLight;
 
@@ -448,7 +510,7 @@ export function PaletteBuilderPage() {
         ? 'primaryText' : 'background';
       if (fix) {
         out.push({
-          msg: `Primary text/bg is ${txtBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          msg: `Light: primary text/bg is ${txtBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: fixRole,
           suggestedHex: fix,
           suggestedLabel: fixRole === 'primaryText' ? 'darker text' : 'lighter background',
@@ -464,7 +526,7 @@ export function PaletteBuilderPage() {
         ? 'secondaryText' : 'surface';
       if (fix) {
         out.push({
-          msg: `Secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          msg: `Light: secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: fixRole,
           suggestedHex: fix,
           suggestedLabel: fixRole === 'secondaryText' ? 'darker text' : 'lighter surface',
@@ -477,7 +539,7 @@ export function PaletteBuilderPage() {
       const fix = findAccessibleVariant(r.accent, r.background, 7, 'darken');
       if (fix) {
         out.push({
-          msg: `Accent/bg is ${accBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          msg: `Light: accent/bg is ${accBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
           role: 'accent',
           suggestedHex: fix,
           suggestedLabel: 'darker accent',
@@ -488,461 +550,565 @@ export function PaletteBuilderPage() {
     return out;
   }, [effectiveLight]);
 
+  /* ── Theme insufficiency suggestions ────────────────────────────────────── */
+
+  const themeSuggestions = useMemo((): string[] => {
+    if (paletteColors.length === 0) return [];
+    const out: string[] = [];
+    if (paletteColors.length < 2)
+      out.push('Add at least one more color for contrast pairings to appear.');
+    if (paletteColors.length < 4)
+      out.push('Consider adding lighter and darker tones for backgrounds and text.');
+    if (paletteColors.length < 6)
+      out.push('A second accent color would let you differentiate primary and secondary actions.');
+    const hasLight = paletteColors.some((c) => hexToHsl(c.hex).l > 75);
+    const hasDark = paletteColors.some((c) => hexToHsl(c.hex).l < 25);
+    if (!hasLight && paletteColors.length >= 2)
+      out.push('Your palette lacks a light color — needed for light-mode backgrounds or dark-mode text.');
+    if (!hasDark && paletteColors.length >= 2)
+      out.push('Your palette lacks a dark color — needed for dark-mode backgrounds or light-mode text.');
+    return out;
+  }, [paletteColors]);
+
   /* ── Render ─────────────────────────────────────────────────────────────── */
 
-  const primaryHsl = hexToHsl(primaryHex);
+  const previewHex = primaryHex ?? '#3B82F6';
+  const primaryHsl = hexToHsl(previewHex);
+
+  const a11ySuggestions = [...darkSuggestions, ...lightSuggestions];
 
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>palette builder</h1>
       <p className={styles.subtitle}>
-        Start from a single color. Generate harmonies, check contrast, and
-        build palettes that work in dark and light mode.
+        Pick a primary color, explore harmony suggestions, and build your
+        palette by choosing the colors you want.
       </p>
 
-      {/* ── A. Color Input ──────────────────────────────────────────────── */}
-      <div className={styles.inputBar}>
-        <input
-          type="color"
-          className={styles.colorPicker}
-          value={primaryHex.toLowerCase()}
-          onChange={handlePickerChange}
-          aria-label="Pick primary color"
-        />
-        <input
-          type="text"
-          className={`${styles.hexInput} ${!isValid ? styles.hexInputInvalid : ''}`}
-          value={hexInput}
-          onChange={(e) => setHexInput(e.target.value)}
-          onBlur={handleHexBlur}
-          onKeyDown={handleHexKey}
-          aria-label="Hex color value"
-          spellCheck={false}
-        />
-        <div
-          className={styles.swatchPreview}
-          style={{ backgroundColor: primaryHex }}
-          aria-hidden="true"
-        />
-        <span className={styles.hslReadout}>
-          H {primaryHsl.h} &middot; S {primaryHsl.s} &middot; L {primaryHsl.l}
-        </span>
-      </div>
+      <div className={styles.twoColumn}>
+        {/* ════════════════ LEFT: SUGGESTIONS COLUMN ════════════════ */}
+        <div className={styles.suggestionsColumn}>
 
-      {/* ── B. Harmony Selector ─────────────────────────────────────────── */}
-      <div className={styles.harmonyGroup}>
-        <div className={styles.harmonyButtons}>
-          {(['analogous', 'complementary', 'triadic'] as Relationship[]).map(
-            (h) => (
-              <button
-                key={h}
-                className={`${styles.harmonyBtn} ${harmony === h ? styles.harmonyBtnActive : ''}`}
-                onClick={() => handleHarmonyChange(h)}
-              >
-                {h}
-              </button>
-            ),
-          )}
-        </div>
-        <p className={styles.harmonyDesc}>{HARMONY_DESC[harmony]}</p>
-      </div>
-
-      {/* ── C. Color Suggestions ────────────────────────────────────────── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionHeading}>color suggestions</h2>
-        <div className={styles.suggestionsGrid}>
-          {suggestions.map((color) => {
-            const isAdded = paletteHexSet.has(color.hex.toUpperCase());
-            return (
-              <div key={color.hex} className={styles.suggestionCard}>
-                <div className={styles.swatchColumnHeader}>
-                  <span className={styles.swatchColumnLabel}>{color.label}</span>
-                </div>
-                <div
-                  className={styles.suggestMainSwatch}
-                  style={{ backgroundColor: color.hex }}
-                />
-                <span className={styles.swatchHex}>{color.hex.toUpperCase()}</span>
-                <button
-                  className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
-                  onClick={() => { if (!isAdded) addPaletteColor(color.hex, color.label); }}
-                  disabled={isAdded}
-                  aria-label={isAdded ? `${color.label} already in palette` : `Add ${color.label} to palette`}
-                >
-                  {isAdded ? '✓ added' : '+ add to palette'}
-                </button>
-                <div className={styles.variantRow}>
-                  {(
-                    [
-                      ['lighter', color.lighter],
-                      ['darker', color.darker],
-                      ['muted', color.muted],
-                    ] as const
-                  ).map(([label, hex]) => {
-                    const varAdded = paletteHexSet.has(hex.toUpperCase());
-                    return (
-                      <div key={label} className={styles.variantSwatch}>
-                        <div
-                          className={styles.variantBlock}
-                          style={{ backgroundColor: hex }}
-                        />
-                        <span className={styles.variantLabel}>{label}</span>
-                        <span className={styles.variantHex}>{hex.toUpperCase()}</span>
-                        <button
-                          className={`${styles.variantPromoteBtn} ${varAdded ? styles.variantPromoAdded : ''}`}
-                          onClick={() => { if (!varAdded) addPaletteColor(hex); }}
-                          disabled={varAdded}
-                          title={varAdded ? `${hex.toUpperCase()} already in palette` : `Add ${hex.toUpperCase()} as palette color`}
-                          aria-label={varAdded ? `${label} already in palette` : `Add ${label} variant as palette color`}
-                        >
-                          {varAdded ? '✓' : '+ add'}
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ── D. Palette Grid ─────────────────────────────────────────────── */}
-      <div className={styles.section}>
-        <div className={styles.sectionHeaderRow}>
-          <h2 className={styles.sectionHeading}>palette</h2>
-          {paletteIsCustom && (
-            <button className={styles.resetBtn} onClick={handleResetPalette}>
-              ↺ reset to harmony
-            </button>
-          )}
-        </div>
-        <div className={styles.paletteGrid}>
-          {paletteColors.map((color, i) => (
-            <div key={i} className={styles.swatchColumn}>
-              <div className={styles.swatchColumnHeader}>
-                <span className={styles.swatchColumnLabel}>{color.label}</span>
-                {paletteColors.length > 1 && (
-                  <button
-                    className={styles.removeBtn}
-                    onClick={() => removePaletteColor(i)}
-                    aria-label={`Remove ${color.label}`}
-                    title="Remove color"
-                  >
-                    ×
-                  </button>
-                )}
-              </div>
-              <button
-                className={styles.swatchEditable}
-                style={{ backgroundColor: color.hex }}
-                onClick={() => {
-                  if (editingIndex === i) {
-                    setEditingIndex(null);
-                  } else {
-                    setEditingIndex(i);
-                    setEditHexInput(color.hex.toUpperCase());
-                  }
-                }}
-                aria-label={`Edit ${color.label} — ${color.hex.toUpperCase()}`}
-                title="Click to edit"
+          {/* ── Color Picker ──────────────────────────────────────── */}
+          <div className={styles.section}>
+            <h2 className={styles.sectionHeading}>pick your primary color</h2>
+            <div className={styles.inputBar}>
+              <input
+                type="color"
+                className={styles.colorPicker}
+                value={previewHex.toLowerCase()}
+                onChange={handlePickerChange}
+                aria-label="Pick primary color"
               />
-              {editingIndex === i && (
-                <div className={styles.editInline}>
-                  <input
-                    type="color"
-                    className={styles.editInlinePicker}
-                    value={editHexInput.toLowerCase()}
-                    onChange={(e) => {
-                      const val = e.target.value.toUpperCase();
-                      setEditHexInput(val);
-                      updatePaletteColor(i, val);
-                    }}
-                    aria-label="Pick color"
-                  />
-                  <input
-                    type="text"
-                    className={`${styles.editInlineInput} ${parseHex(editHexInput) === null ? styles.hexInputInvalid : ''}`}
-                    value={editHexInput}
-                    onChange={(e) => setEditHexInput(e.target.value)}
-                    onBlur={() => {
-                      const parsed = parseHex(editHexInput);
-                      if (parsed) {
-                        const canonical = rgbToHex(parsed);
-                        setEditHexInput(canonical);
-                        updatePaletteColor(i, canonical);
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        const parsed = parseHex(editHexInput);
-                        if (parsed) {
-                          const canonical = rgbToHex(parsed);
-                          setEditHexInput(canonical);
-                          updatePaletteColor(i, canonical);
-                          setEditingIndex(null);
-                        }
-                      }
-                      if (e.key === 'Escape') setEditingIndex(null);
-                    }}
-                    autoFocus
-                    aria-label="Hex color value"
-                    spellCheck={false}
-                  />
-                </div>
-              )}
-              <span className={styles.swatchHex}>{color.hex.toUpperCase()}</span>
-              <div className={styles.variantRow}>
-                {(
-                  [
-                    ['lighter', color.lighter],
-                    ['darker', color.darker],
-                    ['muted', color.muted],
-                  ] as const
-                ).map(([label, hex]) => (
-                  <div key={label} className={styles.variantSwatch}>
-                    <div
-                      className={styles.variantBlock}
-                      style={{ backgroundColor: hex }}
-                    />
-                    <span className={styles.variantLabel}>{label}</span>
-                    <span className={styles.variantHex}>
-                      {hex.toUpperCase()}
-                    </span>
-                    <button
-                      className={styles.variantPromoteBtn}
-                      onClick={() => addPaletteColor(hex)}
-                      title={`Add ${hex.toUpperCase()} as palette color`}
-                      aria-label={`Add ${label} variant as palette color`}
-                    >
-                      + add
-                    </button>
+              <input
+                type="text"
+                className={`${styles.hexInput} ${!isValid ? styles.hexInputInvalid : ''}`}
+                value={hexInput}
+                onChange={(e) => setHexInput(e.target.value)}
+                onBlur={handleHexBlur}
+                onKeyDown={handleHexKey}
+                aria-label="Hex color value"
+                spellCheck={false}
+              />
+              <div
+                className={styles.swatchPreview}
+                style={{ backgroundColor: previewHex }}
+                aria-hidden="true"
+              />
+              <span className={styles.hslReadout}>
+                H {primaryHsl.h} &middot; S {primaryHsl.s} &middot; L {primaryHsl.l}
+              </span>
+            </div>
+          </div>
+
+          {/* ── Harmony Suggestions (all three types) ─────────────── */}
+          {primaryHex && allHarmonySuggestions.map(({ type, colors }) => (
+            <div key={type} className={styles.section}>
+              <h2 className={styles.sectionHeading}>{type}</h2>
+              <p className={styles.harmonyDesc}>{HARMONY_DESC[type]}</p>
+              <div className={styles.suggestionsGrid}>
+                {colors.map((color) => {
+                  const isAdded = paletteHexSet.has(color.hex.toUpperCase());
+                  return (
+                    <div key={color.hex} className={styles.suggestionCard}>
+                      <div className={styles.swatchColumnHeader}>
+                        <span className={styles.swatchColumnLabel}>{color.label}</span>
+                      </div>
+                      <div
+                        className={styles.suggestMainSwatch}
+                        style={{ backgroundColor: color.hex }}
+                      />
+                      <span className={styles.swatchHex}>{color.hex.toUpperCase()}</span>
+                      <button
+                        className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
+                        onClick={() => { if (!isAdded) addPaletteColor(color.hex, color.label); }}
+                        disabled={isAdded}
+                        aria-label={isAdded ? `${color.label} already in palette` : `Add ${color.label} to palette`}
+                      >
+                        {isAdded ? '✓ added' : '+ add to palette'}
+                      </button>
+                      <div className={styles.variantRow}>
+                        {(
+                          [
+                            ['lighter', color.lighter],
+                            ['darker', color.darker],
+                            ['muted', color.muted],
+                          ] as const
+                        ).map(([label, hex]) => {
+                          const varAdded = paletteHexSet.has(hex.toUpperCase());
+                          return (
+                            <div key={label} className={styles.variantSwatch}>
+                              <div
+                                className={styles.variantBlock}
+                                style={{ backgroundColor: hex }}
+                              />
+                              <span className={styles.variantLabel}>{label}</span>
+                              <span className={styles.variantHex}>{hex.toUpperCase()}</span>
+                              <button
+                                className={`${styles.variantPromoteBtn} ${varAdded ? styles.variantPromoAdded : ''}`}
+                                onClick={() => { if (!varAdded) addPaletteColor(hex); }}
+                                disabled={varAdded}
+                                title={varAdded ? `${hex.toUpperCase()} already in palette` : `Add ${hex.toUpperCase()} as palette color`}
+                                aria-label={varAdded ? `${label} already in palette` : `Add ${label} variant as palette color`}
+                              >
+                                {varAdded ? '✓' : '+ add'}
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+
+          {/* ── Missing lighter colors ────────────────────────────── */}
+          {missingLighter.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionHeading}>your palette is missing lighter colors</h2>
+              <div className={styles.suggestionsGrid}>
+                {missingLighter.map(({ hex }) => {
+                  const isAdded = paletteHexSet.has(hex.toUpperCase());
+                  return (
+                    <div key={hex} className={styles.suggestionCard}>
+                      <div
+                        className={styles.suggestMainSwatch}
+                        style={{ backgroundColor: hex }}
+                      />
+                      <span className={styles.swatchHex}>{hex.toUpperCase()}</span>
+                      <button
+                        className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
+                        onClick={() => { if (!isAdded) addPaletteColor(hex, 'lighter'); }}
+                        disabled={isAdded}
+                      >
+                        {isAdded ? '✓ added' : '+ add to palette'}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* ── Missing darker colors ─────────────────────────────── */}
+          {missingDarker.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionHeading}>your palette is missing darker colors</h2>
+              <div className={styles.suggestionsGrid}>
+                {missingDarker.map(({ hex }) => {
+                  const isAdded = paletteHexSet.has(hex.toUpperCase());
+                  return (
+                    <div key={hex} className={styles.suggestionCard}>
+                      <div
+                        className={styles.suggestMainSwatch}
+                        style={{ backgroundColor: hex }}
+                      />
+                      <span className={styles.swatchHex}>{hex.toUpperCase()}</span>
+                      <button
+                        className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
+                        onClick={() => { if (!isAdded) addPaletteColor(hex, 'darker'); }}
+                        disabled={isAdded}
+                      >
+                        {isAdded ? '✓ added' : '+ add to palette'}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* ── Missing neutrals ──────────────────────────────────── */}
+          {missingNeutrals.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionHeading}>your palette is missing neutral colors</h2>
+              <div className={styles.suggestionsGrid}>
+                {missingNeutrals.map(({ hex }) => {
+                  const isAdded = paletteHexSet.has(hex.toUpperCase());
+                  return (
+                    <div key={hex} className={styles.suggestionCard}>
+                      <div
+                        className={styles.suggestMainSwatch}
+                        style={{ backgroundColor: hex }}
+                      />
+                      <span className={styles.swatchHex}>{hex.toUpperCase()}</span>
+                      <button
+                        className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
+                        onClick={() => { if (!isAdded) addPaletteColor(hex, 'neutral'); }}
+                        disabled={isAdded}
+                      >
+                        {isAdded ? '✓ added' : '+ add to palette'}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* ── Theme advice ──────────────────────────────────────── */}
+          {themeSuggestions.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionHeading}>theme advice</h2>
+              <div className={styles.suggestion}>
+                {themeSuggestions.map((msg, i) => (
+                  <p key={i} className={styles.a11ySuggestionMsg}>{msg}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Contrast / accessibility suggestions ──────────────── */}
+          {a11ySuggestions.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionHeading}>accessibility suggestions</h2>
+              <div className={styles.suggestion}>
+                {a11ySuggestions.map((s, i) => (
+                  <div key={i} className={styles.a11ySuggestion}>
+                    <p className={styles.a11ySuggestionMsg}>{s.msg}</p>
+                    <div className={styles.a11ySuggestionFix}>
+                      <div
+                        className={styles.a11ySuggestionSwatch}
+                        style={{ backgroundColor: s.suggestedHex }}
+                      />
+                      <span className={styles.a11ySuggestionHex}>
+                        {s.suggestedHex.toUpperCase()}
+                      </span>
+                      <span className={styles.a11ySuggestionFixLabel}>
+                        {s.suggestedLabel}
+                      </span>
+                      <button
+                        className={styles.a11ySuggestionApply}
+                        onClick={() => addPaletteColor(s.suggestedHex, s.suggestedLabel)}
+                        aria-label={`Add ${s.suggestedHex.toUpperCase()} to palette`}
+                      >
+                        + add to palette
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-          ))}
+          )}
         </div>
-        <button className={styles.addColorBtn} onClick={() => addPaletteColor()}>
-          + add color
-        </button>
-      </div>
 
-      {/* ── E. Contrast Matrix ──────────────────────────────────────────── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionHeading}>contrast pairings</h2>
-        {matrixPairs.length === 0 ? (
-          <p className={styles.harmonyDesc}>
-            No high-contrast pairings found. Try a color with more lightness
-            variation.
-          </p>
-        ) : (
-          <div className={styles.matrixWrap}>
-            <div
-              className={styles.matrix}
-              style={{
-                gridTemplateColumns: `14ch 1fr 1fr 1fr`,
-              }}
-            >
-              <div className={styles.matrixHeader}>pair</div>
-              <div className={styles.matrixHeader}>ratio</div>
-              <div className={styles.matrixHeader}>level</div>
-              <div className={styles.matrixHeader}>preview</div>
-              {matrixPairs.slice(0, 20).map(({ fg, bg, ratio }, i) => {
-                const even = i % 2 === 0;
-                const cellCls = even
-                  ? styles.matrixCellEven
-                  : styles.matrixCellOdd;
-                return (
-                  <Fragment key={`${fg}-${bg}`}>
-                    <div className={`${styles.matrixCell} ${cellCls}`}>
-                      <span style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-                        <span
-                          className={styles.matrixHeaderSwatch}
-                          style={{ backgroundColor: fg }}
-                        />
-                        <span style={{ color: 'var(--muted)' }}>on</span>
-                        <span
-                          className={styles.matrixHeaderSwatch}
-                          style={{ backgroundColor: bg }}
-                        />
-                      </span>
-                    </div>
-                    <div className={`${styles.matrixCell} ${cellCls}`}>
-                      <span className={styles.matrixRatio}>
-                        {ratio.toFixed(1)}:1
-                      </span>
-                    </div>
-                    <div className={`${styles.matrixCell} ${cellCls}`}>
-                      {contrastBadge(ratio)}
-                    </div>
-                    <div className={`${styles.matrixCell} ${cellCls}`}>
-                      <span
-                        style={{
-                          backgroundColor: bg,
-                          color: fg,
-                          padding: '2px 8px',
-                          borderRadius: 'var(--radius-sm)',
-                          fontFamily: 'var(--font-mono)',
-                          fontSize: '0.85rem',
-                        }}
-                      >
-                        sample
-                      </span>
-                    </div>
-                  </Fragment>
-                );
-              })}
+        {/* ════════════════ RIGHT: PALETTE COLUMN ════════════════ */}
+        <div className={styles.paletteColumn}>
+
+          {/* ── Palette Grid ──────────────────────────────────────── */}
+          <div className={styles.section}>
+            <div className={styles.sectionHeaderRow}>
+              <h2 className={styles.sectionHeading}>your palette</h2>
+              {paletteIsCustom && (
+                <button className={styles.resetBtn} onClick={handleResetPalette}>
+                  ↺ reset
+                </button>
+              )}
             </div>
-          </div>
-        )}
-      </div>
 
-      {/* ── F. Dark + Light Mode Arranger ───────────────────────────────── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionHeading}>theme arranger</h2>
-        <div className={styles.arrangerRow}>
-          {(
-            [
-              ['dark', effectiveDark, darkSuggestions],
-              ['light', effectiveLight, lightSuggestions],
-            ] as const
-          ).map(([mode, roles, suggestions]) => (
-            <div key={mode} className={styles.modePanel}>
-              <h3 className={styles.sectionHeading}>{mode} mode</h3>
-
-              {ROLE_KEYS.map((role) => (
-                <div key={role}>
-                  <div className={styles.roleRow}>
-                    <span className={styles.roleLabel}>
-                      {ROLE_LABELS[role]}
-                    </span>
-                    <button
-                      className={styles.roleSwatch}
-                      style={{ backgroundColor: roles[role] }}
-                      onClick={() => handleRoleClick(mode, role)}
-                      aria-label={`Change ${mode} ${ROLE_LABELS[role]} color`}
-                    />
-                    <span className={styles.roleHex}>
-                      {roles[role].toUpperCase()}
-                    </span>
-                  </div>
-                  {openPicker?.mode === mode && openPicker?.role === role && (
-                    <div className={styles.rolePickerPopover}>
-                      {allColors.map((hex, i) => (
-                        <button
-                          key={`${hex}-${i}`}
-                          className={styles.rolePickerSwatch}
-                          style={{ backgroundColor: hex }}
-                          onClick={() => handleRolePick(mode, role, hex)}
-                          aria-label={`Select ${hex.toUpperCase()}`}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {/* Mini preview */}
-              <div
-                className={styles.miniPreview}
-                style={{
-                  backgroundColor: roles.background,
-                  borderColor: roles.surface,
-                }}
-              >
-                <div
-                  style={{
-                    backgroundColor: roles.surface,
-                    padding: 'var(--spacing-sm)',
-                    borderRadius: 'var(--radius-sm)',
-                  }}
-                >
-                  <span
-                    className={styles.miniPreviewHeading}
-                    style={{ color: roles.primaryText }}
-                  >
-                    Card heading
-                  </span>
-                  <p
-                    className={styles.miniPreviewBody}
-                    style={{ color: roles.secondaryText }}
-                  >
-                    Secondary body text on surface.
-                  </p>
-                </div>
-                <span
-                  className={styles.miniPreviewBtn}
-                  style={{
-                    backgroundColor: roles.accent,
-                    color: roles.background,
-                  }}
-                >
-                  accent button
-                </span>
-                <span
-                  className={styles.miniPreviewBtn}
-                  style={{
-                    backgroundColor: roles.accentSecondary,
-                    color: roles.background,
-                  }}
-                >
-                  secondary action
-                </span>
-              </div>
-
-              {/* Contrast checks */}
-              <div className={styles.contrastChecks}>
-                <div className={styles.checkRow}>
-                  text/bg:{' '}
-                  {contrastBadge(ratioOf(roles.primaryText, roles.background))}
-                </div>
-                <div className={styles.checkRow}>
-                  text/surface:{' '}
-                  {contrastBadge(
-                    ratioOf(roles.secondaryText, roles.surface),
-                  )}
-                </div>
-                <div className={styles.checkRow}>
-                  accent/bg:{' '}
-                  {contrastBadge(ratioOf(roles.accent, roles.background))}
-                </div>
-              </div>
-
-              {/* Suggestions */}
-              {suggestions.length > 0 && (
-                <div className={styles.suggestion}>
-                  {suggestions.map((s, i) => (
-                    <div key={i} className={styles.a11ySuggestion}>
-                      <p className={styles.a11ySuggestionMsg}>{s.msg}</p>
-                      <div className={styles.a11ySuggestionFix}>
-                        <div
-                          className={styles.a11ySuggestionSwatch}
-                          style={{ backgroundColor: s.suggestedHex }}
-                        />
-                        <span className={styles.a11ySuggestionHex}>
-                          {s.suggestedHex.toUpperCase()}
-                        </span>
-                        <span className={styles.a11ySuggestionFixLabel}>
-                          {s.suggestedLabel}
-                        </span>
-                        <button
-                          className={styles.a11ySuggestionApply}
-                          onClick={() => handleRolePick(mode, s.role, s.suggestedHex)}
-                          aria-label={`Apply ${s.suggestedHex.toUpperCase()} as ${ROLE_LABELS[s.role]}`}
-                        >
-                          apply
-                        </button>
+            {paletteColors.length === 0 ? (
+              <p className={styles.harmonyDesc}>
+                Pick a primary color to get started.
+              </p>
+            ) : (
+              <>
+                <div className={styles.paletteGrid}>
+                  {paletteColors.map((color, i) => (
+                    <div key={i} className={styles.swatchColumn}>
+                      <div className={styles.swatchColumnHeader}>
+                        <span className={styles.swatchColumnLabel}>{color.label}</span>
+                        {paletteColors.length > 1 && (
+                          <button
+                            className={styles.removeBtn}
+                            onClick={() => removePaletteColor(i)}
+                            aria-label={`Remove ${color.label}`}
+                            title="Remove color"
+                          >
+                            ×
+                          </button>
+                        )}
                       </div>
+                      <button
+                        className={styles.swatchEditable}
+                        style={{ backgroundColor: color.hex }}
+                        onClick={() => {
+                          if (editingIndex === i) {
+                            setEditingIndex(null);
+                          } else {
+                            setEditingIndex(i);
+                            setEditHexInput(color.hex.toUpperCase());
+                          }
+                        }}
+                        aria-label={`Edit ${color.label} — ${color.hex.toUpperCase()}`}
+                        title="Click to edit"
+                      />
+                      {editingIndex === i && (
+                        <div className={styles.editInline}>
+                          <input
+                            type="color"
+                            className={styles.editInlinePicker}
+                            value={editHexInput.toLowerCase()}
+                            onChange={(e) => {
+                              const val = e.target.value.toUpperCase();
+                              setEditHexInput(val);
+                              updatePaletteColor(i, val);
+                            }}
+                            aria-label="Pick color"
+                          />
+                          <input
+                            type="text"
+                            className={`${styles.editInlineInput} ${parseHex(editHexInput) === null ? styles.hexInputInvalid : ''}`}
+                            value={editHexInput}
+                            onChange={(e) => setEditHexInput(e.target.value)}
+                            onBlur={() => {
+                              const parsed = parseHex(editHexInput);
+                              if (parsed) {
+                                const canonical = rgbToHex(parsed);
+                                setEditHexInput(canonical);
+                                updatePaletteColor(i, canonical);
+                              }
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                const parsed = parseHex(editHexInput);
+                                if (parsed) {
+                                  const canonical = rgbToHex(parsed);
+                                  setEditHexInput(canonical);
+                                  updatePaletteColor(i, canonical);
+                                  setEditingIndex(null);
+                                }
+                              }
+                              if (e.key === 'Escape') setEditingIndex(null);
+                            }}
+                            autoFocus
+                            aria-label="Hex color value"
+                            spellCheck={false}
+                          />
+                        </div>
+                      )}
+                      <span className={styles.swatchHex}>{color.hex.toUpperCase()}</span>
                     </div>
                   ))}
                 </div>
+                <button className={styles.addColorBtn} onClick={() => addPaletteColor()}>
+                  + add color
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* ── Contrast Matrix ────────────────────────────────────── */}
+          {paletteColors.length >= 2 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionHeading}>contrast pairings</h2>
+              {matrixPairs.length === 0 ? (
+                <p className={styles.harmonyDesc}>
+                  No high-contrast pairings found. Try adding colors with more
+                  lightness variation.
+                </p>
+              ) : (
+                <div className={styles.matrixWrap}>
+                  <div
+                    className={styles.matrix}
+                    style={{
+                      gridTemplateColumns: `14ch 1fr 1fr 1fr`,
+                    }}
+                  >
+                    <div className={styles.matrixHeader}>pair</div>
+                    <div className={styles.matrixHeader}>ratio</div>
+                    <div className={styles.matrixHeader}>level</div>
+                    <div className={styles.matrixHeader}>preview</div>
+                    {matrixPairs.slice(0, 20).map(({ fg, bg, ratio }, i) => {
+                      const even = i % 2 === 0;
+                      const cellCls = even
+                        ? styles.matrixCellEven
+                        : styles.matrixCellOdd;
+                      return (
+                        <Fragment key={`${fg}-${bg}`}>
+                          <div className={`${styles.matrixCell} ${cellCls}`}>
+                            <span style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                              <span
+                                className={styles.matrixHeaderSwatch}
+                                style={{ backgroundColor: fg }}
+                              />
+                              <span style={{ color: 'var(--muted)' }}>on</span>
+                              <span
+                                className={styles.matrixHeaderSwatch}
+                                style={{ backgroundColor: bg }}
+                              />
+                            </span>
+                          </div>
+                          <div className={`${styles.matrixCell} ${cellCls}`}>
+                            <span className={styles.matrixRatio}>
+                              {ratio.toFixed(1)}:1
+                            </span>
+                          </div>
+                          <div className={`${styles.matrixCell} ${cellCls}`}>
+                            {contrastBadge(ratio)}
+                          </div>
+                          <div className={`${styles.matrixCell} ${cellCls}`}>
+                            <span
+                              style={{
+                                backgroundColor: bg,
+                                color: fg,
+                                padding: '2px 8px',
+                                borderRadius: 'var(--radius-sm)',
+                                fontFamily: 'var(--font-mono)',
+                                fontSize: '0.85rem',
+                              }}
+                            >
+                              sample
+                            </span>
+                          </div>
+                        </Fragment>
+                      );
+                    })}
+                  </div>
+                </div>
               )}
             </div>
-          ))}
+          )}
+
+          {/* ── Theme Arranger ─────────────────────────────────────── */}
+          {paletteColors.length >= 1 && effectiveDark && effectiveLight && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionHeading}>theme arranger</h2>
+              <div className={styles.arrangerRow}>
+                {(
+                  [
+                    ['dark', effectiveDark, darkSuggestions] as const,
+                    ['light', effectiveLight, lightSuggestions] as const,
+                  ]
+                ).map(([mode, roles]) => (
+                  <div key={mode} className={styles.modePanel}>
+                    <h3 className={styles.sectionHeading}>{mode} mode</h3>
+
+                    {ROLE_KEYS.map((role) => (
+                      <div key={role}>
+                        <div className={styles.roleRow}>
+                          <span className={styles.roleLabel}>
+                            {ROLE_LABELS[role]}
+                          </span>
+                          <button
+                            className={styles.roleSwatch}
+                            style={{ backgroundColor: roles[role] }}
+                            onClick={() => handleRoleClick(mode, role)}
+                            aria-label={`Change ${mode} ${ROLE_LABELS[role]} color`}
+                          />
+                          <span className={styles.roleHex}>
+                            {roles[role].toUpperCase()}
+                          </span>
+                        </div>
+                        {openPicker?.mode === mode && openPicker?.role === role && (
+                          <div className={styles.rolePickerPopover}>
+                            {paletteHexes.map((hex, i) => (
+                              <button
+                                key={`${hex}-${i}`}
+                                className={styles.rolePickerSwatch}
+                                style={{ backgroundColor: hex }}
+                                onClick={() => handleRolePick(mode, role, hex)}
+                                aria-label={`Select ${hex.toUpperCase()}`}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+
+                    {/* Mini preview */}
+                    <div
+                      className={styles.miniPreview}
+                      style={{
+                        backgroundColor: roles.background,
+                        borderColor: roles.surface,
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: roles.surface,
+                          padding: 'var(--spacing-sm)',
+                          borderRadius: 'var(--radius-sm)',
+                        }}
+                      >
+                        <span
+                          className={styles.miniPreviewHeading}
+                          style={{ color: roles.primaryText }}
+                        >
+                          Card heading
+                        </span>
+                        <p
+                          className={styles.miniPreviewBody}
+                          style={{ color: roles.secondaryText }}
+                        >
+                          Secondary body text on surface.
+                        </p>
+                      </div>
+                      <span
+                        className={styles.miniPreviewBtn}
+                        style={{
+                          backgroundColor: roles.accent,
+                          color: roles.background,
+                        }}
+                      >
+                        accent button
+                      </span>
+                      <span
+                        className={styles.miniPreviewBtn}
+                        style={{
+                          backgroundColor: roles.accentSecondary,
+                          color: roles.background,
+                        }}
+                      >
+                        secondary action
+                      </span>
+                    </div>
+
+                    {/* Contrast checks */}
+                    <div className={styles.contrastChecks}>
+                      <div className={styles.checkRow}>
+                        text/bg:{' '}
+                        {contrastBadge(ratioOf(roles.primaryText, roles.background))}
+                      </div>
+                      <div className={styles.checkRow}>
+                        text/surface:{' '}
+                        {contrastBadge(
+                          ratioOf(roles.secondaryText, roles.surface),
+                        )}
+                      </div>
+                      <div className={styles.checkRow}>
+                        accent/bg:{' '}
+                        {contrastBadge(ratioOf(roles.accent, roles.background))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
-
