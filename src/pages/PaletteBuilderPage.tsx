@@ -495,11 +495,6 @@ export function PaletteBuilderPage() {
     if (e.key === 'Enter') handleHexBlur();
   };
 
-  const handlePickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.toUpperCase();
-    applyPrimary(val);
-  };
-
   const handleRgbChange = (channel: 'r' | 'g' | 'b', value: number) => {
     const next = { ...rgbSliders, [channel]: value };
     setRgbSliders(next);
