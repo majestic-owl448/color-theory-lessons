@@ -96,8 +96,193 @@
 
 .hslReadout {
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: var(--muted);
+}
+
+.pickerMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+/* ── Picker Tabs ──────────────────────────────────────────────────────────── */
+
+.pickerTabs {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.pickerTab {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--secondary-foreground);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.pickerTab:hover {
+  border-color: var(--secondary-foreground);
+  color: var(--primary-foreground);
+}
+
+.pickerTabActive {
+  background: var(--surface);
+  color: var(--primary-foreground);
+  border-color: var(--primary-foreground);
+}
+
+.pickerPanel {
+  padding: var(--spacing-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+/* ── Slider group (RGB + HSL) ─────────────────────────────────────────────── */
+
+.sliderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sliderRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.sliderLabel {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  width: 2ch;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.slider {
+  flex: 1;
+  height: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--secondary-background);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-color, var(--primary-foreground));
+  border: 2px solid var(--primary-foreground);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-color, var(--primary-foreground));
+  border: 2px solid var(--primary-foreground);
+  cursor: pointer;
+}
+
+.sliderValue {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--secondary-foreground);
+  width: 4ch;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Hue Ring ─────────────────────────────────────────────────────────────── */
+
+.hueRingWrap {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-sm) 0;
+}
+
+.hueRing {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: conic-gradient(
+    hsl(0, 100%, 50%),
+    hsl(60, 100%, 50%),
+    hsl(120, 100%, 50%),
+    hsl(180, 100%, 50%),
+    hsl(240, 100%, 50%),
+    hsl(300, 100%, 50%),
+    hsl(360, 100%, 50%)
+  );
+  position: relative;
+  cursor: pointer;
+}
+
+.hueRingCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+}
+
+.hueIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-foreground);
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+/* ── Named Color Swatches ─────────────────────────────────────────────────── */
+
+.swatchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(28px, 1fr));
+  gap: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.namedSwatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  padding: 0;
+  transition: outline 0.1s;
+}
+
+.namedSwatch:hover {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 1px;
+}
+
+.namedSwatchActive {
+  outline: 2px solid var(--primary-foreground);
+  outline-offset: 1px;
 }
 
 /* ── Section generics ─────────────────────────────────────────────────────── */

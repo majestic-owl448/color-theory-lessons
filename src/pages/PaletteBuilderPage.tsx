@@ -1,4 +1,4 @@
-import { useState, useMemo, Fragment } from 'react';
+import { useState, useMemo, useCallback, Fragment } from 'react';
 import {
   hexToRgb,
   hexToHsl,
@@ -10,7 +10,7 @@ import {
   clamp,
   luminanceWcag,
 } from '../utils/color.ts';
-import type { Relationship } from '../utils/color.ts';
+import type { RGB, Relationship } from '../utils/color.ts';
 import styles from './PaletteBuilderPage.module.css';
 
 /* ── Types ────────────────────────────────────────────────────────────────── */
@@ -44,6 +44,143 @@ const ROLE_KEYS: RoleKey[] = [
   'secondaryText',
   'accent',
   'accentSecondary',
+];
+
+type PickerTab = 'rgb' | 'hsl' | 'swatches';
+
+const CSS_NAMED_COLORS: { name: string; hex: string }[] = [
+  // Reds
+  { name: 'indianred', hex: '#CD5C5C' },
+  { name: 'lightcoral', hex: '#F08080' },
+  { name: 'salmon', hex: '#FA8072' },
+  { name: 'darksalmon', hex: '#E9967A' },
+  { name: 'crimson', hex: '#DC143C' },
+  { name: 'red', hex: '#FF0000' },
+  { name: 'firebrick', hex: '#B22222' },
+  { name: 'darkred', hex: '#8B0000' },
+  // Pinks
+  { name: 'pink', hex: '#FFC0CB' },
+  { name: 'lightpink', hex: '#FFB6C1' },
+  { name: 'hotpink', hex: '#FF69B4' },
+  { name: 'deeppink', hex: '#FF1493' },
+  { name: 'mediumvioletred', hex: '#C71585' },
+  { name: 'palevioletred', hex: '#DB7093' },
+  // Oranges
+  { name: 'coral', hex: '#FF7F50' },
+  { name: 'tomato', hex: '#FF6347' },
+  { name: 'orangered', hex: '#FF4500' },
+  { name: 'darkorange', hex: '#FF8C00' },
+  { name: 'orange', hex: '#FFA500' },
+  // Yellows
+  { name: 'gold', hex: '#FFD700' },
+  { name: 'yellow', hex: '#FFFF00' },
+  { name: 'lightyellow', hex: '#FFFFE0' },
+  { name: 'khaki', hex: '#F0E68C' },
+  { name: 'darkkhaki', hex: '#BDB76B' },
+  // Purples
+  { name: 'lavender', hex: '#E6E6FA' },
+  { name: 'thistle', hex: '#D8BFD8' },
+  { name: 'plum', hex: '#DDA0DD' },
+  { name: 'violet', hex: '#EE82EE' },
+  { name: 'orchid', hex: '#DA70D6' },
+  { name: 'fuchsia', hex: '#FF00FF' },
+  { name: 'mediumorchid', hex: '#BA55D3' },
+  { name: 'mediumpurple', hex: '#9370DB' },
+  { name: 'rebeccapurple', hex: '#663399' },
+  { name: 'blueviolet', hex: '#8A2BE2' },
+  { name: 'darkviolet', hex: '#9400D3' },
+  { name: 'darkorchid', hex: '#9932CC' },
+  { name: 'darkmagenta', hex: '#8B008B' },
+  { name: 'purple', hex: '#800080' },
+  { name: 'indigo', hex: '#4B0082' },
+  { name: 'slateblue', hex: '#6A5ACD' },
+  { name: 'darkslateblue', hex: '#483D8B' },
+  // Greens
+  { name: 'greenyellow', hex: '#ADFF2F' },
+  { name: 'chartreuse', hex: '#7FFF00' },
+  { name: 'lawngreen', hex: '#7CFC00' },
+  { name: 'lime', hex: '#00FF00' },
+  { name: 'limegreen', hex: '#32CD32' },
+  { name: 'springgreen', hex: '#00FF7F' },
+  { name: 'mediumspringgreen', hex: '#00FA9A' },
+  { name: 'lightgreen', hex: '#90EE90' },
+  { name: 'palegreen', hex: '#98FB98' },
+  { name: 'mediumseagreen', hex: '#3CB371' },
+  { name: 'seagreen', hex: '#2E8B57' },
+  { name: 'forestgreen', hex: '#228B22' },
+  { name: 'green', hex: '#008000' },
+  { name: 'darkgreen', hex: '#006400' },
+  { name: 'olivedrab', hex: '#6B8E23' },
+  { name: 'olive', hex: '#808000' },
+  { name: 'darkolivegreen', hex: '#556B2F' },
+  { name: 'teal', hex: '#008080' },
+  // Blues
+  { name: 'aqua', hex: '#00FFFF' },
+  { name: 'lightcyan', hex: '#E0FFFF' },
+  { name: 'paleturquoise', hex: '#AFEEEE' },
+  { name: 'aquamarine', hex: '#7FFFD4' },
+  { name: 'turquoise', hex: '#40E0D0' },
+  { name: 'mediumturquoise', hex: '#48D1CC' },
+  { name: 'darkturquoise', hex: '#00CED1' },
+  { name: 'cadetblue', hex: '#5F9EA0' },
+  { name: 'steelblue', hex: '#4682B4' },
+  { name: 'lightsteelblue', hex: '#B0C4DE' },
+  { name: 'powderblue', hex: '#B0E0E6' },
+  { name: 'lightblue', hex: '#ADD8E6' },
+  { name: 'skyblue', hex: '#87CEEB' },
+  { name: 'deepskyblue', hex: '#00BFFF' },
+  { name: 'dodgerblue', hex: '#1E90FF' },
+  { name: 'cornflowerblue', hex: '#6495ED' },
+  { name: 'royalblue', hex: '#4169E1' },
+  { name: 'blue', hex: '#0000FF' },
+  { name: 'mediumblue', hex: '#0000CD' },
+  { name: 'darkblue', hex: '#00008B' },
+  { name: 'navy', hex: '#000080' },
+  { name: 'midnightblue', hex: '#191970' },
+  // Browns
+  { name: 'cornsilk', hex: '#FFF8DC' },
+  { name: 'wheat', hex: '#F5DEB3' },
+  { name: 'burlywood', hex: '#DEB887' },
+  { name: 'tan', hex: '#D2B48C' },
+  { name: 'rosybrown', hex: '#BC8F8F' },
+  { name: 'sandybrown', hex: '#F4A460' },
+  { name: 'goldenrod', hex: '#DAA520' },
+  { name: 'darkgoldenrod', hex: '#B8860B' },
+  { name: 'peru', hex: '#CD853F' },
+  { name: 'chocolate', hex: '#D2691E' },
+  { name: 'saddlebrown', hex: '#8B4513' },
+  { name: 'sienna', hex: '#A0522D' },
+  { name: 'brown', hex: '#A52A2A' },
+  { name: 'maroon', hex: '#800000' },
+  // Whites
+  { name: 'white', hex: '#FFFFFF' },
+  { name: 'snow', hex: '#FFFAFA' },
+  { name: 'honeydew', hex: '#F0FFF0' },
+  { name: 'mintcream', hex: '#F5FFFA' },
+  { name: 'azure', hex: '#F0FFFF' },
+  { name: 'aliceblue', hex: '#F0F8FF' },
+  { name: 'ghostwhite', hex: '#F8F8FF' },
+  { name: 'whitesmoke', hex: '#F5F5F5' },
+  { name: 'seashell', hex: '#FFF5EE' },
+  { name: 'beige', hex: '#F5F5DC' },
+  { name: 'oldlace', hex: '#FDF5E6' },
+  { name: 'floralwhite', hex: '#FFFAF0' },
+  { name: 'ivory', hex: '#FFFFF0' },
+  { name: 'antiquewhite', hex: '#FAEBD7' },
+  { name: 'linen', hex: '#FAF0E6' },
+  { name: 'lavenderblush', hex: '#FFF0F5' },
+  { name: 'mistyrose', hex: '#FFE4E1' },
+  // Grays
+  { name: 'gainsboro', hex: '#DCDCDC' },
+  { name: 'lightgray', hex: '#D3D3D3' },
+  { name: 'silver', hex: '#C0C0C0' },
+  { name: 'darkgray', hex: '#A9A9A9' },
+  { name: 'gray', hex: '#808080' },
+  { name: 'dimgray', hex: '#696969' },
+  { name: 'lightslategray', hex: '#778899' },
+  { name: 'slategray', hex: '#708090' },
+  { name: 'darkslategray', hex: '#2F4F4F' },
+  { name: 'black', hex: '#000000' },
 ];
 
 /* ── Helpers ──────────────────────────────────────────────────────────────── */
@@ -206,6 +343,9 @@ export function PaletteBuilderPage() {
     mode: 'dark' | 'light';
     role: RoleKey;
   } | null>(null);
+  const [pickerTab, setPickerTab] = useState<PickerTab>('rgb');
+  const [rgbSliders, setRgbSliders] = useState<RGB>({ r: 59, g: 130, b: 246 });
+  const [hslSliders, setHslSliders] = useState({ h: 217, s: 91, l: 60 });
 
   const isValid = parseHex(hexInput) !== null;
 
@@ -318,8 +458,17 @@ export function PaletteBuilderPage() {
 
   /* ── Primary color actions ─────────────────────────────────────────────── */
 
-  const applyPrimary = (hex: string) => {
+  const syncPickerStates = useCallback((hex: string) => {
+    setHexInput(hex);
+    const rgb = hexToRgb(hex);
+    setRgbSliders(rgb);
+    const hsl = hexToHsl(hex);
+    setHslSliders(hsl);
+  }, []);
+
+  const applyPrimary = useCallback((hex: string) => {
     setPrimaryHex(hex);
+    syncPickerStates(hex);
     if (paletteColors.length === 0) {
       setPaletteColors([{ hex, label: 'primary' }]);
     } else {
@@ -332,13 +481,12 @@ export function PaletteBuilderPage() {
     setDarkRoles(null);
     setLightRoles(null);
     setOpenPicker(null);
-  };
+  }, [paletteColors.length, syncPickerStates]);
 
   const handleHexBlur = () => {
     const parsed = parseHex(hexInput);
     if (parsed) {
       const canonical = rgbToHex(parsed);
-      setHexInput(canonical);
       applyPrimary(canonical);
     }
   };
@@ -349,8 +497,29 @@ export function PaletteBuilderPage() {
 
   const handlePickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.toUpperCase();
-    setHexInput(val);
     applyPrimary(val);
+  };
+
+  const handleRgbChange = (channel: 'r' | 'g' | 'b', value: number) => {
+    const next = { ...rgbSliders, [channel]: value };
+    setRgbSliders(next);
+    const hex = rgbToHex(next);
+    setHexInput(hex);
+    setHslSliders(hexToHsl(hex));
+    applyPrimary(hex);
+  };
+
+  const handleHslChange = (channel: 'h' | 's' | 'l', value: number) => {
+    const next = { ...hslSliders, [channel]: value };
+    setHslSliders(next);
+    const hex = hslToHex(next.h, next.s, next.l);
+    setHexInput(hex.toUpperCase());
+    setRgbSliders(hexToRgb(hex));
+    applyPrimary(hex.toUpperCase());
+  };
+
+  const handleSwatchPick = (hex: string) => {
+    applyPrimary(hex);
   };
 
   const handleRoleClick = (mode: 'dark' | 'light', role: RoleKey) => {
@@ -592,32 +761,164 @@ export function PaletteBuilderPage() {
           {/* ── Color Picker ──────────────────────────────────────── */}
           <div className={styles.section}>
             <h2 className={styles.sectionHeading}>pick your primary color</h2>
+
+            {/* Preview + hex input row */}
             <div className={styles.inputBar}>
-              <input
-                type="color"
-                className={styles.colorPicker}
-                value={previewHex.toLowerCase()}
-                onChange={handlePickerChange}
-                aria-label="Pick primary color"
-              />
-              <input
-                type="text"
-                className={`${styles.hexInput} ${!isValid ? styles.hexInputInvalid : ''}`}
-                value={hexInput}
-                onChange={(e) => setHexInput(e.target.value)}
-                onBlur={handleHexBlur}
-                onKeyDown={handleHexKey}
-                aria-label="Hex color value"
-                spellCheck={false}
-              />
               <div
                 className={styles.swatchPreview}
                 style={{ backgroundColor: previewHex }}
                 aria-hidden="true"
               />
-              <span className={styles.hslReadout}>
-                H {primaryHsl.h} &middot; S {primaryHsl.s} &middot; L {primaryHsl.l}
-              </span>
+              <div className={styles.pickerMeta}>
+                <input
+                  type="text"
+                  className={`${styles.hexInput} ${!isValid ? styles.hexInputInvalid : ''}`}
+                  value={hexInput}
+                  onChange={(e) => setHexInput(e.target.value)}
+                  onBlur={handleHexBlur}
+                  onKeyDown={handleHexKey}
+                  aria-label="Hex color value"
+                  spellCheck={false}
+                />
+                <span className={styles.hslReadout}>
+                  H {primaryHsl.h} &middot; S {primaryHsl.s} &middot; L {primaryHsl.l}
+                </span>
+              </div>
+            </div>
+
+            {/* Tab buttons */}
+            <div className={styles.pickerTabs}>
+              {(['rgb', 'hsl', 'swatches'] as PickerTab[]).map((tab) => (
+                <button
+                  key={tab}
+                  className={`${styles.pickerTab} ${pickerTab === tab ? styles.pickerTabActive : ''}`}
+                  onClick={() => setPickerTab(tab)}
+                >
+                  {tab.toUpperCase()}
+                </button>
+              ))}
+            </div>
+
+            {/* Tab content */}
+            <div className={styles.pickerPanel}>
+              {pickerTab === 'rgb' && (
+                <div className={styles.sliderGroup}>
+                  {(['r', 'g', 'b'] as const).map((ch) => (
+                    <label key={ch} className={styles.sliderRow}>
+                      <span className={styles.sliderLabel}>{ch.toUpperCase()}</span>
+                      <input
+                        type="range"
+                        min={0}
+                        max={255}
+                        value={rgbSliders[ch]}
+                        onChange={(e) => handleRgbChange(ch, Number(e.target.value))}
+                        className={styles.slider}
+                        style={{
+                          '--slider-color': ch === 'r' ? '#ff4444' : ch === 'g' ? '#44bb44' : '#4488ff',
+                        } as React.CSSProperties}
+                        aria-label={`${ch.toUpperCase()} channel`}
+                      />
+                      <span className={styles.sliderValue}>{rgbSliders[ch]}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              {pickerTab === 'hsl' && (
+                <div className={styles.sliderGroup}>
+                  {/* Hue ring */}
+                  <div className={styles.hueRingWrap}>
+                    <div
+                      className={styles.hueRing}
+                      onClick={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const cx = rect.width / 2;
+                        const cy = rect.height / 2;
+                        const dx = e.clientX - rect.left - cx;
+                        const dy = e.clientY - rect.top - cy;
+                        const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+                        const hue = ((angle + 90) % 360 + 360) % 360;
+                        handleHslChange('h', Math.round(hue));
+                      }}
+                      role="slider"
+                      aria-label="Hue"
+                      aria-valuemin={0}
+                      aria-valuemax={360}
+                      aria-valuenow={hslSliders.h}
+                      tabIndex={0}
+                    >
+                      <div
+                        className={styles.hueIndicator}
+                        style={{
+                          transform: `rotate(${hslSliders.h - 90}deg) translateX(60px)`,
+                          backgroundColor: hslToHex(hslSliders.h, 100, 50),
+                        }}
+                      />
+                      <div
+                        className={styles.hueRingCenter}
+                        style={{ backgroundColor: previewHex }}
+                      />
+                    </div>
+                  </div>
+                  <label className={styles.sliderRow}>
+                    <span className={styles.sliderLabel}>H</span>
+                    <input
+                      type="range"
+                      min={0}
+                      max={360}
+                      value={hslSliders.h}
+                      onChange={(e) => handleHslChange('h', Number(e.target.value))}
+                      className={styles.slider}
+                      style={{ '--slider-color': hslToHex(hslSliders.h, 100, 50) } as React.CSSProperties}
+                      aria-label="Hue"
+                    />
+                    <span className={styles.sliderValue}>{hslSliders.h}°</span>
+                  </label>
+                  <label className={styles.sliderRow}>
+                    <span className={styles.sliderLabel}>S</span>
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={hslSliders.s}
+                      onChange={(e) => handleHslChange('s', Number(e.target.value))}
+                      className={styles.slider}
+                      style={{ '--slider-color': hslToHex(hslSliders.h, 100, 50) } as React.CSSProperties}
+                      aria-label="Saturation"
+                    />
+                    <span className={styles.sliderValue}>{hslSliders.s}%</span>
+                  </label>
+                  <label className={styles.sliderRow}>
+                    <span className={styles.sliderLabel}>L</span>
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={hslSliders.l}
+                      onChange={(e) => handleHslChange('l', Number(e.target.value))}
+                      className={styles.slider}
+                      style={{ '--slider-color': hslToHex(hslSliders.h, hslSliders.s, 50) } as React.CSSProperties}
+                      aria-label="Lightness"
+                    />
+                    <span className={styles.sliderValue}>{hslSliders.l}%</span>
+                  </label>
+                </div>
+              )}
+
+              {pickerTab === 'swatches' && (
+                <div className={styles.swatchGrid}>
+                  {CSS_NAMED_COLORS.map(({ name, hex }) => (
+                    <button
+                      key={name}
+                      className={`${styles.namedSwatch} ${hex.toUpperCase() === previewHex.toUpperCase() ? styles.namedSwatchActive : ''}`}
+                      style={{ backgroundColor: hex }}
+                      onClick={() => handleSwatchPick(hex)}
+                      title={name}
+                      aria-label={`${name} (${hex})`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
