@@ -238,51 +238,29 @@ function autoAssignRoles(
   mode: 'dark' | 'light',
 ): Record<RoleKey, string> {
   const all = palette.map((c) => c.hex);
+
+  // Only use colors that are actually in the palette — repeat if needed
+  const pick = (index: number) => all[index % all.length];
+
   const sorted = sortByLuminance(all, true); // darkest first
 
   if (mode === 'dark') {
-    const bg = sorted[0] ?? '#0a0a23';
-    const surface = sorted[1] ?? sorted[0] ?? '#1b1b32';
-    const primaryText = sorted[sorted.length - 1] ?? '#ffffff';
-    const secondaryText = sorted[sorted.length - 2] ?? sorted[sorted.length - 1] ?? '#d0d0d5';
-    const accent = palette[0]?.hex ?? '#3b82f6';
-    const accentSecondary = palette[1]?.hex ?? palette[0]?.hex ?? '#3b82f6';
-
-    const bgHsl = hexToHsl(bg);
-    const finalBg = bgHsl.l > 20 ? hslToHex(bgHsl.h, bgHsl.s, 8) : bg;
-    const surfaceHsl = hexToHsl(surface);
-    const finalSurface =
-      surfaceHsl.l > 25 ? hslToHex(surfaceHsl.h, surfaceHsl.s, 15) : surface;
-
     return {
-      background: finalBg,
-      surface: finalSurface,
-      primaryText,
-      secondaryText,
-      accent,
-      accentSecondary,
+      background: sorted[0],
+      surface: sorted[1 % sorted.length],
+      primaryText: sorted[sorted.length - 1],
+      secondaryText: sorted[Math.max(sorted.length - 2, 0)],
+      accent: pick(0),
+      accentSecondary: pick(1),
     };
   } else {
-    const bg = sorted[sorted.length - 1] ?? '#ffffff';
-    const surface = sorted[sorted.length - 2] ?? sorted[sorted.length - 1] ?? '#f5f6f7';
-    const primaryText = sorted[0] ?? '#0a0a23';
-    const secondaryText = sorted[1] ?? sorted[0] ?? '#1b1b32';
-    const accent = palette[0]?.hex ?? '#3b82f6';
-    const accentSecondary = palette[1]?.hex ?? palette[0]?.hex ?? '#3b82f6';
-
-    const bgHsl = hexToHsl(bg);
-    const finalBg = bgHsl.l < 85 ? hslToHex(bgHsl.h, bgHsl.s, 97) : bg;
-    const surfaceHsl = hexToHsl(surface);
-    const finalSurface =
-      surfaceHsl.l < 80 ? hslToHex(surfaceHsl.h, surfaceHsl.s, 92) : surface;
-
     return {
-      background: finalBg,
-      surface: finalSurface,
-      primaryText,
-      secondaryText,
-      accent,
-      accentSecondary,
+      background: sorted[sorted.length - 1],
+      surface: sorted[Math.max(sorted.length - 2, 0)],
+      primaryText: sorted[0],
+      secondaryText: sorted[1 % sorted.length],
+      accent: pick(0),
+      accentSecondary: pick(1),
     };
   }
 }
