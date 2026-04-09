@@ -1017,7 +1017,7 @@ export function PaletteBuilderPage() {
           )}
 
           {/* ── Contrast / accessibility suggestions ──────────────── */}
-          {a11ySuggestions.length > 0 && (
+          {a11ySuggestions.length > 0 && paletteColors.length >= 2 && (
             <div className={styles.section}>
               <h2 className={styles.sectionHeading}>accessibility suggestions</h2>
               <div className={styles.suggestion}>
@@ -1228,7 +1228,7 @@ export function PaletteBuilderPage() {
           )}
 
           {/* ── Theme Arranger ─────────────────────────────────────── */}
-          {paletteColors.length >= 1 && effectiveDark && effectiveLight && (
+          {paletteColors.length >= 2 && effectiveDark && effectiveLight && (
             <div className={styles.section}>
               <h2 className={styles.sectionHeading}>theme arranger</h2>
               <div className={styles.arrangerRow}>
