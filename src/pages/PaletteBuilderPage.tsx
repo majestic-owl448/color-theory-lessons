@@ -352,15 +352,6 @@ export function PaletteBuilderPage() {
     ];
   }, [primaryHex]);
 
-  const HARMONY_DESC: Record<Relationship, string> = {
-    analogous:
-      'Colors adjacent on the wheel (30° apart). Harmonious and low-contrast, great for cohesive themes.',
-    complementary:
-      'Colors opposite on the wheel (180° apart). High contrast and vibrant, ideal for accent pairings.',
-    triadic:
-      'Three colors evenly spaced (120° apart). Balanced variety for multi-role systems.',
-  };
-
   const paletteHexSet = useMemo(
     () => new Set(paletteColors.map((c) => c.hex.toUpperCase())),
     [paletteColors],
@@ -897,61 +888,23 @@ export function PaletteBuilderPage() {
 
           {/* ── Harmony Suggestions (all three types) ─────────────── */}
           {primaryHex && allHarmonySuggestions.map(({ type, colors }) => (
-            <div key={type} className={styles.section}>
+            <div key={type} className={styles.harmonySection}>
               <h2 className={styles.sectionHeading}>{type}</h2>
-              <p className={styles.harmonyDesc}>{HARMONY_DESC[type]}</p>
-              <div className={styles.suggestionsGrid}>
+              <div className={styles.harmonySwatches}>
                 {colors.map((color) => {
                   const isAdded = paletteHexSet.has(color.hex.toUpperCase());
                   return (
-                    <div key={color.hex} className={styles.suggestionCard}>
-                      <div className={styles.swatchColumnHeader}>
-                        <span className={styles.swatchColumnLabel}>{color.label}</span>
-                      </div>
-                      <div
-                        className={styles.suggestMainSwatch}
-                        style={{ backgroundColor: color.hex }}
-                      />
-                      <span className={styles.swatchHex}>{color.hex.toUpperCase()}</span>
-                      <button
-                        className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
-                        onClick={() => { if (!isAdded) addPaletteColor(color.hex, color.label); }}
-                        disabled={isAdded}
-                        aria-label={isAdded ? `${color.label} already in palette` : `Add ${color.label} to palette`}
-                      >
-                        {isAdded ? '✓ added' : '+ add to palette'}
-                      </button>
-                      <div className={styles.variantRow}>
-                        {(
-                          [
-                            ['lighter', color.lighter],
-                            ['darker', color.darker],
-                            ['muted', color.muted],
-                          ] as const
-                        ).map(([label, hex]) => {
-                          const varAdded = paletteHexSet.has(hex.toUpperCase());
-                          return (
-                            <div key={label} className={styles.variantSwatch}>
-                              <div
-                                className={styles.variantBlock}
-                                style={{ backgroundColor: hex }}
-                              />
-                              <span className={styles.variantLabel}>{label}</span>
-                              <span className={styles.variantHex}>{hex.toUpperCase()}</span>
-                              <button
-                                className={`${styles.variantPromoteBtn} ${varAdded ? styles.variantPromoAdded : ''}`}
-                                onClick={() => { if (!varAdded) addPaletteColor(hex); }}
-                                disabled={varAdded}
-                                title={varAdded ? `${hex.toUpperCase()} already in palette` : `Add ${hex.toUpperCase()} as palette color`}
-                                aria-label={varAdded ? `${label} already in palette` : `Add ${label} variant as palette color`}
-                              >
-                                {varAdded ? '✓' : '+ add'}
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
+                    <button
+                      key={color.hex}
+                      className={`${styles.harmonySwatch} ${isAdded ? styles.harmonySwatchAdded : ''}`}
+                      style={{ backgroundColor: color.hex }}
+                      onClick={() => { if (!isAdded) addPaletteColor(color.hex, color.label); }}
+                      disabled={isAdded}
+                      title={isAdded ? `${color.label} — already added` : `${color.label} — ${color.hex.toUpperCase()} — click to add`}
+                      aria-label={isAdded ? `${color.label} already in palette` : `Add ${color.label} to palette`}
+                    >
+                      {isAdded && <span className={styles.harmonySwatchCheck}>✓</span>}
+                    </button>
                   );
                 })}
               </div>
@@ -960,26 +913,23 @@ export function PaletteBuilderPage() {
 
           {/* ── Missing lighter colors ────────────────────────────── */}
           {missingLighter.length > 0 && (
-            <div className={styles.section}>
-              <h2 className={styles.sectionHeading}>your palette is missing lighter colors</h2>
-              <div className={styles.suggestionsGrid}>
+            <div className={styles.harmonySection}>
+              <h2 className={styles.sectionHeading}>missing lighter colors</h2>
+              <div className={styles.harmonySwatches}>
                 {missingLighter.map(({ hex }) => {
                   const isAdded = paletteHexSet.has(hex.toUpperCase());
                   return (
-                    <div key={hex} className={styles.suggestionCard}>
-                      <div
-                        className={styles.suggestMainSwatch}
-                        style={{ backgroundColor: hex }}
-                      />
-                      <span className={styles.swatchHex}>{hex.toUpperCase()}</span>
-                      <button
-                        className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
-                        onClick={() => { if (!isAdded) addPaletteColor(hex, 'lighter'); }}
-                        disabled={isAdded}
-                      >
-                        {isAdded ? '✓ added' : '+ add to palette'}
-                      </button>
-                    </div>
+                    <button
+                      key={hex}
+                      className={`${styles.harmonySwatch} ${isAdded ? styles.harmonySwatchAdded : ''}`}
+                      style={{ backgroundColor: hex }}
+                      onClick={() => { if (!isAdded) addPaletteColor(hex, 'lighter'); }}
+                      disabled={isAdded}
+                      title={isAdded ? `${hex.toUpperCase()} — already added` : `${hex.toUpperCase()} — click to add`}
+                      aria-label={isAdded ? 'Already in palette' : `Add ${hex.toUpperCase()} to palette`}
+                    >
+                      {isAdded && <span className={styles.harmonySwatchCheck}>✓</span>}
+                    </button>
                   );
                 })}
               </div>
@@ -988,26 +938,23 @@ export function PaletteBuilderPage() {
 
           {/* ── Missing darker colors ─────────────────────────────── */}
           {missingDarker.length > 0 && (
-            <div className={styles.section}>
-              <h2 className={styles.sectionHeading}>your palette is missing darker colors</h2>
-              <div className={styles.suggestionsGrid}>
+            <div className={styles.harmonySection}>
+              <h2 className={styles.sectionHeading}>missing darker colors</h2>
+              <div className={styles.harmonySwatches}>
                 {missingDarker.map(({ hex }) => {
                   const isAdded = paletteHexSet.has(hex.toUpperCase());
                   return (
-                    <div key={hex} className={styles.suggestionCard}>
-                      <div
-                        className={styles.suggestMainSwatch}
-                        style={{ backgroundColor: hex }}
-                      />
-                      <span className={styles.swatchHex}>{hex.toUpperCase()}</span>
-                      <button
-                        className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
-                        onClick={() => { if (!isAdded) addPaletteColor(hex, 'darker'); }}
-                        disabled={isAdded}
-                      >
-                        {isAdded ? '✓ added' : '+ add to palette'}
-                      </button>
-                    </div>
+                    <button
+                      key={hex}
+                      className={`${styles.harmonySwatch} ${isAdded ? styles.harmonySwatchAdded : ''}`}
+                      style={{ backgroundColor: hex }}
+                      onClick={() => { if (!isAdded) addPaletteColor(hex, 'darker'); }}
+                      disabled={isAdded}
+                      title={isAdded ? `${hex.toUpperCase()} — already added` : `${hex.toUpperCase()} — click to add`}
+                      aria-label={isAdded ? 'Already in palette' : `Add ${hex.toUpperCase()} to palette`}
+                    >
+                      {isAdded && <span className={styles.harmonySwatchCheck}>✓</span>}
+                    </button>
                   );
                 })}
               </div>
@@ -1016,26 +963,23 @@ export function PaletteBuilderPage() {
 
           {/* ── Missing neutrals ──────────────────────────────────── */}
           {missingNeutrals.length > 0 && (
-            <div className={styles.section}>
-              <h2 className={styles.sectionHeading}>your palette is missing neutral colors</h2>
-              <div className={styles.suggestionsGrid}>
+            <div className={styles.harmonySection}>
+              <h2 className={styles.sectionHeading}>missing neutral colors</h2>
+              <div className={styles.harmonySwatches}>
                 {missingNeutrals.map(({ hex }) => {
                   const isAdded = paletteHexSet.has(hex.toUpperCase());
                   return (
-                    <div key={hex} className={styles.suggestionCard}>
-                      <div
-                        className={styles.suggestMainSwatch}
-                        style={{ backgroundColor: hex }}
-                      />
-                      <span className={styles.swatchHex}>{hex.toUpperCase()}</span>
-                      <button
-                        className={`${styles.variantPromoteBtn} ${isAdded ? styles.variantPromoAdded : ''}`}
-                        onClick={() => { if (!isAdded) addPaletteColor(hex, 'neutral'); }}
-                        disabled={isAdded}
-                      >
-                        {isAdded ? '✓ added' : '+ add to palette'}
-                      </button>
-                    </div>
+                    <button
+                      key={hex}
+                      className={`${styles.harmonySwatch} ${isAdded ? styles.harmonySwatchAdded : ''}`}
+                      style={{ backgroundColor: hex }}
+                      onClick={() => { if (!isAdded) addPaletteColor(hex, 'neutral'); }}
+                      disabled={isAdded}
+                      title={isAdded ? `${hex.toUpperCase()} — already added` : `${hex.toUpperCase()} — click to add`}
+                      aria-label={isAdded ? 'Already in palette' : `Add ${hex.toUpperCase()} to palette`}
+                    >
+                      {isAdded && <span className={styles.harmonySwatchCheck}>✓</span>}
+                    </button>
                   );
                 })}
               </div>

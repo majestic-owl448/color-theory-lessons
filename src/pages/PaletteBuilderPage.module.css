@@ -331,28 +331,48 @@
   font-family: var(--font-sans);
 }
 
-/* ── Suggestions Grid ─────────────────────────────────────────────────────── */
+/* ── Harmony Suggestion Swatches ───────────────────────────────────────────── */
 
-.suggestionsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: var(--spacing-md);
-}
-
-.suggestionCard {
+.harmonySection {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
 }
 
-.suggestMainSwatch {
-  height: 80px;
+.harmonySwatches {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.harmonySwatch {
+  width: 48px;
+  height: 48px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: outline 0.1s, opacity 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.harmonySwatch:hover:not(:disabled) {
+  outline: 2px solid var(--accent-link);
+  outline-offset: 2px;
+}
+
+.harmonySwatchAdded {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.harmonySwatchCheck {
+  color: var(--primary-foreground);
+  font-size: 1rem;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
 }
 
 .swatchColumnHeader {
@@ -373,61 +393,6 @@
   font-family: var(--font-mono);
   font-size: 1rem;
   color: var(--primary-foreground);
-}
-
-.variantRow {
-  display: flex;
-  gap: var(--spacing-sm);
-}
-
-.variantSwatch {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.variantBlock {
-  width: 100%;
-  height: 48px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-
-.variantLabel {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-.variantHex {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--secondary-foreground);
-}
-
-.variantPromoteBtn {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 1px 4px;
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
-  white-space: nowrap;
-}
-
-.variantPromoteBtn:hover {
-  color: var(--accent-link);
-  border-color: var(--accent-link);
-}
-
-.variantPromoAdded {
-  opacity: 0.5;
-  cursor: default;
 }
 
 /* ── Palette Grid ─────────────────────────────────────────────────────────── */
