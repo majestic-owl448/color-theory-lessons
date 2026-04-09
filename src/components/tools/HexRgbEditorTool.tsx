@@ -62,13 +62,16 @@ export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEdito
     setHexError(false);
   }
 
+  // Sliders disabled during challenge — learner must use HEX input to match targets
+  const slidersLocked = interactive && !allDone;
+
   function handleSlider(key: keyof RGB, val: number) {
-    if (!interactive || (checked && !allDone)) return;
+    if (!interactive || slidersLocked) return;
     applyRgb({ ...current, [key]: val });
   }
 
   function handleHexChange(raw: string) {
-    if (!interactive || (checked && !allDone)) return;
+    if (!interactive) return;
     setHexInput(raw);
     const parsed = parseHex(raw);
     if (parsed) {
@@ -154,7 +157,7 @@ export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEdito
             type="text"
             value={hexInput}
             maxLength={7}
-            disabled={!interactive || (checked && !allDone)}
+            disabled={!interactive}
             onChange={(e) => handleHexChange(e.target.value)}
             aria-label="HEX color input"
             spellCheck={false}
@@ -165,6 +168,11 @@ export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEdito
         </div>
 
         {/* ─ RGB sliders ─ */}
+        {slidersLocked && (
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--muted)' }}>
+            sliders locked — type a HEX value to match
+          </span>
+        )}
         <div className={styles.sliders}>
           {CHANNELS.map(({ key, label, trackColor }) => (
             <div key={key} className={styles.sliderRow}>
@@ -180,7 +188,7 @@ export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEdito
                 min={0}
                 max={255}
                 value={current[key]}
-                disabled={!interactive || (checked && !allDone)}
+                disabled={!interactive || slidersLocked}
                 onChange={(e) => handleSlider(key, Number(e.target.value))}
                 style={{ accentColor: trackColor }}
                 aria-label={`${label} channel`}
@@ -197,7 +205,7 @@ export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEdito
               <button
                 key={label}
                 className={styles.presetBtn}
-                disabled={!interactive || (checked && !allDone)}
+                disabled={!interactive || slidersLocked}
                 onClick={() => handlePreset(rgb)}
               >
                 <span

@@ -192,7 +192,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'channel',
     definition: 'One of the three independent color components in the RGB model: red, green, and blue. Each channel is a number from 0 to 255, and the combination of all three channels produces a specific color.',
-    relatedLessons: ['u3-l2'],
+    relatedLessons: ['u2-l2', 'u3-l2'],
   },
   {
     term: 'channel intensity',

@@ -12,7 +12,7 @@ export const lesson6_3: LessonConfig = {
   glossaryTerms: ['accent overuse', 'brand color', 'supporting palette', 'tonal scale'],
   reviewTags: ['brand', 'hierarchy', 'neutrals', 'balance'],
   steps: [
-    { id: 's1', text: 'Brand colors are usually chosen for marketing materials — high contrast on white, large areas, bold typography. Those same colors can overwhelm an interface when applied to backgrounds, small labels, icons, and states simultaneously.', highlights: ['brand color', 'accent overuse'] },
+    { id: 's1', text: 'Unit 1 showed that hierarchy requires restraint — accent colors lose impact when overused. Brand colors pose the same risk at a system level: chosen for marketing materials with high contrast and bold typography, they can overwhelm an interface when applied to backgrounds, small labels, icons, and states simultaneously.', highlights: ['brand color', 'accent overuse'] },
     { id: 's2', text: 'A brand color works best as an anchor for one or two interactive roles: the primary action button, the primary link, and the highlight accent. Beyond that, neutrals and tonal steps carry the structural weight.', highlights: ['supporting palette'] },
     { id: 's3', text: 'Supporting neutrals do most of the interface work: page backgrounds, card surfaces, body text, dividers, and secondary actions. A strong neutral system gives the brand color space to stand out when it appears.' },
     { id: 's4', text: 'A tonal scale expands the brand anchor into lighter and darker variants. These variants support disabled states, hover states, and semantic variations without changing the hue family.', highlights: ['tonal scale'] },

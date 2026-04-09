@@ -8,7 +8,7 @@ export const lesson2_6: LessonConfig = {
   learningGoal: 'Make and explain intentional screen-first color decisions for accent, surface, and neutral roles in a simple UI palette.',
   estimatedMinutes: 14,
   prerequisites: ['u2-l5'],
-  conceptsIntroduced: ['surface color', 'neutral', 'vivid', 'muted', 'screen-first decision', 'palette balance'],
+  conceptsIntroduced: ['surface color', 'screen-first decision', 'palette balance'],
   interactionType: 'interface-tuner',
   glossaryTerms: ['surface color', 'neutral', 'palette balance', 'screen-first decision'],
   reviewTags: ['additive', 'interface', 'palette', 'practical'],

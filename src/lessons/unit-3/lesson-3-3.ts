@@ -11,11 +11,8 @@ export const lesson3_3: LessonConfig = {
   estimatedMinutes: 16,
   prerequisites: ['u3-l2'],
   conceptsIntroduced: [
-    'HSL',
+    'HSL notation',
     'HSLA',
-    'hue',
-    'saturation',
-    'lightness',
     'alpha',
     'tonal variation',
     'color family',

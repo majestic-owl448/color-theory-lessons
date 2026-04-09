@@ -12,8 +12,8 @@ export const lesson5_4: LessonConfig = {
   glossaryTerms: ['redundant cue', 'status message', 'validation state'],
   reviewTags: ['color-only', 'redundancy', 'states'],
   steps: [
-    { id: 's1', text: "WCAG 1.4.1 Use of Color states that color must not be the only visual means of conveying information, indicating an action, prompting a response, or distinguishing an element. This is not about removing color — it is about not depending on it alone.", highlights: ['redundant cue', 'use of color'] },
-    { id: 's2', text: 'Required fields marked only in red, error borders with no text, and chart series differentiated only by hue are common failures. In each case, removing hue removes meaning — which is the problem.' },
+    { id: 's1', text: "In Unit 4, you learned to spot color-alone problems — elements where hue is the only signal. Now you will fix them. The principle (WCAG 1.4.1) is clear: color must not be the only visual means of conveying information. The goal is not to remove color but to ensure it is not the sole carrier of meaning.", highlights: ['redundant cue', 'use of color'] },
+    { id: 's2', text: 'You have already seen the common patterns: status dots, validation borders, chart legends. The question now shifts from \'can I spot the problem?\' to \'how do I fix it?\' The answer is always the same: add a second channel of meaning.' },
     { id: 's3', text: "Better systems add a second channel: an error icon + a message ('Please enter a valid email'); a required asterisk + a legend; direct chart labels or patterns + a structured legend.", highlights: ['validation state', 'status message'] },
     { id: 's4', text: 'The goal is redundancy — meaning carried by two or more signals. If color fades or shifts under CVD simulation, the icon or label still communicates. If the label is hidden, the color still contributes. Multiple channels make the design robust.' },
     { id: 's5', text: 'In the rebuild tool, take each color-only example and add at least one more cue from the toolbox. The challenge is to make every state understandable without hue as the only signal.' },

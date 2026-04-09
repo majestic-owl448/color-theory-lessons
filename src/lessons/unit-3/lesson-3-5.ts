@@ -14,7 +14,6 @@ export const lesson3_5: LessonConfig = {
     'gradient',
     'linear gradient',
     'radial gradient',
-    'surface color',
     'text color',
     'border color',
     'semantic color',
