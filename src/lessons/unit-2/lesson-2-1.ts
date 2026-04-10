@@ -4,13 +4,13 @@ export const lesson2_1: LessonConfig = {
   id: 'u2-l1',
   unitId: 'unit-2',
   title: 'Two Ways Color Mixes',
-  description: 'Discover the fundamental difference between color made from light and color made from pigment.',
-  learningGoal: 'Correctly classify common examples as additive or subtractive and explain the difference in plain language.',
-  estimatedMinutes: 11,
+  description: 'Discover the fundamental difference between color made from light and color made from pigment, and unlearn the paint-based intuitions that mislead screen designers.',
+  learningGoal: 'Correctly classify common examples as additive or subtractive, explain the difference in plain language, and identify when paint logic is being misapplied to screens.',
+  estimatedMinutes: 14,
   prerequisites: [],
-  conceptsIntroduced: ['additive color', 'subtractive color', 'RGB', 'pigment', 'light emission', 'light absorption'],
+  conceptsIntroduced: ['additive color', 'subtractive color', 'RGB', 'pigment', 'light emission', 'light absorption', 'paint logic', 'screen logic', 'mental model'],
   interactionType: 'additive-sort',
-  glossaryTerms: ['additive color', 'subtractive color', 'pigment', 'RGB'],
+  glossaryTerms: ['additive color', 'subtractive color', 'pigment', 'RGB', 'paint logic', 'screen logic', 'mental model'],
   reviewTags: ['foundations', 'additive', 'subtractive', 'color-models'],
   steps: [
     {
@@ -29,10 +29,16 @@ export const lesson2_1: LessonConfig = {
     },
     {
       id: 's4',
-      text: 'This is why paint intuition does not transfer to screen design. On a screen, mixing more color channels adds brightness. With pigment, mixing more colors removes it. The rules run in opposite directions.',
+      text: 'This is why paint intuition does not transfer to screen design. On a screen, mixing more color channels adds brightness. With pigment, mixing more colors removes it. The rules run in opposite directions. Red and green paint make a brownish mess; red and green light make yellow.',
+      highlights: ['paint logic', 'screen logic'],
     },
     {
       id: 's5',
+      text: 'When a screen color looks dark, it is because the channel values are low — there is little light. Brightening means raising values, not thinning or diluting color. If you catch yourself thinking "this will get muddy" when combining screen colors, you are using a paint mental model. Consciously switch to screen-first thinking.',
+      highlights: ['mental model'],
+    },
+    {
+      id: 's6',
       text: 'Look at the two diagrams on the right. The dark one shows light combining — colors brighten toward white. The light one shows pigment combining — colors darken toward black. Then sort the examples below each diagram into the correct model.',
     },
   ],
@@ -87,5 +93,7 @@ export const lesson2_1: LessonConfig = {
     'Physical materials use subtractive color: pigments absorb (subtract) wavelengths and reflect the rest.',
     'Mixing all subtractive primaries fully produces black — all wavelengths absorbed.',
     'The two models are opposites: more light is added on screens; more wavelengths are removed in pigments.',
+    'Applying paint logic to screens produces wrong predictions — "muddy," "dilute," and "absorb" are paint-model words.',
+    'Black on a screen is the complete absence of emitted light, not a color mixed from other colors.',
   ],
 };
