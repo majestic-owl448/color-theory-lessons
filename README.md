@@ -28,10 +28,11 @@ Deploys to GitHub Pages at `/color-theory-lessons/` via GitHub Actions on push t
 
 ```
 src/
-  components/   # layout, nav, shared UI
-  data/         # static data (units, badges, glossary)
-  pages/        # route-level page components
+  components/   # layout, nav, shared UI, tool components
+  data/         # static data (units, milestones, glossary)
+  lessons/      # lesson configs organized by unit (unit-1 through unit-6)
+  pages/        # route-level page components (Home, Lesson, Milestone, PaletteBuilder, Glossary, Review, Settings)
   state/        # app-context.tsx, persistence.ts
   types/        # TypeScript interfaces
-  lessons/      # lesson configs (not yet populated)
+  utils/        # color conversion and analysis utilities
 ```

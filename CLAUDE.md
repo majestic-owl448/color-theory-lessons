@@ -1,5 +1,3 @@
-The file `/color-theory-lessons/AGENTS.md` must be updated as the app status changes so that the infos in it are based on the current status of the app.
-
 # Color Theory Lessons (Color Quest)
 
 Interactive color theory learning app. React 19 + TypeScript + Vite, deployed to GitHub Pages at `/color-theory-lessons/`.
@@ -38,28 +36,18 @@ All 6 units fully built and wired. 37 total lessons, 36 tool components, 6 miles
 | Color utilities | `src/utils/color.ts` |
 | Types | `src/types/lesson.ts`, `src/types/milestone.ts` |
 | Palette Builder | `src/pages/PaletteBuilderPage.tsx` |
+| Pages | `src/pages/` |
+| State management | `src/state/` |
 
 ## Tech Stack
 
-React 19 + TypeScript + Vite. No backend. GitHub Pages deployment. Design system: freeCodeCamp "Command-line Chic." CSS variables for theming: `var(--fg)`, `var(--bg)`, `var(--muted)`, `var(--border)`, `var(--accent)`, `var(--success)`, `var(--warning)`, `var(--error)`, `var(--font-mono)`, `var(--radius-md)`, `var(--radius-sm)`.
+React 19 + TypeScript + Vite. No backend. GitHub Pages deployment via GitHub Actions on push to `main`. Design system: freeCodeCamp "Command-line Chic." CSS variables for theming: `var(--fg)`, `var(--bg)`, `var(--muted)`, `var(--border)`, `var(--accent)`, `var(--success)`, `var(--warning)`, `var(--error)`, `var(--font-mono)`, `var(--radius-md)`, `var(--radius-sm)`.
 
 ## Build
 
 ```
 npm run build   # tsc + vite build
 ```
-
-## Documents
-
-- `color-theory-app-prd.md` — Full product requirements document
-- `color-theory-app-lesson-plan.md` — High-level lesson plan overview across all units
-- `color-theory-unit-1-detailed-lesson-plan.md` — Unit 1: What Is Color?
-- `color-theory-unit-2-detailed-lesson-plan.md` — Unit 2: Color Models and Notation
-- `color-theory-unit-3-detailed-lesson-plan.md` — Unit 3: Digital Color in Programming
-- `color-theory-unit-4-detailed-lesson-plan.md` — Unit 4: Human Vision and Color Blindness
-- `color-theory-unit-5-detailed-lesson-plan.md` — Unit 5: Accessible Color and WCAG in Practice
-- `color-theory-unit-6-detailed-lesson-plan.md` — Unit 6: Applied Design Systems and Advanced Color
-- `palette-builder-plan.md` — Palette Builder page design plan
 
 ## Learning Outcomes
 
