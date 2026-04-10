@@ -650,8 +650,8 @@ const milestone3: MilestoneConfig = {
   title: 'Build a UI Palette in Code',
   description:
     'Apply your Unit 3 knowledge to build a small but coherent digital color system using implementation-style thinking.',
-  estimatedMinutes: 25,
-  passThreshold: 8,
+  estimatedMinutes: 20,
+  passThreshold: 6,
   parts: [
     {
       id: 'm3-p1',
@@ -750,44 +750,6 @@ const milestone3: MilestoneConfig = {
         },
       ],
     },
-    {
-      id: 'm3-p3',
-      title: 'Color Spaces and Implementation Awareness',
-      description:
-        'Demonstrate practical awareness of sRGB, Display P3, and the need for accessibility checking in all contexts.',
-      questions: [
-        {
-          id: 'm3-q9',
-          prompt: 'Which color space is the safer default baseline for most web design?',
-          choices: [
-            { id: 'a', label: 'Display P3', isCorrect: false, explanation: 'P3 offers wider gamut but is not universally supported. sRGB is the universal baseline.' },
-            { id: 'b', label: 'sRGB', isCorrect: true, explanation: 'sRGB is supported by virtually all screens and is the default color space for standard CSS color functions.' },
-            { id: 'c', label: 'Adobe RGB', isCorrect: false, explanation: 'Adobe RGB is primarily used in photography and print workflows, not web design.' },
-            { id: 'd', label: 'It depends on which browser is being used', isCorrect: false, explanation: 'sRGB is universally supported across all modern browsers. It is the safe baseline regardless of browser choice.' },
-          ],
-        },
-        {
-          id: 'm3-q10',
-          prompt: 'A color compiles correctly in your CSS file. Is it automatically accessible?',
-          choices: [
-            { id: 'a', label: 'Yes — if the syntax is valid, accessibility is handled', isCorrect: false, explanation: 'Valid syntax only means the browser can render it. Contrast, readability, and color-only meaning still need checking.' },
-            { id: 'b', label: 'No — you still need to check contrast, readability, and whether meaning depends on color alone', isCorrect: true, explanation: 'A vivid yellow text on white background is perfectly valid CSS but nearly unreadable. Accessibility requires design judgment, not just valid code.' },
-            { id: 'c', label: 'Only if you used HSL format, which is inherently more accessible', isCorrect: false, explanation: 'No format is inherently more accessible. Accessibility depends on the actual color values and their usage in context.' },
-            { id: 'd', label: 'Yes — modern browsers auto-correct poor contrast', isCorrect: false, explanation: 'Browsers render exactly what you specify. They do not auto-correct accessibility issues.' },
-          ],
-        },
-        {
-          id: 'm3-q11',
-          prompt: 'Why might a vivid Display P3 color look different on a device that only supports sRGB?',
-          choices: [
-            { id: 'a', label: 'The device will show an error message', isCorrect: false, explanation: 'Devices do not show errors for out-of-gamut colors. They silently clip or map the color to the nearest displayable value.' },
-            { id: 'b', label: 'The color gets clipped to the nearest sRGB equivalent, which may look less vivid', isCorrect: true, explanation: 'Colors outside the sRGB gamut are mapped to the closest representable value, which can reduce vividness or shift hue slightly.' },
-            { id: 'c', label: 'It will look identical — all modern screens support P3', isCorrect: false, explanation: 'Many screens, especially older or budget displays, do not support Display P3.' },
-            { id: 'd', label: 'The browser converts it to grayscale automatically', isCorrect: false, explanation: 'Out-of-gamut colors are clipped to the nearest in-gamut color, not converted to grayscale.' },
-          ],
-        },
-      ],
-    },
   ],
 };
 
@@ -796,10 +758,10 @@ const milestone4: MilestoneConfig = {
   unitId: 'unit-4',
   title: 'Design Beyond Your Own Eyes',
   description:
-    'Apply your Unit 4 knowledge to identify and improve a flawed interface. Use the panel on the right to answer each question.',
-  estimatedMinutes: 20,
+    'Apply your Unit 4 knowledge of human vision and color perception to identify fragile interface patterns.',
+  estimatedMinutes: 15,
   heroVisual: 'interface-mockup',
-  passThreshold: 8,
+  passThreshold: 6,
   parts: [
     {
       id: 'm4-p1',
@@ -897,56 +859,6 @@ const milestone4: MilestoneConfig = {
             { id: 'b', label: 'Multiple cues benefit all users — in bright sunlight, on grayscale printouts, or when scanning quickly', isCorrect: true, explanation: 'Any condition that reduces effective color perception — physical or contextual — benefits from redundant cues. Good inclusive design helps everyone.' },
             { id: 'c', label: 'All users prefer monochromatic interfaces', isCorrect: false, explanation: 'User preference is not the issue. The point is that multiple cues improve robustness in real-world conditions for all users.' },
             { id: 'd', label: 'Color-only design increases file size', isCorrect: false, explanation: 'File size is unrelated to this accessibility concern.' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'm4-p3',
-      title: 'Repair Strategies',
-      description:
-        'Choose appropriate cues and fixes to make interfaces more inclusive.',
-      questions: [
-        {
-          id: 'm4-q9',
-          prompt:
-            'A form has a red border on invalid fields. What is the strongest improvement?',
-          choices: [
-            { id: 'a', label: 'Change the border to a different shade of red', isCorrect: false, explanation: 'A different shade still relies only on color. The improvement needs to add a non-color channel.' },
-            { id: 'b', label: 'Add an error icon and a clear error message text below the field', isCorrect: true, explanation: 'Three channels — color, icon shape, and text — ensure the error state is communicated even if any one channel is lost.' },
-            { id: 'c', label: 'Remove the colored border entirely', isCorrect: false, explanation: 'Color reinforcement is valuable. The fix is to add backup cues alongside it, not to remove color.' },
-            { id: 'd', label: 'Make the border thicker', isCorrect: false, explanation: 'A thicker border is still a color-only signal. It does not add a new communication channel.' },
-          ],
-        },
-        {
-          id: 'm4-q10',
-          prompt:
-            'A line chart has 5 series distinguished only by hue. Which two approaches would most improve it?',
-          choices: [
-            { id: 'a', label: 'Add a color legend and make the lines thicker', isCorrect: false, explanation: 'A color-only legend still relies on hue. Thicker lines improve visibility but do not add a non-color channel.' },
-            { id: 'b', label: 'Use direct data labels on each line; use different line styles such as dashed, dotted, or solid', isCorrect: true, explanation: 'Direct labels eliminate the need for a legend. Different line styles make series distinguishable through shape, not just hue.' },
-            { id: 'c', label: 'Reduce to 2 series and remove the others', isCorrect: false, explanation: 'Fewer series may help readability, but this avoids the problem rather than solving it. Labels and patterns work with any number of series.' },
-            { id: 'd', label: 'Use only grayscale colors for all series', isCorrect: false, explanation: 'Grayscale removes hue but still relies on luminance alone. Adding direct labels or line style variation is a more robust approach.' },
-          ],
-        },
-        {
-          id: 'm4-q11',
-          prompt: 'What is simulation useful for in inclusive design?',
-          choices: [
-            { id: 'a', label: 'Replacing the need for user testing with real CVD users', isCorrect: false, explanation: 'Simulation is a fast first-pass check, not a replacement for real user testing, which captures individual variation and real task behavior.' },
-            { id: 'b', label: 'Revealing which interface areas will confuse users under CVD conditions — a fast first-pass check', isCorrect: true, explanation: 'Simulation shows which elements lose meaning when color distinctions are reduced. It is quick to apply and catches obvious problems early.' },
-            { id: 'c', label: 'Automatically applying WCAG-compliant color choices', isCorrect: false, explanation: 'Simulation is a visual diagnostic tool. It does not automatically change colors or guarantee WCAG compliance.' },
-            { id: 'd', label: 'Checking whether a design meets contrast ratio requirements', isCorrect: false, explanation: 'Contrast ratio checking is a separate tool. Simulation is for identifying color-only meaning problems, not contrast measurements.' },
-          ],
-        },
-        {
-          id: 'm4-q12',
-          prompt: 'When should inclusive color review happen in the design process?',
-          choices: [
-            { id: 'a', label: 'Only as a final compliance check before shipping', isCorrect: false, explanation: 'Late compliance checks catch problems when structural fixes are most expensive. Inclusive review should be integrated throughout.' },
-            { id: 'b', label: 'Early and repeatedly — not only as a final compliance check after the design is locked', isCorrect: true, explanation: 'Structural fixes are cheap in design files and expensive in shipped products. Early, repeated checks make inclusive design practical.' },
-            { id: 'c', label: 'Only when a client specifically requests it', isCorrect: false, explanation: 'Inclusive design is a baseline quality concern, not an optional client request.' },
-            { id: 'd', label: 'Only during development, not during design', isCorrect: false, explanation: 'Color decisions are made during design. Waiting until development to check them means the hardest decisions have already been locked.' },
           ],
         },
       ],
