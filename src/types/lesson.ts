@@ -32,7 +32,6 @@ export type InteractionType =
   | 'before-after'
   | 'slider-explore'
   | 'additive-sort'
-  | 'logic-fixer'
   | 'mismatch-explainer'
   | 'background-shift'
   | 'interface-tuner'
@@ -49,10 +48,10 @@ export type InteractionType =
   | 'color-only-detector'
   | 'state-workshop'
   | 'inclusive-review'
-  | 'broken-usable-cards'
+
   | 'text-contrast-lab'
   | 'component-checker'
-  | 'color-alone-rebuild'
+
   | 'audit-flow'
   | 'pattern-repair'
   | 'system-comparison'
