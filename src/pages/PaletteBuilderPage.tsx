@@ -906,7 +906,6 @@ export function PaletteBuilderPage() {
                     { hex: color.hex, label: color.label },
                     { hex: color.lighter, label: `${color.label} lighter` },
                     { hex: color.darker, label: `${color.label} darker` },
-                    { hex: color.muted, label: `${color.label} muted` },
                   ];
                   return variants.map(({ hex, label }) => {
                     const isAdded = paletteHexSet.has(hex.toUpperCase());
