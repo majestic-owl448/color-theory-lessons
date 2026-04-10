@@ -9,7 +9,7 @@ export const lesson4_1: LessonConfig = {
   learningGoal:
     'Explain in plain terms that color perception is constructed by the visual system and varies across individuals.',
   estimatedMinutes: 13,
-  prerequisites: ['u3-l7'],
+  prerequisites: ['u3-l6'],
   conceptsIntroduced: [
     'color perception',
     'retina',
