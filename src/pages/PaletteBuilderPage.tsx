@@ -639,23 +639,70 @@ export function PaletteBuilderPage() {
 
   /* ── Theme insufficiency suggestions ────────────────────────────────────── */
 
-  const themeSuggestions = useMemo((): string[] => {
-    if (paletteColors.length === 0) return [];
-    const out: string[] = [];
-    if (paletteColors.length < 2)
-      out.push('Add at least one more color for contrast pairings to appear.');
-    if (paletteColors.length < 4)
-      out.push('Consider adding lighter and darker tones for backgrounds and text.');
-    if (paletteColors.length < 6)
-      out.push('A second accent color would let you differentiate primary and secondary actions.');
-    const hasLight = paletteColors.some((c) => hexToHsl(c.hex).l > 75);
-    const hasDark = paletteColors.some((c) => hexToHsl(c.hex).l < 25);
-    if (!hasLight && paletteColors.length >= 2)
-      out.push('Your palette lacks a light color — needed for light-mode backgrounds or dark-mode text.');
-    if (!hasDark && paletteColors.length >= 2)
-      out.push('Your palette lacks a dark color — needed for dark-mode backgrounds or light-mode text.');
+  interface RoleSuggestion {
+    msg: string;
+    hex: string;
+    label: string;
+    mode: 'dark' | 'light';
+    role: RoleKey;
+  }
+
+  const roleSuggestions = useMemo((): RoleSuggestion[] => {
+    if (paletteColors.length === 0 || !primaryHex) return [];
+    const out: RoleSuggestion[] = [];
+    const existing = new Set(paletteHexSet);
+
+    const suggest = (hex: string, label: string, msg: string, mode: 'dark' | 'light', role: RoleKey) => {
+      const upper = hex.toUpperCase();
+      if (!existing.has(upper)) {
+        existing.add(upper);
+        out.push({ msg, hex, label, mode, role });
+      }
+    };
+
+    const primaryHsl = hexToHsl(primaryHex);
+
+    // Check each mode for duplicate roles
+    for (const mode of ['dark', 'light'] as const) {
+      const roles = mode === 'dark' ? effectiveDark : effectiveLight;
+      if (!roles) continue;
+
+      const usedHexes = new Set<string>();
+      const duplicateRoles: RoleKey[] = [];
+      for (const key of ROLE_KEYS) {
+        const upper = roles[key].toUpperCase();
+        if (usedHexes.has(upper)) {
+          duplicateRoles.push(key);
+        }
+        usedHexes.add(upper);
+      }
+
+      for (const role of duplicateRoles) {
+        if (role === 'background' || role === 'surface') {
+          // Need a very dark (dark mode) or very light (light mode) color
+          const targetL = mode === 'dark'
+            ? (role === 'background' ? 5 : 12)
+            : (role === 'background' ? 97 : 90);
+          const hex = hslToHex(primaryHsl.h, Math.max(primaryHsl.s, 10), targetL);
+          suggest(hex, `${mode} ${ROLE_LABELS[role]}`, `${mode} mode: ${ROLE_LABELS[role]} shares a color with another role.`, mode, role);
+        } else if (role === 'primaryText' || role === 'secondaryText') {
+          // Need a very light (dark mode) or very dark (light mode) color
+          const targetL = mode === 'dark'
+            ? (role === 'primaryText' ? 95 : 80)
+            : (role === 'primaryText' ? 10 : 25);
+          const hex = hslToHex(primaryHsl.h, Math.min(primaryHsl.s, 15), targetL);
+          suggest(hex, `${mode} ${ROLE_LABELS[role]}`, `${mode} mode: ${ROLE_LABELS[role]} shares a color with another role.`, mode, role);
+        } else if (role === 'accentSecondary') {
+          // Generate from a harmony color
+          const relHues = getRelatedHues(primaryHsl.h, 'complementary');
+          const hex = hslToHex(relHues[0], primaryHsl.s, primaryHsl.l);
+          suggest(hex, 'accent 2', `${mode} mode: accent 2 shares a color with another role.`, mode, role);
+        }
+      }
+    }
+
     return out;
-  }, [paletteColors]);
+  }, [paletteColors, primaryHex, paletteHexSet, effectiveDark, effectiveLight]);
 
   /* ── Render ─────────────────────────────────────────────────────────────── */
 
@@ -953,13 +1000,34 @@ export function PaletteBuilderPage() {
             </div>
           )}
 
-          {/* ── Theme advice ──────────────────────────────────────── */}
-          {themeSuggestions.length > 0 && (
+          {/* ── Role gap suggestions ──────────────────────────────── */}
+          {roleSuggestions.length > 0 && (
             <div className={styles.section}>
-              <h2 className={styles.sectionHeading}>theme advice</h2>
+              <h2 className={styles.sectionHeading}>colors needed for theme roles</h2>
               <div className={styles.suggestion}>
-                {themeSuggestions.map((msg, i) => (
-                  <p key={i} className={styles.a11ySuggestionMsg}>{msg}</p>
+                {roleSuggestions.map((s, i) => (
+                  <div key={i} className={styles.a11ySuggestion}>
+                    <p className={styles.a11ySuggestionMsg}>{s.msg}</p>
+                    <div className={styles.a11ySuggestionFix}>
+                      <div
+                        className={styles.a11ySuggestionSwatch}
+                        style={{ backgroundColor: s.hex }}
+                      />
+                      <span className={styles.a11ySuggestionHex}>
+                        {s.hex.toUpperCase()}
+                      </span>
+                      <button
+                        className={styles.a11ySuggestionApply}
+                        onClick={() => {
+                          addPaletteColor(s.hex, s.label);
+                          handleRolePick(s.mode, s.role, s.hex);
+                        }}
+                        aria-label={`Add ${s.hex.toUpperCase()} and assign as ${ROLE_LABELS[s.role]}`}
+                      >
+                        + add as {s.mode} {ROLE_LABELS[s.role]}
+                      </button>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
