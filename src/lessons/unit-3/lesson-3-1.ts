@@ -9,7 +9,7 @@ export const lesson3_1: LessonConfig = {
   learningGoal:
     'Explain why coded color formats matter and identify where designers encounter them.',
   estimatedMinutes: 13,
-  prerequisites: ['u2-l6'],
+  prerequisites: ['u2-l5'],
   conceptsIntroduced: [
     'color value',
     'color format',
