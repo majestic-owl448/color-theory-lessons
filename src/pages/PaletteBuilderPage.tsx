@@ -307,6 +307,7 @@ function findAccessibleVariant(
 
 interface AccessibilitySuggestion {
   msg: string;
+  mode: 'dark' | 'light';
   role: RoleKey;
   suggestedHex: string;
   suggestedLabel: string;
@@ -587,111 +588,54 @@ export function PaletteBuilderPage() {
 
   /* ── Accessibility suggestions ──────────────────────────────────────────── */
 
-  const darkSuggestions = useMemo((): AccessibilitySuggestion[] => {
-    if (!effectiveDark) return [];
+  const buildA11ySuggestions = (
+    roles: Record<RoleKey, string>,
+    mode: 'dark' | 'light',
+  ): AccessibilitySuggestion[] => {
     const out: AccessibilitySuggestion[] = [];
-    const r = effectiveDark;
+    const dir1 = mode === 'dark' ? 'lighten' as const : 'darken' as const;
+    const dir2 = mode === 'dark' ? 'darken' as const : 'lighten' as const;
 
-    const txtBg = ratioOf(r.primaryText, r.background);
-    if (txtBg < 7) {
-      const fix = findAccessibleVariant(r.primaryText, r.background, 7, 'lighten')
-        ?? findAccessibleVariant(r.background, r.primaryText, 7, 'darken');
-      const fixRole: RoleKey = findAccessibleVariant(r.primaryText, r.background, 7, 'lighten')
-        ? 'primaryText' : 'background';
+    const checks: { fg: string; bg: string; fgRole: RoleKey; bgRole: RoleKey; label1: string; label2: string }[] = [
+      { fg: roles.primaryText, bg: roles.background, fgRole: 'primaryText', bgRole: 'background',
+        label1: mode === 'dark' ? 'lighter text' : 'darker text', label2: mode === 'dark' ? 'darker background' : 'lighter background' },
+      { fg: roles.secondaryText, bg: roles.surface, fgRole: 'secondaryText', bgRole: 'surface',
+        label1: mode === 'dark' ? 'lighter text' : 'darker text', label2: mode === 'dark' ? 'darker surface' : 'lighter surface' },
+      { fg: roles.accent, bg: roles.background, fgRole: 'accent', bgRole: 'background',
+        label1: mode === 'dark' ? 'lighter accent' : 'darker accent', label2: '' },
+    ];
+
+    for (const { fg, bg, fgRole, bgRole, label1, label2 } of checks) {
+      const ratio = ratioOf(fg, bg);
+      if (ratio >= 7) continue;
+      const fix = findAccessibleVariant(fg, bg, 7, dir1)
+        ?? (label2 ? findAccessibleVariant(bg, fg, 7, dir2) : null);
+      const fixRole = findAccessibleVariant(fg, bg, 7, dir1) ? fgRole : bgRole;
+      const fixLabel = findAccessibleVariant(fg, bg, 7, dir1) ? label1 : label2;
       if (fix) {
+        const pairLabel = fgRole === 'accent' ? 'accent/bg'
+          : fgRole === 'primaryText' ? 'primary text/bg' : 'secondary text/surface';
         out.push({
-          msg: `Dark: primary text/bg is ${txtBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          msg: `${mode === 'dark' ? 'Dark' : 'Light'}: ${pairLabel} is ${ratio.toFixed(1)}:1 — needs 7:1 for AAA.`,
+          mode,
           role: fixRole,
           suggestedHex: fix,
-          suggestedLabel: fixRole === 'primaryText' ? 'lighter text' : 'darker background',
+          suggestedLabel: fixLabel,
         });
       }
     }
-
-    const txtSurf = ratioOf(r.secondaryText, r.surface);
-    if (txtSurf < 7) {
-      const fix = findAccessibleVariant(r.secondaryText, r.surface, 7, 'lighten')
-        ?? findAccessibleVariant(r.surface, r.secondaryText, 7, 'darken');
-      const fixRole: RoleKey = findAccessibleVariant(r.secondaryText, r.surface, 7, 'lighten')
-        ? 'secondaryText' : 'surface';
-      if (fix) {
-        out.push({
-          msg: `Dark: secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 7:1 for AAA.`,
-          role: fixRole,
-          suggestedHex: fix,
-          suggestedLabel: fixRole === 'secondaryText' ? 'lighter text' : 'darker surface',
-        });
-      }
-    }
-
-    const accBg = ratioOf(r.accent, r.background);
-    if (accBg < 7) {
-      const fix = findAccessibleVariant(r.accent, r.background, 7, 'lighten');
-      if (fix) {
-        out.push({
-          msg: `Dark: accent/bg is ${accBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
-          role: 'accent',
-          suggestedHex: fix,
-          suggestedLabel: 'lighter accent',
-        });
-      }
-    }
-
     return out;
-  }, [effectiveDark]);
+  };
 
-  const lightSuggestions = useMemo((): AccessibilitySuggestion[] => {
-    if (!effectiveLight) return [];
-    const out: AccessibilitySuggestion[] = [];
-    const r = effectiveLight;
+  const darkSuggestions = useMemo(
+    () => effectiveDark ? buildA11ySuggestions(effectiveDark, 'dark') : [],
+    [effectiveDark],
+  );
 
-    const txtBg = ratioOf(r.primaryText, r.background);
-    if (txtBg < 7) {
-      const fix = findAccessibleVariant(r.primaryText, r.background, 7, 'darken')
-        ?? findAccessibleVariant(r.background, r.primaryText, 7, 'lighten');
-      const fixRole: RoleKey = findAccessibleVariant(r.primaryText, r.background, 7, 'darken')
-        ? 'primaryText' : 'background';
-      if (fix) {
-        out.push({
-          msg: `Light: primary text/bg is ${txtBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
-          role: fixRole,
-          suggestedHex: fix,
-          suggestedLabel: fixRole === 'primaryText' ? 'darker text' : 'lighter background',
-        });
-      }
-    }
-
-    const txtSurf = ratioOf(r.secondaryText, r.surface);
-    if (txtSurf < 7) {
-      const fix = findAccessibleVariant(r.secondaryText, r.surface, 7, 'darken')
-        ?? findAccessibleVariant(r.surface, r.secondaryText, 7, 'lighten');
-      const fixRole: RoleKey = findAccessibleVariant(r.secondaryText, r.surface, 7, 'darken')
-        ? 'secondaryText' : 'surface';
-      if (fix) {
-        out.push({
-          msg: `Light: secondary text/surface is ${txtSurf.toFixed(1)}:1 — needs 7:1 for AAA.`,
-          role: fixRole,
-          suggestedHex: fix,
-          suggestedLabel: fixRole === 'secondaryText' ? 'darker text' : 'lighter surface',
-        });
-      }
-    }
-
-    const accBg = ratioOf(r.accent, r.background);
-    if (accBg < 7) {
-      const fix = findAccessibleVariant(r.accent, r.background, 7, 'darken');
-      if (fix) {
-        out.push({
-          msg: `Light: accent/bg is ${accBg.toFixed(1)}:1 — needs 7:1 for AAA.`,
-          role: 'accent',
-          suggestedHex: fix,
-          suggestedLabel: 'darker accent',
-        });
-      }
-    }
-
-    return out;
-  }, [effectiveLight]);
+  const lightSuggestions = useMemo(
+    () => effectiveLight ? buildA11ySuggestions(effectiveLight, 'light') : [],
+    [effectiveLight],
+  );
 
   /* ── Theme insufficiency suggestions ────────────────────────────────────── */
 
@@ -1026,30 +970,43 @@ export function PaletteBuilderPage() {
             <div className={styles.section}>
               <h2 className={styles.sectionHeading}>accessibility suggestions</h2>
               <div className={styles.suggestion}>
-                {a11ySuggestions.map((s, i) => (
-                  <div key={i} className={styles.a11ySuggestion}>
-                    <p className={styles.a11ySuggestionMsg}>{s.msg}</p>
-                    <div className={styles.a11ySuggestionFix}>
-                      <div
-                        className={styles.a11ySuggestionSwatch}
-                        style={{ backgroundColor: s.suggestedHex }}
-                      />
-                      <span className={styles.a11ySuggestionHex}>
-                        {s.suggestedHex.toUpperCase()}
-                      </span>
-                      <span className={styles.a11ySuggestionFixLabel}>
-                        {s.suggestedLabel}
-                      </span>
-                      <button
-                        className={styles.a11ySuggestionApply}
-                        onClick={() => addPaletteColor(s.suggestedHex, s.suggestedLabel)}
-                        aria-label={`Add ${s.suggestedHex.toUpperCase()} to palette`}
-                      >
-                        + add to palette
-                      </button>
+                {a11ySuggestions.map((s, i) => {
+                  const alreadyInPalette = paletteHexSet.has(s.suggestedHex.toUpperCase());
+                  return (
+                    <div key={i} className={styles.a11ySuggestion}>
+                      <p className={styles.a11ySuggestionMsg}>{s.msg}</p>
+                      <div className={styles.a11ySuggestionFix}>
+                        <div
+                          className={styles.a11ySuggestionSwatch}
+                          style={{ backgroundColor: s.suggestedHex }}
+                        />
+                        <span className={styles.a11ySuggestionHex}>
+                          {s.suggestedHex.toUpperCase()}
+                        </span>
+                        <span className={styles.a11ySuggestionFixLabel}>
+                          {s.suggestedLabel}
+                        </span>
+                        {alreadyInPalette ? (
+                          <button
+                            className={styles.a11ySuggestionApply}
+                            onClick={() => handleRolePick(s.mode, s.role, s.suggestedHex)}
+                            aria-label={`Assign ${s.suggestedHex.toUpperCase()} as ${ROLE_LABELS[s.role]}`}
+                          >
+                            assign as {ROLE_LABELS[s.role]}
+                          </button>
+                        ) : (
+                          <button
+                            className={styles.a11ySuggestionApply}
+                            onClick={() => addPaletteColor(s.suggestedHex, s.suggestedLabel)}
+                            aria-label={`Add ${s.suggestedHex.toUpperCase()} to palette`}
+                          >
+                            + add to palette
+                          </button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
