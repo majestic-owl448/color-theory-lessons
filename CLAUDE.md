@@ -9,18 +9,18 @@ Browser-based learning app teaching practical color theory for digital design. S
 ## Implementation Status
 
 ### Completed Units
-- **Unit 1** — Seeing and Describing Color (6 lessons, milestone, 32 glossary terms, tools: before-after, slider-explore, contrast-checker, palette-builder, color-wheel, additive-sort)
-- **Unit 2** — Additive and Subtractive Color (6 lessons, milestone, 26 glossary terms, tools: rgb-mixer, logic-fixer, mismatch-explainer, background-shift, interface-tuner, format-reveal, hex-rgb-editor)
-- **Unit 3** — Digital Color in Programming (7 lessons, milestone, 38 glossary terms, tools: hsl-playground, alpha-layer, theme-sandbox, token-map, color-space-lab)
-- **Unit 4** — Human Vision and Color Blindness (6 lessons, milestone, 45 glossary terms, tools: eye-diagram, vision-cards, interface-gallery, color-only-detector, state-workshop, inclusive-review)
-- **Unit 5** — Accessible Color and WCAG in Practice (6 lessons, milestone, 35 glossary terms, tools: broken-usable-cards, text-contrast-lab, component-checker, color-alone-rebuild, audit-flow, pattern-repair)
-- **Unit 6** — Applied Design Systems and Advanced Color (6 lessons, milestone-6 capstone, 32 glossary terms, tools: system-comparison, role-builder, brand-pressure, dark-translator, chart-tuner, system-stress)
+- **Unit 1** — Seeing and Describing Color (6 lessons, milestone, tools: before-after, slider-explore, contrast-checker, palette-builder, color-wheel, additive-sort)
+- **Unit 2** — How Screens Make Color (5 lessons, milestone, tools: additive-sort, rgb-mixer, mismatch-explainer, background-shift, interface-tuner)
+- **Unit 3** — Digital Color in Code (6 lessons, milestone, tools: format-reveal, hex-rgb-editor, hsl-playground, alpha-layer, theme-sandbox, token-map)
+- **Unit 4** — Human Vision and Color Perception (4 lessons, milestone, tools: eye-diagram, vision-cards, interface-gallery, color-only-detector)
+- **Unit 5** — Accessible Color in Practice (6 lessons, milestone, tools: text-contrast-lab, component-checker, state-workshop, pattern-repair, audit-flow, inclusive-review)
+- **Unit 6** — Color Systems and Advanced Topics (7 lessons, milestone-6 capstone, tools: system-comparison, role-builder, brand-pressure, dark-translator, chart-tuner, color-space-lab, system-stress)
 
 ### Standalone Pages
 - **Palette Builder** (`/palette-builder`) — generate harmony-based palettes from a primary color (analogous, complementary, triadic), with tonal variants (lighter/darker/muted), WCAG AAA contrast matrix, and dark/light mode theme arranger. Located at `src/pages/PaletteBuilderPage.tsx`.
 
 ### App Completeness
-All 6 units fully built and wired. 37 total lessons, 36 tool components, 6 milestones. The `/capstone` route redirects to `milestone-6`. `npm run build` passes with zero TypeScript errors.
+All 6 units fully built and wired. 34 total lessons, 33 tool components, 6 milestones. The `/capstone` route redirects to `milestone-6`. `npm run build` passes with zero TypeScript errors.
 
 ## Key Source Locations
 
