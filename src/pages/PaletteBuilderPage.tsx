@@ -986,23 +986,18 @@ export function PaletteBuilderPage() {
                         <span className={styles.a11ySuggestionFixLabel}>
                           {s.suggestedLabel}
                         </span>
-                        {alreadyInPalette ? (
-                          <button
-                            className={styles.a11ySuggestionApply}
-                            onClick={() => handleRolePick(s.mode, s.role, s.suggestedHex)}
-                            aria-label={`Assign ${s.suggestedHex.toUpperCase()} as ${ROLE_LABELS[s.role]}`}
-                          >
-                            assign as {ROLE_LABELS[s.role]}
-                          </button>
-                        ) : (
-                          <button
-                            className={styles.a11ySuggestionApply}
-                            onClick={() => addPaletteColor(s.suggestedHex, s.suggestedLabel)}
-                            aria-label={`Add ${s.suggestedHex.toUpperCase()} to palette`}
-                          >
-                            + add to palette
-                          </button>
-                        )}
+                        <button
+                          className={styles.a11ySuggestionApply}
+                          onClick={() => {
+                            if (!alreadyInPalette) addPaletteColor(s.suggestedHex, s.suggestedLabel);
+                            handleRolePick(s.mode, s.role, s.suggestedHex);
+                          }}
+                          aria-label={alreadyInPalette
+                            ? `Assign ${s.suggestedHex.toUpperCase()} as ${ROLE_LABELS[s.role]}`
+                            : `Add ${s.suggestedHex.toUpperCase()} and assign as ${ROLE_LABELS[s.role]}`}
+                        >
+                          {alreadyInPalette ? `assign as ${ROLE_LABELS[s.role]}` : `+ add & assign as ${ROLE_LABELS[s.role]}`}
+                        </button>
                       </div>
                     </div>
                   );
