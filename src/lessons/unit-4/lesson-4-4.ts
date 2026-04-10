@@ -3,187 +3,175 @@ import type { LessonConfig } from '../../types/lesson.ts';
 export const lesson4_4: LessonConfig = {
   id: 'u4-l4',
   unitId: 'unit-4',
-  title: 'When Color Alone Fails',
+  title: 'What Color Perception Means for Design',
   description:
-    'Identify the "color alone" design problem and learn to spot it in common UI patterns such as status indicators, form validation, and charts.',
+    'Connect what you have learned about vision and CVD to everyday interface patterns — observe which designs hold up and which break down when color perception varies.',
   learningGoal:
-    'Define "color alone" as a design problem and identify at least three common examples in real interfaces.',
-  estimatedMinutes: 14,
+    'Identify at least three common interface patterns that become ambiguous when color perception varies, and explain why they break.',
+  estimatedMinutes: 13,
   prerequisites: ['u4-l3'],
   conceptsIntroduced: [
-    'chart key',
-    'legend',
-    'icon',
-    'label',
-    'pattern',
-    'selected state',
-    'semantic state',
-    'use of color',
+    'color-dependent meaning',
+    'ambiguous element',
+    'perceptual robustness',
   ],
   interactionType: 'color-only-detector',
   glossaryTerms: [
-    'chart key',
-    'legend',
-    'icon',
-    'label',
-    'pattern',
-    'selected state',
-    'semantic state',
-    'use of color',
+    'color-dependent meaning',
+    'ambiguous element',
+    'perceptual robustness',
   ],
-  reviewTags: ['color-alone', 'wcag', 'accessibility', 'ui-patterns'],
+  reviewTags: ['color-alone', 'observation', 'accessibility', 'ui-patterns'],
   steps: [
     {
       id: 's1',
-      text: '"Color alone" means that the meaning of an element is conveyed only by a hue difference — no shape, icon, label, pattern, or other visual signal backs it up. WCAG 1.4.1 "Use of Color" requires that color is not the only visual means of conveying information.',
-      highlights: ['use of color'],
+      text: 'Now that you understand how CVD changes what people see, look at common interface patterns through that lens. Some designs survive color perception differences just fine. Others fall apart — and the reason is almost always the same: the meaning lives entirely in the hue.',
     },
     {
       id: 's2',
-      text: 'A common failure: status dots. A red dot means error; a green dot means success. If the only difference is the hue, a user with CVD — or someone viewing in a low-color context — has no other way to distinguish them.',
-      highlights: ['semantic state'],
+      text: 'Status indicators are a classic example. A red dot for error and a green dot for success may look distinct to most people, but under deuteranopia simulation those two hues converge. Without any other visual signal, the dots become indistinguishable.',
+      highlights: ['ambiguous element'],
     },
     {
       id: 's3',
-      text: 'Form validation is another common failure. A red border on an invalid field relies on color alone unless there is also an error icon and a text message. The colored border is a nice reinforcement, but it cannot be the only signal.',
-      highlights: ['label', 'icon'],
+      text: 'Form fields that signal errors with only a red border face the same problem. The color shift may be invisible or subtle under certain CVD types. Text labels, icons, or other cues would survive where the color alone does not.',
     },
     {
       id: 's4',
-      text: 'Charts and maps often encode data series using only hue differences in the legend. Under CVD simulation, those series may look identical. Direct data labels, pattern fills, or different line styles add backup cues that survive color loss.',
-      highlights: ['chart key', 'legend', 'pattern'],
+      text: 'Charts and data visualizations are especially vulnerable. When series are distinguished only by hue, a CVD simulation can make two or three series look identical. This is not just a theoretical concern — it directly blocks comprehension.',
+      highlights: ['color-dependent meaning'],
     },
     {
       id: 's5',
-      text: 'Redundant cues benefit all users — not just those with CVD. In bright sunlight, on a grayscale printout, or when scanning quickly, multiple cues help everyone understand the interface more reliably.',
-      highlights: ['selected state'],
+      text: 'Notice the pattern: designs that rely on a single visual channel (hue) to carry meaning are fragile. Designs that pair color with shape, text, pattern, or position are robust. In the next unit, you will learn the specific techniques and guidelines for building that robustness.',
+      highlights: ['perceptual robustness'],
     },
   ],
   challenges: [
     {
       id: 'c1',
       prompt:
-        'Review the six UI examples and click all of the ones where meaning depends only on color with no other supporting cue.',
-      type: 'add-cues',
+        'Review the six UI examples. Click the ones where meaning would become ambiguous if the viewer could not distinguish the hues used.',
+      type: 'identify-problem',
       hints: [
-        'Look for elements where removing the color difference would leave no other way to understand the meaning.',
-        'Three of the six examples have the color-alone problem. The others have a backup cue.',
+        'Imagine the colors shift so that reds and greens look the same. Which elements lose their meaning?',
+        'Three of the six examples rely on hue alone. The others have a backup signal.',
       ],
-      successCriteria: 'All three color-only examples identified.',
+      successCriteria: 'All three hue-dependent examples correctly identified.',
     },
   ],
   quizItems: [
     {
       id: 'q1',
-      prompt: 'What does "color alone" mean as a design problem?',
+      prompt: 'Why do status dots with only red and green hues break down under CVD?',
       choices: [
         {
           id: 'a',
-          label: 'Using too many colors in the same interface',
+          label: 'Red and green are ugly together',
           isCorrect: false,
           explanation:
-            'Having many colors is a different issue. "Color alone" means a single element\'s meaning is carried only by hue, with no other cue.',
+            'Aesthetics are not the issue. The problem is that deuteranopia and protanopia make red and green look very similar, removing the only distinction.',
         },
         {
           id: 'b',
           label:
-            'The meaning of an element is conveyed only by hue difference, with no other visual signal',
+            'Under protan and deutan CVD, those hues converge and the dots become indistinguishable',
           isCorrect: true,
           explanation:
-            'WCAG 1.4.1 requires that color is not the only means of conveying information. If removing the color difference removes all meaning, the design has a color-alone problem.',
+            'When the sole distinguishing feature is a red-green hue difference, CVD that affects red-green perception removes that distinction entirely.',
         },
         {
           id: 'c',
-          label: 'Using colors that fail contrast ratio thresholds',
+          label: 'Screens cannot display red and green at the same time',
           isCorrect: false,
           explanation:
-            'Contrast ratio failures are a separate accessibility issue. Color-alone is about whether non-color signals also carry meaning.',
+            'Screens display both fine. The issue is how certain visual systems perceive them, not how the display produces them.',
         },
         {
           id: 'd',
-          label: 'Designing with a single-color palette',
+          label: 'The dots are too small to see color clearly',
           isCorrect: false,
           explanation:
-            'A monochromatic palette is a design choice. Color-alone is about whether meaning can be understood without relying on hue distinctions.',
+            'Size can affect perception, but the core issue is that hue is the only differentiator and that hue difference disappears under certain CVD types.',
         },
       ],
     },
     {
       id: 'q2',
-      prompt: 'Name two common examples of color-only design failures.',
+      prompt: 'What makes a chart series robust against color perception differences?',
       choices: [
         {
           id: 'a',
-          label: 'Low-contrast text and oversaturated backgrounds',
+          label: 'Using only blue and orange, since those are safe for everyone',
           isCorrect: false,
           explanation:
-            'These are contrast and saturation issues, not color-alone failures. Color-alone means meaning is conveyed by hue difference with no backup.',
+            'No two-color pair is universally safe across all CVD types. Robustness comes from pairing color with other visual cues.',
         },
         {
           id: 'b',
           label:
-            'Red/green status dots with no labels; chart series distinguished only by hue',
+            'Pairing hue with other visual signals like labels, patterns, or line styles',
           isCorrect: true,
           explanation:
-            'Both rely entirely on hue to carry meaning. Remove the color and nothing else communicates the status or series identity.',
+            'When color is not the only way to tell series apart, the chart remains comprehensible even when hue differences are reduced or lost.',
         },
         {
           id: 'c',
-          label: 'Using more than four colors in a chart; dark text on dark backgrounds',
+          label: 'Using maximum saturation for every series',
           isCorrect: false,
           explanation:
-            'Dark-on-dark is a contrast failure. Using many colors may cause clutter but is not the same as color-alone.',
+            'High saturation does not solve the problem — two saturated colors can still look the same under CVD.',
         },
         {
           id: 'd',
-          label: 'Using blue links and animated transitions',
+          label: 'Avoiding color entirely and using only gray shades',
           isCorrect: false,
           explanation:
-            'Blue underlined links have a shape backup cue (underline) and are generally not a color-alone problem.',
+            'Removing color entirely is unnecessarily restrictive. The goal is pairing color with other cues, not eliminating it.',
         },
       ],
     },
     {
       id: 'q3',
-      prompt: 'Why is a backup cue helpful even for users without CVD?',
+      prompt: 'What is the common pattern behind designs that break down when color perception varies?',
       choices: [
         {
           id: 'a',
-          label: 'It is not — backup cues are only necessary for CVD users',
+          label: 'They use too many colors',
           isCorrect: false,
           explanation:
-            'Multiple cues benefit all users. Bright sunlight, grayscale printing, quick scanning, and fatigue all reduce effective color perception.',
+            'The number of colors is not the issue. Even two colors can fail if hue is the only distinguishing signal.',
         },
         {
           id: 'b',
           label:
-            'Multiple cues reinforce clarity for all users, not just those with color differences',
+            'They rely on hue difference as the only visual signal carrying meaning',
           isCorrect: true,
           explanation:
-            'Icons, labels, and patterns make meaning clearer and faster to process in any conditions — bright light, inattention, or fast scanning.',
+            'When meaning lives entirely in hue and that hue distinction is lost, nothing else communicates the information.',
         },
         {
           id: 'c',
-          label: 'Backup cues make the interface more colorful and engaging',
+          label: 'They do not use enough contrast',
           isCorrect: false,
           explanation:
-            'Backup cues add clarity through non-color channels. Their benefit is robustness, not visual decoration.',
+            'Contrast is a related but separate concern. An element can have good lightness contrast but still rely on hue alone for its meaning.',
         },
         {
           id: 'd',
-          label: 'Backup cues are required by law for all interfaces',
+          label: 'They use old-fashioned color choices',
           isCorrect: false,
           explanation:
-            'WCAG guidelines address this, but the practical benefit extends beyond compliance — multiple cues help all users regardless of legal requirements.',
+            'The failure is structural, not aesthetic. Modern and traditional palettes alike can carry meaning only through hue.',
         },
       ],
     },
   ],
   keyPoints: [
-    '"Color alone" is a design problem where the meaning of an element depends entirely on hue difference, with no icon, label, shape, or pattern as backup.',
-    'WCAG 1.4.1 "Use of Color" requires that color is not the only visual means of conveying information.',
-    'Common failures: status dots with no labels, form validation with only a colored border, chart series distinguished only by hue.',
-    'Backup cues — icons, labels, patterns, text — make meaning survive color loss.',
-    'Redundant cues benefit all users: bright sunlight, grayscale contexts, and fast scanning all reduce effective color perception.',
+    'Designs that rely on hue alone to carry meaning are fragile — they break when color perception varies.',
+    'Status indicators, form validation, and chart series are the most common patterns that depend on hue difference.',
+    'Under protan and deutan simulation, red-green distinctions collapse; under tritan, blue-yellow distinctions collapse.',
+    'Designs that pair color with other visual signals (shape, text, pattern, position) remain comprehensible across perception differences.',
+    'Noticing where color carries meaning is the first step; the next unit covers how to build robust alternatives.',
   ],
 };
