@@ -10,20 +10,16 @@ import { lesson2_2 } from './unit-2/lesson-2-2.ts';
 import { lesson2_3 } from './unit-2/lesson-2-3.ts';
 import { lesson2_4 } from './unit-2/lesson-2-4.ts';
 import { lesson2_5 } from './unit-2/lesson-2-5.ts';
-import { lesson2_6 } from './unit-2/lesson-2-6.ts';
 import { lesson3_1 } from './unit-3/lesson-3-1.ts';
 import { lesson3_2 } from './unit-3/lesson-3-2.ts';
 import { lesson3_3 } from './unit-3/lesson-3-3.ts';
 import { lesson3_4 } from './unit-3/lesson-3-4.ts';
 import { lesson3_5 } from './unit-3/lesson-3-5.ts';
 import { lesson3_6 } from './unit-3/lesson-3-6.ts';
-import { lesson3_7 } from './unit-3/lesson-3-7.ts';
 import { lesson4_1 } from './unit-4/lesson-4-1.ts';
 import { lesson4_2 } from './unit-4/lesson-4-2.ts';
 import { lesson4_3 } from './unit-4/lesson-4-3.ts';
 import { lesson4_4 } from './unit-4/lesson-4-4.ts';
-import { lesson4_5 } from './unit-4/lesson-4-5.ts';
-import { lesson4_6 } from './unit-4/lesson-4-6.ts';
 import { lesson5_1 } from './unit-5/lesson-5-1.ts';
 import { lesson5_2 } from './unit-5/lesson-5-2.ts';
 import { lesson5_3 } from './unit-5/lesson-5-3.ts';
@@ -36,6 +32,7 @@ import { lesson6_3 } from './unit-6/lesson-6-3.ts';
 import { lesson6_4 } from './unit-6/lesson-6-4.ts';
 import { lesson6_5 } from './unit-6/lesson-6-5.ts';
 import { lesson6_6 } from './unit-6/lesson-6-6.ts';
+import { lesson6_7 } from './unit-6/lesson-6-7.ts';
 
 export const lessonRegistry: LessonConfig[] = [
   lesson1_1,
@@ -49,20 +46,16 @@ export const lessonRegistry: LessonConfig[] = [
   lesson2_3,
   lesson2_4,
   lesson2_5,
-  lesson2_6,
   lesson3_1,
   lesson3_2,
   lesson3_3,
   lesson3_4,
   lesson3_5,
   lesson3_6,
-  lesson3_7,
   lesson4_1,
   lesson4_2,
   lesson4_3,
   lesson4_4,
-  lesson4_5,
-  lesson4_6,
   lesson5_1,
   lesson5_2,
   lesson5_3,
@@ -75,6 +68,7 @@ export const lessonRegistry: LessonConfig[] = [
   lesson6_4,
   lesson6_5,
   lesson6_6,
+  lesson6_7,
 ];
 
 export function getLessonById(id: string): LessonConfig | undefined {
