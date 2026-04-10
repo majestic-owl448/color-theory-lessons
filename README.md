@@ -1,4 +1,4 @@
-# Color Quest
+# Color Theory Course
 
 Browser-based color theory course for developers and designers. Six units of interactive lessons covering color perception, digital color models, accessibility, and design systems.
 

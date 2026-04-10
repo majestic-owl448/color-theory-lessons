@@ -17,7 +17,7 @@ export function HomePage() {
   return (
     <>
       <section className={styles.hero}>
-        <span className={styles.prompt}>~/color-quest $ learn --interactive</span>
+        <span className={styles.prompt}>~/color-theory-course $ learn --interactive</span>
         <h1 className={styles.title}>
           Color Theory
           <br />

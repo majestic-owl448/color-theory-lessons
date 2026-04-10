@@ -1,6 +1,6 @@
 import type { ProgressState } from '../types/progress.ts';
 
-const STORAGE_KEY = 'color-quest-state';
+const STORAGE_KEY = 'color-theory-course-state';
 const VERSION = 1;
 
 interface StoredState {

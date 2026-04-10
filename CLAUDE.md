@@ -1,4 +1,4 @@
-# Color Theory Lessons (Color Quest)
+# Color Theory Lessons (Color Theory Course)
 
 Interactive color theory learning app. React 19 + TypeScript + Vite, deployed to GitHub Pages at `/color-theory-lessons/`.
 

@@ -145,7 +145,7 @@ function Mockup({ accent, surface, neutral }: MockupProps) {
         }}
       >
         <span style={{ color: rgbString(neutral), fontWeight: 600, fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
-          color-quest$
+          color-theory-course$
         </span>
         <div style={{ display: 'flex', gap: '10px' }}>
           {['home', 'learn', 'sandbox'].map((t) => (

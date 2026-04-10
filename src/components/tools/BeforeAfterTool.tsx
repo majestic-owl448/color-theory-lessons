@@ -126,7 +126,7 @@ export function BeforeAfterTool({ variant = 'color-function', interactive = true
               onKeyDown={(e) => interactive && e.key === 'Enter' && handleRegionClick('nav')}
               aria-label={interactive ? 'Click to identify what the nav bar color is doing' : undefined}
             >
-              <span className={styles.navLogo}>color-quest$</span>
+              <span className={styles.navLogo}>color-theory-course$</span>
               <span className={styles.navLink}>settings</span>
               {results['nav'] === true && <span className={styles.regionBadge}>✓</span>}
             </div>
@@ -176,7 +176,7 @@ export function BeforeAfterTool({ variant = 'color-function', interactive = true
           <span className={styles.panelLabel}>noisy color</span>
           <div className={`${styles.mockup} ${styles.mockupBad}`}>
             <div className={styles.nav}>
-              <span className={styles.navLogo}>color-quest$</span>
+              <span className={styles.navLogo}>color-theory-course$</span>
               <span className={styles.navLink}>settings</span>
             </div>
             <div className={styles.hero}>

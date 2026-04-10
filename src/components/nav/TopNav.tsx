@@ -5,7 +5,7 @@ export function TopNav() {
   return (
     <nav className={styles.nav} aria-label="Main navigation">
       <NavLink to="/" end className={styles.logo}>
-        color-quest$
+        color-theory-course$
       </NavLink>
       <ul className={styles.links}>
         <li>
