@@ -897,36 +897,42 @@ export function PaletteBuilderPage() {
           </div>
 
           {/* ── Harmony Suggestions (all three types) ─────────────── */}
-          {primaryHex && allHarmonySuggestions.map(({ type, colors }) => (
-            <div key={type} className={styles.harmonySection}>
-              <h2 className={styles.sectionHeading}>{type}</h2>
-              <div className={styles.harmonySwatches}>
-                {colors.flatMap((color) => {
-                  const variants = [
-                    { hex: color.hex, label: color.label },
-                    { hex: color.lighter, label: `${color.label} lighter` },
-                    { hex: color.darker, label: `${color.label} darker` },
-                  ];
-                  return variants.map(({ hex, label }) => {
-                    const isAdded = paletteHexSet.has(hex.toUpperCase());
-                    return (
-                      <button
-                        key={hex}
-                        className={`${styles.harmonySwatch} ${isAdded ? styles.harmonySwatchAdded : ''}`}
-                        style={{ backgroundColor: hex }}
-                        onClick={() => { if (!isAdded) addPaletteColor(hex, label); }}
-                        disabled={isAdded}
-                        title={isAdded ? `${label} — already added` : `${label} — ${hex.toUpperCase()} — click to add`}
-                        aria-label={isAdded ? `${label} already in palette` : `Add ${label} to palette`}
-                      >
-                        {isAdded && <span className={styles.harmonySwatchCheck}>✓</span>}
-                      </button>
-                    );
-                  });
-                })}
+          {primaryHex && allHarmonySuggestions.map(({ type, colors }) => {
+            const seen = new Set(paletteHexSet);
+            const unique: { hex: string; label: string }[] = [];
+            for (const color of colors) {
+              for (const { hex, label } of [
+                { hex: color.hex, label: color.label },
+                { hex: color.lighter, label: `${color.label} lighter` },
+                { hex: color.darker, label: `${color.label} darker` },
+              ]) {
+                const upper = hex.toUpperCase();
+                if (!seen.has(upper)) {
+                  seen.add(upper);
+                  unique.push({ hex, label });
+                }
+              }
+            }
+            if (unique.length === 0) return null;
+            return (
+              <div key={type} className={styles.harmonySection}>
+                <h2 className={styles.sectionHeading}>{type}</h2>
+                <div className={styles.harmonySwatches}>
+                  {unique.map(({ hex, label }) => (
+                    <button
+                      key={hex}
+                      className={styles.harmonySwatch}
+                      style={{ backgroundColor: hex }}
+                      onClick={() => addPaletteColor(hex, label)}
+                      title={`${label} — ${hex.toUpperCase()} — click to add`}
+                      aria-label={`Add ${label} to palette`}
+                    >
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {/* ── Missing lighter colors ────────────────────────────── */}
           {missingLighter.length > 0 && (
