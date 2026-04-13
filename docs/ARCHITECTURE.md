@@ -54,9 +54,9 @@ The app uses a centralized state pattern to track progress:
 
 ## Routing
 
-The app uses `react-router-dom` with a `HashRouter` (configured in `main.tsx`). This is essential for GitHub Pages compatibility, as it avoids 404 errors when deep-linking to specific routes on a static host.
+The app uses `react-router-dom` with a `BrowserRouter` (configured in `src/App.tsx`) for clean URLs.
 
-- **Base URL**: `/color-theory-lessons/` (configured in `vite.config.ts`).
+- **Base URL**: `/` (default Vite base).
 - **Primary Routes**:
   - `/`: Home (Unit selection)
   - `/lesson/:id`: Interactive lesson player

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './state/app-provider.tsx';
 import { AppShell } from './components/layout/AppShell.tsx';
 
@@ -15,7 +15,7 @@ const PaletteBuilderPage = lazy(() => import('./pages/PaletteBuilderPage.tsx').t
 export function App() {
   return (
     <AppProvider>
-      <HashRouter>
+      <BrowserRouter>
         <AppShell>
           <Suspense fallback={<p style={{ color: 'var(--muted)', fontFamily: 'var(--font-mono)' }}>loading...</p>}>
             <Routes>
@@ -43,7 +43,7 @@ export function App() {
             </Routes>
           </Suspense>
         </AppShell>
-      </HashRouter>
+      </BrowserRouter>
     </AppProvider>
   );
 }

@@ -11,7 +11,7 @@ Browser-based color theory course for developers and designers. Six units of int
 ## Stack
 
 - React 19 + TypeScript 5.9 + Vite 8
-- react-router-dom v7 with `HashRouter` (GitHub Pages SPA compatibility)
+- react-router-dom v7 with `BrowserRouter`
 - CSS Modules + CSS custom properties (freeCodeCamp Command-line Chic design system)
 - React Context + `useReducer` for state, `localStorage` for persistence
 
@@ -28,7 +28,7 @@ npm run dev
 npm run build
 ```
 
-Deploys to GitHub Pages at `/color-theory-lessons/` via GitHub Actions on push to `main`.
+Deploys to Vercel using `npm run build` and serves the `dist/` output as a static SPA.
 
 ## Structure
 
