@@ -122,7 +122,7 @@ export function AlphaLayerTool({ interactive = false, onComplete }: AlphaLayerTo
               fontSize: '0.78rem',
               fontFamily: 'var(--font-mono)',
               background: i === ctxIdx ? 'var(--surface)' : 'transparent',
-              color: completed[i] ? 'var(--green)' : i === ctxIdx ? 'var(--foreground)' : 'var(--muted)',
+              color: completed[i] ? 'var(--green)' : i === ctxIdx ? 'var(--primary-foreground)' : 'var(--muted)',
               border: `1px solid ${i === ctxIdx ? 'var(--border)' : 'transparent'}`,
               borderRadius: 'var(--radius-sm)',
               cursor: interactive ? 'pointer' : 'default',

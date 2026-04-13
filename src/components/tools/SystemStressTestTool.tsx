@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { simulateDeuteranopia } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -44,7 +44,7 @@ export function SystemStressTestTool({ interactive = false, onComplete }: System
     hierarchy: null, 'text-contrast': null, 'semantic-clarity': null,
     'dark-mode': null, 'chart-readability': null, 'cvd-robustness': null,
   });
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   const palette = SYSTEM_COLORS[mode];
   const display = (hex: string) => cvd ? simulateDeuteranopia(hex) : hex;
@@ -55,8 +55,8 @@ export function SystemStressTestTool({ interactive = false, onComplete }: System
     setFindings(prev => {
       const next = { ...prev, [id]: result };
       const allMarked = Object.values(next).every(v => v !== null);
-      if (allMarked && !completed.current) {
-        completed.current = true;
+      if (allMarked && !completed) {
+        setCompleted(true);
         onComplete?.();
       }
       return next;
@@ -76,13 +76,13 @@ export function SystemStressTestTool({ interactive = false, onComplete }: System
         {(['light', 'dark'] as const).map(m => (
           <button key={m} onClick={() => setMode(m)} disabled={!interactive}
             style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: 4, cursor: interactive ? 'pointer' : 'default', border: 'none',
-              background: mode === m ? 'var(--accent, #f59e0b)' : 'var(--border)', color: mode === m ? '#000' : 'var(--fg)' }}>
+              background: mode === m ? 'var(--accent-cta)' : 'var(--border)', color: mode === m ? '#000' : 'var(--primary-foreground)' }}>
             {m} mode
           </button>
         ))}
         <button onClick={() => setCvd(v => !v)} disabled={!interactive}
           style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: 4, cursor: interactive ? 'pointer' : 'default', border: 'none',
-            background: cvd ? 'var(--accent, #f59e0b)' : 'var(--border)', color: cvd ? '#000' : 'var(--fg)' }}>
+            background: cvd ? 'var(--accent-cta)' : 'var(--border)', color: cvd ? '#000' : 'var(--primary-foreground)' }}>
           {cvd ? 'CVD sim ON' : 'CVD sim OFF'}
         </button>
       </div>
@@ -111,22 +111,22 @@ export function SystemStressTestTool({ interactive = false, onComplete }: System
             background: findings[check.id] === 'pass' ? 'rgba(34,197,94,0.08)' : findings[check.id] === 'fail' ? 'rgba(239,68,68,0.08)' : 'transparent' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 600, color: 'var(--fg)' }}>{check.label}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 600, color: 'var(--primary-foreground)' }}>{check.label}</div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.15rem' }}>{check.description}</div>
                 {findings[check.id] === 'fail' && (
-                  <div style={{ fontSize: '0.72rem', color: 'var(--error, #ef4444)', marginTop: '0.2rem' }}>⚠ {check.failNote}</div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--accent-danger)', marginTop: '0.2rem' }}>⚠ {check.failNote}</div>
                 )}
               </div>
               {interactive && (
                 <div style={{ display: 'flex', gap: '0.3rem', flexShrink: 0 }}>
                   <button onClick={() => mark(check.id, 'pass')}
                     style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: 3, border: 'none', cursor: 'pointer',
-                      background: findings[check.id] === 'pass' ? '#16a34a' : 'var(--border)', color: findings[check.id] === 'pass' ? '#fff' : 'var(--fg)' }}>
+                      background: findings[check.id] === 'pass' ? '#16a34a' : 'var(--border)', color: findings[check.id] === 'pass' ? '#fff' : 'var(--primary-foreground)' }}>
                     ✓ Pass
                   </button>
                   <button onClick={() => mark(check.id, 'fail')}
                     style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: 3, border: 'none', cursor: 'pointer',
-                      background: findings[check.id] === 'fail' ? '#dc2626' : 'var(--border)', color: findings[check.id] === 'fail' ? '#fff' : 'var(--fg)' }}>
+                      background: findings[check.id] === 'fail' ? '#dc2626' : 'var(--border)', color: findings[check.id] === 'fail' ? '#fff' : 'var(--primary-foreground)' }}>
                     ✕ Fail
                   </button>
                 </div>
@@ -142,8 +142,8 @@ export function SystemStressTestTool({ interactive = false, onComplete }: System
         </p>
       )}
 
-      {completed.current && (
-        <p style={{ color: 'var(--success, #22c55e)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           Stress test complete. A robust system survives light, dark, chart, alert, and CVD contexts.
         </p>
       )}

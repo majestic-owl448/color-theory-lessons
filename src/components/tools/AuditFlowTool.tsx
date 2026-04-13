@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface AuditStage {
@@ -80,7 +80,7 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
   const [singleSelected, setSingleSelected] = useState<string | null>(null);
   const [stageResult, setStageResult] = useState<'correct' | 'incorrect' | null>(null);
   const [completedStages, setCompletedStages] = useState<string[]>([]);
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   const stage = STAGES[currentStage];
 
@@ -112,8 +112,8 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
     if (correct) {
       const newCompleted = [...completedStages, stage.id];
       setCompletedStages(newCompleted);
-      if (newCompleted.length === STAGES.length && !completed.current) {
-        completed.current = true;
+      if (newCompleted.length === STAGES.length && !completed) {
+        setCompleted(true);
         onComplete?.();
       }
     }
@@ -140,9 +140,9 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
             style={{
               flex: 1, height: 4, borderRadius: 2,
               background: completedStages.includes(s.id)
-                ? 'var(--success)'
+                ? 'var(--accent-success)'
                 : i === currentStage
-                ? 'var(--accent)'
+                ? 'var(--accent-cta)'
                 : 'var(--border)',
             }}
           />
@@ -154,7 +154,7 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
 
       {/* Current stage */}
       <div style={{ border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '0.75rem' }}>
-        <p style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.35rem', color: 'var(--foreground)' }}>
+        <p style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.35rem', color: 'var(--primary-foreground)' }}>
           {stage.title}
         </p>
         <p style={{ fontSize: '0.78rem', color: 'var(--muted)', marginBottom: '0.65rem' }}>
@@ -173,8 +173,8 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
                   display: 'flex', alignItems: 'flex-start', gap: '0.4rem',
                   fontSize: '0.78rem', cursor: interactive && stageResult !== 'correct' ? 'pointer' : 'default',
                   padding: '0.3rem 0.5rem', borderRadius: 'var(--radius-sm)',
-                  border: `1px solid ${isSelected ? 'var(--accent)' : 'var(--border)'}`,
-                  background: isSelected ? 'color-mix(in srgb, var(--accent) 10%, transparent)' : 'transparent',
+                  border: `1px solid ${isSelected ? 'var(--accent-cta)' : 'var(--border)'}`,
+                  background: isSelected ? 'color-mix(in srgb, var(--accent-cta) 10%, transparent)' : 'transparent',
                 }}
               >
                 <input
@@ -183,7 +183,7 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
                   checked={isSelected}
                   disabled={!interactive || stageResult === 'correct'}
                   onChange={() => stage.type === 'multi-select' ? toggleMulti(option) : selectSingle(option)}
-                  style={{ accentColor: 'var(--accent)', marginTop: 2 }}
+                  style={{ accentColor: 'var(--accent-cta)', marginTop: 2 }}
                 />
                 {option}
               </label>
@@ -197,8 +197,8 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
             style={{
               marginTop: '0.65rem', padding: '0.35rem 0.75rem',
               fontSize: '0.78rem', borderRadius: 'var(--radius-sm)',
-              border: '1px solid var(--accent)', background: 'color-mix(in srgb, var(--accent) 15%, transparent)',
-              color: 'var(--foreground)', cursor: 'pointer',
+              border: '1px solid var(--accent-cta)', background: 'color-mix(in srgb, var(--accent-cta) 15%, transparent)',
+              color: 'var(--primary-foreground)', cursor: 'pointer',
             }}
           >
             Check answer
@@ -206,14 +206,14 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
         )}
 
         {stageResult === 'incorrect' && (
-          <p style={{ fontSize: '0.75rem', color: 'var(--error)', marginTop: '0.4rem' }}>
+          <p style={{ fontSize: '0.75rem', color: 'var(--accent-danger)', marginTop: '0.4rem' }}>
             Not quite — review your selection and try again.
           </p>
         )}
 
         {stageResult === 'correct' && (
           <div style={{ marginTop: '0.4rem' }}>
-            <p style={{ fontSize: '0.75rem', color: 'var(--success)' }}>
+            <p style={{ fontSize: '0.75rem', color: 'var(--accent-success)' }}>
               ✓ {stage.explanation}
             </p>
             {currentStage < STAGES.length - 1 && (
@@ -222,8 +222,8 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
                 style={{
                   marginTop: '0.4rem', padding: '0.3rem 0.65rem',
                   fontSize: '0.75rem', borderRadius: 'var(--radius-sm)',
-                  border: '1px solid var(--success)', background: 'color-mix(in srgb, var(--success) 10%, transparent)',
-                  color: 'var(--foreground)', cursor: 'pointer',
+                  border: '1px solid var(--accent-success)', background: 'color-mix(in srgb, var(--accent-success) 10%, transparent)',
+                  color: 'var(--primary-foreground)', cursor: 'pointer',
                 }}
               >
                 Next stage →
@@ -233,8 +233,8 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
         )}
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem' }}>
           ✓ Full audit workflow complete. You can now apply this four-stage approach to any interface.
         </p>
       )}

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 const SVG_FILTERS = `
@@ -37,7 +37,7 @@ interface InterfaceGalleryToolProps {
 export function InterfaceGalleryTool({ interactive = false, onComplete }: InterfaceGalleryToolProps) {
   const [mode, setMode] = useState<SimMode>('normal');
   const [seen, setSeen] = useState<Set<SimMode>>(new Set(['normal']));
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function selectMode(m: SimMode) {
     if (!interactive) return;
@@ -45,8 +45,8 @@ export function InterfaceGalleryTool({ interactive = false, onComplete }: Interf
     setSeen((prev) => {
       const next = new Set(prev);
       next.add(m);
-      if (next.size === MODES.length && !completed.current) {
-        completed.current = true;
+      if (next.size === MODES.length && !completed) {
+        setCompleted(true);
         onComplete?.();
       }
       return next;
@@ -72,9 +72,9 @@ export function InterfaceGalleryTool({ interactive = false, onComplete }: Interf
               padding: '0.3rem 0.6rem',
               fontSize: '0.75rem',
               fontFamily: 'var(--font-mono)',
-              background: mode === m.id ? 'var(--accent)' : 'transparent',
-              color: mode === m.id ? '#111' : seen.has(m.id) ? 'var(--success)' : 'var(--muted)',
-              border: `1px solid ${mode === m.id ? 'var(--accent)' : 'var(--border)'}`,
+              background: mode === m.id ? 'var(--accent-cta)' : 'transparent',
+              color: mode === m.id ? '#111' : seen.has(m.id) ? 'var(--accent-success)' : 'var(--muted)',
+              border: `1px solid ${mode === m.id ? 'var(--accent-cta)' : 'var(--border)'}`,
               borderRadius: 'var(--radius-sm)',
               cursor: interactive ? 'pointer' : 'default',
             }}
@@ -138,8 +138,8 @@ export function InterfaceGalleryTool({ interactive = false, onComplete }: Interf
         </p>
       )}
 
-      {completed.current && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.4rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.4rem' }}>
           All simulation modes explored. Notice which status badges merge under CVD filters.
         </p>
       )}

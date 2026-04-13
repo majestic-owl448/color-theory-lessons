@@ -1,41 +1,41 @@
+import { lazy, Suspense } from 'react';
+import type { ReactNode } from 'react';
 import type { LessonConfig } from '../../types/lesson.ts';
-import { BeforeAfterTool } from './BeforeAfterTool.tsx';
-import { HSLSliderTool } from './HSLSliderTool.tsx';
-import { ContrastTool } from './ContrastTool.tsx';
-import { TemperatureSorterTool } from './TemperatureSorterTool.tsx';
-import { ColorWheelTool } from './ColorWheelTool.tsx';
-import { AdditiveSortTool } from './AdditiveSortTool.tsx';
-import { RGBMixerTool } from './RGBMixerTool.tsx';
-
-import { MismatchExplainerTool } from './MismatchExplainerTool.tsx';
-import { BackgroundShiftTool } from './BackgroundShiftTool.tsx';
-import { InterfaceTunerTool } from './InterfaceTunerTool.tsx';
-import { FormatRevealTool } from './FormatRevealTool.tsx';
-import { HexRgbEditorTool } from './HexRgbEditorTool.tsx';
-import { HslPlaygroundTool } from './HslPlaygroundTool.tsx';
-import { AlphaLayerTool } from './AlphaLayerTool.tsx';
-import { ThemeSandboxTool } from './ThemeSandboxTool.tsx';
-import { TokenMapTool } from './TokenMapTool.tsx';
-import { ColorSpaceLabTool } from './ColorSpaceLabTool.tsx';
-import { EyeDiagramTool } from './EyeDiagramTool.tsx';
-import { VisionCardsTool } from './VisionCardsTool.tsx';
-import { InterfaceGalleryTool } from './InterfaceGalleryTool.tsx';
-import { ColorOnlyDetectorTool } from './ColorOnlyDetectorTool.tsx';
-import { StateWorkshopTool } from './StateWorkshopTool.tsx';
-import { InclusiveReviewTool } from './InclusiveReviewTool.tsx';
-
-import { TextContrastLabTool } from './TextContrastLabTool.tsx';
-import { ComponentCheckerTool } from './ComponentCheckerTool.tsx';
-
-import { AuditFlowTool } from './AuditFlowTool.tsx';
-import { PatternRepairTool } from './PatternRepairTool.tsx';
-import { SystemComparisonTool } from './SystemComparisonTool.tsx';
-import { RoleBuilderTool } from './RoleBuilderTool.tsx';
-import { BrandPressureTool } from './BrandPressureTool.tsx';
-import { DarkTranslatorTool } from './DarkTranslatorTool.tsx';
-import { ChartTunerTool } from './ChartTunerTool.tsx';
-import { SystemStressTestTool } from './SystemStressTestTool.tsx';
 import shellStyles from './ToolShell.module.css';
+
+const BeforeAfterTool = lazy(() => import('./BeforeAfterTool.tsx').then((m) => ({ default: m.BeforeAfterTool })));
+const HSLSliderTool = lazy(() => import('./HSLSliderTool.tsx').then((m) => ({ default: m.HSLSliderTool })));
+const ContrastTool = lazy(() => import('./ContrastTool.tsx').then((m) => ({ default: m.ContrastTool })));
+const TemperatureSorterTool = lazy(() => import('./TemperatureSorterTool.tsx').then((m) => ({ default: m.TemperatureSorterTool })));
+const ColorWheelTool = lazy(() => import('./ColorWheelTool.tsx').then((m) => ({ default: m.ColorWheelTool })));
+const AdditiveSortTool = lazy(() => import('./AdditiveSortTool.tsx').then((m) => ({ default: m.AdditiveSortTool })));
+const RGBMixerTool = lazy(() => import('./RGBMixerTool.tsx').then((m) => ({ default: m.RGBMixerTool })));
+const MismatchExplainerTool = lazy(() => import('./MismatchExplainerTool.tsx').then((m) => ({ default: m.MismatchExplainerTool })));
+const BackgroundShiftTool = lazy(() => import('./BackgroundShiftTool.tsx').then((m) => ({ default: m.BackgroundShiftTool })));
+const InterfaceTunerTool = lazy(() => import('./InterfaceTunerTool.tsx').then((m) => ({ default: m.InterfaceTunerTool })));
+const FormatRevealTool = lazy(() => import('./FormatRevealTool.tsx').then((m) => ({ default: m.FormatRevealTool })));
+const HexRgbEditorTool = lazy(() => import('./HexRgbEditorTool.tsx').then((m) => ({ default: m.HexRgbEditorTool })));
+const HslPlaygroundTool = lazy(() => import('./HslPlaygroundTool.tsx').then((m) => ({ default: m.HslPlaygroundTool })));
+const AlphaLayerTool = lazy(() => import('./AlphaLayerTool.tsx').then((m) => ({ default: m.AlphaLayerTool })));
+const ThemeSandboxTool = lazy(() => import('./ThemeSandboxTool.tsx').then((m) => ({ default: m.ThemeSandboxTool })));
+const TokenMapTool = lazy(() => import('./TokenMapTool.tsx').then((m) => ({ default: m.TokenMapTool })));
+const ColorSpaceLabTool = lazy(() => import('./ColorSpaceLabTool.tsx').then((m) => ({ default: m.ColorSpaceLabTool })));
+const EyeDiagramTool = lazy(() => import('./EyeDiagramTool.tsx').then((m) => ({ default: m.EyeDiagramTool })));
+const VisionCardsTool = lazy(() => import('./VisionCardsTool.tsx').then((m) => ({ default: m.VisionCardsTool })));
+const InterfaceGalleryTool = lazy(() => import('./InterfaceGalleryTool.tsx').then((m) => ({ default: m.InterfaceGalleryTool })));
+const ColorOnlyDetectorTool = lazy(() => import('./ColorOnlyDetectorTool.tsx').then((m) => ({ default: m.ColorOnlyDetectorTool })));
+const StateWorkshopTool = lazy(() => import('./StateWorkshopTool.tsx').then((m) => ({ default: m.StateWorkshopTool })));
+const InclusiveReviewTool = lazy(() => import('./InclusiveReviewTool.tsx').then((m) => ({ default: m.InclusiveReviewTool })));
+const TextContrastLabTool = lazy(() => import('./TextContrastLabTool.tsx').then((m) => ({ default: m.TextContrastLabTool })));
+const ComponentCheckerTool = lazy(() => import('./ComponentCheckerTool.tsx').then((m) => ({ default: m.ComponentCheckerTool })));
+const AuditFlowTool = lazy(() => import('./AuditFlowTool.tsx').then((m) => ({ default: m.AuditFlowTool })));
+const PatternRepairTool = lazy(() => import('./PatternRepairTool.tsx').then((m) => ({ default: m.PatternRepairTool })));
+const SystemComparisonTool = lazy(() => import('./SystemComparisonTool.tsx').then((m) => ({ default: m.SystemComparisonTool })));
+const RoleBuilderTool = lazy(() => import('./RoleBuilderTool.tsx').then((m) => ({ default: m.RoleBuilderTool })));
+const BrandPressureTool = lazy(() => import('./BrandPressureTool.tsx').then((m) => ({ default: m.BrandPressureTool })));
+const DarkTranslatorTool = lazy(() => import('./DarkTranslatorTool.tsx').then((m) => ({ default: m.DarkTranslatorTool })));
+const ChartTunerTool = lazy(() => import('./ChartTunerTool.tsx').then((m) => ({ default: m.ChartTunerTool })));
+const SystemStressTestTool = lazy(() => import('./SystemStressTestTool.tsx').then((m) => ({ default: m.SystemStressTestTool })));
 
 /** Props for the ToolRenderer component. */
 interface ToolRendererProps {
@@ -59,114 +59,149 @@ interface ToolRendererProps {
 export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete }: ToolRendererProps) {
   const isChallenge = phase === 'challenge';
 
+  let tool: ReactNode;
+
   switch (lesson.interactionType) {
     case 'before-after':
-      return (
+      tool = (
         <BeforeAfterTool
           variant={lesson.id === 'u1-l5' ? 'hierarchy' : 'color-function'}
           interactive={toolUnlocked}
           onComplete={isChallenge ? onChallengeComplete : undefined}
         />
       );
+      break;
 
     case 'slider-explore':
-      return <HSLSliderTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <HSLSliderTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'contrast-checker':
-      return <ContrastTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ContrastTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'palette-builder':
-      return <TemperatureSorterTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <TemperatureSorterTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'color-wheel':
-      return <ColorWheelTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ColorWheelTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'additive-sort':
-      return <AdditiveSortTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <AdditiveSortTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'rgb-mixer':
-      return <RGBMixerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <RGBMixerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'mismatch-explainer':
-      return <MismatchExplainerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <MismatchExplainerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'background-shift':
-      return <BackgroundShiftTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <BackgroundShiftTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'interface-tuner':
-      return <InterfaceTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <InterfaceTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'format-reveal':
-      return <FormatRevealTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <FormatRevealTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'hex-rgb-editor':
-      return <HexRgbEditorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <HexRgbEditorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'hsl-playground':
-      return <HslPlaygroundTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <HslPlaygroundTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'alpha-layer':
-      return <AlphaLayerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <AlphaLayerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'theme-sandbox':
-      return <ThemeSandboxTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ThemeSandboxTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'token-map':
-      return <TokenMapTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <TokenMapTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'color-space-lab':
-      return <ColorSpaceLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ColorSpaceLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'eye-diagram':
-      return <EyeDiagramTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <EyeDiagramTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'vision-cards':
-      return <VisionCardsTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <VisionCardsTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'interface-gallery':
-      return <InterfaceGalleryTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <InterfaceGalleryTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'color-only-detector':
-      return <ColorOnlyDetectorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ColorOnlyDetectorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'state-workshop':
-      return <StateWorkshopTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <StateWorkshopTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'inclusive-review':
-      return <InclusiveReviewTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <InclusiveReviewTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'text-contrast-lab':
-      return <TextContrastLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <TextContrastLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'component-checker':
-      return <ComponentCheckerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ComponentCheckerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'audit-flow':
-      return <AuditFlowTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <AuditFlowTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'pattern-repair':
-      return <PatternRepairTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <PatternRepairTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'system-comparison':
-      return <SystemComparisonTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <SystemComparisonTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'role-builder':
-      return <RoleBuilderTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <RoleBuilderTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'brand-pressure':
-      return <BrandPressureTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <BrandPressureTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'dark-translator':
-      return <DarkTranslatorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <DarkTranslatorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'chart-tuner':
-      return <ChartTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ChartTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     case 'system-stress':
-      return <SystemStressTestTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <SystemStressTestTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      break;
 
     default:
-      return (
+      tool = (
         <div className={shellStyles.shell}>
           <span className={shellStyles.toolLabel}>interactive tool</span>
           <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>
@@ -174,5 +209,19 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
           </p>
         </div>
       );
+      break;
   }
+
+  return (
+    <Suspense
+      fallback={
+        <div className={shellStyles.shell}>
+          <span className={shellStyles.toolLabel}>interactive tool</span>
+          <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>loading tool...</p>
+        </div>
+      }
+    >
+      {tool}
+    </Suspense>
+  );
 }

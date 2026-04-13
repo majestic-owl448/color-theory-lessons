@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { hexToRgb, contrastRatio } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -33,14 +33,14 @@ export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandb
   );
   const [gradStart, setGradStart] = useState(GRADIENT_DEFAULTS.start);
   const [gradEnd, setGradEnd] = useState(GRADIENT_DEFAULTS.end);
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function setColor(key: string, value: string) {
     setColors((prev) => ({ ...prev, [key]: value }));
   }
 
   function checkTheme() {
-    if (!interactive || completed.current) return;
+    if (!interactive || completed) return;
     const bgRgb = hexToRgb(colors.bg);
     const surfRgb = hexToRgb(colors.surface);
     const textPriRgb = hexToRgb(colors.textPri);
@@ -52,7 +52,7 @@ export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandb
 
     const passes = priOnBg >= 4.5 && priOnSurf >= 4.5 && secOnSurf >= 3;
     if (passes) {
-      completed.current = true;
+      setCompleted(true);
       onComplete?.();
     }
   }
@@ -122,7 +122,7 @@ export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandb
         {ROLES.map((role) => (
           <label key={role.key} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem' }}>
             <input type="color" value={colors[role.key]}
-              disabled={!interactive || completed.current}
+              disabled={!interactive || completed}
               onChange={(e) => setColor(role.key, e.target.value)}
               style={{ width: 24, height: 24, border: 'none', padding: 0, cursor: interactive ? 'pointer' : 'default' }}
               aria-label={role.label}
@@ -135,7 +135,7 @@ export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandb
       {/* Gradient editors */}
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.6rem', alignItems: 'center' }}>
         <label style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.78rem' }}>
-          <input type="color" value={gradStart} disabled={!interactive || completed.current}
+          <input type="color" value={gradStart} disabled={!interactive || completed}
             onChange={(e) => setGradStart(e.target.value)}
             style={{ width: 24, height: 24, border: 'none', padding: 0 }}
             aria-label="Gradient start"
@@ -143,7 +143,7 @@ export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandb
           <span style={{ color: 'var(--muted)' }}>Grad start</span>
         </label>
         <label style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.78rem' }}>
-          <input type="color" value={gradEnd} disabled={!interactive || completed.current}
+          <input type="color" value={gradEnd} disabled={!interactive || completed}
             onChange={(e) => setGradEnd(e.target.value)}
             style={{ width: 24, height: 24, border: 'none', padding: 0 }}
             aria-label="Gradient end"
@@ -165,7 +165,7 @@ export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandb
         </div>
       </div>
 
-      {interactive && !completed.current && (
+      {interactive && !completed && (
         <button onClick={checkTheme} disabled={!allPass} style={{
           padding: '0.4rem 1rem', background: allPass ? 'var(--yellow)' : 'var(--surface)',
           color: allPass ? '#111' : 'var(--muted)',
@@ -177,7 +177,7 @@ export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandb
         </button>
       )}
 
-      {completed.current && (
+      {completed && (
         <p style={{ color: 'var(--green)', fontSize: '0.85rem' }}>
           Theme complete. Your roles are coherent and text is readable.
         </p>

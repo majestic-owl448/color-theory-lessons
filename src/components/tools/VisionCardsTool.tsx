@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface CardData {
@@ -68,7 +68,7 @@ interface VisionCardsToolProps {
 export function VisionCardsTool({ interactive = false, onComplete }: VisionCardsToolProps) {
   const [expanded, setExpanded] = useState<boolean[]>(CARDS.map(() => false));
   const [everExpanded, setEverExpanded] = useState<boolean[]>(CARDS.map(() => false));
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function toggleCard(idx: number) {
     if (!interactive) return;
@@ -80,8 +80,8 @@ export function VisionCardsTool({ interactive = false, onComplete }: VisionCards
     nextEver[idx] = true;
     setEverExpanded(nextEver);
 
-    if (nextEver.every(Boolean) && !completed.current) {
-      completed.current = true;
+    if (nextEver.every(Boolean) && !completed) {
+      setCompleted(true);
       onComplete?.();
     }
   }
@@ -134,7 +134,7 @@ export function VisionCardsTool({ interactive = false, onComplete }: VisionCards
                 }} />
                 <strong style={{ fontSize: '0.85rem', flex: 1 }}>{card.name}</strong>
                 {wasSeen && !isOpen && (
-                  <span style={{ fontSize: '0.72rem', color: 'var(--success)' }}>✓</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-success)' }}>✓</span>
                 )}
                 {interactive && (
                   <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>
@@ -165,7 +165,7 @@ export function VisionCardsTool({ interactive = false, onComplete }: VisionCards
       </div>
 
       {allExplored && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           All vision types explored. Design for the range, not just your own experience.
         </p>
       )}

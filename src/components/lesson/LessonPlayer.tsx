@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { LessonConfig } from '../../types/lesson.ts';
 import { useAppDispatch } from '../../state/app-context.tsx';
-import { lessonRegistry } from '../../lessons/lesson-registry.ts';
 import { units } from '../../data/units.ts';
 import { ToolRenderer } from '../tools/ToolRenderer.tsx';
 import styles from './LessonPlayer.module.css';
@@ -250,8 +249,12 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
 
         {/* ── Complete phase ── */}
         {phase === 'complete' && (() => {
-          const idx = lessonRegistry.findIndex((l) => l.id === lesson.id);
-          const nextLesson = idx >= 0 ? lessonRegistry[idx + 1] : undefined;
+          const allLessonIds = units.flatMap((unit) => unit.lessons);
+          const idx = allLessonIds.indexOf(lesson.id);
+          const nextLessonId = idx >= 0 ? allLessonIds[idx + 1] : undefined;
+          const nextLesson = nextLessonId
+            ? { id: nextLessonId, unitId: nextLessonId.split('-')[0].replace('u', 'unit-') }
+            : undefined;
           const isSameUnit = nextLesson?.unitId === lesson.unitId;
           const currentUnit = units.find((u) => u.id === lesson.unitId);
           const isLastInUnit = !isSameUnit;

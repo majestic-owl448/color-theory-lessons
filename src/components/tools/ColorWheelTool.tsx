@@ -37,7 +37,7 @@ function ColorWheel({ baseH, relatedH, interactive, onChange }: ColorWheelProps)
         hue: startAngle,
       };
     });
-  }, []);
+  }, [cx, cy, r]);
 
   function hueToXY(h: number, radius: number) {
     const angle = (h - 90) * (Math.PI / 180);

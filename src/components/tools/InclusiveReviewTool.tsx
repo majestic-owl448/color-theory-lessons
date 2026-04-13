@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 type Assessment = 'pass' | 'needs-work' | null;
@@ -52,15 +52,15 @@ export function InclusiveReviewTool({ interactive = false, onComplete }: Inclusi
   const [answers, setAnswers] = useState<Record<string, Assessment>>(
     Object.fromEntries(CHECKLIST.map((c) => [c.id, null])),
   );
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function setAnswer(id: string, value: Assessment) {
-    if (!interactive || completed.current) return;
+    if (!interactive || completed) return;
     setAnswers((prev) => {
       const next = { ...prev, [id]: value };
       const allAnswered = CHECKLIST.every((c) => next[c.id] !== null);
-      if (allAnswered && !completed.current) {
-        completed.current = true;
+      if (allAnswered && !completed) {
+        setCompleted(true);
         onComplete?.();
       }
       return next;
@@ -108,11 +108,11 @@ export function InclusiveReviewTool({ interactive = false, onComplete }: Inclusi
               style={{
                 padding: '0.5rem 0.65rem',
                 borderRadius: 'var(--radius-sm)',
-                border: `1px solid ${answer ? (isCorrect ? 'var(--success)' : 'var(--warning)') : 'var(--border)'}`,
+                border: `1px solid ${answer ? (isCorrect ? 'var(--accent-success)' : 'var(--accent-cta)') : 'var(--border)'}`,
                 background: answer
                   ? isCorrect
-                    ? 'color-mix(in srgb, var(--success) 6%, transparent)'
-                    : 'color-mix(in srgb, var(--warning) 6%, transparent)'
+                    ? 'color-mix(in srgb, var(--accent-success) 6%, transparent)'
+                    : 'color-mix(in srgb, var(--accent-cta) 6%, transparent)'
                   : 'transparent',
               }}
             >
@@ -122,21 +122,21 @@ export function InclusiveReviewTool({ interactive = false, onComplete }: Inclusi
                 {(['pass', 'needs-work'] as Assessment[]).map((opt) => (
                   <button
                     key={opt!}
-                    disabled={!interactive || completed.current}
+                    disabled={!interactive || completed}
                     onClick={() => setAnswer(item.id, opt)}
                     style={{
                       padding: '0.2rem 0.5rem',
                       fontSize: '0.72rem',
                       fontFamily: 'var(--font-mono)',
-                      border: `1px solid ${answer === opt ? (opt === 'pass' ? 'var(--success)' : 'var(--warning)') : 'var(--border)'}`,
+                      border: `1px solid ${answer === opt ? (opt === 'pass' ? 'var(--accent-success)' : 'var(--accent-cta)') : 'var(--border)'}`,
                       background: answer === opt
                         ? opt === 'pass'
-                          ? 'color-mix(in srgb, var(--success) 20%, transparent)'
-                          : 'color-mix(in srgb, var(--warning) 20%, transparent)'
+                          ? 'color-mix(in srgb, var(--accent-success) 20%, transparent)'
+                          : 'color-mix(in srgb, var(--accent-cta) 20%, transparent)'
                         : 'transparent',
                       borderRadius: 'var(--radius-sm)',
-                      cursor: interactive && !completed.current ? 'pointer' : 'default',
-                      color: answer === opt ? 'var(--foreground)' : 'var(--muted)',
+                      cursor: interactive && !completed ? 'pointer' : 'default',
+                      color: answer === opt ? 'var(--primary-foreground)' : 'var(--muted)',
                     }}
                   >
                     {opt === 'pass' ? 'Pass' : 'Needs work'}
@@ -144,7 +144,7 @@ export function InclusiveReviewTool({ interactive = false, onComplete }: Inclusi
                 ))}
               </div>
               {answer && !isCorrect && (
-                <p style={{ fontSize: '0.7rem', color: 'var(--warning)', marginTop: '0.25rem', margin: '0.25rem 0 0' }}>
+                <p style={{ fontSize: '0.7rem', color: 'var(--accent-cta)', marginTop: '0.25rem', margin: '0.25rem 0 0' }}>
                   This mockup has this problem — "Needs work" is the expected answer.
                 </p>
               )}
@@ -153,14 +153,14 @@ export function InclusiveReviewTool({ interactive = false, onComplete }: Inclusi
         })}
       </div>
 
-      {interactive && !completed.current && (
+      {interactive && !completed && (
         <p style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.4rem' }}>
           {answeredCount}/{CHECKLIST.length} items assessed
         </p>
       )}
 
-      {completed.current && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           Review complete. This mockup needs work on all five checks — a realistic starting point.
         </p>
       )}

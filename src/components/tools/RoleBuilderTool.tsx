@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { hexToRgb, contrastRatio, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -37,21 +37,24 @@ function getContrast(fg: string, bg: string): number {
 
 function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }
 
-export function RoleBuilderTool({ interactive = false, onComplete }: RoleBuilderToolProps) {
-  const [roles, setRoles] = useState<Record<RoleKey, string>>(DEFAULTS);
-  const completed = useRef(false);
+function CheckRow({ label, pass, ratio }: { label: string; pass: boolean; ratio?: number }) {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', padding: '0.2rem 0' }}>
+      <span style={{ color: 'var(--primary-foreground)' }}>{label}</span>
+      <span style={{ color: pass ? '#22c55e' : '#ef4444', fontFamily: 'var(--font-mono)' }}>
+        {pass ? '✓' : '✗'} {ratio !== undefined ? ratio.toFixed(1) + ':1' : ''}
+      </span>
+    </div>
+  );
+}
 
-  function update(key: RoleKey, val: string) {
-    if (!interactive) return;
-    setRoles(prev => ({ ...prev, [key]: val }));
-  }
-
+function validateRoles(roles: Record<RoleKey, string>) {
   const primaryContrast = getContrast(roles['primary-text'], roles['page-bg']);
   const secondaryContrast = getContrast(roles['secondary-text'], roles['surface']);
   const actionContrast = getContrast('#ffffff', roles['action']);
 
-  const warnHue = isValidHex(roles['warning']) ? hexToHsl(roles['warning']).h : 0;
-  const errHue = isValidHex(roles['error']) ? hexToHsl(roles['error']).h : 0;
+  const warnHue = isValidHex(roles.warning) ? hexToHsl(roles.warning).h : 0;
+  const errHue = isValidHex(roles.error) ? hexToHsl(roles.error).h : 0;
   const hueDiff = Math.abs(warnHue - errHue);
   const hueDiffWrapped = Math.min(hueDiff, 360 - hueDiff);
   const statusDistinct = hueDiffWrapped >= 30;
@@ -61,44 +64,29 @@ export function RoleBuilderTool({ interactive = false, onComplete }: RoleBuilder
   const actionOk = actionContrast >= 4.5;
   const allPass = primaryOk && secondaryOk && actionOk && statusDistinct;
 
-  if (interactive && allPass && !completed.current) {
-    completed.current = true;
-    onComplete?.();
+  return { primaryContrast, secondaryContrast, actionContrast, primaryOk, secondaryOk, actionOk, statusDistinct, allPass };
+}
+
+export function RoleBuilderTool({ interactive = false, onComplete }: RoleBuilderToolProps) {
+  const [roles, setRoles] = useState<Record<RoleKey, string>>(DEFAULTS);
+  const [completed, setCompleted] = useState(false);
+
+  function update(key: RoleKey, val: string) {
+    if (!interactive) return;
+    setRoles((prev) => {
+      const next = { ...prev, [key]: val };
+      if (!completed) {
+        const metrics = validateRoles(next);
+        if (metrics.allPass) {
+          setCompleted(true);
+          onComplete?.();
+        }
+      }
+      return next;
+    });
   }
 
-  function CheckRow({ label, pass, ratio }: { label: string; pass: boolean; ratio?: number }) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', padding: '0.2rem 0' }}>
-        <span style={{ color: 'var(--foreground)' }}>{label}</span>
-        <span style={{ color: pass ? '#22c55e' : '#ef4444', fontFamily: 'var(--font-mono)' }}>
-          {pass ? '✓' : '✗'} {ratio !== undefined ? ratio.toFixed(1) + ':1' : ''}
-        </span>
-      </div>
-    );
-  }
-
-  function RoleInput({ roleKey }: { roleKey: RoleKey }) {
-    const val = roles[roleKey];
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem' }}>
-        <div style={{ width: 18, height: 18, borderRadius: 3, background: isValidHex(val) ? val : '#888', border: '1px solid var(--border)', flexShrink: 0 }} />
-        <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', width: 110, flexShrink: 0 }}>{ROLE_LABELS[roleKey]}</span>
-        <input
-          type="text"
-          value={val}
-          onChange={e => update(roleKey, e.target.value)}
-          disabled={!interactive}
-          maxLength={7}
-          style={{
-            fontFamily: 'var(--font-mono)', fontSize: '0.78rem',
-            background: 'var(--surface, #1e293b)', color: 'var(--foreground)',
-            border: `1px solid ${isValidHex(val) ? 'var(--border)' : '#ef4444'}`,
-            borderRadius: 3, padding: '0.15rem 0.3rem', width: 90,
-          }}
-        />
-      </div>
-    );
-  }
+  const { primaryContrast, secondaryContrast, actionContrast, primaryOk, secondaryOk, actionOk, statusDistinct } = validateRoles(roles);
 
   const bg = isValidHex(roles['page-bg']) ? roles['page-bg'] : '#f9fafb';
   const surf = isValidHex(roles['surface']) ? roles['surface'] : '#ffffff';
@@ -117,7 +105,28 @@ export function RoleBuilderTool({ interactive = false, onComplete }: RoleBuilder
         {/* Inputs */}
         <div style={{ flex: '0 0 220px' }}>
           <p style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', marginBottom: '0.5rem' }}>SEMANTIC ROLES</p>
-          {(Object.keys(DEFAULTS) as RoleKey[]).map(k => <RoleInput key={k} roleKey={k} />)}
+          {(Object.keys(DEFAULTS) as RoleKey[]).map((roleKey) => {
+            const val = roles[roleKey];
+            return (
+              <div key={roleKey} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem' }}>
+                <div style={{ width: 18, height: 18, borderRadius: 3, background: isValidHex(val) ? val : '#888', border: '1px solid var(--border)', flexShrink: 0 }} />
+                <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', width: 110, flexShrink: 0 }}>{ROLE_LABELS[roleKey]}</span>
+                <input
+                  type="text"
+                  value={val}
+                  onChange={(e) => update(roleKey, e.target.value)}
+                  disabled={!interactive}
+                  maxLength={7}
+                  style={{
+                    fontFamily: 'var(--font-mono)', fontSize: '0.78rem',
+                    background: 'var(--surface)', color: 'var(--primary-foreground)',
+                    border: `1px solid ${isValidHex(val) ? 'var(--border)' : '#ef4444'}`,
+                    borderRadius: 3, padding: '0.15rem 0.3rem', width: 90,
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
 
         {/* Preview */}
@@ -149,8 +158,8 @@ export function RoleBuilderTool({ interactive = false, onComplete }: RoleBuilder
         </div>
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success, #22c55e)', fontSize: '0.85rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem' }}>
           All checks pass. Your semantic roles create a clear, readable hierarchy.
         </p>
       )}

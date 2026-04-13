@@ -56,7 +56,7 @@ All 6 units are fully built and wired. Milestones now use mixed-part capstones (
 
 ## Tech Stack
 
-React 19 + TypeScript + Vite. No backend. GitHub Pages deployment via GitHub Actions on push to `main`. Design system: freeCodeCamp "Command-line Chic." CSS variables for theming: `var(--fg)`, `var(--bg)`, `var(--muted)`, `var(--border)`, `var(--accent)`, `var(--success)`, `var(--warning)`, `var(--error)`, `var(--font-mono)`, `var(--radius-md)`, `var(--radius-sm)`.
+React 19 + TypeScript + Vite. No backend. GitHub Pages deployment via GitHub Actions on push to `main`. Design system: freeCodeCamp "Command-line Chic." CSS variables for theming: `var(--primary-foreground)`, `var(--primary-background)`, `var(--muted)`, `var(--border)`, `var(--accent-cta)`, `var(--accent-success)`, `var(--accent-danger)`, `var(--font-mono)`, `var(--radius-md)`, `var(--radius-sm)`.
 
 ## Build
 

@@ -73,7 +73,7 @@ To maintain the "Command-line Chic" aesthetic, use the CSS custom properties def
 | Typography | `--font-mono` | All UI text (Monospace) |
 
 ### Best Practices
-- **CSS Modules**: Always use `.module.css` files to ensure styles are scoped and do not bleed into other tools.
+- **Styling Approach**: Prefer `.module.css` for reusable structure and repeated patterns, but inline styles are acceptable for tool-specific dynamic previews (e.g., live color swatches, generated gradients, per-role color chips).
 - **Accessibility**: Ensure that interactive elements respond to both mouse and keyboard inputs where possible. 
 - **Tool-Only Logic**: Keep the tool's internal state independent. The tool should not know about the lesson's current step or quiz status.
 - **Responsive Layout**: Tools should ideally be designed to fit within the `ToolShell` container, which provides consistent padding and border-styling.

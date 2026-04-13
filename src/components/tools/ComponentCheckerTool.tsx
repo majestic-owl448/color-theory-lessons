@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { contrastRatio, hexToRgb } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -100,7 +100,7 @@ export function ComponentCheckerTool({ interactive = false, onComplete }: Compon
     Object.fromEntries(COMPONENTS.map((c) => [c.id, c.defaultColor])),
   );
   const [passed, setPassed] = useState<Record<string, boolean>>({});
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function handleChange(id: string, val: string) {
     if (!interactive) return;
@@ -111,8 +111,8 @@ export function ComponentCheckerTool({ interactive = false, onComplete }: Compon
         setPassed((prev) => {
           const next = { ...prev, [id]: true };
           const allPassed = COMPONENTS.every((c) => next[c.id]);
-          if (allPassed && !completed.current) {
-            completed.current = true;
+          if (allPassed && !completed) {
+            setCompleted(true);
             onComplete?.();
           }
           return next;
@@ -145,17 +145,17 @@ export function ComponentCheckerTool({ interactive = false, onComplete }: Compon
             <div
               key={comp.id}
               style={{
-                border: `1px solid ${pass ? 'var(--success)' : 'var(--border)'}`,
+                border: `1px solid ${pass ? 'var(--accent-success)' : 'var(--border)'}`,
                 borderRadius: 'var(--radius-md)',
                 padding: '0.65rem',
-                background: pass ? 'color-mix(in srgb, var(--success) 6%, transparent)' : 'transparent',
+                background: pass ? 'color-mix(in srgb, var(--accent-success) 6%, transparent)' : 'transparent',
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--muted)', textTransform: 'uppercase' }}>
                   {comp.label}
                 </span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: pass ? 'var(--success)' : 'var(--error)' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: pass ? 'var(--accent-success)' : 'var(--accent-danger)' }}>
                   {ratio.toFixed(2)}:1 — {pass ? 'PASS' : 'FAIL'}
                 </span>
               </div>
@@ -176,7 +176,7 @@ export function ComponentCheckerTool({ interactive = false, onComplete }: Compon
                       fontFamily: 'var(--font-mono)', fontSize: '0.78rem',
                       padding: '0.2rem 0.4rem', borderRadius: 'var(--radius-sm)',
                       border: '1px solid var(--border)', background: 'var(--surface)',
-                      color: 'var(--foreground)', width: '7rem',
+                      color: 'var(--primary-foreground)', width: '7rem',
                     }}
                     aria-label={`${comp.label} hex color`}
                   />
@@ -188,8 +188,8 @@ export function ComponentCheckerTool({ interactive = false, onComplete }: Compon
         })}
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           ✓ All components now pass 3:1 — they are clearly visible against their backgrounds.
         </p>
       )}

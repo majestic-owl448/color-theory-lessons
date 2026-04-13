@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Module {
@@ -161,10 +161,10 @@ export function PatternRepairTool({ interactive = false, onComplete }: PatternRe
     Object.fromEntries(MODULES.map((m) => [m.id, []])),
   );
   const [repaired, setRepaired] = useState<Record<string, boolean>>({});
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function toggleOption(moduleId: string, option: string) {
-    if (!interactive || completed.current) return;
+    if (!interactive || completed) return;
     setChecked((prev) => {
       const current = prev[moduleId];
       const next = current.includes(option) ? current.filter((o) => o !== option) : [...current, option];
@@ -173,8 +173,8 @@ export function PatternRepairTool({ interactive = false, onComplete }: PatternRe
       setRepaired((prevR) => {
         const nextR = { ...prevR, [moduleId]: isRepaired };
         const allRepaired = MODULES.every((m) => nextR[m.id]);
-        if (allRepaired && !completed.current) {
-          completed.current = true;
+        if (allRepaired && !completed) {
+          setCompleted(true);
           onComplete?.();
         }
         return nextR;
@@ -204,17 +204,17 @@ export function PatternRepairTool({ interactive = false, onComplete }: PatternRe
             <div
               key={mod.id}
               style={{
-                border: `1px solid ${isRepaired ? 'var(--success)' : 'var(--border)'}`,
+                border: `1px solid ${isRepaired ? 'var(--accent-success)' : 'var(--border)'}`,
                 borderRadius: 'var(--radius-md)',
                 padding: '0.65rem',
-                background: isRepaired ? 'color-mix(in srgb, var(--success) 6%, transparent)' : 'transparent',
+                background: isRepaired ? 'color-mix(in srgb, var(--accent-success) 6%, transparent)' : 'transparent',
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                <p style={{ fontWeight: 600, fontSize: '0.8rem', margin: 0, color: 'var(--foreground)' }}>{mod.name}</p>
+                <p style={{ fontWeight: 600, fontSize: '0.8rem', margin: 0, color: 'var(--primary-foreground)' }}>{mod.name}</p>
                 <span style={{ fontSize: '0.68rem', color: 'var(--muted)', fontFamily: 'var(--font-mono)' }}>
                   {isRepaired
-                    ? <span style={{ color: 'var(--success)' }}>✓ repaired</span>
+                    ? <span style={{ color: 'var(--accent-success)' }}>✓ repaired</span>
                     : `needs ≥${mod.minRepairs} option${mod.minRepairs > 1 ? 's' : ''}`}
                 </span>
               </div>
@@ -243,7 +243,7 @@ export function PatternRepairTool({ interactive = false, onComplete }: PatternRe
                         type="checkbox"
                         checked={modChecked.includes(option)}
                         onChange={() => toggleOption(mod.id, option)}
-                        style={{ accentColor: 'var(--accent)' }}
+                        style={{ accentColor: 'var(--accent-cta)' }}
                       />
                       {option}
                     </label>
@@ -255,8 +255,8 @@ export function PatternRepairTool({ interactive = false, onComplete }: PatternRe
         })}
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           ✓ All patterns repaired. These same fixes, applied as reusable patterns, scale across an entire product.
         </p>
       )}

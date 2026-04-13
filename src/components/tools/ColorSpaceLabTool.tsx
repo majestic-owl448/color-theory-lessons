@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { hexToRgb, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -38,7 +38,7 @@ export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpac
   const [accentIdx, setAccentIdx] = useState(0);
   const [sortAnswers, setSortAnswers] = useState<Record<string, string>>({});
   const [sortChecked, setSortChecked] = useState(false);
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   const accent = ACCENTS[accentIdx];
   const rgb = hexToRgb(accent.hex);
@@ -50,11 +50,11 @@ export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpac
   const isVivid = maxChannel >= 250 || minChannel <= 5;
 
   function checkSort() {
-    if (!interactive || completed.current) return;
+    if (!interactive || completed) return;
     setSortChecked(true);
     const allCorrect = SORT_ITEMS.every((item) => sortAnswers[item.label] === item.category);
     if (allCorrect) {
-      completed.current = true;
+      setCompleted(true);
       onComplete?.();
     }
   }
@@ -140,7 +140,7 @@ export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpac
       {/* Color info */}
       <div style={{
         fontSize: '0.75rem', fontFamily: 'var(--font-mono)', marginBottom: '0.75rem',
-        color: 'var(--foreground)',
+        color: 'var(--primary-foreground)',
       }}>
         <span style={{ color: 'var(--muted)' }}>HEX</span> {accent.hex}
         {' · '}
@@ -168,17 +168,17 @@ export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpac
                 <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <code style={{
                     fontSize: '0.75rem', minWidth: 170,
-                    color: isWrong ? 'var(--red)' : 'var(--foreground)',
+                    color: isWrong ? 'var(--red)' : 'var(--primary-foreground)',
                   }}>
                     {item.label}
                   </code>
                   <select
                     value={answer}
-                    disabled={completed.current}
+                    disabled={completed}
                     onChange={(e) => setSortAnswers((prev) => ({ ...prev, [item.label]: e.target.value }))}
                     style={{
                       fontSize: '0.75rem', fontFamily: 'var(--font-mono)',
-                      background: 'var(--surface)', color: 'var(--foreground)',
+                      background: 'var(--surface)', color: 'var(--primary-foreground)',
                       border: `1px solid ${isWrong ? 'var(--red)' : 'var(--border)'}`,
                       borderRadius: 'var(--radius-sm)', padding: '0.2rem 0.3rem',
                     }}
@@ -194,7 +194,7 @@ export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpac
             })}
           </div>
 
-          {!completed.current && (
+          {!completed && (
             <button onClick={checkSort} style={{
               padding: '0.4rem 1rem', background: 'var(--yellow)', color: '#111',
               border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
@@ -204,7 +204,7 @@ export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpac
             </button>
           )}
 
-          {sortChecked && !completed.current && (
+          {sortChecked && !completed && (
             <p style={{ fontSize: '0.78rem', color: 'var(--red)', marginTop: '0.3rem' }}>
               Some items are miscategorized. Try again.
             </p>
@@ -212,7 +212,7 @@ export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpac
         </div>
       )}
 
-      {completed.current && (
+      {completed && (
         <p style={{ color: 'var(--green)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           All items correctly sorted. Color decisions matter regardless of the rendering context.
         </p>

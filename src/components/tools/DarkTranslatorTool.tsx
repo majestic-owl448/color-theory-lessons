@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { hexToRgb, contrastRatio } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -38,7 +38,7 @@ function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }
 export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTranslatorToolProps) {
   const [dark, setDark] = useState<Record<RoleKey, string>>(DARK_DEFAULTS);
   const [preview, setPreview] = useState<'light' | 'dark'>('light');
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function update(key: RoleKey, val: string) {
     if (!interactive) return;
@@ -57,8 +57,8 @@ export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTran
   const actionOk = actionContrast >= 4.5;
   const allPass = primaryOk && secondaryOk && surfaceOk && actionOk;
 
-  if (interactive && allPass && !completed.current) {
-    completed.current = true;
+  if (interactive && allPass && !completed) {
+    setCompleted(true);
     onComplete?.();
   }
 
@@ -85,7 +85,7 @@ export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTran
             <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem', opacity: 0.7 }}>
               <div style={{ width: 16, height: 16, borderRadius: 3, background: LIGHT_THEME[key], border: '1px solid #e5e7eb', flexShrink: 0 }} />
               <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', width: 100, flexShrink: 0 }}>{key}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--foreground)' }}>{LIGHT_THEME[key]}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--primary-foreground)' }}>{LIGHT_THEME[key]}</span>
             </div>
           ))}
         </div>
@@ -109,7 +109,7 @@ export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTran
                   maxLength={7}
                   style={{
                     fontFamily: 'var(--font-mono)', fontSize: '0.72rem',
-                    background: 'var(--surface, #1e293b)', color: 'var(--foreground)',
+                    background: 'var(--surface, #1e293b)', color: 'var(--primary-foreground)',
                     border: `1px solid ${isValidHex(val) ? 'var(--border)' : '#ef4444'}`,
                     borderRadius: 3, padding: '0.15rem 0.3rem', width: 80,
                   }}
@@ -128,8 +128,8 @@ export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTran
                 onClick={() => setPreview(m)}
                 style={{
                   padding: '0.2rem 0.6rem', fontSize: '0.75rem', borderRadius: 4, cursor: 'pointer',
-                  background: preview === m ? 'var(--accent, #7c3aed)' : 'var(--surface, #1e293b)',
-                  color: preview === m ? '#fff' : 'var(--foreground)',
+                  background: preview === m ? 'var(--accent-cta)' : 'var(--surface, #1e293b)',
+                  color: preview === m ? '#fff' : 'var(--primary-foreground)',
                   border: '1px solid var(--border)',
                 }}
               >
@@ -159,7 +159,7 @@ export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTran
             { label: 'White / action (4.5:1)', pass: actionOk, ratio: actionContrast },
           ].map(({ label, pass, ratio }) => (
             <div key={label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', padding: '0.15rem 0' }}>
-              <span style={{ color: 'var(--foreground)' }}>{label}</span>
+              <span style={{ color: 'var(--primary-foreground)' }}>{label}</span>
               <span style={{ color: pass ? '#22c55e' : '#ef4444', fontFamily: 'var(--font-mono)' }}>
                 {pass ? '✓' : '✗'} {ratio.toFixed(1)}:1
               </span>
@@ -168,8 +168,8 @@ export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTran
         </div>
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success, #22c55e)', fontSize: '0.85rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem' }}>
           Both themes show readable hierarchy. Dark mode is properly adapted, not just inverted.
         </p>
       )}

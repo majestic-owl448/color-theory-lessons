@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Example {
@@ -152,19 +152,19 @@ interface ColorOnlyDetectorToolProps {
 export function ColorOnlyDetectorTool({ interactive = false, onComplete }: ColorOnlyDetectorToolProps) {
   const [feedback, setFeedback] = useState<Record<string, 'correct' | 'incorrect' | null>>({});
   const [identified, setIdentified] = useState<Set<string>>(new Set());
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   const PROBLEM_COUNT = EXAMPLES.filter((e) => e.isColorOnly).length;
 
   function handleClick(ex: Example) {
-    if (!interactive || completed.current) return;
+    if (!interactive || completed) return;
     if (ex.isColorOnly) {
       setFeedback((prev) => ({ ...prev, [ex.id]: 'correct' }));
       setIdentified((prev) => {
         const next = new Set(prev);
         next.add(ex.id);
-        if (next.size === PROBLEM_COUNT && !completed.current) {
-          completed.current = true;
+        if (next.size === PROBLEM_COUNT && !completed) {
+          setCompleted(true);
           onComplete?.();
         }
         return next;
@@ -197,26 +197,26 @@ export function ColorOnlyDetectorTool({ interactive = false, onComplete }: Color
               style={{
                 padding: '0.6rem',
                 borderRadius: 'var(--radius-md)',
-                border: `1px solid ${isCorrect ? 'var(--success)' : isWrong ? 'var(--error)' : 'var(--border)'}`,
+                border: `1px solid ${isCorrect ? 'var(--accent-success)' : isWrong ? 'var(--accent-danger)' : 'var(--border)'}`,
                 background: isCorrect
-                  ? 'color-mix(in srgb, var(--success) 8%, transparent)'
+                  ? 'color-mix(in srgb, var(--accent-success) 8%, transparent)'
                   : isWrong
-                  ? 'color-mix(in srgb, var(--error) 8%, transparent)'
+                  ? 'color-mix(in srgb, var(--accent-danger) 8%, transparent)'
                   : 'transparent',
-                cursor: interactive && !isCorrect && !completed.current ? 'pointer' : 'default',
+                cursor: interactive && !isCorrect && !completed ? 'pointer' : 'default',
               }}
             >
-              <p style={{ fontSize: '0.75rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--foreground)' }}>
+              <p style={{ fontSize: '0.75rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--primary-foreground)' }}>
                 {ex.name}
               </p>
               <div style={{ marginBottom: '0.4rem' }}>{ex.visual}</div>
               {isCorrect && (
-                <p style={{ fontSize: '0.72rem', color: 'var(--success)', margin: 0 }}>
+                <p style={{ fontSize: '0.72rem', color: 'var(--accent-success)', margin: 0 }}>
                   ✓ {ex.correctFeedback}
                 </p>
               )}
               {isWrong && (
-                <p style={{ fontSize: '0.72rem', color: 'var(--error)', margin: 0 }}>
+                <p style={{ fontSize: '0.72rem', color: 'var(--accent-danger)', margin: 0 }}>
                   {ex.incorrectFeedback}
                 </p>
               )}
@@ -225,8 +225,8 @@ export function ColorOnlyDetectorTool({ interactive = false, onComplete }: Color
         })}
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           All color-only problems identified. Every one of them needs a backup cue.
         </p>
       )}

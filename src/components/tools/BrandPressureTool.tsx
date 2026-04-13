@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { hexToRgb, contrastRatio } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -62,7 +62,7 @@ function brandPressurePercent(roles: Record<RoleKey, string>): number {
 export function BrandPressureTool({ interactive = false, onComplete }: BrandPressureToolProps) {
   const defaults = interactive ? INTERACTIVE_DEFAULTS : NON_INTERACTIVE_DEFAULTS;
   const [roles, setRoles] = useState<Record<RoleKey, string>>(defaults);
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function update(key: RoleKey, val: string) {
     if (!interactive) return;
@@ -78,8 +78,8 @@ export function BrandPressureTool({ interactive = false, onComplete }: BrandPres
   const pressureOk = pressure < 40;
   const allPass = textOk && surfaceOk && pressureOk;
 
-  if (interactive && allPass && !completed.current) {
-    completed.current = true;
+  if (interactive && allPass && !completed) {
+    setCompleted(true);
     onComplete?.();
   }
 
@@ -104,7 +104,7 @@ export function BrandPressureTool({ interactive = false, onComplete }: BrandPres
             <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem', opacity: 0.7 }}>
               <div style={{ width: 18, height: 18, borderRadius: 3, background: val, border: '1px solid var(--border)', flexShrink: 0 }} />
               <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', width: 110, flexShrink: 0 }}>{label} (fixed)</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--foreground)' }}>{val}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--primary-foreground)' }}>{val}</span>
             </div>
           ))}
 
@@ -124,7 +124,7 @@ export function BrandPressureTool({ interactive = false, onComplete }: BrandPres
                   maxLength={7}
                   style={{
                     fontFamily: 'var(--font-mono)', fontSize: '0.78rem',
-                    background: 'var(--surface, #1e293b)', color: 'var(--foreground)',
+                    background: 'var(--surface, #1e293b)', color: 'var(--primary-foreground)',
                     border: `1px solid ${isValidHex(val) ? 'var(--border)' : '#ef4444'}`,
                     borderRadius: 3, padding: '0.15rem 0.3rem', width: 90,
                   }}
@@ -162,7 +162,7 @@ export function BrandPressureTool({ interactive = false, onComplete }: BrandPres
             { label: 'Page/surface separation', pass: surfaceOk, ratio: surfaceContrast },
           ].map(({ label, pass, ratio }) => (
             <div key={label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', padding: '0.2rem 0' }}>
-              <span style={{ color: 'var(--foreground)' }}>{label}</span>
+              <span style={{ color: 'var(--primary-foreground)' }}>{label}</span>
               <span style={{ color: pass ? '#22c55e' : '#ef4444', fontFamily: 'var(--font-mono)' }}>
                 {pass ? '✓' : '✗'} {ratio.toFixed(1)}:1
               </span>
@@ -170,7 +170,7 @@ export function BrandPressureTool({ interactive = false, onComplete }: BrandPres
           ))}
           <div style={{ marginTop: '0.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-              <span style={{ color: 'var(--foreground)' }}>Brand pressure</span>
+              <span style={{ color: 'var(--primary-foreground)' }}>Brand pressure</span>
               <span style={{ color: meterColor, fontFamily: 'var(--font-mono)' }}>{pressureOk ? '✓' : '✗'} {pressure}%</span>
             </div>
             <div style={{ background: 'var(--border)', borderRadius: 99, height: 6, marginTop: '0.25rem', overflow: 'hidden' }}>
@@ -181,8 +181,8 @@ export function BrandPressureTool({ interactive = false, onComplete }: BrandPres
         </div>
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success, #22c55e)', fontSize: '0.85rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem' }}>
           Brand is present but not overwhelming. Neutrals carry the structural weight.
         </p>
       )}

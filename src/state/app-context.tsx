@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
-import type { ReactNode } from 'react';
+import { createContext, useContext } from 'react';
 import type { ProgressState } from '../types/progress.ts';
-import { loadState, saveState } from './persistence.ts';
+import { loadState } from './persistence.ts';
 
 /** All possible route views in the application. */
 type View = 'home' | 'lesson' | 'sandbox' | 'quiz' | 'glossary' | 'settings' | 'review' | 'capstone';
@@ -36,7 +35,7 @@ type Action =
   | { type: 'RESET_PROGRESS' };
 
 /** Initialize state from localStorage or defaults. */
-function createInitialState(): AppState {
+export function createInitialState(): AppState {
   const { progress, preferences } = loadState();
   return {
     ...progress,
@@ -51,7 +50,7 @@ function createInitialState(): AppState {
  * Reducer for managing application state updates.
  * Most completion actions are idempotent to prevent duplicate entries.
  */
-function appReducer(state: AppState, action: Action): AppState {
+export function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'NAVIGATE':
       return { ...state, view: action.view };
@@ -126,42 +125,8 @@ function appReducer(state: AppState, action: Action): AppState {
   }
 }
 
-const AppStateContext = createContext<AppState | null>(null);
-const AppDispatchContext = createContext<React.Dispatch<Action> | null>(null);
-
-/**
- * Root state provider for the application.
- * Syncs specific state slices to localStorage on every change.
- */
-export function AppProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(appReducer, undefined, createInitialState);
-
-  useEffect(() => {
-    const progress: ProgressState = {
-      completedLessons: state.completedLessons,
-      completedQuizzes: state.completedQuizzes,
-      quizBestScores: state.quizBestScores,
-      completedMilestones: state.completedMilestones,
-      glossaryTermsSeen: state.glossaryTermsSeen,
-    };
-    saveState(progress, state.preferences);
-  }, [
-    state.completedLessons,
-    state.completedQuizzes,
-    state.quizBestScores,
-    state.completedMilestones,
-    state.glossaryTermsSeen,
-    state.preferences,
-  ]);
-
-  return (
-    <AppStateContext value={state}>
-      <AppDispatchContext value={dispatch}>
-        {children}
-      </AppDispatchContext>
-    </AppStateContext>
-  );
-}
+export const AppStateContext = createContext<AppState | null>(null);
+export const AppDispatchContext = createContext<React.Dispatch<Action> | null>(null);
 
 /** Access the global application state. */
 export function useAppState(): AppState {

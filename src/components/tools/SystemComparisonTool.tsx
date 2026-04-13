@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface SystemComparisonToolProps {
@@ -16,7 +16,7 @@ const INCONSISTENCIES = [
 export function SystemComparisonTool({ interactive = false, onComplete }: SystemComparisonToolProps) {
   const [found, setFound] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState<string | null>(null);
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function handleClick(id: string) {
     if (!interactive) return;
@@ -24,8 +24,8 @@ export function SystemComparisonTool({ interactive = false, onComplete }: System
     setFound((prev) => {
       const next = new Set(prev);
       next.add(id);
-      if (next.size === INCONSISTENCIES.length && !completed.current) {
-        completed.current = true;
+      if (next.size === INCONSISTENCIES.length && !completed) {
+        setCompleted(true);
         onComplete?.();
       }
       return next;
@@ -90,7 +90,7 @@ export function SystemComparisonTool({ interactive = false, onComplete }: System
             </div>
           </div>
           {interactive && (
-            <p style={{ fontSize: '0.75rem', color: found.size === INCONSISTENCIES.length ? 'var(--success, #22c55e)' : 'var(--muted)', marginTop: '0.3rem' }}>
+            <p style={{ fontSize: '0.75rem', color: found.size === INCONSISTENCIES.length ? 'var(--accent-success)' : 'var(--muted)', marginTop: '0.3rem' }}>
               Found {found.size}/{INCONSISTENCIES.length} inconsistencies
             </p>
           )}
@@ -120,13 +120,13 @@ export function SystemComparisonTool({ interactive = false, onComplete }: System
       {/* Explanation panel */}
       {revealed && (
         <div style={{ background: 'var(--surface, #1e293b)', border: '1px solid var(--border)', borderRadius: 4, padding: '0.6rem 0.75rem', fontSize: '0.82rem' }}>
-          <strong style={{ color: 'var(--accent, #f59e0b)' }}>{INCONSISTENCIES.find(i => i.id === revealed)?.label}:</strong>{' '}
-          <span style={{ color: 'var(--foreground)' }}>{INCONSISTENCIES.find(i => i.id === revealed)?.explanation}</span>
+          <strong style={{ color: 'var(--accent-cta)' }}>{INCONSISTENCIES.find(i => i.id === revealed)?.label}:</strong>{' '}
+          <span style={{ color: 'var(--primary-foreground)' }}>{INCONSISTENCIES.find(i => i.id === revealed)?.explanation}</span>
         </div>
       )}
 
-      {completed.current && (
-        <p style={{ color: 'var(--success, #22c55e)', fontSize: '0.85rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem' }}>
           All inconsistencies found. A role-based system eliminates each of these problems.
         </p>
       )}

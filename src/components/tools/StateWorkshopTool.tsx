@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface StateConfig {
@@ -27,10 +27,10 @@ export function StateWorkshopTool({ interactive = false, onComplete }: StateWork
   const [cues, setCues] = useState<Record<string, Record<CueKey, boolean>>>(
     Object.fromEntries(STATES.map((s) => [s.name, { icon: false, label: false, border: false }])),
   );
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   function toggleCue(stateName: string, cue: CueKey) {
-    if (!interactive || completed.current) return;
+    if (!interactive || completed) return;
     setCues((prev) => {
       const next = {
         ...prev,
@@ -39,8 +39,8 @@ export function StateWorkshopTool({ interactive = false, onComplete }: StateWork
       const allHaveOneCue = STATES.every((s) =>
         Object.values(next[s.name]).some(Boolean),
       );
-      if (allHaveOneCue && !completed.current) {
-        completed.current = true;
+      if (allHaveOneCue && !completed) {
+        setCompleted(true);
         onComplete?.();
       }
       return next;
@@ -67,9 +67,9 @@ export function StateWorkshopTool({ interactive = false, onComplete }: StateWork
               style={{
                 padding: '0.65rem',
                 borderRadius: 'var(--radius-md)',
-                border: `1px solid ${hasAnyCue ? 'var(--success)' : 'var(--border)'}`,
+                border: `1px solid ${hasAnyCue ? 'var(--accent-success)' : 'var(--border)'}`,
                 background: hasAnyCue
-                  ? 'color-mix(in srgb, var(--success) 5%, transparent)'
+                  ? 'color-mix(in srgb, var(--accent-success) 5%, transparent)'
                   : 'transparent',
               }}
             >
@@ -123,7 +123,7 @@ export function StateWorkshopTool({ interactive = false, onComplete }: StateWork
                     <input
                       type="checkbox"
                       checked={stateCues[cue]}
-                      disabled={!interactive || completed.current}
+                      disabled={!interactive || completed}
                       onChange={() => toggleCue(state.name, cue)}
                       style={{ accentColor: state.color }}
                     />
@@ -136,8 +136,8 @@ export function StateWorkshopTool({ interactive = false, onComplete }: StateWork
         })}
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           All states reinforced. Each now communicates through multiple channels.
         </p>
       )}

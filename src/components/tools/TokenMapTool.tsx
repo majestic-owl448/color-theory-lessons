@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { hslToHex, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -52,7 +52,7 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
   const [baseSat, setBaseSat] = useState(70);
   const [sortAnswers, setSortAnswers] = useState<Record<string, string>>({});
   const [sortChecked, setSortChecked] = useState(false);
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   const derived = ROLES.map((r) => ({
     ...r,
@@ -66,11 +66,11 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
   const hueOk = hueDiff > 30 && hueDiff < 330;
 
   function checkSort() {
-    if (!interactive || completed.current) return;
+    if (!interactive || completed) return;
     setSortChecked(true);
     const allCorrect = SORT_ITEMS.every((item) => sortAnswers[item.label] === item.category);
     if (allCorrect && hueOk) {
-      completed.current = true;
+      setCompleted(true);
       onComplete?.();
     }
   }
@@ -86,7 +86,7 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
         <label style={{ fontSize: '0.82rem', display: 'block', marginBottom: '0.3rem' }}>
           Base hue: {baseHue}°
           <input type="range" min={0} max={360} value={baseHue}
-            disabled={!interactive || completed.current}
+            disabled={!interactive || completed}
             onChange={(e) => setBaseHue(Number(e.target.value))}
             style={{ width: '100%', accentColor: 'var(--yellow)' }}
             aria-label={`Base hue: ${baseHue} degrees`}
@@ -95,7 +95,7 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
         <label style={{ fontSize: '0.82rem', display: 'block' }}>
           Base saturation: {baseSat}%
           <input type="range" min={0} max={100} value={baseSat}
-            disabled={!interactive || completed.current}
+            disabled={!interactive || completed}
             onChange={(e) => setBaseSat(Number(e.target.value))}
             style={{ width: '100%', accentColor: 'var(--yellow)' }}
             aria-label={`Base saturation: ${baseSat} percent`}
@@ -114,7 +114,7 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
                 background: d.color, border: '1px solid var(--border)',
                 flexShrink: 0,
               }} />
-              <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--foreground)' }}>
+              <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--primary-foreground)' }}>
                 {d.name}
               </span>
               <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)' }}>
@@ -175,17 +175,17 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
                 <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <code style={{
                     fontSize: '0.75rem', minWidth: 180,
-                    color: isWrong ? 'var(--red)' : 'var(--foreground)',
+                    color: isWrong ? 'var(--red)' : 'var(--primary-foreground)',
                   }}>
                     {item.label}
                   </code>
                   <select
                     value={answer}
-                    disabled={completed.current}
+                    disabled={completed}
                     onChange={(e) => setSortAnswers((prev) => ({ ...prev, [item.label]: e.target.value }))}
                     style={{
                       fontSize: '0.75rem', fontFamily: 'var(--font-mono)',
-                      background: 'var(--surface)', color: 'var(--foreground)',
+                      background: 'var(--surface)', color: 'var(--primary-foreground)',
                       border: `1px solid ${isWrong ? 'var(--red)' : 'var(--border)'}`,
                       borderRadius: 'var(--radius-sm)', padding: '0.2rem 0.3rem',
                     }}
@@ -201,7 +201,7 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
             })}
           </div>
 
-          {!completed.current && (
+          {!completed && (
             <button onClick={checkSort} style={{
               padding: '0.4rem 1rem', background: 'var(--yellow)', color: '#111',
               border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
@@ -211,7 +211,7 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
             </button>
           )}
 
-          {sortChecked && !completed.current && (
+          {sortChecked && !completed && (
             <p style={{ fontSize: '0.78rem', color: 'var(--red)', marginTop: '0.3rem' }}>
               {!hueOk ? 'Adjust the base hue so action and error are distinct. ' : ''}
               {sortCorrectCount < SORT_ITEMS.length ? 'Some items are miscategorized.' : ''}
@@ -220,7 +220,7 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
         </div>
       )}
 
-      {completed.current && (
+      {completed && (
         <p style={{ color: 'var(--green)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           Token map complete. One base change updated every derived role.
         </p>

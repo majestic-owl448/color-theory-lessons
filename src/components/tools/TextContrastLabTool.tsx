@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { contrastRatio, hexToRgb } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -43,7 +43,7 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
     Object.fromEntries(PAIRS.map((p) => [p.id, p.defaultBg])),
   );
   const [passed, setPassed] = useState<Record<string, boolean>>({});
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   const pair = PAIRS[activePair];
   const textColor = textColors[pair.id];
@@ -75,8 +75,8 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
       setPassed((prev) => {
         const next = { ...prev, [id]: true };
         const allPassed = PAIRS.every((p) => next[p.id]);
-        if (allPassed && !completed.current) {
-          completed.current = true;
+        if (allPassed && !completed) {
+          setCompleted(true);
           onComplete?.();
         }
         return next;
@@ -106,11 +106,11 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
               padding: '0.3rem 0.65rem',
               fontSize: '0.75rem',
               borderRadius: 'var(--radius-sm)',
-              border: `1px solid ${passed[p.id] ? 'var(--success)' : activePair === i ? 'var(--accent)' : 'var(--border)'}`,
+              border: `1px solid ${passed[p.id] ? 'var(--accent-success)' : activePair === i ? 'var(--accent-cta)' : 'var(--border)'}`,
               background: activePair === i
-                ? 'color-mix(in srgb, var(--accent) 15%, transparent)'
+                ? 'color-mix(in srgb, var(--accent-cta) 15%, transparent)'
                 : 'transparent',
-              color: passed[p.id] ? 'var(--success)' : 'var(--foreground)',
+              color: passed[p.id] ? 'var(--accent-success)' : 'var(--primary-foreground)',
               cursor: interactive ? 'pointer' : 'default',
               fontFamily: 'var(--font-mono)',
             }}
@@ -150,10 +150,10 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
           fontSize: '0.75rem', padding: '0.3rem 0.65rem',
           borderRadius: 'var(--radius-sm)',
           background: normalPass
-            ? 'color-mix(in srgb, var(--success) 12%, transparent)'
-            : 'color-mix(in srgb, var(--error) 12%, transparent)',
-          border: `1px solid ${normalPass ? 'var(--success)' : 'var(--error)'}`,
-          color: normalPass ? 'var(--success)' : 'var(--error)',
+            ? 'color-mix(in srgb, var(--accent-success) 12%, transparent)'
+            : 'color-mix(in srgb, var(--accent-danger) 12%, transparent)',
+          border: `1px solid ${normalPass ? 'var(--accent-success)' : 'var(--accent-danger)'}`,
+          color: normalPass ? 'var(--accent-success)' : 'var(--accent-danger)',
         }}>
           Normal text (≥4.5:1) — {normalPass ? 'PASS' : 'FAIL'}
         </div>
@@ -161,10 +161,10 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
           fontSize: '0.75rem', padding: '0.3rem 0.65rem',
           borderRadius: 'var(--radius-sm)',
           background: largePass
-            ? 'color-mix(in srgb, var(--success) 12%, transparent)'
-            : 'color-mix(in srgb, var(--error) 12%, transparent)',
-          border: `1px solid ${largePass ? 'var(--success)' : 'var(--error)'}`,
-          color: largePass ? 'var(--success)' : 'var(--error)',
+            ? 'color-mix(in srgb, var(--accent-success) 12%, transparent)'
+            : 'color-mix(in srgb, var(--accent-danger) 12%, transparent)',
+          border: `1px solid ${largePass ? 'var(--accent-success)' : 'var(--accent-danger)'}`,
+          color: largePass ? 'var(--accent-success)' : 'var(--accent-danger)',
         }}>
           Large text (≥3:1) — {largePass ? 'PASS' : 'FAIL'}
         </div>
@@ -185,7 +185,7 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
                 fontFamily: 'var(--font-mono)', fontSize: '0.8rem',
                 padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border)', background: 'var(--surface)',
-                color: 'var(--foreground)', width: '7rem',
+                color: 'var(--primary-foreground)', width: '7rem',
               }}
               aria-label="Text color hex"
             />
@@ -204,7 +204,7 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
                 fontFamily: 'var(--font-mono)', fontSize: '0.8rem',
                 padding: '0.25rem 0.4rem', borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border)', background: 'var(--surface)',
-                color: 'var(--foreground)', width: '7rem',
+                color: 'var(--primary-foreground)', width: '7rem',
               }}
               aria-label="Background color hex"
             />
@@ -212,8 +212,8 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
         </label>
       </div>
 
-      {completed.current && (
-        <p style={{ color: 'var(--success)', fontSize: '0.85rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem' }}>
           ✓ All three pairs now pass. Lightness difference, not hue, is the key to contrast.
         </p>
       )}

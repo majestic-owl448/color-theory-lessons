@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { hslToHex, hexToRgb, hslString } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -37,7 +37,7 @@ export function HslPlaygroundTool({ interactive = false, onComplete }: HslPlaygr
   const [l, setL] = useState(50);
   const [targetIdx, setTargetIdx] = useState(0);
   const [matched, setMatched] = useState<boolean[]>(TARGETS.map(() => false));
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   const hex = hslToHex(h, s, l);
   const rgb = hexToRgb(hex);
@@ -45,7 +45,7 @@ export function HslPlaygroundTool({ interactive = false, onComplete }: HslPlaygr
   const targetHex = hslToHex(target.h, target.s, target.l);
 
   function checkMatch() {
-    if (!interactive || completed.current) return;
+    if (!interactive || completed) return;
     if (
       hueClose(h, target.h, TOLERANCE) &&
       isClose(s, target.s, TOLERANCE) &&
@@ -55,7 +55,7 @@ export function HslPlaygroundTool({ interactive = false, onComplete }: HslPlaygr
       next[targetIdx] = true;
       setMatched(next);
       if (next.every(Boolean)) {
-        completed.current = true;
+        setCompleted(true);
         onComplete?.();
       } else {
         const nextUnmatched = next.findIndex((m) => !m);
@@ -115,7 +115,7 @@ export function HslPlaygroundTool({ interactive = false, onComplete }: HslPlaygr
       {interactive && !allDone && (
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: '0.75rem' }}>
           <p style={{ fontSize: '0.82rem', color: 'var(--muted)', marginBottom: '0.5rem' }}>
-            Target {targetIdx + 1}/{TARGETS.length}: <strong style={{ color: 'var(--foreground)' }}>{target.label}</strong>
+            Target {targetIdx + 1}/{TARGETS.length}: <strong style={{ color: 'var(--primary-foreground)' }}>{target.label}</strong>
           </p>
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
             <div style={{

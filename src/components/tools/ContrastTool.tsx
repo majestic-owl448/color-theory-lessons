@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -35,18 +35,22 @@ export function ContrastTool({ interactive = true, onComplete }: ContrastToolPro
     return area.fixBg ? l <= area.minL : l >= area.minL;
   }
 
-  const allFixed = AREAS.every(isFixed);
-
-  useEffect(() => {
-    if (interactive && !completed && allFixed) {
-      setCompleted(true);
-      onComplete?.();
-    }
-  }, [allFixed, completed, interactive, onComplete]);
-
   function handleChange(id: string, val: number) {
     if (completed || !interactive) return;
-    setLightness((prev) => ({ ...prev, [id]: val }));
+    setLightness((prev) => {
+      const next = { ...prev, [id]: val };
+      const nextAllFixed = AREAS.every((area) => {
+        const l = next[area.id];
+        return area.fixBg ? l <= area.minL : l >= area.minL;
+      });
+
+      if (nextAllFixed) {
+        setCompleted(true);
+        onComplete?.();
+      }
+
+      return next;
+    });
   }
 
   return (

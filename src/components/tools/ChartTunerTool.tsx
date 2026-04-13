@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { hexToRgb, colorDistance, simulateDeuteranopia } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -61,7 +61,7 @@ function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }
 export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerToolProps) {
   const [colors, setColors] = useState<string[]>(DEFAULTS);
   const [simulated, setSimulated] = useState(false);
-  const completed = useRef(false);
+  const [completed, setCompleted] = useState(false);
 
   /**
    * Updates a specific series color and checks if the new palette passes 
@@ -73,14 +73,14 @@ export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerTo
     next[i] = val;
     setColors(next);
 
-    if (!completed.current && isValidHex(val)) {
+    if (!completed && isValidHex(val)) {
       const pairs = [];
       for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++) pairs.push([next[a], next[b]]);
       const simPairs = pairs.map(([a, b]) => [simulateDeuteranopia(a), simulateDeuteranopia(b)]);
       const allOk = pairs.every(([a, b]) => colorDiff(a, b) >= MIN_DIFF) &&
         simPairs.every(([a, b]) => colorDiff(a, b) >= MIN_DIFF);
       if (allOk) {
-        completed.current = true;
+        setCompleted(true);
         onComplete?.();
       }
     }
@@ -98,7 +98,7 @@ export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerTo
           disabled={!interactive}
           style={{
             fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: 4, cursor: interactive ? 'pointer' : 'default',
-            background: !simulated ? 'var(--accent, #f59e0b)' : 'var(--border)', color: !simulated ? '#000' : 'var(--fg)',
+            background: !simulated ? 'var(--accent-cta)' : 'var(--border)', color: !simulated ? '#000' : 'var(--primary-foreground)',
             border: 'none',
           }}
         >
@@ -109,7 +109,7 @@ export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerTo
           disabled={!interactive}
           style={{
             fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: 4, cursor: interactive ? 'pointer' : 'default',
-            background: simulated ? 'var(--accent, #f59e0b)' : 'var(--border)', color: simulated ? '#000' : 'var(--fg)',
+            background: simulated ? 'var(--accent-cta)' : 'var(--border)', color: simulated ? '#000' : 'var(--primary-foreground)',
             border: 'none',
           }}
         >
@@ -144,14 +144,14 @@ export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerTo
             for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++) pairs.push([a, b]);
             const weak = pairs.filter(([a, b]) => colorDiff(simColors[a], simColors[b]) < MIN_DIFF);
             return weak.length > 0
-              ? <span style={{ color: 'var(--warning, #f59e0b)' }}>⚠ Under simulation: {weak.map(([a, b]) => `${SERIES[a]}/${SERIES[b]}`).join(', ')} are hard to distinguish</span>
-              : <span style={{ color: 'var(--success, #22c55e)' }}>✓ All series distinguishable in both views</span>;
+              ? <span style={{ color: 'var(--accent-cta)' }}>⚠ Under simulation: {weak.map(([a, b]) => `${SERIES[a]}/${SERIES[b]}`).join(', ')} are hard to distinguish</span>
+              : <span style={{ color: 'var(--accent-success)' }}>✓ All series distinguishable in both views</span>;
           })()}
         </div>
       )}
 
-      {completed.current && (
-        <p style={{ color: 'var(--success, #22c55e)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+      {completed && (
+        <p style={{ color: 'var(--accent-success)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
           Chart palette passes normal and CVD simulation — series are distinguishable in both views.
         </p>
       )}
