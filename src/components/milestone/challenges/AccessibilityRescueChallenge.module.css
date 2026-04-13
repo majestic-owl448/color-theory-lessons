@@ -1,0 +1,125 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  background: var(--secondary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.progress { color: var(--yellow); }
+
+.block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.sample {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem;
+  font-size: 0.78rem;
+}
+
+.sliderLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  font-size: 0.78rem;
+}
+
+.errorMark {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.note {
+  color: var(--secondary-foreground);
+  font-size: 0.75rem;
+}
+
+.toggle {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--blue);
+}
+
+.fakeButton {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--primary-background);
+  color: var(--primary-foreground);
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.focusOn {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.iconPreview {
+  border: 1px solid var(--border);
+  background: var(--gray-00);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem;
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+.good { color: var(--green); font-size: 0.74rem; }
+.bad { color: var(--red); font-size: 0.74rem; }
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing-xs);
+}
+
+.button {
+  background: var(--yellow);
+  color: var(--gray-90);
+  border-radius: var(--radius-sm);
+  padding: 0.48rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

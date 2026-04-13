@@ -1,0 +1,134 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  background: var(--secondary-background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.brand {
+  color: var(--blue);
+}
+
+.grid {
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.roleCard {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.roleTop {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.roleTop code {
+  font-family: var(--font-mono);
+  color: var(--secondary-foreground);
+}
+
+.sliderRow {
+  display: grid;
+  grid-template-columns: 20px 1fr 40px;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.sliderRow input {
+  width: 100%;
+}
+
+.preview {
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+}
+
+.previewCard {
+  border: 1px solid color-mix(in srgb, var(--gray-00) 20%, transparent);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.previewTitle {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.previewBody {
+  font-size: 0.9rem;
+}
+
+.previewButton {
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gray-90);
+  width: fit-content;
+}
+
+.checks {
+  display: grid;
+  gap: 4px;
+  font-size: 0.78rem;
+}
+
+.good {
+  color: var(--green);
+}
+
+.bad {
+  color: var(--red);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  background: var(--yellow);
+  color: var(--gray-90);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

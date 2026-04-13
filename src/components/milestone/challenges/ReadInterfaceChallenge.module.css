@@ -18,7 +18,7 @@
 }
 
 .score {
-  color: var(--accent);
+  color: var(--yellow);
 }
 
 .grid {
@@ -33,19 +33,19 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--spacing-sm);
-  background-color: var(--bg);
+  background-color: var(--primary-background);
 }
 
 .label {
   font-size: 0.88rem;
-  color: var(--fg);
+  color: var(--primary-foreground);
 }
 
 .select {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background-color: var(--bg);
-  color: var(--fg);
+  background-color: var(--primary-background);
+  color: var(--primary-foreground);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   padding: 0.4rem 0.5rem;
@@ -58,11 +58,11 @@
 }
 
 .good {
-  color: var(--success);
+  color: var(--green);
 }
 
 .bad {
-  color: var(--error);
+  color: var(--red);
 }
 
 .actions {
@@ -73,8 +73,8 @@
 .button {
   border: none;
   border-radius: var(--radius-sm);
-  background-color: var(--accent);
-  color: var(--bg);
+  background-color: var(--yellow);
+  color: var(--gray-90);
   font-family: var(--font-mono);
   font-size: 0.82rem;
   padding: 0.45rem 0.9rem;

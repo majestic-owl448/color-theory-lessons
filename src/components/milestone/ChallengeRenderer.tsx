@@ -1,6 +1,11 @@
 import type { MilestoneChallengeType } from '../../types/milestone.ts';
+import { AccessibilityRescueChallenge } from './challenges/AccessibilityRescueChallenge.tsx';
 import { ChannelPredictionChallenge } from './challenges/ChannelPredictionChallenge.tsx';
+import { DarkModeStressChallenge } from './challenges/DarkModeStressChallenge.tsx';
 import { ReadInterfaceChallenge } from './challenges/ReadInterfaceChallenge.tsx';
+import { SemanticAuditChallenge } from './challenges/SemanticAuditChallenge.tsx';
+import { SimulationSpotterChallenge } from './challenges/SimulationSpotterChallenge.tsx';
+import { ThemeFromScratchChallenge } from './challenges/ThemeFromScratchChallenge.tsx';
 
 interface ChallengeRendererProps {
   challengeType: MilestoneChallengeType;
@@ -25,10 +30,16 @@ export function ChallengeRenderer({ challengeType, onComplete }: ChallengeRender
     case 'channel-prediction':
       return <ChannelPredictionChallenge onComplete={onComplete} />;
     case 'theme-from-scratch':
+      return <ThemeFromScratchChallenge onComplete={onComplete} />;
     case 'simulation-spotter':
+      return <SimulationSpotterChallenge onComplete={onComplete} />;
     case 'accessibility-rescue':
+      return <AccessibilityRescueChallenge onComplete={onComplete} />;
     case 'semantic-audit':
+      return <SemanticAuditChallenge onComplete={onComplete} />;
     case 'dark-mode-stress':
+      return <DarkModeStressChallenge onComplete={onComplete} />;
+    default:
       return <UnimplementedChallenge challengeType={challengeType} />;
   }
 }

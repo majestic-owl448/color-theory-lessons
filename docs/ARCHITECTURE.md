@@ -32,6 +32,16 @@ Milestones are also data-driven, using discriminated parts in `src/types/milesto
 - **`MilestonePlayer` (`src/components/milestone/MilestonePlayer.tsx`)**: Switches between question/challenge phases per part kind, aggregates quiz correctness plus challenge points, and evaluates pass thresholds from total points.
 - **`ChallengeRenderer` (`src/components/milestone/ChallengeRenderer.tsx`)**: Maps `challengeType` values to concrete challenge components.
 
+Current challenge mappings:
+
+- `read-interface`
+- `channel-prediction`
+- `theme-from-scratch`
+- `simulation-spotter`
+- `accessibility-rescue`
+- `semantic-audit`
+- `dark-mode-stress`
+
 `challengeType` values are compile-time constrained by the `MilestoneChallengeType` union to prevent typo-based fallbacks in milestone data.
 
 ### 4. State Management & Persistence

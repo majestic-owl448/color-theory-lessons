@@ -18,7 +18,7 @@
 }
 
 .strong {
-  color: var(--accent);
+  color: var(--yellow);
 }
 
 .card {
@@ -27,12 +27,12 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--spacing-sm);
-  background-color: var(--bg);
+  background-color: var(--primary-background);
 }
 
 .prompt {
   font-size: 0.9rem;
-  color: var(--fg);
+  color: var(--primary-foreground);
 }
 
 .choices {
@@ -45,7 +45,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background-color: var(--secondary-background);
-  color: var(--fg);
+  color: var(--primary-foreground);
   font-family: var(--font-mono);
   font-size: 0.78rem;
   padding: 0.35rem 0.65rem;
@@ -53,8 +53,8 @@
 }
 
 .active {
-  border-color: var(--accent);
-  background-color: color-mix(in srgb, var(--accent) 16%, var(--secondary-background));
+  border-color: var(--yellow);
+  background-color: color-mix(in srgb, var(--yellow) 16%, var(--secondary-background));
 }
 
 .swatches {
@@ -93,8 +93,8 @@
 .button {
   border: none;
   border-radius: var(--radius-sm);
-  background-color: var(--accent);
-  color: var(--bg);
+  background-color: var(--yellow);
+  color: var(--gray-90);
   font-family: var(--font-mono);
   font-size: 0.82rem;
   padding: 0.45rem 0.9rem;

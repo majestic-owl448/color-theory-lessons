@@ -20,7 +20,15 @@ Browser-based learning app teaching practical color theory for digital design. S
 - **Palette Builder** (`/palette-builder`) — generate harmony-based palettes from a primary color (analogous, complementary, triadic), with tonal variants (lighter/darker/muted), WCAG AAA contrast matrix, and dark/light mode theme arranger. Located at `src/pages/PaletteBuilderPage.tsx`.
 
 ### App Completeness
-All 6 units fully built and wired. 34 total lessons, 33 tool components, 6 milestones. The `/capstone` route redirects to `milestone-6`. `npm run build` passes with zero TypeScript errors.
+All 6 units are fully built and wired. Milestones now use mixed-part capstones (interactive challenges + short quizzes) with point-based pass thresholds. The `/capstone` route redirects to `milestone-6`.
+
+### Milestone Challenge Coverage
+- **Milestone 1**: `read-interface`
+- **Milestone 2**: `channel-prediction`
+- **Milestone 3**: `theme-from-scratch`
+- **Milestone 4**: `simulation-spotter`
+- **Milestone 5**: `accessibility-rescue`
+- **Milestone 6**: `semantic-audit` + `dark-mode-stress`
 
 ## Key Source Locations
 

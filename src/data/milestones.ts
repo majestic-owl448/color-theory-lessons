@@ -4,8 +4,7 @@ const milestone1: MilestoneConfig = {
   id: 'milestone-1',
   unitId: 'unit-1',
   title: 'Read the Interface',
-  description:
-    'Apply your Unit 1 vocabulary in a hands-on interface reading challenge, then finish with a short quiz.',
+  description: 'Apply Unit 1 vocabulary in a practical interface-reading challenge, then confirm core ideas with a short quiz.',
   estimatedMinutes: 12,
   heroVisual: 'interface-mockup',
   passThreshold: 4,
@@ -14,123 +13,46 @@ const milestone1: MilestoneConfig = {
       kind: 'challenge',
       id: 'm1-c1',
       title: 'Read the Interface',
-      description: 'Classify important UI regions by their color role.',
+      description: 'Classify highlighted interface regions by role.',
       challengeType: 'read-interface',
-      briefing:
-        'Label each highlighted region by its function: focal point, low-contrast failure, competing accent, accessible text, or hierarchy anchor. You need at least 4 correct labels.',
-      successMessage:
-        'Nice work. You mapped color function to real UI elements and identified where hierarchy and accessibility break down.',
+      briefing: 'Assign each highlighted element to the right role. Reach at least 4 of 5 correct to clear the challenge.',
+      successMessage: 'You identified hierarchy anchors, focal points, and contrast failures in a realistic interface.',
       pointValue: 3,
     },
     {
       kind: 'quiz',
-      id: 'm1-p1',
+      id: 'm1-qz',
       title: 'Concept Check',
-      description:
-        'Answer three conceptual questions to confirm Unit 1 fundamentals.',
+      description: 'Three core recall questions from Unit 1.',
       questions: [
         {
           id: 'm1-q1',
-          prompt: 'What is the first element your eye is drawn to in this interface?',
+          prompt: 'What best explains why one element becomes the visual focal point?',
           choices: [
-            {
-              id: 'a',
-              label: 'The navigation links',
-              isCorrect: false,
-              explanation:
-                'The nav links have low contrast on the blue header — they draw less attention than they should.',
-            },
-            {
-              id: 'b',
-              label: 'The green "Try it free" button',
-              isCorrect: true,
-              explanation:
-                'The green CTA sits on the large blue hero and has the highest contrast of any element. It is the clear focal point.',
-            },
-            {
-              id: 'c',
-              label: 'The card grid',
-              isCorrect: false,
-              explanation:
-                'The cards are below the hero and share visual weight with each other. They do not lead the hierarchy.',
-            },
-            {
-              id: 'd',
-              label: 'The footer',
-              isCorrect: false,
-              explanation:
-                'The footer has the worst contrast on the page — it recedes rather than draws attention.',
-            },
+            { id: 'a', label: 'It has the highest contrast and strongest emphasis', isCorrect: true, explanation: 'Strong contrast and emphasis are the main drivers of immediate visual attention.' },
+            { id: 'b', label: 'It appears first in the HTML structure', isCorrect: false, explanation: 'Markup order can affect reading flow, but visual prominence is mostly contrast and emphasis.' },
+            { id: 'c', label: 'It uses the largest file size image', isCorrect: false, explanation: 'File size has no visual meaning for the user.' },
+            { id: 'd', label: 'It has the most saturated grayscale value', isCorrect: false, explanation: 'Grayscale has no saturation channel.' },
           ],
         },
         {
           id: 'm1-q2',
-          prompt:
-            'Which element is most likely to fail an accessibility contrast check?',
+          prompt: 'A footer label is hard to read on a dark surface. What is the most direct fix?',
           choices: [
-            {
-              id: 'a',
-              label: 'The hero headline',
-              isCorrect: false,
-              explanation:
-                'White text on the dark blue hero has high contrast and should pass accessibility checks.',
-            },
-            {
-              id: 'b',
-              label: 'The navigation links on the blue header',
-              isCorrect: true,
-              explanation:
-                'The medium-gray nav links (#9ca3af) on a saturated blue (#1e40af) background likely fall below the WCAG 4.5:1 minimum for normal text.',
-            },
-            {
-              id: 'c',
-              label: 'The green CTA button',
-              isCorrect: false,
-              explanation:
-                'The green button with white text has sufficient contrast to be readable.',
-            },
-            {
-              id: 'd',
-              label: 'The card headings',
-              isCorrect: false,
-              explanation:
-                'Dark text on a light card background is typically high contrast and accessible.',
-            },
+            { id: 'a', label: 'Increase lightness contrast between text and background', isCorrect: true, explanation: 'Readability depends on luminance contrast, not hue alone.' },
+            { id: 'b', label: 'Change typeface to monospace', isCorrect: false, explanation: 'Typeface choice does not solve a failing contrast ratio.' },
+            { id: 'c', label: 'Add a soft blur behind the text', isCorrect: false, explanation: 'Blur is decorative and unreliable for accessibility.' },
+            { id: 'd', label: 'Lower the font size to reduce noise', isCorrect: false, explanation: 'Smaller text is harder to read at low contrast.' },
           ],
         },
         {
-          id: 'm1-q4',
-          prompt:
-            'The footer text is difficult to read. What adjustment would help most?',
+          id: 'm1-q3',
+          prompt: 'What does a hierarchy anchor do in interface color design?',
           choices: [
-            {
-              id: 'a',
-              label: 'Change the text hue to match the brand blue',
-              isCorrect: false,
-              explanation:
-                'Changing hue does not fix a lightness contrast problem. Dark blue on near-black is still unreadable.',
-            },
-            {
-              id: 'b',
-              label: 'Increase the lightness of the text so it contrasts with the dark background',
-              isCorrect: true,
-              explanation:
-                'The problem is insufficient lightness difference. Lighter text on the dark footer restores the contrast needed for readability.',
-            },
-            {
-              id: 'c',
-              label: 'Add a drop shadow to the text',
-              isCorrect: false,
-              explanation:
-                'Drop shadows can help in some situations, but they do not fix the underlying low-contrast relationship between text and surface.',
-            },
-            {
-              id: 'd',
-              label: 'Reduce the font size',
-              isCorrect: false,
-              explanation:
-                'Smaller text makes the contrast problem worse, not better.',
-            },
+            { id: 'a', label: 'Provides a stable structural reference for surrounding elements', isCorrect: true, explanation: 'Anchors help users parse sections and orient visually.' },
+            { id: 'b', label: 'Guarantees all contrast checks pass', isCorrect: false, explanation: 'Hierarchy and contrast are related but distinct concerns.' },
+            { id: 'c', label: 'Replaces the need for spacing', isCorrect: false, explanation: 'Layout spacing and color hierarchy both matter.' },
+            { id: 'd', label: 'Forces users to click the primary action', isCorrect: false, explanation: 'Anchors support comprehension, not coercion.' },
           ],
         },
       ],
@@ -142,8 +64,7 @@ const milestone2: MilestoneConfig = {
   id: 'milestone-2',
   unitId: 'unit-2',
   title: 'Mix for Screen',
-  description:
-    'Predict channel behavior in additive color mixing, then validate with a short reasoning quiz.',
+  description: 'Predict RGB behavior without sliders, then validate additive-color fundamentals in a short quiz.',
   estimatedMinutes: 14,
   passThreshold: 4,
   parts: [
@@ -151,108 +72,46 @@ const milestone2: MilestoneConfig = {
       kind: 'challenge',
       id: 'm2-c1',
       title: 'Channel Prediction',
-      description: 'Predict dominant channels and additive mix outcomes without sliders.',
+      description: 'Predict dominant channels and additive outcomes.',
       challengeType: 'channel-prediction',
-      briefing:
-        'Complete four rounds. For each one, identify the dominant channel and predict the additive mix result from swatches.',
-      successMessage:
-        'Strong reasoning. You can now predict additive outcomes without relying on trial-and-error controls.',
+      briefing: 'Complete all four rounds: identify the dominant channel and choose the expected additive mix result.',
+      successMessage: 'You demonstrated additive reasoning without relying on trial-and-error controls.',
       pointValue: 3,
     },
     {
       kind: 'quiz',
-      id: 'm2-p1',
+      id: 'm2-qz',
       title: 'Concept Check',
-      description:
-        'Answer three conceptual questions about additive and subtractive thinking.',
+      description: 'Three conceptual checks for Unit 2.',
       questions: [
         {
           id: 'm2-q1',
-          prompt: 'An LED billboard advertising a film premiere.',
+          prompt: 'Why is RGB the native model for screen design?',
           choices: [
-            {
-              id: 'a',
-              label: 'Additive — emits light, mixes RGB channels',
-              isCorrect: true,
-              explanation:
-                'LED displays emit light directly. The more light channels are active, the brighter and closer to white the result.',
-            },
-            {
-              id: 'b',
-              label: 'Subtractive — absorbs light, mixes pigments',
-              isCorrect: false,
-              explanation:
-                'Subtractive mixing applies to physical pigments like ink or paint, not to light-emitting technology.',
-            },
+            { id: 'a', label: 'Screens emit red, green, and blue light channels', isCorrect: true, explanation: 'Pixel hardware emits RGB light, so RGB maps directly to display behavior.' },
+            { id: 'b', label: 'RGB supports more colors than all other models', isCorrect: false, explanation: 'Model choice here is about hardware alignment, not absolute color counts.' },
+            { id: 'c', label: 'RGB is primarily a print-production model', isCorrect: false, explanation: 'Print is generally subtractive (CMYK/pigment-based).' },
+            { id: 'd', label: 'Browsers only accept RGB values', isCorrect: false, explanation: 'Browsers support many color syntaxes and models.' },
           ],
         },
         {
-          id: 'm2-q6',
-          prompt: 'Which RGB values produce the color shown in this swatch?',
-          swatchColor: '#2563eb',
+          id: 'm2-q2',
+          prompt: 'In additive color, what happens as you increase all three channels equally?',
           choices: [
-            {
-              id: 'a',
-              label: 'R:37  G:99  B:235',
-              isCorrect: true,
-              explanation:
-                'A small red component, moderate green, and large blue channel produces this rich, saturated blue.',
-            },
-            {
-              id: 'b',
-              label: 'R:235  G:99  B:37',
-              isCorrect: false,
-              explanation:
-                'Swapping red and blue channels gives a warm orange-red — not blue.',
-            },
-            {
-              id: 'c',
-              label: 'R:99  G:235  B:37',
-              isCorrect: false,
-              explanation:
-                'High green with low blue and moderate red produces a bright lime-green.',
-            },
-            {
-              id: 'd',
-              label: 'R:235  G:37  B:99',
-              isCorrect: false,
-              explanation:
-                'High red as the dominant channel produces a vibrant pink-magenta.',
-            },
+            { id: 'a', label: 'The color moves toward white and increases in brightness', isCorrect: true, explanation: 'Equal channel increase adds emitted light energy, approaching white.' },
+            { id: 'b', label: 'The color always becomes more saturated', isCorrect: false, explanation: 'Saturation behavior is not guaranteed by equal channel changes.' },
+            { id: 'c', label: 'The hue rotates toward magenta', isCorrect: false, explanation: 'Equal changes tend toward neutral lightness shifts, not hue rotation.' },
+            { id: 'd', label: 'The color becomes subtractive', isCorrect: false, explanation: 'Additive/subtractive are different mixing contexts, not slider states.' },
           ],
         },
         {
-          id: 'm2-q11',
-          prompt: 'Why is RGB the right model for designing colors on screens?',
+          id: 'm2-q3',
+          prompt: 'Which mix is expected from red light + green light at high intensity?',
           choices: [
-            {
-              id: 'a',
-              label: 'Because screens use red, blue, and gray channels to produce every color',
-              isCorrect: false,
-              explanation:
-                'There is no gray channel. Screens use red, green, and blue light emitters.',
-            },
-            {
-              id: 'b',
-              label: 'Because screens emit light by combining red, green, and blue channels',
-              isCorrect: true,
-              explanation:
-                'Screen pixels are physically built from red, green, and blue sub-pixels that emit light. RGB values map directly to the intensity of each emitter — that is why it is the native model for screens.',
-            },
-            {
-              id: 'c',
-              label: 'Because RGB is the only model that supports more than 256 colors',
-              isCorrect: false,
-              explanation:
-                'Many color models support large color spaces. RGB is used for screens because of how screen hardware is built, not because of a color count.',
-            },
-            {
-              id: 'd',
-              label: 'Because most print designers already use RGB in their workflows',
-              isCorrect: false,
-              explanation:
-                'Print workflows typically use CMYK. RGB dominates screen design because of how screens emit light, not because of convention.',
-            },
+            { id: 'a', label: 'Yellow', isCorrect: true, explanation: 'In additive mixing, red + green yields yellow.' },
+            { id: 'b', label: 'Blue', isCorrect: false, explanation: 'Blue is the third channel, not the red+green sum.' },
+            { id: 'c', label: 'Black', isCorrect: false, explanation: 'Black is the absence of emitted light.' },
+            { id: 'd', label: 'Brown', isCorrect: false, explanation: 'Brown is typically a low-luminance orange context, not this additive result.' },
           ],
         },
       ],
@@ -264,106 +123,54 @@ const milestone3: MilestoneConfig = {
   id: 'milestone-3',
   unitId: 'unit-3',
   title: 'Build a UI Palette in Code',
-  description:
-    'Apply your Unit 3 knowledge to build a small but coherent digital color system using implementation-style thinking.',
-  estimatedMinutes: 20,
-  passThreshold: 6,
+  description: 'Build a small theme from scratch with HSL controls, then answer practical token and format questions.',
+  estimatedMinutes: 18,
+  passThreshold: 5,
   parts: [
     {
+      kind: 'challenge',
+      id: 'm3-c1',
+      title: 'Theme From Scratch',
+      description: 'Create five core theme roles from HSL controls.',
+      challengeType: 'theme-from-scratch',
+      briefing: 'Build background, surface, text, and accent roles so readability and hierarchy checks pass.',
+      successMessage: 'You built a coherent, role-based palette from a single starting hue.',
+      pointValue: 4,
+    },
+    {
       kind: 'quiz',
-      id: 'm3-p1',
-      title: 'Color Formats and Conversion',
-      description:
-        'Demonstrate your understanding of HEX, RGB, HSL, and alpha by answering practical format questions.',
+      id: 'm3-qz',
+      title: 'Concept Check',
+      description: 'Three conceptual checks from Unit 3.',
       questions: [
         {
           id: 'm3-q1',
-          prompt: 'Which format is often easiest for making a color more muted without changing the hue?',
+          prompt: 'Why are semantic token names (like --text-primary) better than visual names (like --dark-gray)?',
           choices: [
-            { id: 'a', label: 'HEX', isCorrect: false, explanation: 'HEX encodes RGB channels in base-16. Muting a color in HEX requires calculating which channels to adjust — less intuitive than HSL.' },
-            { id: 'b', label: 'RGB', isCorrect: false, explanation: 'RGB requires changing multiple channels in a balanced way to reduce saturation.' },
-            { id: 'c', label: 'HSL', isCorrect: true, explanation: 'In HSL, lowering saturation mutes the color directly without affecting hue or lightness.' },
-            { id: 'd', label: 'RGBA', isCorrect: false, explanation: 'The alpha channel controls transparency, not saturation or mutedness.' },
+            { id: 'a', label: 'Semantic names stay valid when color values change', isCorrect: true, explanation: 'Role-based naming survives theme changes and refactors.' },
+            { id: 'b', label: 'Semantic names render faster', isCorrect: false, explanation: 'Naming has no runtime rendering speed advantage.' },
+            { id: 'c', label: 'Visual names provide better accessibility by default', isCorrect: false, explanation: 'Accessibility depends on chosen values and checks, not naming style.' },
+            { id: 'd', label: 'Visual names are invalid CSS variables', isCorrect: false, explanation: 'Both are valid syntax; semantics are the difference.' },
           ],
         },
         {
           id: 'm3-q2',
-          prompt: 'What does rgba(0, 0, 0, 0.5) describe?',
+          prompt: 'What does alpha in an RGBA color control?',
           choices: [
-            { id: 'a', label: 'A medium gray at full opacity', isCorrect: false, explanation: 'The RGB channels are all 0, which is black — not gray. The 0.5 is alpha, not brightness.' },
-            { id: 'b', label: 'Black at 50% transparency', isCorrect: true, explanation: 'rgb(0, 0, 0) is black. The alpha of 0.5 makes it 50% transparent — commonly used for scrims and overlays.' },
-            { id: 'c', label: 'A dark color that is half as saturated', isCorrect: false, explanation: 'Alpha controls transparency, not saturation. The visual result depends on the background underneath.' },
-            { id: 'd', label: 'An invalid value — alpha must be a percentage', isCorrect: false, explanation: 'Alpha as a decimal from 0 to 1 is standard and valid in CSS.' },
+            { id: 'a', label: 'Transparency/opacity of the color layer', isCorrect: true, explanation: 'Alpha controls how much of the background shows through.' },
+            { id: 'b', label: 'Hue angle', isCorrect: false, explanation: 'Hue is not encoded by alpha.' },
+            { id: 'c', label: 'Saturation amount', isCorrect: false, explanation: 'Saturation belongs to HSL/HSV models.' },
+            { id: 'd', label: 'Contrast ratio target', isCorrect: false, explanation: 'Contrast is computed from foreground/background luminance.' },
           ],
         },
         {
           id: 'm3-q3',
-          prompt: 'Why does the same 50% transparent overlay look different on a white background versus a dark background?',
+          prompt: 'What makes gradients risky for body text readability?',
           choices: [
-            { id: 'a', label: 'Because the browser adjusts alpha differently for each background', isCorrect: false, explanation: 'The browser renders alpha consistently. The visual difference comes from the blend of foreground and background colors.' },
-            { id: 'b', label: 'Because the perceived result is a blend of the overlay and the background', isCorrect: true, explanation: 'A dark overlay on white produces a visible gray tint, while the same overlay on a dark background is barely noticeable.' },
-            { id: 'c', label: 'Because transparency values are measured relative to the background lightness', isCorrect: false, explanation: 'Alpha is absolute — 0.5 always means 50% transparent regardless of the background.' },
-            { id: 'd', label: 'It does not — the result always looks the same', isCorrect: false, explanation: 'The visual result changes significantly because the blended color depends on both the foreground and the background.' },
-          ],
-        },
-        {
-          id: 'm3-q4',
-          prompt: 'Which HEX value is closest to white?',
-          swatchColor: '#F0F0F0',
-          choices: [
-            { id: 'a', label: '#F0F0F0', isCorrect: true, explanation: 'F0 in hex is 240 in decimal — very close to the maximum of 255. Equal high channel values produce a near-white neutral.' },
-            { id: 'b', label: '#303030', isCorrect: false, explanation: '30 in hex is 48 in decimal — a very dark neutral, far from white.' },
-            { id: 'c', label: '#808080', isCorrect: false, explanation: '80 in hex is 128 — a medium gray, exactly between black and white.' },
-            { id: 'd', label: '#101010', isCorrect: false, explanation: '10 in hex is 16 — nearly black.' },
-          ],
-        },
-      ],
-    },
-    {
-      kind: 'quiz',
-      id: 'm3-p2',
-      title: 'Themes and Token Thinking',
-      description:
-        'Show that you understand role-based color systems, design tokens, and how theme propagation works.',
-      questions: [
-        {
-          id: 'm3-q5',
-          prompt: 'What makes --color-text-primary a better token name than --dark-gray?',
-          choices: [
-            { id: 'a', label: 'It is shorter', isCorrect: false, explanation: 'Length is not the issue. The advantage is that role names stay meaningful even when the value changes.' },
-            { id: 'b', label: 'It describes what the color does, not what it looks like — so it stays useful even if the value changes', isCorrect: true, explanation: 'In a dark theme, primary text might be light — but --color-text-primary still makes sense. --dark-gray would not.' },
-            { id: 'c', label: 'CSS requires dashes in variable names', isCorrect: false, explanation: 'Both names use valid CSS custom property syntax. The issue is semantic clarity, not syntax.' },
-            { id: 'd', label: 'It loads faster because it references a system color', isCorrect: false, explanation: 'Token naming has no impact on loading speed. The advantage is maintainability and semantic clarity.' },
-          ],
-        },
-        {
-          id: 'm3-q6',
-          prompt: 'What happens when you change a base alias token that multiple role tokens reference?',
-          choices: [
-            { id: 'a', label: 'Only the first component using it updates', isCorrect: false, explanation: 'Token references propagate to all consumers. Every component referencing the updated alias will update.' },
-            { id: 'b', label: 'Every role token that references that alias updates automatically', isCorrect: true, explanation: 'This is the power of token systems — one change propagates through every role that references the base value.' },
-            { id: 'c', label: 'Nothing — role tokens store a copy of the value, not a reference', isCorrect: false, explanation: 'Role tokens reference aliases. Changing the alias changes the resolved value for all referencing roles.' },
-            { id: 'd', label: 'The system throws an error because multiple tokens cannot share a base', isCorrect: false, explanation: 'Sharing base tokens is exactly the intended usage pattern. It enables consistent, cascading updates.' },
-          ],
-        },
-        {
-          id: 'm3-q7',
-          prompt: 'Which of these is NOT a color role you would typically find in a theme?',
-          choices: [
-            { id: 'a', label: 'Surface background', isCorrect: false, explanation: 'Surface background is a standard structural role in most design systems.' },
-            { id: 'b', label: 'Error state', isCorrect: false, explanation: 'Error is a standard semantic status role.' },
-            { id: 'c', label: 'Hover animation timing', isCorrect: true, explanation: 'Animation timing is a motion property, not a color role. Color themes define values like surfaces, text, borders, and semantic states.' },
-            { id: 'd', label: 'Primary action', isCorrect: false, explanation: 'Primary action is a standard interactive role for buttons, links, and focus indicators.' },
-          ],
-        },
-        {
-          id: 'm3-q8',
-          prompt: 'Why are gradients sometimes problematic for text readability?',
-          choices: [
-            { id: 'a', label: 'Because gradients cannot be used in CSS backgrounds', isCorrect: false, explanation: 'CSS fully supports gradient backgrounds. The issue is that contrast varies across the gradient.' },
-            { id: 'b', label: 'Because the background color varies, making contrast unpredictable across the area', isCorrect: true, explanation: 'Text may pass contrast in one region of the gradient but fail in another where the background is lighter or darker.' },
-            { id: 'c', label: 'Because screen readers cannot process gradient backgrounds', isCorrect: false, explanation: 'Screen readers process text content regardless of background style. The issue is visual readability for sighted users.' },
-            { id: 'd', label: 'Because gradients always reduce contrast by blending toward gray', isCorrect: false, explanation: 'Gradients blend between whatever colors you choose — they do not inherently reduce contrast.' },
+            { id: 'a', label: 'Contrast varies across the gradient region', isCorrect: true, explanation: 'Text may pass in one area and fail in another.' },
+            { id: 'b', label: 'Browsers cannot anti-alias gradient backgrounds', isCorrect: false, explanation: 'Gradients are fully supported in modern rendering.' },
+            { id: 'c', label: 'Gradients disable semantic tokens', isCorrect: false, explanation: 'Tokens and gradients are unrelated mechanisms.' },
+            { id: 'd', label: 'Gradients require CMYK values', isCorrect: false, explanation: 'Web gradients are not CMYK-based.' },
           ],
         },
       ],
@@ -375,110 +182,54 @@ const milestone4: MilestoneConfig = {
   id: 'milestone-4',
   unitId: 'unit-4',
   title: 'Design Beyond Your Own Eyes',
-  description:
-    'Apply your Unit 4 knowledge of human vision and color perception to identify fragile interface patterns.',
-  estimatedMinutes: 15,
-  heroVisual: 'interface-mockup',
-  passThreshold: 6,
+  description: 'Use simulation and pattern-level reasoning to detect fragile interfaces, then confirm key Unit 4 concepts.',
+  estimatedMinutes: 16,
+  passThreshold: 5,
   parts: [
     {
+      kind: 'challenge',
+      id: 'm4-c1',
+      title: 'Simulation Spotter',
+      description: 'Find elements that fail under deuteranopia simulation and choose practical fixes.',
+      challengeType: 'simulation-spotter',
+      briefing: 'Flag the fragile elements and choose a valid fix strategy for each one.',
+      successMessage: 'You combined detection and repair thinking under simulated vision constraints.',
+      pointValue: 4,
+    },
+    {
       kind: 'quiz',
-      id: 'm4-p1',
-      title: 'Vision Science and CVD Types',
-      description:
-        'Answer questions about color perception and the types of color vision deficiency.',
+      id: 'm4-qz',
+      title: 'Concept Check',
+      description: 'Three conceptual checks from Unit 4.',
       questions: [
         {
           id: 'm4-q1',
-          prompt: 'Which cells in the retina are primarily responsible for color perception?',
+          prompt: 'Which retinal cells are primarily responsible for color perception?',
           choices: [
-            { id: 'a', label: 'Rods', isCorrect: false, explanation: 'Rods respond to low-light conditions and are not primarily responsible for color vision.' },
-            { id: 'b', label: 'Cones', isCorrect: true, explanation: 'Cones are the photoreceptor cells responsible for color vision. Humans typically have three types, each sensitive to a different range of wavelengths.' },
-            { id: 'c', label: 'The optic nerve', isCorrect: false, explanation: 'The optic nerve carries signals from the retina to the brain — it does not process color itself.' },
-            { id: 'd', label: 'The cornea', isCorrect: false, explanation: 'The cornea focuses light onto the retina but does not play a role in color processing.' },
+            { id: 'a', label: 'Cones', isCorrect: true, explanation: 'Cone cells drive color discrimination.' },
+            { id: 'b', label: 'Rods', isCorrect: false, explanation: 'Rods are dominant in low-light and do not provide full color vision.' },
+            { id: 'c', label: 'Optic discs', isCorrect: false, explanation: 'Optic disc structure is not the color receptor mechanism.' },
+            { id: 'd', label: 'Iris fibers', isCorrect: false, explanation: 'Iris controls pupil size, not color encoding.' },
           ],
         },
         {
           id: 'm4-q2',
-          prompt: 'What does color vision deficiency mean?',
+          prompt: 'Why is color-only communication risky even for users without CVD?',
           choices: [
-            { id: 'a', label: 'Complete inability to see any color', isCorrect: false, explanation: 'Only achromatopsia involves very limited hue perception. Most CVD types reduce specific color distinctions, not all color.' },
-            { id: 'b', label: 'A difference in how some color distinctions are perceived, due to variation in cone function', isCorrect: true, explanation: 'CVD describes a range of conditions where certain color distinctions are harder to perceive because of differences in cone sensitivity.' },
-            { id: 'c', label: 'A medical condition that only affects one eye', isCorrect: false, explanation: 'CVD is typically a property of the visual system as a whole, not limited to one eye.' },
-            { id: 'd', label: 'The inability to perceive lightness differences', isCorrect: false, explanation: 'CVD affects hue distinctions, not lightness perception. Luminance contrast is generally preserved in most CVD types.' },
+            { id: 'a', label: 'Environmental and device conditions can reduce color discernment', isCorrect: true, explanation: 'Glare, poor displays, and quick scanning can all weaken color-only cues.' },
+            { id: 'b', label: 'All users see colors in grayscale at night', isCorrect: false, explanation: 'Perception changes are contextual, not absolute grayscale conversion.' },
+            { id: 'c', label: 'Color-only states are invalid under CSS standards', isCorrect: false, explanation: 'The issue is usability/accessibility, not CSS validity.' },
+            { id: 'd', label: 'Screen readers read colors incorrectly', isCorrect: false, explanation: 'Screen readers do not rely on color rendering for semantics.' },
           ],
         },
         {
           id: 'm4-q3',
-          prompt: 'Which is the most common form of CVD?',
+          prompt: 'What is the strongest general fix for red/green chart confusion?',
           choices: [
-            { id: 'a', label: 'Protanopia', isCorrect: false, explanation: 'Protanopia is relatively rare. Deuteranomaly is the most common form.' },
-            { id: 'b', label: 'Tritanopia', isCorrect: false, explanation: 'Tritan types affecting blue-yellow are quite rare. Deuteranomaly is far more common.' },
-            { id: 'c', label: 'Deuteranomaly — reduced green cone sensitivity', isCorrect: true, explanation: 'Deuteranomaly affects roughly 5–8% of males with Northern European ancestry, making it the most common form of CVD.' },
-            { id: 'd', label: 'Achromatopsia', isCorrect: false, explanation: 'Achromatopsia is a rare condition. Deuteranomaly is substantially more common.' },
-          ],
-        },
-        {
-          id: 'm4-q4',
-          prompt: 'Which CVD type affects blue-yellow distinctions?',
-          choices: [
-            { id: 'a', label: 'Protan types', isCorrect: false, explanation: 'Protan types affect red-sensitive cones, weakening red-green distinctions.' },
-            { id: 'b', label: 'Deutan types', isCorrect: false, explanation: 'Deutan types affect green-sensitive cones, also weakening red-green distinctions.' },
-            { id: 'c', label: 'Tritan types — tritanopia and tritanomaly', isCorrect: true, explanation: 'Tritan types affect the blue-sensitive cone. Blue and yellow become harder to distinguish.' },
-            { id: 'd', label: 'Achromatopsia', isCorrect: false, explanation: 'Achromatopsia involves very limited cone function overall, not specifically blue-yellow.' },
-          ],
-        },
-      ],
-    },
-    {
-      kind: 'quiz',
-      id: 'm4-p2',
-      title: 'Color-Only Failures',
-      description:
-        'Identify design failures that rely on color alone and understand why they fail.',
-      questions: [
-        {
-          id: 'm4-q5',
-          prompt:
-            'A designer marks required form fields with red text and nothing else. What is the problem?',
-          choices: [
-            { id: 'a', label: 'Red text is too bright and distracting', isCorrect: false, explanation: 'Brightness is not the issue here. The problem is that color is the only signal.' },
-            { id: 'b', label: 'Color alone carries the meaning — users with CVD or in high-contrast environments may not distinguish required fields', isCorrect: true, explanation: 'If the only difference is the hue of the text, that difference may not be perceivable for users with CVD or in conditions that reduce color fidelity.' },
-            { id: 'c', label: 'Red is not a valid CSS color for form labels', isCorrect: false, explanation: 'Red is a perfectly valid CSS color. The issue is how meaning is communicated, not the CSS syntax.' },
-            { id: 'd', label: 'Required fields should always be indicated with an asterisk in the label', isCorrect: false, explanation: 'An asterisk is one good solution, but the question is about identifying the problem — which is color-only communication.' },
-          ],
-        },
-        {
-          id: 'm4-q6',
-          prompt:
-            'A bar chart uses red, green, and orange to distinguish three data series, with no labels. What is the main risk?',
-          choices: [
-            { id: 'a', label: 'The chart will not render in older browsers', isCorrect: false, explanation: 'Browser rendering is not the concern here. The accessibility risk is the relevant issue.' },
-            { id: 'b', label: 'Under protan or deutan simulation, red and green look very similar, making the series indistinguishable', isCorrect: true, explanation: 'Protan and deutan conditions both affect the red-green axis. Without labels, pattern fills, or direct labels, two of the three series become ambiguous.' },
-            { id: 'c', label: 'Too many colors in one chart looks cluttered', isCorrect: false, explanation: 'Clutter is a design concern but not the accessibility risk being asked about.' },
-            { id: 'd', label: 'Orange is too similar to yellow to be used in charts', isCorrect: false, explanation: 'The main risk is the red-green confusion under CVD, not orange-yellow similarity.' },
-          ],
-        },
-        {
-          id: 'm4-q7',
-          prompt:
-            'A "selected" tab is shown only by a blue highlight. No other visual change occurs. What is the problem?',
-          choices: [
-            { id: 'a', label: 'Blue is not a good color for selected states', isCorrect: false, explanation: 'Blue is commonly used for selected states. The problem is not the color choice but the absence of other cues.' },
-            { id: 'b', label: 'Color is the only cue — there is no shape, border, or label change to support it', isCorrect: true, explanation: 'If the only difference between selected and unselected tabs is a hue change, users who cannot perceive that hue difference have no way to know which tab is active.' },
-            { id: 'c', label: 'Tabs should not be highlighted at all', isCorrect: false, explanation: 'Highlighting the selected tab is correct behavior. The problem is relying only on color to communicate the selection.' },
-            { id: 'd', label: 'The tab text is too small to read', isCorrect: false, explanation: 'Text size is a separate concern. The color-only selection state is the specific problem being asked about.' },
-          ],
-        },
-        {
-          id: 'm4-q8',
-          prompt:
-            'Why is color-only design a usability issue even for users without CVD?',
-          choices: [
-            { id: 'a', label: 'It is not — color-only design only affects users with CVD', isCorrect: false, explanation: 'Color perception is reduced in many situations: bright sunlight, low-quality displays, grayscale printing, and simple inattention.' },
-            { id: 'b', label: 'Multiple cues benefit all users — in bright sunlight, on grayscale printouts, or when scanning quickly', isCorrect: true, explanation: 'Any condition that reduces effective color perception — physical or contextual — benefits from redundant cues. Good inclusive design helps everyone.' },
-            { id: 'c', label: 'All users prefer monochromatic interfaces', isCorrect: false, explanation: 'User preference is not the issue. The point is that multiple cues improve robustness in real-world conditions for all users.' },
-            { id: 'd', label: 'Color-only design increases file size', isCorrect: false, explanation: 'File size is unrelated to this accessibility concern.' },
+            { id: 'a', label: 'Add labels or patterns so series are not distinguished by hue alone', isCorrect: true, explanation: 'Redundant non-color cues preserve distinction under simulation.' },
+            { id: 'b', label: 'Increase saturation of both colors', isCorrect: false, explanation: 'Higher saturation does not reliably solve red/green confusion.' },
+            { id: 'c', label: 'Use thinner lines', isCorrect: false, explanation: 'Line thickness does not establish semantic distinction.' },
+            { id: 'd', label: 'Move chart legend to the top', isCorrect: false, explanation: 'Legend placement alone does not solve color-only ambiguity.' },
           ],
         },
       ],
@@ -490,45 +241,66 @@ const milestone5: MilestoneConfig = {
   id: 'milestone-5',
   unitId: 'unit-5',
   title: 'Accessibility Rescue',
-  description: 'Apply your Unit 5 knowledge to audit and repair a flawed interface for color accessibility. Use the panel on the right to answer each question.',
-  estimatedMinutes: 20,
-  heroVisual: 'interface-mockup',
-  passThreshold: 8,
+  description: 'Repair a multi-issue interface accessibility scenario, then complete a focused concept quiz.',
+  estimatedMinutes: 18,
+  passThreshold: 6,
   parts: [
     {
-      kind: 'quiz',
-      id: 'm5-p1',
-      title: 'Contrast and Readability',
-      description: 'Test your knowledge of contrast thresholds and how they apply to real text and backgrounds.',
-      questions: [
-        { id: 'm5-q1', prompt: 'What contrast ratio is the practical minimum for normal body text?', choices: [{ id: 'a', label: '2:1', isCorrect: false, explanation: '2:1 is well below the minimum for readable body text.' }, { id: 'b', label: '3:1', isCorrect: false, explanation: '3:1 is the threshold for large text, not normal body text.' }, { id: 'c', label: '4.5:1', isCorrect: true, explanation: 'Correct. 4.5:1 is the practical minimum for normal body text.' }, { id: 'd', label: '7:1', isCorrect: false, explanation: '7:1 is enhanced contrast — above the typical minimum.' }] },
-        { id: 'm5-q2', prompt: 'A heading is set in 22px bold weight. Which threshold applies?', choices: [{ id: 'a', label: '4.5:1 — all text needs 4.5:1 minimum', isCorrect: false, explanation: '22px bold qualifies as large text and uses the 3:1 threshold.' }, { id: 'b', label: '3:1 for large text', isCorrect: true, explanation: 'Correct. 22px bold is large text and the 3:1 threshold applies.' }, { id: 'c', label: '2:1 — headings are decorative', isCorrect: false, explanation: 'Headings are functional, not decorative.' }, { id: 'd', label: '7:1 — bold text needs more contrast', isCorrect: false, explanation: 'Bold text at large size needs less contrast, not more.' }] },
-        { id: 'm5-q3', prompt: 'A text/background pair has a contrast ratio of 3.8:1. It is used for a small 12px label. Does it pass?', choices: [{ id: 'a', label: 'Yes — 3.8:1 is close enough', isCorrect: false, explanation: '3.8:1 does not meet the 4.5:1 minimum for normal (small) text.' }, { id: 'b', label: 'No — 3.8:1 is below 4.5:1 for normal (small) text', isCorrect: true, explanation: 'Correct. 12px is normal text and requires 4.5:1.' }, { id: 'c', label: 'Yes — the label is a UI element so 3:1 applies', isCorrect: false, explanation: 'Text labels use text contrast thresholds, not non-text thresholds.' }, { id: 'd', label: 'Cannot determine without seeing the full design', isCorrect: false, explanation: 'The ratio and text size give us enough information to determine pass/fail.' }] },
-        { id: 'm5-q4', prompt: 'Which adjustment would most reliably improve a failing text contrast?', choices: [{ id: 'a', label: 'Change the font family to a more readable typeface', isCorrect: false, explanation: 'Font family does not affect contrast ratio.' }, { id: 'b', label: 'Darken the text or lighten the background — change lightness, not just hue', isCorrect: true, explanation: 'Correct. Contrast depends on luminance difference, which requires changing lightness.' }, { id: 'c', label: 'Increase the font size only', isCorrect: false, explanation: 'Increasing size may change which threshold applies, but does not improve the ratio.' }, { id: 'd', label: 'Change the hue to a more saturated color', isCorrect: false, explanation: 'Hue changes alone do not reliably change luminance or contrast ratio.' }] },
-      ],
+      kind: 'challenge',
+      id: 'm5-c1',
+      title: 'Accessibility Rescue',
+      description: 'Fix mixed WCAG failures in a compact interface.',
+      challengeType: 'accessibility-rescue',
+      briefing: 'Repair text contrast, color-only signaling, focus visibility, and icon contrast in one pass.',
+      successMessage: 'You repaired multiple accessibility failure categories in a single workflow.',
+      pointValue: 4,
     },
     {
       kind: 'quiz',
-      id: 'm5-p2',
-      title: 'Non-Text and Color-Only Failures',
-      description: 'Identify failures beyond text contrast — components, icons, and color-only communication.',
+      id: 'm5-qz',
+      title: 'Concept Check',
+      description: 'Four conceptual checks from Unit 5.',
       questions: [
-        { id: 'm5-q5', prompt: 'An icon button has no text label. Its icon is #cccccc on a white background. What is the main problem?', choices: [{ id: 'a', label: 'The icon color does not match the brand palette', isCorrect: false, explanation: 'Brand palette is not the accessibility concern here.' }, { id: 'b', label: 'The icon is too faint — low contrast makes it hard to identify the action', isCorrect: true, explanation: 'Correct. A faint icon fails users who need to identify the button action.' }, { id: 'c', label: 'Icon buttons should always have text labels', isCorrect: false, explanation: 'Text labels are recommended but not always required — contrast is the issue here.' }, { id: 'd', label: 'Gray icons are never accessible', isCorrect: false, explanation: 'Gray icons can be accessible with sufficient contrast.' }] },
-        { id: 'm5-q6', prompt: 'A form field is required. The only indication is a red asterisk. No other cue is used. What is the failure?', choices: [{ id: 'a', label: 'The asterisk is too small to notice', isCorrect: false, explanation: 'Size is not the primary issue — color-only communication is.' }, { id: 'b', label: 'Color alone carries the required-field meaning — users who cannot distinguish red may miss it', isCorrect: true, explanation: 'Correct. The required state relies entirely on color, which fails WCAG 1.4.1.' }, { id: 'c', label: 'Asterisks are confusing to new users', isCorrect: false, explanation: 'Asterisks are a standard convention — color-only use is the problem.' }, { id: 'd', label: 'The asterisk should be placed after the label, not before', isCorrect: false, explanation: 'Placement is a UX concern, not the accessibility failure here.' }] },
-        { id: 'm5-q7', prompt: 'A keyboard user presses Tab to navigate a form. The focused input looks identical to an unfocused one. What has failed?', choices: [{ id: 'a', label: 'The form has too many fields', isCorrect: false, explanation: 'Number of fields is not the accessibility issue.' }, { id: 'b', label: 'The focus indicator is missing or invisible — keyboard navigation is severely impaired', isCorrect: true, explanation: 'Correct. Keyboard users depend on visible focus to know where they are.' }, { id: 'c', label: 'The Tab order is incorrect', isCorrect: false, explanation: 'Tab order may also be an issue, but the invisible focus state is the primary failure.' }, { id: 'd', label: 'The input border color is wrong', isCorrect: false, explanation: 'Border color is a non-text contrast issue — focus visibility is the specific failure.' }] },
-        { id: 'm5-q8', prompt: 'A dashboard uses five chart series with a color-only legend. What is the strongest fix?', choices: [{ id: 'a', label: 'Use a more varied color palette', isCorrect: false, explanation: 'A more varied palette is still color-only.' }, { id: 'b', label: 'Add direct data labels to each series so series identity does not depend on the legend', isCorrect: true, explanation: 'Correct. Direct labels remove the dependency on color-only identification.' }, { id: 'c', label: 'Make the legend larger', isCorrect: false, explanation: 'A larger legend is still color-only.' }, { id: 'd', label: 'Reduce the series count to three', isCorrect: false, explanation: 'Fewer series help, but without direct labels it remains color-only.' }] },
-      ],
-    },
-    {
-      kind: 'quiz',
-      id: 'm5-p3',
-      title: 'Repair and Pattern Thinking',
-      description: 'Apply accessible design thinking to real interface patterns and systemic improvements.',
-      questions: [
-        { id: 'm5-q9', prompt: "An error alert uses a red background and white text. It contains only the message 'Error occurred.' What would make it stronger?", choices: [{ id: 'a', label: 'Use a darker red background', isCorrect: false, explanation: 'Darker background is still color-only in terms of distinguishing the alert type.' }, { id: 'b', label: "Add an error icon, a descriptive heading like 'Payment failed', and actionable next steps", isCorrect: true, explanation: 'Correct. Icon, heading, and actionable content make the alert much more useful.' }, { id: 'c', label: 'Make the text larger', isCorrect: false, explanation: 'Larger text helps readability but does not address the content or redundancy.' }, { id: 'd', label: 'Add a close button', isCorrect: false, explanation: 'A close button is useful UX but does not address the alert content or color-only issue.' }] },
-        { id: 'm5-q10', prompt: 'A link in a paragraph is shown only by a slight blue color shift. What is the simplest effective repair?', choices: [{ id: 'a', label: 'Change the link color to a more saturated blue', isCorrect: false, explanation: 'Saturated blue is still color-only.' }, { id: 'b', label: 'Add an underline — this provides a non-color cue that confirms the link', isCorrect: true, explanation: 'Correct. Underlines are the standard non-color cue for links in body text.' }, { id: 'c', label: 'Add an arrow icon after each link', isCorrect: false, explanation: 'Arrow icons work but underlines are the simpler standard solution.' }, { id: 'd', label: 'Move all links to a separate section', isCorrect: false, explanation: 'Moving links removes their inline context — underline is the better solution.' }] },
-        { id: 'm5-q11', prompt: 'Why is fixing the form validation pattern more valuable than fixing one form screen?', choices: [{ id: 'a', label: 'It takes less time', isCorrect: false, explanation: 'Pattern work often takes more time initially.' }, { id: 'b', label: 'A pattern fix scales across every form in the product automatically', isCorrect: true, explanation: 'Correct. One pattern fix propagates to every instance across the product.' }, { id: 'c', label: 'Patterns are easier to test', isCorrect: false, explanation: 'Testing scope is not the primary advantage.' }, { id: 'd', label: 'One form screen is usually enough', isCorrect: false, explanation: 'Products typically have many forms — one fix is not enough.' }] },
-        { id: 'm5-q12', prompt: "A designer runs a contrast checker on a button and it passes. The button's active/pressed state has no visual difference from its default state. What is missing?", choices: [{ id: 'a', label: 'The button needs a drop shadow', isCorrect: false, explanation: 'Drop shadows are decorative — they are not the accessibility issue.' }, { id: 'b', label: 'A non-text contrast check on the state change — pressed state is a meaningful visual signal', isCorrect: true, explanation: 'Correct. State changes are meaningful visual signals and need visible distinction.' }, { id: 'c', label: 'The button color needs to be darker', isCorrect: false, explanation: 'Darkness is not the issue — state distinction is.' }, { id: 'd', label: 'Nothing — the button passed the checker', isCorrect: false, explanation: 'The contrast checker only checked the default state. State changes require separate review.' }] },
+        {
+          id: 'm5-q1',
+          prompt: 'What is the standard minimum contrast for normal body text?',
+          choices: [
+            { id: 'a', label: '4.5:1', isCorrect: true, explanation: 'WCAG AA for normal text is 4.5:1.' },
+            { id: 'b', label: '3:1', isCorrect: false, explanation: '3:1 applies to large text or certain non-text elements.' },
+            { id: 'c', label: '2:1', isCorrect: false, explanation: '2:1 is too low for readable body text.' },
+            { id: 'd', label: '7:1 mandatory for all text', isCorrect: false, explanation: '7:1 is enhanced AAA, not universal minimum AA.' },
+          ],
+        },
+        {
+          id: 'm5-q2',
+          prompt: 'What does WCAG 1.4.1 (Use of Color) primarily require?',
+          choices: [
+            { id: 'a', label: 'Do not rely on color as the only means of conveying information', isCorrect: true, explanation: 'Critical meaning must also be available via non-color cues.' },
+            { id: 'b', label: 'Use only grayscale for UI states', isCorrect: false, explanation: 'Color use is allowed when not the sole signal.' },
+            { id: 'c', label: 'Avoid red and green entirely', isCorrect: false, explanation: 'Hue restrictions are not blanket bans.' },
+            { id: 'd', label: 'Always provide audio cues for form states', isCorrect: false, explanation: 'Requirement is about not relying solely on color.' },
+          ],
+        },
+        {
+          id: 'm5-q3',
+          prompt: 'Why is visible focus styling essential?',
+          choices: [
+            { id: 'a', label: 'Keyboard users need to track current interaction target', isCorrect: true, explanation: 'Without visible focus, keyboard navigation becomes unusable.' },
+            { id: 'b', label: 'It improves animation smoothness', isCorrect: false, explanation: 'Focus visibility is about operability, not animation.' },
+            { id: 'c', label: 'It reduces bundle size', isCorrect: false, explanation: 'No direct relation to bundle size.' },
+            { id: 'd', label: 'It replaces semantic HTML', isCorrect: false, explanation: 'Semantic HTML and focus visibility are complementary.' },
+          ],
+        },
+        {
+          id: 'm5-q4',
+          prompt: 'What is the most scalable way to reduce repeated accessibility regressions?',
+          choices: [
+            { id: 'a', label: 'Fix patterns/components once so improvements propagate', isCorrect: true, explanation: 'Pattern-level remediation scales across screens.' },
+            { id: 'b', label: 'Fix only the highest-traffic page', isCorrect: false, explanation: 'Single-page fixes do not address systemic recurrence.' },
+            { id: 'c', label: 'Increase QA time without design changes', isCorrect: false, explanation: 'Process alone cannot replace robust components.' },
+            { id: 'd', label: 'Remove all accent colors', isCorrect: false, explanation: 'Color can remain if used accessibly with proper cues and contrast.' },
+          ],
+        },
       ],
     },
   ],
@@ -538,219 +310,74 @@ const milestone6: MilestoneConfig = {
   id: 'milestone-6',
   unitId: 'unit-6',
   title: 'Color System Capstone',
-  description: 'Demonstrate your mastery of applied color systems. Answer questions across color roles, dark mode, chart accessibility, brand constraints, and system review.',
-  estimatedMinutes: 25,
-  heroVisual: 'interface-mockup',
-  passThreshold: 12,
+  description: 'Classify semantic roles, repair dark-mode stress failures, and validate advanced color-system reasoning.',
+  estimatedMinutes: 20,
+  passThreshold: 7,
   parts: [
     {
+      kind: 'challenge',
+      id: 'm6-c1',
+      title: 'Semantic Audit',
+      description: 'Map visible colors back to their intended semantic roles.',
+      challengeType: 'semantic-audit',
+      briefing: 'Assign role labels to swatches, then identify the most critical semantic conflict.',
+      successMessage: 'You successfully audited semantic mapping and found the system-level role conflict.',
+      pointValue: 3,
+    },
+    {
+      kind: 'challenge',
+      id: 'm6-c2',
+      title: 'Dark Mode Stress Repair',
+      description: 'Fix dark-mode failures caused by naive value reuse/inversion.',
+      challengeType: 'dark-mode-stress',
+      briefing: 'Tune text, surface hierarchy, and accent visibility so the dark theme becomes readable and usable.',
+      successMessage: 'You resolved key dark-mode stress failures while preserving hierarchy and action visibility.',
+      pointValue: 3,
+    },
+    {
       kind: 'quiz',
-      id: 'm6-p1',
-      title: 'Color Systems and Roles',
-      description: 'Test your understanding of semantic color roles and system thinking.',
+      id: 'm6-qz',
+      title: 'Concept Check',
+      description: 'Four conceptual checks from Unit 6.',
       questions: [
         {
           id: 'm6-q1',
-          prompt: 'What is the main advantage of assigning semantic color roles over choosing hex values case by case?',
+          prompt: 'What problem appears when a semantic status color is reused decoratively everywhere?',
           choices: [
-            { id: 'a', label: 'Semantic roles guarantee better contrast ratios automatically', isCorrect: false, explanation: 'Roles do not auto-fix contrast — they provide a consistent vocabulary. Contrast must still be verified.' },
-            { id: 'b', label: 'Semantic roles make color decisions consistent and reusable across the entire product', isCorrect: true, explanation: 'Correct. Roles like "action" or "surface" let you update one value and propagate it everywhere, reducing inconsistency.' },
-            { id: 'c', label: 'Semantic roles eliminate the need for design tokens', isCorrect: false, explanation: 'Design tokens are how semantic roles are typically implemented — they work together, not against each other.' },
-            { id: 'd', label: 'Semantic roles reduce the number of colors a designer has to choose', isCorrect: false, explanation: 'You still choose values for each role. The benefit is clarity of purpose, not fewer decisions.' },
+            { id: 'a', label: 'Its semantic meaning gets diluted', isCorrect: true, explanation: 'Status colors should communicate state consistently, not general decoration.' },
+            { id: 'b', label: 'The browser blocks status rendering', isCorrect: false, explanation: 'This is a design-system semantics issue, not a rendering rule.' },
+            { id: 'c', label: 'It always fails contrast checks', isCorrect: false, explanation: 'Contrast may pass while semantics still fail.' },
+            { id: 'd', label: 'It increases token count automatically', isCorrect: false, explanation: 'Overuse does not inherently change token inventory.' },
           ],
         },
         {
           id: 'm6-q2',
-          prompt: 'A "success" role currently maps to teal (#14b8a6). A developer uses it for both success alerts and a decorative teal accent. What problem does this create?',
+          prompt: 'Why is direct inversion usually a poor dark-mode strategy?',
           choices: [
-            { id: 'a', label: 'The teal color is not accessible', isCorrect: false, explanation: 'Accessibility depends on contrast, not the color itself.' },
-            { id: 'b', label: 'The semantic meaning of "success" is diluted when the same color is used decoratively', isCorrect: true, explanation: 'Correct. When a semantic color appears in unrelated contexts, users lose confidence in what it means.' },
-            { id: 'c', label: 'Two different components cannot share the same hex value', isCorrect: false, explanation: 'The same value can appear in multiple places — the problem is semantic confusion, not the value itself.' },
-            { id: 'd', label: 'Teal is not appropriate for success states', isCorrect: false, explanation: 'The role value choice is independent of the semantic confusion issue.' },
+            { id: 'a', label: 'It can destroy hierarchy and create unreadable pairings', isCorrect: true, explanation: 'Dark mode needs intentional tonal stepping, not blanket inversion.' },
+            { id: 'b', label: 'Inverted colors are unsupported in CSS', isCorrect: false, explanation: 'CSS supports many transformations; quality is the issue.' },
+            { id: 'c', label: 'Inversion removes alpha channels', isCorrect: false, explanation: 'Alpha handling depends on implementation, not inversion concept alone.' },
+            { id: 'd', label: 'It only fails on OLED displays', isCorrect: false, explanation: 'Failure patterns are broader than display type.' },
           ],
         },
         {
           id: 'm6-q3',
-          prompt: 'A minimal color system needs at least which set of semantic roles?',
+          prompt: 'What is the strongest accessibility improvement for multi-series charts?',
           choices: [
-            { id: 'a', label: 'Primary, secondary, tertiary, and quaternary', isCorrect: false, explanation: 'These are generic labels, not semantic roles. "Secondary" does not tell you what the color does.' },
-            { id: 'b', label: 'Page background, surface, primary text, secondary text, action, success, warning, error', isCorrect: true, explanation: 'Correct. This set covers the core structural and feedback needs of most interfaces.' },
-            { id: 'c', label: 'Brand color, highlight, and shadow', isCorrect: false, explanation: 'These are descriptive but incomplete — they miss structural roles like surface and text.' },
-            { id: 'd', label: 'A color system needs at least 24 named roles to be useful', isCorrect: false, explanation: 'A compact 8–12 role system can fully support most product components and states.' },
+            { id: 'a', label: 'Use direct labels and non-color differentiators like line styles', isCorrect: true, explanation: 'Redundant cues reduce dependence on hue perception.' },
+            { id: 'b', label: 'Use only saturated colors', isCorrect: false, explanation: 'Saturation does not solve hue-confusion failure modes.' },
+            { id: 'c', label: 'Hide lower-priority series', isCorrect: false, explanation: 'Removing data is not the preferred accessibility strategy.' },
+            { id: 'd', label: 'Animate each series on load', isCorrect: false, explanation: 'Animation does not guarantee distinguishability.' },
           ],
         },
         {
           id: 'm6-q4',
-          prompt: 'When a designer updates the "action" token value from blue to indigo in a design system, what happens to all buttons using that token?',
+          prompt: 'What is the most important ongoing practice after launching a color system?',
           choices: [
-            { id: 'a', label: 'Nothing — each button must be updated individually', isCorrect: false, explanation: 'That would be true if hex values were hardcoded, not tokens.' },
-            { id: 'b', label: 'All buttons update automatically because they reference the same token', isCorrect: true, explanation: 'Correct. This is the primary efficiency benefit of a token-based color system.' },
-            { id: 'c', label: 'Only buttons in the design file update, not in code', isCorrect: false, explanation: 'A shared token system propagates to code as well when properly implemented.' },
-            { id: 'd', label: 'Tokens only affect new components, not existing ones', isCorrect: false, explanation: 'Existing components referencing the token update when the token value changes.' },
-          ],
-        },
-      ],
-    },
-    {
-      kind: 'quiz',
-      id: 'm6-p2',
-      title: 'Brand Constraints and Dark Mode',
-      description: 'Apply brand pressure and dark mode adaptation principles.',
-      questions: [
-        {
-          id: 'm6-q5',
-          prompt: "A brand's primary color is a bright yellow (#facc15). It is used as button background with white text. What is the likely failure?",
-          choices: [
-            { id: 'a', label: 'Yellow is not a professional brand color', isCorrect: false, explanation: 'Brand color perception is subjective — accessibility is the objective issue.' },
-            { id: 'b', label: 'White text on bright yellow likely fails contrast — dark text would work better', isCorrect: true, explanation: 'Correct. Bright yellow has high luminance; white text often fails 4.5:1. Dark text is the correct pair.' },
-            { id: 'c', label: 'Buttons should never use the primary brand color', isCorrect: false, explanation: 'Brand color on buttons is common — the issue is the text contrast choice.' },
-            { id: 'd', label: 'Yellow buttons confuse users about the primary action', isCorrect: false, explanation: 'Yellow is a bold choice but not inherently confusing — contrast is the failure.' },
-          ],
-        },
-        {
-          id: 'm6-q6',
-          prompt: 'A brand accent is used everywhere: buttons, links, headings, card borders, dividers. What is the most likely problem?',
-          choices: [
-            { id: 'a', label: 'The accent color becomes invisible from overuse and loses its ability to signal importance', isCorrect: true, explanation: 'Correct. Accent overuse dilutes the attention signal — when everything is accented, nothing is.' },
-            { id: 'b', label: 'The brand palette becomes too consistent', isCorrect: false, explanation: 'Consistency is a goal, not a problem. Over-application of a single color is the issue.' },
-            { id: 'c', label: 'Users will memorize the brand color more easily', isCorrect: false, explanation: 'Memorability is not the failure mode here — signal dilution is.' },
-            { id: 'd', label: 'The accent creates too much contrast on most elements', isCorrect: false, explanation: 'High contrast is usually desirable. The problem is semantic dilution.' },
-          ],
-        },
-        {
-          id: 'm6-q7',
-          prompt: 'Why does a light-mode surface color (#f9fafb) usually fail in dark mode when applied directly?',
-          choices: [
-            { id: 'a', label: 'Light colors are not supported in dark mode', isCorrect: false, explanation: 'Any color can technically be applied — the problem is perceptual.' },
-            { id: 'b', label: 'A near-white surface in a dark context creates blinding contrast and destroys hierarchy', isCorrect: true, explanation: 'Correct. Dark mode surfaces should step from dark, not use light-mode values.' },
-            { id: 'c', label: 'Light surfaces are always too transparent in dark mode', isCorrect: false, explanation: 'Transparency is a separate concern — luminance clash is the primary issue.' },
-            { id: 'd', label: 'Light colors render differently on dark displays', isCorrect: false, explanation: 'Rendering differences are minor — the perceptual hierarchy issue is the core problem.' },
-          ],
-        },
-        {
-          id: 'm6-q8',
-          prompt: 'What technique ensures a dark mode system maintains depth hierarchy without using the same color values as light mode?',
-          choices: [
-            { id: 'a', label: 'Invert all light-mode hex values', isCorrect: false, explanation: 'Simple inversion often produces ugly or inaccessible results — tonal stepping is more reliable.' },
-            { id: 'b', label: 'Step surfaces upward in lightness — page bg darkest, cards lighter, elevated panels lightest', isCorrect: true, explanation: 'Correct. Tonal stepping within the dark range preserves depth without using light-mode values.' },
-            { id: 'c', label: 'Use identical dark gray for all surfaces to look more refined', isCorrect: false, explanation: 'Identical surfaces flatten hierarchy — users cannot distinguish cards from background.' },
-            { id: 'd', label: 'Reduce saturation of all colors to near-zero in dark mode', isCorrect: false, explanation: 'Zero saturation removes personality and makes semantic colors hard to distinguish.' },
-          ],
-        },
-        {
-          id: 'm6-q9',
-          prompt: 'A dark mode design has a blue action color (#1e40af) carried over from light mode. What is likely wrong?',
-          choices: [
-            { id: 'a', label: 'Blue is not permitted in dark mode', isCorrect: false, explanation: 'Blue can work in dark mode — the specific value is the issue.' },
-            { id: 'b', label: '#1e40af is too dark to be visible on dark backgrounds — a lighter blue is needed', isCorrect: true, explanation: 'Correct. Dark blue on dark surface has low contrast. Dark mode actions typically need lighter, more luminous values.' },
-            { id: 'c', label: 'The button will automatically lighten in dark mode', isCorrect: false, explanation: 'Dark mode adaptation requires explicit design decisions — values do not self-adapt.' },
-            { id: 'd', label: 'Dark mode should use green for actions instead of blue', isCorrect: false, explanation: 'Hue is not the issue — luminance contrast with the dark background is.' },
-          ],
-        },
-      ],
-    },
-    {
-      kind: 'quiz',
-      id: 'm6-p3',
-      title: 'Charts and Data Visualization',
-      description: 'Apply color accessibility thinking to data visualization contexts.',
-      questions: [
-        {
-          id: 'm6-q10',
-          prompt: 'A line chart with 5 series uses only hue to distinguish them. Under deuteranopia simulation, red and green lines look identical. What is the best fix?',
-          choices: [
-            { id: 'a', label: 'Remove one of the series', isCorrect: false, explanation: 'Removing series loses information — the design should support all series accessibly.' },
-            { id: 'b', label: 'Add direct data labels and use different line styles (dashed, dotted, solid)', isCorrect: true, explanation: 'Correct. Direct labels eliminate legend dependency. Line styles distinguish series by shape, not hue.' },
-            { id: 'c', label: 'Change to a pie chart instead', isCorrect: false, explanation: 'Pie charts have their own accessibility challenges — this does not solve the CVD issue.' },
-            { id: 'd', label: 'Use a bright red-green pair with higher saturation', isCorrect: false, explanation: 'Higher saturation does not help under CVD — red and green merge regardless of saturation.' },
-          ],
-        },
-        {
-          id: 'm6-q11',
-          prompt: 'When is a sequential palette more appropriate than a categorical palette in data visualization?',
-          choices: [
-            { id: 'a', label: 'When the data has no natural ordering', isCorrect: false, explanation: 'Unordered data calls for categorical palettes, not sequential ones.' },
-            { id: 'b', label: 'When representing ordered or quantitative data (e.g., heatmaps, density, intensity scales)', isCorrect: true, explanation: 'Correct. Sequential palettes encode magnitude — dark to light or vice versa for ordered data.' },
-            { id: 'c', label: 'Always — sequential palettes are more accessible than categorical ones', isCorrect: false, explanation: 'Sequential palettes are appropriate for ordered data. For categories, sequential palettes mislead users into seeing false order.' },
-            { id: 'd', label: 'When you need more than 6 series', isCorrect: false, explanation: 'Number of series is not the deciding factor — data structure (ordered vs unordered) is.' },
-          ],
-        },
-        {
-          id: 'm6-q12',
-          prompt: 'A pie chart has 7 slices with very similar hues. What is the most robust fix?',
-          choices: [
-            { id: 'a', label: 'Use a wider hue range and higher saturation', isCorrect: false, explanation: 'Wider hue range helps somewhat but still relies on color alone, especially with many slices.' },
-            { id: 'b', label: 'Label each slice directly with its value and name; use a table for precise values', isCorrect: true, explanation: 'Correct. Direct labels and supplementary tables eliminate color-only identification and aid precision.' },
-            { id: 'c', label: 'Reduce to a maximum of 4 slices by hiding the rest', isCorrect: false, explanation: 'Hiding data is a last resort — labels and tables are more informative solutions.' },
-            { id: 'd', label: 'Animate each slice to draw attention', isCorrect: false, explanation: 'Animation does not help distinguish 7 similar-hued slices and may cause accessibility issues.' },
-          ],
-        },
-      ],
-    },
-    {
-      kind: 'quiz',
-      id: 'm6-p4',
-      title: 'System Review and Stress Testing',
-      description: 'Evaluate a color system holistically across contexts, modes, and simulation.',
-      questions: [
-        {
-          id: 'm6-q13',
-          prompt: 'What does a "color system stress test" check that a single-screen contrast check does not?',
-          choices: [
-            { id: 'a', label: 'Exact hex values used across the codebase', isCorrect: false, explanation: 'A stress test is about visual and semantic performance, not code auditing.' },
-            { id: 'b', label: 'Whether the system holds up across multiple contexts — light, dark, charts, alerts, and CVD simulation', isCorrect: true, explanation: 'Correct. A stress test exposes failures invisible in any single view.' },
-            { id: 'c', label: 'Whether the brand guidelines were followed exactly', isCorrect: false, explanation: 'Brand compliance is separate from system robustness.' },
-            { id: 'd', label: 'The number of tokens defined in the system', isCorrect: false, explanation: 'Token count does not indicate system quality — contextual performance does.' },
-          ],
-        },
-        {
-          id: 'm6-q14',
-          prompt: 'A consistency audit finds that the primary button uses #1e40af on 3 screens and #3b82f6 on 2 screens. What should happen?',
-          choices: [
-            { id: 'a', label: 'Accept the variation — slight differences are unnoticeable', isCorrect: false, explanation: 'Slight differences accumulate into inconsistency and erode user confidence in the design.' },
-            { id: 'b', label: 'Consolidate to one value via the action token and update all instances', isCorrect: true, explanation: 'Correct. The token should carry the single canonical value and all instances should reference it.' },
-            { id: 'c', label: 'Choose the more popular value and manually change the others', isCorrect: false, explanation: 'Manual changes are error-prone — a token ensures future consistency automatically.' },
-            { id: 'd', label: 'Use both values as aliases for the same role', isCorrect: false, explanation: 'Two values for one role reintroduces inconsistency. One role, one value.' },
-          ],
-        },
-        {
-          id: 'm6-q15',
-          prompt: 'Why can the same hex value look different across two screens in the same app?',
-          choices: [
-            { id: 'a', label: 'The browser renders colors differently per page', isCorrect: false, explanation: 'Browser rendering is consistent per display — perception is the varying factor.' },
-            { id: 'b', label: 'Context effect — the surrounding colors change how a color is perceived', isCorrect: true, explanation: 'Correct. A blue on a warm background reads differently than the same blue on a cool background due to simultaneous contrast.' },
-            { id: 'c', label: 'Different monitors show different colors', isCorrect: false, explanation: 'Monitor variation is a factor, but context effect explains perceptual differences on the same display.' },
-            { id: 'd', label: 'CSS applies different rendering passes per component', isCorrect: false, explanation: 'CSS rendering does not vary between components — context effect is perceptual.' },
-          ],
-        },
-        {
-          id: 'm6-q16',
-          prompt: 'Before shipping, which five areas should a final color review cover?',
-          choices: [
-            { id: 'a', label: 'Font size, border radius, spacing, shadows, and animation timing', isCorrect: false, explanation: 'These are important design properties but not specifically color review areas.' },
-            { id: 'b', label: 'Hierarchy, text readability, semantic clarity, dark mode, chart readability, and CVD robustness', isCorrect: true, explanation: 'Correct. These six areas together cover the key failure modes of a color system.' },
-            { id: 'c', label: 'Brand guidelines, marketing approval, client review, developer handoff, and QA sign-off', isCorrect: false, explanation: 'These are process steps, not color review criteria.' },
-            { id: 'd', label: 'Number of colors, token count, palette size, theme support, and documentation', isCorrect: false, explanation: 'Documentation and quantity are secondary to functional review criteria.' },
-          ],
-        },
-        {
-          id: 'm6-q17',
-          prompt: 'A wide-gamut display shows an interface with highly saturated accent colors as intended. A user on a standard sRGB display sees muted versions of those colors. What approach reduces this problem?',
-          choices: [
-            { id: 'a', label: 'Use maximum saturation so colors remain vivid even when muted', isCorrect: false, explanation: 'Maximum saturation on wide-gamut displays creates extremely vivid results on wide-gamut while still muting on sRGB — the gap widens.' },
-            { id: 'b', label: 'Use moderate saturation that remains readable across display types', isCorrect: true, explanation: 'Correct. Moderate saturation ensures the design holds across both standard and wide-gamut displays.' },
-            { id: 'c', label: 'Avoid color entirely and use only grayscale', isCorrect: false, explanation: 'Grayscale removes all color signal — moderation is the goal, not elimination.' },
-            { id: 'd', label: 'Wide-gamut issues resolve automatically in modern browsers', isCorrect: false, explanation: 'Browsers do not automatically compensate — designers must make intentional saturation choices.' },
-          ],
-        },
-        {
-          id: 'm6-q18',
-          prompt: 'A designer completes a color system for a product. What is the single most important ongoing practice after launch?',
-          choices: [
-            { id: 'a', label: 'Adding new accent colors regularly to keep the design fresh', isCorrect: false, explanation: 'Adding colors without purpose grows entropy — consistency requires discipline.' },
-            { id: 'b', label: 'Reviewing new components and feature additions against the system to maintain consistency', isCorrect: true, explanation: 'Correct. Systems decay when new work bypasses them. Regular review keeps the system alive.' },
-            { id: 'c', label: 'Redesigning the color system annually', isCorrect: false, explanation: 'Annual redesigns are disruptive — incremental review and refinement is more sustainable.' },
-            { id: 'd', label: 'Locking all tokens so no one can change them', isCorrect: false, explanation: 'Lock-down prevents evolution — a governance process with review is more practical.' },
+            { id: 'a', label: 'Continuously review new components against system roles and tokens', isCorrect: true, explanation: 'Systems stay healthy through governance and ongoing enforcement.' },
+            { id: 'b', label: 'Freeze all tokens permanently', isCorrect: false, explanation: 'Systems should evolve while preserving semantic discipline.' },
+            { id: 'c', label: 'Add a new accent every release', isCorrect: false, explanation: 'Uncontrolled expansion usually increases inconsistency.' },
+            { id: 'd', label: 'Rebuild the entire palette yearly', isCorrect: false, explanation: 'Incremental maintenance is usually more stable than full resets.' },
           ],
         },
       ],
@@ -761,5 +388,5 @@ const milestone6: MilestoneConfig = {
 const milestoneRegistry: MilestoneConfig[] = [milestone1, milestone2, milestone3, milestone4, milestone5, milestone6];
 
 export function getMilestoneById(id: string): MilestoneConfig | undefined {
-  return milestoneRegistry.find((m) => m.id === id);
+  return milestoneRegistry.find((milestone) => milestone.id === id);
 }

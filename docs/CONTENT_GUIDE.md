@@ -98,6 +98,23 @@ When adding a new challenge type, update all three:
 
 If a challenge type is not mapped in `ChallengeRenderer`, it now renders an unavailable state and cannot be completed.
 
+### Current milestone scoring model
+
+Milestone pass/fail now uses points, not question counts:
+
+- Quiz questions are worth 1 point each.
+- Challenge parts award `pointValue` when completed.
+- `passThreshold` is compared against total earned points.
+
+Current configured structure in `src/data/milestones.ts`:
+
+- Milestone 1: challenge (3 pts) + 3-question quiz, pass 4
+- Milestone 2: challenge (3 pts) + 3-question quiz, pass 4
+- Milestone 3: challenge (4 pts) + 3-question quiz, pass 5
+- Milestone 4: challenge (4 pts) + 3-question quiz, pass 5
+- Milestone 5: challenge (4 pts) + 4-question quiz, pass 6
+- Milestone 6: two challenges (3 + 3 pts) + 4-question quiz, pass 7
+
 ## Adding Glossary Terms
 New terms should be added to `src/data/glossary.ts`. If a lesson's `glossaryTerms` array contains a string that matches a `term` in this file, that term will be unlocked and displayed in the user's glossary once they finish the lesson.
 
