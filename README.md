@@ -2,6 +2,12 @@
 
 Browser-based color theory course for developers and designers. Six units of interactive lessons covering color perception, digital color models, accessibility, and design systems.
 
+## Milestones
+
+- 6 unit milestones now use mixed parts: interactive challenges + short quizzes
+- Milestone scoring is point-based (`quiz correct answers + challenge pointValue`)
+- Milestone 6 includes two challenge parts (`semantic-audit` and `dark-mode-stress`)
+
 ## Stack
 
 - React 19 + TypeScript 5.9 + Vite 8
