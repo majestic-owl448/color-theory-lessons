@@ -12,7 +12,7 @@ const ROLES: RoleDef[] = [
   { key: 'bg',        label: 'Background',    defaultValue: '#1a1a2e' },
   { key: 'surface',   label: 'Surface',       defaultValue: '#252542' },
   { key: 'textPri',   label: 'Primary text',  defaultValue: '#e0e0e0' },
-  { key: 'textSec',   label: 'Secondary text', defaultValue: '#8888a0' },
+  { key: 'textSec',   label: 'Secondary text', defaultValue: '#6e6e86' },
   { key: 'border',    label: 'Border',        defaultValue: '#3a3a55' },
   { key: 'accent',    label: 'Primary action', defaultValue: '#6366f1' },
   { key: 'success',   label: 'Success',       defaultValue: '#22c55e' },
