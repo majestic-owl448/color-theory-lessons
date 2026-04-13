@@ -11,18 +11,18 @@ type Fix = 'icon' | 'pattern' | 'label' | 'contrast';
 interface Item {
   id: string;
   label: string;
-  color: string;
+  colors: string[];
   fragile: boolean;
   validFixes: Fix[];
 }
 
 const ITEMS: Item[] = [
-  { id: 'status', label: 'Status badge pair (green/red only)', color: '#22c55e', fragile: true, validFixes: ['icon', 'label'] },
-  { id: 'bars', label: 'Chart bars (red vs green)', color: '#ef4444', fragile: true, validFixes: ['pattern', 'label'] },
-  { id: 'form', label: 'Form errors in red-only labels', color: '#f97316', fragile: true, validFixes: ['icon', 'label', 'contrast'] },
-  { id: 'link', label: 'Underlined link', color: '#3b82f6', fragile: false, validFixes: ['label'] },
-  { id: 'toggle', label: 'Toggle with text On/Off', color: '#8b5cf6', fragile: false, validFixes: ['label'] },
-  { id: 'alert', label: 'Alert with icon + heading', color: '#eab308', fragile: false, validFixes: ['icon'] },
+  { id: 'status', label: 'Status badge pair (green/red only)', colors: ['#22c55e', '#ef4444'], fragile: true, validFixes: ['icon', 'label'] },
+  { id: 'bars', label: 'Chart bars (red vs green)', colors: ['#ef4444', '#22c55e'], fragile: true, validFixes: ['pattern', 'label'] },
+  { id: 'form', label: 'Form errors indicated only by red label text', colors: ['#f97316'], fragile: true, validFixes: ['icon', 'label', 'contrast'] },
+  { id: 'link', label: 'Underlined link', colors: ['#3b82f6'], fragile: false, validFixes: ['label'] },
+  { id: 'toggle', label: 'Toggle with text On/Off', colors: ['#8b5cf6'], fragile: false, validFixes: ['label'] },
+  { id: 'alert', label: 'Alert with icon + heading', colors: ['#eab308'], fragile: false, validFixes: ['icon'] },
 ];
 
 const FIX_LABELS: Record<Fix, string> = {
@@ -70,7 +70,7 @@ export function SimulationSpotterChallenge({ onComplete }: SimulationSpotterChal
 
       <div className={styles.list}>
         {ITEMS.map((item) => {
-          const visibleColor = simulated ? simulateDeuteranopia(item.color) : item.color;
+          const visibleColors = item.colors.map((color) => (simulated ? simulateDeuteranopia(color) : color));
           const isFlagged = !!flagged[item.id];
           return (
             <div key={item.id} className={styles.row}>
@@ -81,7 +81,11 @@ export function SimulationSpotterChallenge({ onComplete }: SimulationSpotterChal
               >
                 {isFlagged ? 'flagged' : 'flag'}
               </button>
-              <span className={styles.dot} style={{ backgroundColor: visibleColor }} />
+              <div className={styles.swatches}>
+                {visibleColors.map((visibleColor, index) => (
+                  <span key={`${item.id}-${index}`} className={styles.dot} style={{ backgroundColor: visibleColor }} />
+                ))}
+              </div>
               <span className={styles.label}>{item.label}</span>
               <select
                 className={styles.select}
