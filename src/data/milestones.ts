@@ -320,7 +320,7 @@ const milestone6: MilestoneConfig = {
       title: 'Semantic Audit',
       description: 'Map visible colors back to their intended semantic roles.',
       challengeType: 'semantic-audit',
-      briefing: 'Assign role labels to swatches, then identify the most critical semantic conflict.',
+      briefing: 'Assign role labels to swatches in this dark-mode palette, then identify the most critical semantic conflict.',
       successMessage: 'You successfully audited semantic mapping and found the system-level role conflict.',
       pointValue: 3,
     },

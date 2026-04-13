@@ -7,9 +7,9 @@ interface DarkModeStressChallengeProps {
 }
 
 export function DarkModeStressChallenge({ onComplete }: DarkModeStressChallengeProps) {
-  const [textL, setTextL] = useState(96);
-  const [surfaceL, setSurfaceL] = useState(20);
-  const [accentL, setAccentL] = useState(68);
+  const [textL, setTextL] = useState(70);
+  const [surfaceL, setSurfaceL] = useState(12);
+  const [accentL, setAccentL] = useState(40);
 
   const checks = useMemo(() => {
     const bg = '#0a0a23';
@@ -54,19 +54,19 @@ export function DarkModeStressChallenge({ onComplete }: DarkModeStressChallengeP
       <div className={styles.row}>
         <label htmlFor="dark-text">Text lightness ({textL})</label>
         <input id="dark-text" type="range" min={60} max={100} value={textL} onChange={(event) => setTextL(Number(event.target.value))} />
-        <span className={checks.textPass ? styles.good : styles.bad}>{checks.textContrast.toFixed(2)} (at least 4.5)</span>
+        <span className={checks.textPass ? styles.good : styles.bad}>Text contrast: {checks.textContrast.toFixed(2)} (at least 4.5)</span>
       </div>
 
       <div className={styles.row}>
         <label htmlFor="dark-surface">Surface lightness ({surfaceL})</label>
         <input id="dark-surface" type="range" min={10} max={40} value={surfaceL} onChange={(event) => setSurfaceL(Number(event.target.value))} />
-        <span className={checks.hierarchyPass ? styles.good : styles.bad}>{checks.hierarchyContrast.toFixed(2)} (at least 1.2)</span>
+        <span className={checks.hierarchyPass ? styles.good : styles.bad}>Surface contrast: {checks.hierarchyContrast.toFixed(2)} (at least 1.2)</span>
       </div>
 
       <div className={styles.row}>
         <label htmlFor="dark-accent">Accent lightness ({accentL})</label>
         <input id="dark-accent" type="range" min={35} max={85} value={accentL} onChange={(event) => setAccentL(Number(event.target.value))} />
-        <span className={checks.accentPass ? styles.good : styles.bad}>{checks.accentContrast.toFixed(2)} (at least 3.0)</span>
+        <span className={checks.accentPass ? styles.good : styles.bad}>Accent contrast: {checks.accentContrast.toFixed(2)} (at least 3.0)</span>
       </div>
 
       <div className={styles.actions}>
