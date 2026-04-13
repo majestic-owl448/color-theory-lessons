@@ -33,7 +33,7 @@ export const lesson4_1: LessonConfig = {
   steps: [
     {
       id: 's1',
-      text: 'A digital screen emits light. But when you see a color, you are not seeing the screen itself — you are seeing the result of your eye and brain interpreting that light. Color is a perceptual experience, not a physical property of the display.',
+      text: 'You have learned to describe color, mix it on screen, and express it in code. But there is another side to every color decision: the person looking at the screen. A digital screen emits light. But when you see a color, you are not seeing the screen itself — you are seeing the result of your eye and brain interpreting that light. Color is a perceptual experience, not a physical property of the display.',
       highlights: ['color perception', 'visual system'],
     },
     {

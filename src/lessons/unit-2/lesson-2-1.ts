@@ -15,7 +15,7 @@ export const lesson2_1: LessonConfig = {
   steps: [
     {
       id: 's1',
-      text: 'Color is not created the same way everywhere. A glowing screen and a painted wall both show color, but they are doing completely different things to produce it.',
+      text: 'Unit 1 gave you a vocabulary for describing what color does — hue, saturation, lightness, contrast, harmony. Now we look under the hood at how screens actually produce those colors. Color is not created the same way everywhere. A glowing screen and a painted wall both show color, but they are doing completely different things to produce it.',
     },
     {
       id: 's2',

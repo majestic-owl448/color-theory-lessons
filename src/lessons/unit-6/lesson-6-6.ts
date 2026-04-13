@@ -34,7 +34,7 @@ export const lesson6_6: LessonConfig = {
   steps: [
     {
       id: 's1',
-      text: 'sRGB is the standard color space for most web work. It defines the range of colors that virtually every screen can display. When you write a HEX, RGB, or HSL value in CSS, you are working in sRGB by default.',
+      text: 'Before stress-testing your color system in the next lesson, you need to understand one more layer: the color space your values live in. sRGB is the standard color space for most web work. It defines the range of colors that virtually every screen can display. When you write a HEX, RGB, or HSL value in CSS, you are working in sRGB by default.',
       highlights: ['sRGB', 'color space'],
     },
     {

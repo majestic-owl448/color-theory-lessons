@@ -29,7 +29,7 @@ export const lesson1_4: LessonConfig = {
     },
     {
       id: 's4',
-      text: 'Context changes everything. A red button in a mostly cool interface creates energy and urgency. The same red in a palette of equally loud warm colors might not stand out at all.',
+      text: 'Context changes everything. A red button in a mostly cool interface creates energy and urgency. The same red in a palette of equally loud warm colors might not stand out at all. This is the same principle you saw with contrast — a color\'s impact always depends on what surrounds it.',
     },
     {
       id: 's5',
