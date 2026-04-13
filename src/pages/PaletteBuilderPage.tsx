@@ -287,6 +287,24 @@ function ratioOf(a: string, b: string) {
   return contrastRatioWcag(hexToRgb(a), hexToRgb(b));
 }
 
+function remapRoleHexes(
+  roles: Record<RoleKey, string> | null,
+  fromHex: string,
+  toHex: string,
+) {
+  if (!roles) return roles;
+  const fromUpper = fromHex.toUpperCase();
+  let changed = false;
+  const next = { ...roles };
+  for (const role of ROLE_KEYS) {
+    if (roles[role].toUpperCase() === fromUpper) {
+      next[role] = toHex;
+      changed = true;
+    }
+  }
+  return changed ? next : roles;
+}
+
 function findAccessibleVariant(
   fgHex: string,
   bgHex: string,
@@ -525,9 +543,20 @@ export function PaletteBuilderPage() {
   /* ── Palette edit helpers ───────────────────────────────────────────────── */
 
   const updatePaletteColor = (index: number, newHex: string) => {
+    const previousHex = paletteColors[index]?.hex;
     setPaletteColors((prev) =>
       prev.map((c, i) => (i === index ? { ...c, hex: newHex } : c)),
     );
+
+    if (previousHex) {
+      if (index === 0) {
+        setPrimaryHex(newHex);
+        syncPickerStates(newHex);
+      }
+      setDarkRoles((prev) => remapRoleHexes(prev, previousHex, newHex));
+      setLightRoles((prev) => remapRoleHexes(prev, previousHex, newHex));
+    }
+
     setPaletteIsCustom(true);
   };
 
@@ -536,12 +565,16 @@ export function PaletteBuilderPage() {
       const customCount = prev.filter((c) => c.label.startsWith('custom')).length;
       return [...prev, { hex, label: label ?? `custom ${customCount + 1}` }];
     });
+    setDarkRoles(null);
+    setLightRoles(null);
     setPaletteIsCustom(true);
     setEditingIndex(null);
   };
 
   const removePaletteColor = (index: number) => {
     setPaletteColors((prev) => prev.filter((_, i) => i !== index));
+    setDarkRoles(null);
+    setLightRoles(null);
     setPaletteIsCustom(true);
     setEditingIndex((prev) =>
       prev === index ? null : prev !== null && prev > index ? prev - 1 : prev,
