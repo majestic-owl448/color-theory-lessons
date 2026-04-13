@@ -26,10 +26,10 @@ const ROLE_LABELS: Record<RoleKey, string> = {
 
 const DEFAULTS: Record<RoleKey, RoleHsl> = {
   bg: { h: BASE.h, s: 30, l: 12 },
-  surface: { h: BASE.h, s: 24, l: 18 },
-  primaryText: { h: BASE.h, s: 20, l: 94 },
-  secondaryText: { h: BASE.h, s: 16, l: 74 },
-  accent: { h: BASE.h, s: BASE.s, l: BASE.l },
+  surface: { h: BASE.h, s: 24, l: 14 },
+  primaryText: { h: BASE.h, s: 20, l: 78 },
+  secondaryText: { h: BASE.h, s: 16, l: 56 },
+  accent: { h: BASE.h, s: BASE.s, l: 44 },
 };
 
 function ratio(a: string, b: string): number {
