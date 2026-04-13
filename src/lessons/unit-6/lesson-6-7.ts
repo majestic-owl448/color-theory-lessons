@@ -3,8 +3,8 @@ import type { LessonConfig } from '../../types/lesson.ts';
 export const lesson6_7: LessonConfig = {
   id: 'u6-l7', unitId: 'unit-6',
   title: 'Final System Review and Stress Test',
-  description: 'Run a structured quality review of a color system across light mode, dark mode, charts, alerts, and CVD simulation to find weaknesses before shipping.',
-  learningGoal: 'Perform a comprehensive stress test and consistency audit of a color system across multiple contexts.',
+  description: 'Run a governance-focused stress review of a color system across light mode, dark mode, charts, alerts, and CVD simulation to catch cross-context role drift before shipping.',
+  learningGoal: 'Perform a comprehensive system stress test that identifies role drift, token inconsistency, and cross-context failures.',
   estimatedMinutes: 16,
   prerequisites: ['u6-l6'],
   conceptsIntroduced: [
@@ -32,12 +32,12 @@ export const lesson6_7: LessonConfig = {
     },
     {
       id: 's3',
-      text: 'A consistency audit checks whether roles are applied correctly across components. Common problems: the same interactive blue used for both action buttons and informational tags; error red used in decorative icons; secondary text darker than primary text.',
+      text: 'A consistency audit checks governance patterns across the system, not just one screen. Common failures include role drift (one role used for two meanings), role duplication (two roles doing one job), and local overrides that bypass shared tokens.',
       highlights: ['consistency audit'],
     },
     {
       id: 's4',
-      text: 'Before shipping, verify: hierarchy (is the primary action clearly dominant?), readability (does all text meet contrast thresholds?), semantic clarity (do success/warning/error feel distinct?), dark mode (do all roles still work?), chart readability (are series distinguishable?), and CVD robustness (do backup cues survive simulation?).',
+      text: 'Before shipping, verify both quality and governance: hierarchy (is the primary action clearly dominant?), readability (does all text meet contrast thresholds?), semantic clarity (do success/warning/error feel distinct?), dark mode (do all roles still work?), chart readability (are series distinguishable?), CVD robustness (do backup cues survive simulation?), and token propagation (do fixes apply consistently across contexts?).',
     },
     {
       id: 's5',
@@ -47,11 +47,12 @@ export const lesson6_7: LessonConfig = {
   challenges: [
     {
       id: 'c1',
-      prompt: 'Run the stress test on the sample color system. Mark every weakness you find across light, dark, chart, alert, and simulation contexts.',
+      prompt: 'Run the stress test on the sample color system. Mark every weakness you find across light, dark, chart, alert, and simulation contexts, then tag each issue as role drift, missing role, or token override.',
       type: 'explore-all',
       hints: [
         'Toggle between all five contexts before marking anything — the same issue might appear in multiple views.',
         'Ask: does hierarchy still work? Are states distinct? Is anything too loud or too faint?',
+        'For each issue, classify the root cause: role drift, missing role definition, or token override.',
         'Simulation failures often appear in the chart and alert views — check those carefully.',
       ],
       successCriteria: 'All five stress test contexts reviewed.',
@@ -73,7 +74,7 @@ export const lesson6_7: LessonConfig = {
       prompt: 'What does a consistency audit check?',
       choices: [
         { id: 'a', label: 'Whether all hex values are unique', isCorrect: false, explanation: 'Multiple roles can share a hex value — uniqueness is not the goal of a consistency audit.' },
-        { id: 'b', label: 'Whether roles are applied correctly — the same button color across screens, the same error treatment everywhere', isCorrect: true, explanation: 'Consistency means each role has one clear meaning applied uniformly across the product.' },
+        { id: 'b', label: 'Whether roles and tokens are applied consistently — one role per meaning, and changes propagating across contexts', isCorrect: true, explanation: 'Consistency means each role has one clear meaning, token references stay intact, and fixes propagate uniformly across the product.' },
         { id: 'c', label: 'Whether the palette uses fewer than ten colors', isCorrect: false, explanation: 'Color count is not what a consistency audit measures.' },
         { id: 'd', label: 'Whether the design matches a trend report', isCorrect: false, explanation: 'Trend alignment is not an aspect of consistency auditing.' },
       ],
@@ -91,8 +92,8 @@ export const lesson6_7: LessonConfig = {
   ],
   keyPoints: [
     'A stress test applies the system across multiple contexts — light mode, dark mode, charts, alerts, CVD simulation — to find hidden weaknesses.',
-    'A consistency audit checks that roles are applied correctly: same button color across screens, same error treatment everywhere.',
-    'Before shipping, verify: hierarchy, readability, semantic clarity, dark mode performance, chart readability, and CVD robustness.',
+    'A consistency audit checks governance: role drift, duplicate role meaning, and token overrides that break propagation.',
+    'Before shipping, verify: hierarchy, readability, semantic clarity, dark mode performance, chart readability, CVD robustness, and cross-context token propagation.',
     'This is a synthesis exercise — visual vocabulary, additive model, format knowledge, perception, accessibility, and systems thinking all come together.',
   ],
 };

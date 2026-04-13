@@ -32,9 +32,8 @@ export const lesson2_3: LessonConfig = {
       text: 'For screen-first designers, this matters whenever work crosses into physical materials — packaging, printed cards, branded merchandise, signage. The difference is not a printing error. It is a fundamental difference between two color models.',
     },
     {
-      id: 's5-pantone',
-      text: 'Because screens vary in calibration and gamut, no screen preview is a reliable reference for what ink on paper will look like. Physical color standards like Pantone exist to solve this: a numbered swatch looks the same regardless of which screen was used to design it, giving everyone in the production chain a shared ground truth.',
-      highlights: ['Pantone'],
+      id: 's5',
+      text: 'Because screens vary in calibration and gamut, no screen preview is a perfect reference for ink on paper. In real production work, teams validate with physical proofs and agreed print references so decisions are made in the final medium, not only on-screen.',
     },
     {
       id: 's6',
@@ -91,6 +90,6 @@ export const lesson2_3: LessonConfig = {
     'Screens generally have a wider gamut than print — some screen colors simply cannot be reproduced in ink.',
     'Pigments absorb certain wavelengths; the wavelengths not absorbed are what the eye perceives as color.',
     'Subtractive primaries (cyan, magenta, yellow) each absorb one third of white light when fully applied.',
-    'Pantone is a standardized physical color reference system used to communicate exact color intent across screens and print, where screen preview cannot be trusted.',
+    'When work moves from screen to print, validate with physical proofs and agreed print references rather than relying on monitor appearance alone.',
   ],
 };

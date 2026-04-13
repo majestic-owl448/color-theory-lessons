@@ -5,9 +5,9 @@ export const lesson4_4: LessonConfig = {
   unitId: 'unit-4',
   title: 'What Color Perception Means for Design',
   description:
-    'Connect what you have learned about vision and CVD to everyday interface patterns — observe which designs hold up and which break down when color perception varies.',
+    'Connect what you have learned about vision and CVD to everyday interface patterns by diagnosing where meaning becomes ambiguous when perception varies.',
   learningGoal:
-    'Identify at least three common interface patterns that become ambiguous when color perception varies, and explain why they break.',
+    'Identify at least three interface patterns that become ambiguous when color perception varies, and explain the structural reason they break.',
   estimatedMinutes: 13,
   prerequisites: ['u4-l3'],
   conceptsIntroduced: [
@@ -34,7 +34,7 @@ export const lesson4_4: LessonConfig = {
     },
     {
       id: 's3',
-      text: 'Form fields that signal errors with only a red border face the same problem. The color shift may be invisible or subtle under certain CVD types. Text labels, icons, or other cues would survive where the color alone does not.',
+      text: 'Form fields that signal errors with only a red border face the same problem. The color shift may be invisible or subtle under certain CVD types. Diagnose the failure first: error meaning is present, but encoded in a single fragile channel.',
     },
     {
       id: 's4',
@@ -43,7 +43,7 @@ export const lesson4_4: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'Notice the pattern: designs that rely on a single visual channel (hue) to carry meaning are fragile. Designs that pair color with shape, text, pattern, or position are robust. In the next unit, you will learn the specific techniques and guidelines for building that robustness.',
+      text: 'Notice the pattern: designs that rely on a single visual channel (hue) to carry meaning are fragile. Your outcome here is diagnostic: name where meaning depends on hue alone and why that creates ambiguity. In the next unit, you will learn the repair techniques and guidelines for building robust alternatives.',
       highlights: ['perceptual robustness'],
     },
   ],
@@ -171,7 +171,7 @@ export const lesson4_4: LessonConfig = {
     'Designs that rely on hue alone to carry meaning are fragile — they break when color perception varies.',
     'Status indicators, form validation, and chart series are the most common patterns that depend on hue difference.',
     'Under protan and deutan simulation, red-green distinctions collapse; under tritan, blue-yellow distinctions collapse.',
-    'Designs that pair color with other visual signals (shape, text, pattern, position) remain comprehensible across perception differences.',
-    'Noticing where color carries meaning is the first step; the next unit covers how to build robust alternatives.',
+    'This lesson is about diagnosis: identify where meaning is hue-only and where ambiguity appears.',
+    'Noticing where color carries meaning is the first step; the next unit covers concrete repair methods.',
   ],
 };

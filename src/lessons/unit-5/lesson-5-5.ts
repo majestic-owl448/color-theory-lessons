@@ -3,7 +3,7 @@ import type { LessonConfig } from '../../types/lesson.ts';
 export const lesson5_5: LessonConfig = {
   id: 'u5-l5', unitId: 'unit-5',
   title: 'Accessibility Audit Workflow',
-  description: 'Build a repeatable workflow for auditing color accessibility in real interfaces — combining contrast tools, CVD simulation, and task-based checking into one structured process.',
+  description: 'Build a repeatable accessibility workflow for individual screens and user tasks, combining contrast tools, CVD simulation, and task-based checking into one structured process.',
   learningGoal: 'Apply a structured accessibility audit workflow to a real interface, identify the most important failures, and explain why testing in context matters.',
   estimatedMinutes: 16,
   prerequisites: ['u5-l4'],
@@ -35,7 +35,7 @@ export const lesson5_5: LessonConfig = {
     },
     {
       id: 's2',
-      text: 'A practical audit workflow has four stages: (1) Identify priority elements — text, controls, states, and graphics that carry meaning. (2) Check contrast ratios for text and non-text components. (3) Simulate CVD conditions and identify ambiguous elements. (4) Verify task completion — can users still accomplish their goals?',
+      text: 'A practical audit workflow has four stages: (1) Identify priority elements on the current screen or flow — text, controls, states, and graphics that carry meaning. (2) Check contrast ratios for text and non-text components. (3) Simulate CVD conditions and identify ambiguous elements. (4) Verify task completion — can users still accomplish their goals?',
       highlights: ['audit', 'priority element'],
     },
     {
@@ -50,7 +50,7 @@ export const lesson5_5: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'The most valuable question during simulated review is not "do the colors look different?" but "can the user complete the task?" Run through the core user flows — fill a form, read a chart, understand a status indicator — and flag anywhere meaning is lost.',
+      text: 'The most valuable question during simulated review is not "do the colors look different?" but "can the user complete the task?" Run through the core user flows for this interface slice — fill a form, read a chart, understand a status indicator — and flag anywhere meaning is lost.',
     },
   ],
   challenges: [
@@ -160,7 +160,7 @@ export const lesson5_5: LessonConfig = {
   ],
   keyPoints: [
     'A contrast tool calculates ratios — it does not replace judgment. Always test in realistic context with real sizes and content.',
-    'A practical audit: identify priority elements → check contrast → simulate CVD → verify task completion.',
+    'A practical screen-level audit: identify priority elements → check contrast → simulate CVD → verify task completion.',
     'Priority elements are those users depend on to complete tasks: text, buttons, inputs, feedback, alerts, chart marks.',
     'Contrast passing does not mean color-alone passing — both checks must be done separately.',
     'During simulated review, ask "can the user complete the task?" — not just "do the colors look different?"',

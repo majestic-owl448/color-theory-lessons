@@ -42,7 +42,7 @@ export const lesson3_2: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'RGBA adds a fourth value — the alpha channel — to RGB. It controls opacity, from 0 (fully transparent) to 1 (fully opaque). When you see rgba(30, 64, 175, 0.5), the color is that same blue at 50% opacity.',
+      text: 'RGBA adds a fourth value — the alpha channel — to RGB. In this lesson, treat it as a format preview: 0 is fully transparent and 1 is fully opaque. The next lesson focuses on how that same value behaves in layered interfaces.',
       highlights: ['RGBA', 'alpha channel'],
     },
   ],
@@ -203,6 +203,6 @@ export const lesson3_2: LessonConfig = {
     'HEX encodes the same three channels as base-16 pairs: the first two digits are red, next two green, last two blue.',
     'Matching HEX pairs (e.g. #4A4A4A) signal a neutral — a quick reading shortcut that applies the equal-channels principle from Unit 2.',
     'Shorthand HEX (#ABC) is valid only when each pair in the full six-character form is a repeated digit — #ABC expands to #AABBCC.',
-    'RGBA adds a fourth value (0–1) for opacity; rgba(30, 64, 175, 0.5) is that same blue at 50% transparency.',
+    'RGBA adds a fourth value (0–1) for opacity; this lesson introduces the notation, and the next lesson covers layered behavior in depth.',
   ],
 };

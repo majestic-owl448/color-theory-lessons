@@ -5,9 +5,9 @@ export const lesson3_5: LessonConfig = {
   unitId: 'unit-3',
   title: 'Gradients, CSS Color Usage, and Theme Building',
   description:
-    'Connect color formats to real product work by learning gradients, semantic color roles, and how to build a coherent theme in a live sandbox.',
+    'Connect color formats to real product work by applying gradients and role assignments to build a coherent interface theme in a live sandbox.',
   learningGoal:
-    'Explain role-based color usage and build a simple, coherent interface theme with a functional gradient.',
+    'Apply role-based color usage to build a simple, coherent interface theme with a functional gradient.',
   estimatedMinutes: 16,
   prerequisites: ['u3-l4'],
   conceptsIntroduced: [
@@ -33,7 +33,7 @@ export const lesson3_5: LessonConfig = {
   steps: [
     {
       id: 's1',
-      text: 'In a real product, colors serve specific roles: background, surface, primary text, secondary text, border, accent, success, warning, and error. Thinking in roles — not isolated swatches — helps a product stay consistent across many screens.',
+      text: 'In this lesson, treat colors as assignments in a UI: background, surface, text, border, accent, success, warning, and error. The task is practical: place each color where it belongs so the interface reads clearly and consistently.',
       highlights: ['semantic color', 'theme'],
     },
     {
@@ -43,11 +43,11 @@ export const lesson3_5: LessonConfig = {
     },
     {
       id: 's3',
-      text: 'CSS and design systems often organize color by role, not by swatch name. Instead of storing "#2563EB" everywhere, a system might define --color-action-primary and reference that name across buttons, links, and focus rings. The name describes the job, not the appearance.',
+      text: 'In CSS, roles are usually assigned through custom properties. Instead of repeating "#2563EB" in many rules, assign a role variable and apply it to buttons, links, and focus rings. This keeps the lesson focused on implementation rather than one-off values.',
     },
     {
       id: 's4',
-      text: 'A theme is a coordinated set of color role assignments. Changing the theme — say, from light to dark — means reassigning the values behind the roles, not rewriting every component. This is why role-based thinking scales better than one-off color choices.',
+      text: 'A theme is the set of role assignments used by a given interface mode. In the sandbox, you will swap assignments and immediately see how readability, hierarchy, and emphasis change across components.',
     },
     {
       id: 's5',
@@ -171,10 +171,10 @@ export const lesson3_5: LessonConfig = {
     },
   ],
   keyPoints: [
-    'Products use colors in roles: background, surface, text, border, accent, success, warning, error. Thinking in roles is stronger than scattering random values.',
+    'Products apply colors by role: background, surface, text, border, accent, success, warning, and error.',
     'Gradients are controlled transitions between colors — useful for hierarchy, depth, or energy, but they should serve a function.',
-    'CSS and design systems organize color by role, not by swatch name. Names like --color-action-primary describe the job, not the appearance.',
-    'A theme is a coordinated set of role assignments. Changing themes means reassigning values behind roles, not rewriting every component.',
-    'Role-based color systems scale better than one-off choices because a single change propagates to every component that references the role.',
+    'CSS role variables let you apply one assignment across many components without repeating raw values.',
+    'A theme is a coordinated set of role assignments; changing assignments changes interface behavior immediately.',
+    'This lesson emphasizes implementation: build, evaluate, and refine role assignments in a live UI.',
   ],
 };

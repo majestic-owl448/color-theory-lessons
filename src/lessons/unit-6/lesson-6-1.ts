@@ -3,8 +3,8 @@ import type { LessonConfig } from '../../types/lesson.ts';
 export const lesson6_1: LessonConfig = {
   id: 'u6-l1', unitId: 'unit-6',
   title: 'From Individual Colors to Color Systems',
-  description: 'Discover why semantic color roles are more useful than individual hex decisions, and learn to identify the difference between ad-hoc and system-level color thinking.',
-  learningGoal: 'Explain the benefit of semantic color roles and assign roles to a simple interface palette.',
+  description: 'Move from lesson-level role assignment to product-level color governance by identifying where ad-hoc choices break consistency across screens.',
+  learningGoal: 'Identify system-level color inconsistencies and map them to missing or misused semantic roles.',
   estimatedMinutes: 15,
   prerequisites: ['u5-l6'],
   conceptsIntroduced: ['color system', 'consistency'],
@@ -13,9 +13,9 @@ export const lesson6_1: LessonConfig = {
   reviewTags: ['systems', 'roles', 'consistency'],
   steps: [
     { id: 's1', text: 'A designer picking a new color for every button, card, and state creates an interface that slowly becomes inconsistent. When the same blue means \'primary action\' on one screen and \'informational note\' on another, users lose confidence.', highlights: ['color system', 'consistency'] },
-    { id: 's2', text: 'Unit 3 introduced semantic roles — naming colors by job rather than value. A color system takes that idea further: it enforces consistent role usage across every screen and component, so the same role always means the same thing product-wide.', highlights: ['semantic role'] },
-    { id: 's3', text: 'Semantic roles describe what a color does, not just what value it is. \'button-primary-bg\' is more useful in a product than \'blue-500\' because it tells the team what that color is for.' },
-    { id: 's4', text: 'A minimal system does not need to be large. Even a compact set of 8–12 roles can support a full product\'s components and states, if each role has a clear job and is used consistently.' },
+    { id: 's2', text: 'Unit 3 covered assigning roles in a single interface. Here, the scope expands: a color system governs those roles across many screens, flows, and teams so meaning stays stable product-wide.', highlights: ['semantic role'] },
+    { id: 's3', text: 'System-level failures are usually governance failures: one role used for two meanings, two roles used for one meaning, or local overrides that drift from shared tokens. Your job in this unit is to detect and correct those patterns early.' },
+    { id: 's4', text: 'A minimal system does not need to be large. Even a compact set of 8–12 roles can support a full product when each role has a clear boundary and change decisions are applied consistently.' },
     { id: 's5', text: 'In the comparison tool, you will see two versions of the same interface: one with ad-hoc color choices, and one with a consistent role-based system. Click the inconsistencies in the ad-hoc version to reveal what broke and why.' },
   ],
   challenges: [
@@ -64,9 +64,9 @@ export const lesson6_1: LessonConfig = {
     },
   ],
   keyPoints: [
-    'Color systems assign jobs to colors — a semantic role defines what a color does, not just its value.',
-    'Consistent role use is what makes a product feel coherent across many screens and components.',
-    'A compact set of 8–12 roles can support a full product if each role is clearly defined and consistently applied.',
-    'Semantic names like action-primary-bg are more useful than hex values or scale positions in collaborative product work.',
+    'Unit 3 taught role assignment in implementation; Unit 6 applies role governance across full products.',
+    'System inconsistency usually comes from role drift, overlap, and local overrides rather than single bad color picks.',
+    'Consistent role boundaries make interfaces predictable across screens, states, and teams.',
+    'A compact role set can scale when governance is clear and changes propagate through shared tokens.',
   ],
 };

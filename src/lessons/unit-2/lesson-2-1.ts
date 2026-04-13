@@ -7,7 +7,7 @@ export const lesson2_1: LessonConfig = {
   description: 'Discover the fundamental difference between color made from light and color made from pigment, and unlearn the paint-based intuitions that mislead screen designers.',
   learningGoal: 'Correctly classify common examples as additive or subtractive, explain the difference in plain language, and identify when paint logic is being misapplied to screens.',
   estimatedMinutes: 14,
-  prerequisites: [],
+  prerequisites: ['u1-l6'],
   conceptsIntroduced: ['additive color', 'subtractive color', 'RGB', 'pigment', 'light emission', 'light absorption', 'paint logic', 'screen logic', 'mental model'],
   interactionType: 'additive-sort',
   glossaryTerms: ['additive color', 'subtractive color', 'pigment', 'RGB', 'paint logic', 'screen logic', 'mental model'],

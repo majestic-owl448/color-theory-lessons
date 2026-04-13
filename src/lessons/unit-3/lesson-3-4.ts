@@ -5,7 +5,7 @@ export const lesson3_4: LessonConfig = {
   unitId: 'unit-3',
   title: 'Alpha, Transparency, and Layered Color',
   description:
-    'Explore how opacity and layering change perceived color by placing semi-transparent foregrounds over different backgrounds.',
+    'Go deeper on RGBA behavior by testing how opacity and layering change perceived color over different backgrounds.',
   learningGoal:
     'Use alpha deliberately and explain why the same overlay looks different on different backgrounds.',
   estimatedMinutes: 14,
@@ -32,7 +32,7 @@ export const lesson3_4: LessonConfig = {
   steps: [
     {
       id: 's1',
-      text: 'A fully opaque color blocks everything behind it. A semi-transparent color lets some of the background show through, blending visually. Alpha controls this: 1 is fully opaque, 0 is fully transparent.',
+      text: 'In the previous lesson you saw RGBA notation. Here you will apply it in context. A fully opaque color blocks everything behind it, while a semi-transparent color lets background values show through. Alpha controls this: 1 is fully opaque, 0 is fully transparent.',
       highlights: ['alpha', 'opacity', 'transparency'],
     },
     {
@@ -168,6 +168,7 @@ export const lesson3_4: LessonConfig = {
     },
   ],
   keyPoints: [
+    'RGBA notation becomes useful only in context: this lesson focuses on how alpha behaves in layered interfaces.',
     'Alpha (0-1) controls how transparent a color is — 0 is invisible, 1 is fully opaque.',
     'The perceived result of a semi-transparent color depends on the background underneath — you cannot judge it in isolation.',
     'Designers use alpha for hover states, modal scrims, disabled states, image overlays, and subtle layered surfaces.',
