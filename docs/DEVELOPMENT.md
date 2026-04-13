@@ -7,7 +7,7 @@ This document outlines the technical standards, tech stack, and operational work
 - **Framework**: React 19 (Latest stable release, utilizing new hooks like `useActionState` where applicable).
 - **Language**: TypeScript 5.9 (Strict mode enabled, focusing on type safety for lesson and tool configurations).
 - **Build Tool**: Vite 8 (Optimized for fast HMR and high-performance production builds).
-- **Routing**: React Router 7 (`HashRouter` for GitHub Pages support).
+- **Routing**: React Router 7 (`BrowserRouter`).
 - **State**: React Context + `useReducer` (Centralized state for course progress).
 - **Styling**: CSS Modules (Scoped CSS per component) and CSS Custom Properties (Theme tokens).
 
@@ -27,11 +27,11 @@ npm run dev
 - **Linting**: Run `npm run lint` before committing to ensure adherence to ESLint rules.
 
 ### Building & Deployment
-The app is designed to be hosted as a static site on GitHub Pages.
+The app is designed to be hosted on Vercel as a static site.
 
 1.  **Build**: `npm run build`. This generates a `dist/` folder.
-2.  **Base Path**: The application is configured to serve from the `/color-theory-lessons/` path (set in `vite.config.ts`).
-3.  **Deployment**: Handled automatically via GitHub Actions on every push to the `main` branch.
+2.  **Base Path**: The application serves from `/` (default Vite base).
+3.  **Deployment**: Import the repository into Vercel. Build command: `npm run build`; output directory: `dist`.
 
 ## Contributing
 
