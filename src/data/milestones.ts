@@ -5,16 +5,29 @@ const milestone1: MilestoneConfig = {
   unitId: 'unit-1',
   title: 'Read the Interface',
   description:
-    'Apply your Unit 1 vocabulary to analyze a real interface mockup. Use the panel on the right to answer each question.',
-  estimatedMinutes: 15,
+    'Apply your Unit 1 vocabulary in a hands-on interface reading challenge, then finish with a short quiz.',
+  estimatedMinutes: 12,
   heroVisual: 'interface-mockup',
   passThreshold: 4,
   parts: [
     {
+      kind: 'challenge',
+      id: 'm1-c1',
+      title: 'Read the Interface',
+      description: 'Classify important UI regions by their color role.',
+      challengeType: 'read-interface',
+      briefing:
+        'Label each highlighted region by its function: focal point, low-contrast failure, competing accent, accessible text, or hierarchy anchor. You need at least 4 correct labels.',
+      successMessage:
+        'Nice work. You mapped color function to real UI elements and identified where hierarchy and accessibility break down.',
+      pointValue: 3,
+    },
+    {
+      kind: 'quiz',
       id: 'm1-p1',
-      title: 'Analyze the Mockup',
+      title: 'Concept Check',
       description:
-        'Study the interface on the right. It has intentional strengths and weaknesses. Answer each question using the vocabulary from Unit 1.',
+        'Answer three conceptual questions to confirm Unit 1 fundamentals.',
       questions: [
         {
           id: 'm1-q1',
@@ -86,41 +99,6 @@ const milestone1: MilestoneConfig = {
           ],
         },
         {
-          id: 'm1-q3',
-          prompt:
-            'How would you describe the color relationship between the hero blue and the card accent orange?',
-          choices: [
-            {
-              id: 'a',
-              label: 'Monochromatic — same hue, different lightness',
-              isCorrect: false,
-              explanation:
-                'Monochromatic means variations of a single hue. Blue and orange are very different hues.',
-            },
-            {
-              id: 'b',
-              label: 'Analogous — neighboring hues on the color wheel',
-              isCorrect: false,
-              explanation:
-                'Analogous colors sit next to each other. Blue and orange are on opposite sides of the wheel.',
-            },
-            {
-              id: 'c',
-              label: 'Complementary — opposite hues on the color wheel',
-              isCorrect: true,
-              explanation:
-                'Blue and orange sit directly opposite each other on the standard color wheel — a classic complementary pair.',
-            },
-            {
-              id: 'd',
-              label: 'Triadic — three hues equally spaced around the wheel',
-              isCorrect: false,
-              explanation:
-                'A triadic scheme uses three hues. This interface contrasts only two: blue and orange.',
-            },
-          ],
-        },
-        {
           id: 'm1-q4',
           prompt:
             'The footer text is difficult to read. What adjustment would help most?',
@@ -155,75 +133,6 @@ const milestone1: MilestoneConfig = {
             },
           ],
         },
-        {
-          id: 'm1-q5',
-          prompt: 'What is the dominant color temperature of this palette?',
-          choices: [
-            {
-              id: 'a',
-              label: 'Warm — orange and red tones dominate',
-              isCorrect: false,
-              explanation:
-                'The orange accent is present but it is outnumbered by the large blue areas.',
-            },
-            {
-              id: 'b',
-              label: 'Cool — blue and green tones dominate',
-              isCorrect: true,
-              explanation:
-                'The blue header and hero cover the most surface area. The green CTA and light card backgrounds reinforce the cool read. The orange is an accent, not the dominant temperature.',
-            },
-            {
-              id: 'c',
-              label: 'Balanced — warm and cool are equally distributed',
-              isCorrect: false,
-              explanation:
-                'The cool blue area is much larger than the warm orange accent area.',
-            },
-            {
-              id: 'd',
-              label: 'Neutral — mostly grays with no temperature',
-              isCorrect: false,
-              explanation:
-                'The interface has clear hue in the header and hero, so it is not neutral.',
-            },
-          ],
-        },
-        {
-          id: 'm1-q6',
-          prompt:
-            'What single change would most improve visual hierarchy on this page?',
-          choices: [
-            {
-              id: 'a',
-              label: 'Make all text the same size for consistency',
-              isCorrect: false,
-              explanation:
-                'Uniform text size removes size-based hierarchy. Good hierarchy requires variation, not uniformity.',
-            },
-            {
-              id: 'b',
-              label: 'Remove the orange accent from the cards to reduce competition with the CTA',
-              isCorrect: true,
-              explanation:
-                'The orange card labels compete with the green CTA for the role of "most important colored element." Neutralizing the card accents lets the CTA clearly win that role.',
-            },
-            {
-              id: 'c',
-              label: 'Change the hero background to white',
-              isCorrect: false,
-              explanation:
-                'A white hero would reduce the contrast that currently makes the CTA stand out. The hero is doing its job.',
-            },
-            {
-              id: 'd',
-              label: 'Change the footer to match the hero blue',
-              isCorrect: false,
-              explanation:
-                'A blue footer would compete with the hero for saturation dominance and make the page feel heavy at both ends.',
-            },
-          ],
-        },
       ],
     },
   ],
@@ -234,15 +143,28 @@ const milestone2: MilestoneConfig = {
   unitId: 'unit-2',
   title: 'Mix for Screen',
   description:
-    'Prove that you can classify color models, read RGB channel values, and reason about screen-first color decisions.',
-  estimatedMinutes: 20,
-  passThreshold: 9,
+    'Predict channel behavior in additive color mixing, then validate with a short reasoning quiz.',
+  estimatedMinutes: 14,
+  passThreshold: 4,
   parts: [
     {
+      kind: 'challenge',
+      id: 'm2-c1',
+      title: 'Channel Prediction',
+      description: 'Predict dominant channels and additive mix outcomes without sliders.',
+      challengeType: 'channel-prediction',
+      briefing:
+        'Complete four rounds. For each one, identify the dominant channel and predict the additive mix result from swatches.',
+      successMessage:
+        'Strong reasoning. You can now predict additive outcomes without relying on trial-and-error controls.',
+      pointValue: 3,
+    },
+    {
+      kind: 'quiz',
       id: 'm2-p1',
-      title: 'Sort the Examples',
+      title: 'Concept Check',
       description:
-        'Classify each example as additive (light-based) or subtractive (pigment-based).',
+        'Answer three conceptual questions about additive and subtractive thinking.',
       questions: [
         {
           id: 'm2-q1',
@@ -264,94 +186,6 @@ const milestone2: MilestoneConfig = {
             },
           ],
         },
-        {
-          id: 'm2-q2',
-          prompt: 'A printed magazine with a full-color illustration.',
-          choices: [
-            {
-              id: 'a',
-              label: 'Additive — emits light, mixes RGB channels',
-              isCorrect: false,
-              explanation:
-                'A printed page does not emit light. It reflects ambient light after ink absorbs some wavelengths.',
-            },
-            {
-              id: 'b',
-              label: 'Subtractive — absorbs light, mixes pigments',
-              isCorrect: true,
-              explanation:
-                'Ink pigments absorb (subtract) certain wavelengths and reflect the rest. What we see is whatever light was not absorbed.',
-            },
-          ],
-        },
-        {
-          id: 'm2-q3',
-          prompt: 'A smartphone screen showing a navigation app.',
-          choices: [
-            {
-              id: 'a',
-              label: 'Additive — emits light, mixes RGB channels',
-              isCorrect: true,
-              explanation:
-                'Smartphone screens emit light from individual red, green, and blue sub-pixels. Color is formed by mixing those emissions.',
-            },
-            {
-              id: 'b',
-              label: 'Subtractive — absorbs light, mixes pigments',
-              isCorrect: false,
-              explanation:
-                'Screens do not contain ink. They produce color through light emission, not pigment absorption.',
-            },
-          ],
-        },
-        {
-          id: 'm2-q4',
-          prompt: 'A hand-painted mural on the side of a building.',
-          choices: [
-            {
-              id: 'a',
-              label: 'Additive — emits light, mixes RGB channels',
-              isCorrect: false,
-              explanation:
-                'Paint does not emit light. It reflects whatever its pigments do not absorb from the ambient light source.',
-            },
-            {
-              id: 'b',
-              label: 'Subtractive — absorbs light, mixes pigments',
-              isCorrect: true,
-              explanation:
-                'Paint is a physical pigment. Mixing paints creates subtractive results — more mixed paint absorbs more wavelengths and produces darker, muddier colors.',
-            },
-          ],
-        },
-        {
-          id: 'm2-q5',
-          prompt: 'A laptop monitor displaying a design mockup.',
-          choices: [
-            {
-              id: 'a',
-              label: 'Additive — emits light, mixes RGB channels',
-              isCorrect: true,
-              explanation:
-                'LCD and OLED monitors produce color by combining red, green, and blue light emissions. All three at full intensity produce white.',
-            },
-            {
-              id: 'b',
-              label: 'Subtractive — absorbs light, mixes pigments',
-              isCorrect: false,
-              explanation:
-                'Laptop monitors are light-emitting devices. They do not use ink or pigments.',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'm2-p2',
-      title: 'Recreate Target Colors',
-      description:
-        'Each question shows a target color swatch. Identify which RGB channel values produce that color.',
-      questions: [
         {
           id: 'm2-q6',
           prompt: 'Which RGB values produce the color shown in this swatch?',
@@ -388,154 +222,6 @@ const milestone2: MilestoneConfig = {
           ],
         },
         {
-          id: 'm2-q7',
-          prompt: 'Which RGB values produce the color shown in this swatch?',
-          swatchColor: '#16a34a',
-          choices: [
-            {
-              id: 'a',
-              label: 'R:22  G:74  B:163',
-              isCorrect: false,
-              explanation:
-                'Blue is the highest value here — this would produce a blue hue, not green.',
-            },
-            {
-              id: 'b',
-              label: 'R:163  G:22  B:74',
-              isCorrect: false,
-              explanation:
-                'Red is the dominant channel — this would produce a muted red or rose hue.',
-            },
-            {
-              id: 'c',
-              label: 'R:22  G:163  B:74',
-              isCorrect: true,
-              explanation:
-                'Green is highest at 163. The very low red (22) and moderate blue (74) produce a cool, mid-tone green.',
-            },
-            {
-              id: 'd',
-              label: 'R:74  G:163  B:22',
-              isCorrect: false,
-              explanation:
-                'The low blue and similar R/G proportions would shift the result toward yellow-green.',
-            },
-          ],
-        },
-        {
-          id: 'm2-q8',
-          prompt: 'Which RGB values produce the color shown in this swatch?',
-          swatchColor: '#ea580c',
-          choices: [
-            {
-              id: 'a',
-              label: 'R:234  G:88  B:12',
-              isCorrect: true,
-              explanation:
-                'Very high red, moderate green, and near-zero blue creates this vivid orange. On screen, orange always needs high red and significant green.',
-            },
-            {
-              id: 'b',
-              label: 'R:12  G:88  B:234',
-              isCorrect: false,
-              explanation:
-                'The high blue channel would make this appear blue, not orange.',
-            },
-            {
-              id: 'c',
-              label: 'R:88  G:234  B:12',
-              isCorrect: false,
-              explanation:
-                'High green with low red and almost no blue produces a lime-green.',
-            },
-            {
-              id: 'd',
-              label: 'R:234  G:12  B:88',
-              isCorrect: false,
-              explanation:
-                'High red with low green and moderate blue produces a hot pink or magenta.',
-            },
-          ],
-        },
-        {
-          id: 'm2-q9',
-          prompt: 'Which RGB values produce the color shown in this swatch?',
-          swatchColor: '#7c3aed',
-          choices: [
-            {
-              id: 'a',
-              label: 'R:58  G:237  B:124',
-              isCorrect: false,
-              explanation:
-                'High green and moderate blue with low red gives a mint or teal color.',
-            },
-            {
-              id: 'b',
-              label: 'R:124  G:58  B:237',
-              isCorrect: true,
-              explanation:
-                'Purple needs moderate red, very low green, and high blue. The low green is the key — it stops the result from shifting toward pink or white.',
-            },
-            {
-              id: 'c',
-              label: 'R:237  G:58  B:124',
-              isCorrect: false,
-              explanation:
-                'High red with low green and moderate blue produces a hot pink or magenta.',
-            },
-            {
-              id: 'd',
-              label: 'R:124  G:237  B:58',
-              isCorrect: false,
-              explanation:
-                'High green with moderate red and low blue shifts the result toward yellow-green.',
-            },
-          ],
-        },
-        {
-          id: 'm2-q10',
-          prompt: 'Which RGB values produce the color shown in this swatch?',
-          swatchColor: '#0f766e',
-          choices: [
-            {
-              id: 'a',
-              label: 'R:118  G:15  B:110',
-              isCorrect: false,
-              explanation:
-                'Moderate red and blue with low green creates a purple-pink, not teal.',
-            },
-            {
-              id: 'b',
-              label: 'R:15  G:110  B:118',
-              isCorrect: false,
-              explanation:
-                'Very close — but the blue channel (118) is slightly higher than green (110), which shifts the hue toward blue-teal rather than green-teal.',
-            },
-            {
-              id: 'c',
-              label: 'R:110  G:118  B:15',
-              isCorrect: false,
-              explanation:
-                'High red and green with near-zero blue produces an olive-yellow.',
-            },
-            {
-              id: 'd',
-              label: 'R:15  G:118  B:110',
-              isCorrect: true,
-              explanation:
-                'Teal needs very low red, with green slightly higher than blue. This low-red + nearly-equal green and blue is the recipe for a blue-green teal.',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'm2-p3',
-      title: 'Explain the Reasoning',
-      description:
-        'Show that you understand the logic behind additive color and can explain it in plain language.',
-      questions: [
-        {
           id: 'm2-q11',
           prompt: 'Why is RGB the right model for designing colors on screens?',
           choices: [
@@ -569,76 +255,6 @@ const milestone2: MilestoneConfig = {
             },
           ],
         },
-        {
-          id: 'm2-q12',
-          prompt:
-            'Why does paint-first thinking sometimes lead to wrong predictions for screen color?',
-          choices: [
-            {
-              id: 'a',
-              label: 'Because mixing paints produces lighter results, the opposite of screen mixing',
-              isCorrect: false,
-              explanation:
-                'This is backwards. Mixing more paints produces darker, muddier results. Mixing screen light channels produces lighter results.',
-            },
-            {
-              id: 'b',
-              label: 'Because mixing pigments produces darker results while mixing screen channels produces lighter results',
-              isCorrect: true,
-              explanation:
-                'Paint intuition says "mix more colors → darker mud." Screen logic says "add more light channels → lighter, brighter." These are opposite behaviors, which is exactly why paint experience misleads screen decisions.',
-            },
-            {
-              id: 'c',
-              label: 'Because paint colors are always too dark for digital use',
-              isCorrect: false,
-              explanation:
-                'The problem is behavioral, not about absolute brightness. Paint and screen mixing produce opposite directional results.',
-            },
-            {
-              id: 'd',
-              label: 'Because screens cannot accurately reproduce paint pigments',
-              isCorrect: false,
-              explanation:
-                'Gamut limitations are real, but not the core issue. The main problem is that the mixing rules work in opposite directions.',
-            },
-          ],
-        },
-        {
-          id: 'm2-q13',
-          prompt:
-            'Why is understanding subtractive color still useful for screen designers?',
-          choices: [
-            {
-              id: 'a',
-              label: 'Because screen designers often need to print their designs too',
-              isCorrect: false,
-              explanation:
-                'While some workflows involve print, this is not the core educational reason. The deeper value is understanding why screens and print diverge at a model level.',
-            },
-            {
-              id: 'b',
-              label: 'Because it explains why backlit designs look different when printed and why some colors fall outside a printer\'s gamut',
-              isCorrect: true,
-              explanation:
-                'Screen colors can look vivid on a display but appear dull or shifted in print because ink cannot reproduce additive light values. Knowing subtractive color helps you anticipate and explain those differences.',
-            },
-            {
-              id: 'c',
-              label: 'Because CMYK is used inside screens for internal color management',
-              isCorrect: false,
-              explanation:
-                'Screens do not use CMYK internally. They operate in RGB throughout.',
-            },
-            {
-              id: 'd',
-              label: 'It is only relevant for designers who also work in print',
-              isCorrect: false,
-              explanation:
-                'Any screen designer who collaborates with print teams or needs to explain screen-to-print color shifts will benefit from understanding subtractive color.',
-            },
-          ],
-        },
       ],
     },
   ],
@@ -654,6 +270,7 @@ const milestone3: MilestoneConfig = {
   passThreshold: 6,
   parts: [
     {
+      kind: 'quiz',
       id: 'm3-p1',
       title: 'Color Formats and Conversion',
       description:
@@ -703,6 +320,7 @@ const milestone3: MilestoneConfig = {
       ],
     },
     {
+      kind: 'quiz',
       id: 'm3-p2',
       title: 'Themes and Token Thinking',
       description:
@@ -764,6 +382,7 @@ const milestone4: MilestoneConfig = {
   passThreshold: 6,
   parts: [
     {
+      kind: 'quiz',
       id: 'm4-p1',
       title: 'Vision Science and CVD Types',
       description:
@@ -812,6 +431,7 @@ const milestone4: MilestoneConfig = {
       ],
     },
     {
+      kind: 'quiz',
       id: 'm4-p2',
       title: 'Color-Only Failures',
       description:
@@ -876,6 +496,7 @@ const milestone5: MilestoneConfig = {
   passThreshold: 8,
   parts: [
     {
+      kind: 'quiz',
       id: 'm5-p1',
       title: 'Contrast and Readability',
       description: 'Test your knowledge of contrast thresholds and how they apply to real text and backgrounds.',
@@ -887,6 +508,7 @@ const milestone5: MilestoneConfig = {
       ],
     },
     {
+      kind: 'quiz',
       id: 'm5-p2',
       title: 'Non-Text and Color-Only Failures',
       description: 'Identify failures beyond text contrast — components, icons, and color-only communication.',
@@ -898,6 +520,7 @@ const milestone5: MilestoneConfig = {
       ],
     },
     {
+      kind: 'quiz',
       id: 'm5-p3',
       title: 'Repair and Pattern Thinking',
       description: 'Apply accessible design thinking to real interface patterns and systemic improvements.',
@@ -921,6 +544,7 @@ const milestone6: MilestoneConfig = {
   passThreshold: 12,
   parts: [
     {
+      kind: 'quiz',
       id: 'm6-p1',
       title: 'Color Systems and Roles',
       description: 'Test your understanding of semantic color roles and system thinking.',
@@ -968,6 +592,7 @@ const milestone6: MilestoneConfig = {
       ],
     },
     {
+      kind: 'quiz',
       id: 'm6-p2',
       title: 'Brand Constraints and Dark Mode',
       description: 'Apply brand pressure and dark mode adaptation principles.',
@@ -1025,6 +650,7 @@ const milestone6: MilestoneConfig = {
       ],
     },
     {
+      kind: 'quiz',
       id: 'm6-p3',
       title: 'Charts and Data Visualization',
       description: 'Apply color accessibility thinking to data visualization contexts.',
@@ -1062,6 +688,7 @@ const milestone6: MilestoneConfig = {
       ],
     },
     {
+      kind: 'quiz',
       id: 'm6-p4',
       title: 'System Review and Stress Testing',
       description: 'Evaluate a color system holistically across contexts, modes, and simulation.',

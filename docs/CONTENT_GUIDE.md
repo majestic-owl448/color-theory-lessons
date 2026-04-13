@@ -1,0 +1,107 @@
+# Content Creation Guide
+
+This guide explains how to add new lessons, milestones, and glossary terms to the Color Theory Lessons app.
+
+## Adding a New Lesson
+
+All lesson content is stored as TypeScript data objects in `src/lessons/`.
+
+### 1. Create the Lesson File
+Navigate to the appropriate unit folder (e.g., `src/lessons/unit-1/`) and create a new file named `lesson-X-Y.ts`.
+
+```typescript
+import type { LessonConfig } from '../../types/lesson.ts';
+
+export const lessonX_Y: LessonConfig = {
+  id: 'uX-lY',            // Unique ID (e.g., 'u1-l7')
+  unitId: 'unit-X',       // Parent unit ID
+  title: 'Lesson Title',
+  description: 'A brief summary of what the user will learn.',
+  learningGoal: 'Identify the impact of...',
+  estimatedMinutes: 10,
+  prerequisites: [],      // Optional array of previous lesson IDs
+  conceptsIntroduced: ['concept-a', 'concept-b'],
+  interactionType: 'tool-name', // Must exist in InteractionType enum
+  steps: [
+    { id: 's1', text: 'First instruction...' },
+    { id: 's2', text: 'Second instruction...', highlights: ['word'] }
+  ],
+  challenges: [
+    {
+      id: 'c1',
+      prompt: 'Complete the interaction to...',
+      type: 'match-target',
+      hints: ['Hint 1', 'Hint 2'],
+      successCriteria: 'User matches color exactly'
+    }
+  ],
+  quizItems: [
+    {
+      id: 'q1',
+      prompt: 'Question text?',
+      choices: [
+        { id: 'a', label: 'Correct Choice', isCorrect: true, explanation: 'Why this is right.' },
+        { id: 'b', label: 'Wrong Choice', isCorrect: false, explanation: 'Why this is wrong.' }
+      ]
+    }
+  ],
+  glossaryTerms: ['term-a'], // Terms that will be "unlocked" on completion
+  reviewTags: ['foundations'] // For grouping in the Review page
+};
+```
+
+### 2. Register the Lesson
+Import and add your new lesson to the `lessonRegistry` array in `src/lessons/lesson-registry.ts`.
+
+```typescript
+import { lessonX_Y } from './unit-X/lesson-X-Y.ts';
+
+export const lessonRegistry: LessonConfig[] = [
+  // ... existing lessons
+  lessonX_Y,
+];
+```
+
+### 3. Update the Unit Configuration
+Ensure the lesson's ID is included in the `lessons` array for its parent unit in `src/data/units.ts`.
+
+## Adding a Milestone
+Milestones are "capstone" challenges that appear at the end of each unit. They are defined in `src/data/milestones.ts`.
+
+A milestone requires:
+- `id`: Unique ID (e.g., `milestone-1`).
+- `unitId`: The unit it belongs to.
+- `title`, `description`, `estimatedMinutes`, and `passThreshold`.
+- `parts`: An ordered array of milestone parts.
+
+Each part must be one of:
+- `kind: 'quiz'`: Uses `questions` with multiple-choice answers.
+- `kind: 'challenge'`: Uses `challengeType`, `briefing`, `successMessage`, and `pointValue`.
+
+### Milestone challenge types (important)
+
+Milestone challenge parts are type-safe and must use a supported `challengeType` from `src/types/milestone.ts`.
+
+Current supported values:
+- `read-interface`
+- `channel-prediction`
+- `theme-from-scratch`
+- `simulation-spotter`
+- `accessibility-rescue`
+- `semantic-audit`
+- `dark-mode-stress`
+
+When adding a new challenge type, update all three:
+1. `MilestoneChallengeType` union in `src/types/milestone.ts`
+2. Switch mapping in `src/components/milestone/ChallengeRenderer.tsx`
+3. Milestone content in `src/data/milestones.ts`
+
+If a challenge type is not mapped in `ChallengeRenderer`, it now renders an unavailable state and cannot be completed.
+
+## Adding Glossary Terms
+New terms should be added to `src/data/glossary.ts`. If a lesson's `glossaryTerms` array contains a string that matches a `term` in this file, that term will be unlocked and displayed in the user's glossary once they finish the lesson.
+
+## Content Best Practices
+- **Step Highlights**: Use the `highlights` array in a `LessonStep` to visually emphasize key words in the UI.
+- **Quiz Explanations**: Always provide an `explanation` for both correct and incorrect choices. This is where the actual teaching happens for users who guess.
+- **Incremental Difficulty**: Ensure that early steps in a lesson prepare the user for the subsequent challenge and quiz.

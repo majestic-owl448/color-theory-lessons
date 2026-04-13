@@ -39,6 +39,13 @@ All 6 units fully built and wired. 34 total lessons, 33 tool components, 6 miles
 | Pages | `src/pages/` |
 | State management | `src/state/` |
 
+## Documentation
+
+- **[Architecture Overview](docs/ARCHITECTURE.md)** — technical flow and state management
+- **[Content Creation Guide](docs/CONTENT_GUIDE.md)** — adding lessons, milestones, and glossary terms
+- **[Tool Development Guide](docs/TOOL_GUIDE.md)** — building and registering interactive tools
+- **[Development Standards](docs/DEVELOPMENT.md)** — tech stack, conventions, and CI/CD
+
 ## Tech Stack
 
 React 19 + TypeScript + Vite. No backend. GitHub Pages deployment via GitHub Actions on push to `main`. Design system: freeCodeCamp "Command-line Chic." CSS variables for theming: `var(--fg)`, `var(--bg)`, `var(--muted)`, `var(--border)`, `var(--accent)`, `var(--success)`, `var(--warning)`, `var(--error)`, `var(--font-mono)`, `var(--radius-md)`, `var(--radius-sm)`.

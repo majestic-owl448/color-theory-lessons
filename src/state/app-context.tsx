@@ -3,18 +3,27 @@ import type { ReactNode } from 'react';
 import type { ProgressState } from '../types/progress.ts';
 import { loadState, saveState } from './persistence.ts';
 
+/** All possible route views in the application. */
 type View = 'home' | 'lesson' | 'sandbox' | 'quiz' | 'glossary' | 'settings' | 'review' | 'capstone';
 
+/** Combined global state including progress and active UI context. */
 interface AppState extends ProgressState {
+  /** The current active page/view. */
   view: View;
+  /** The ID of the lesson currently being played, if any. */
   activeLessonId: string | null;
+  /** The ID of the quiz currently being played, if any. */
   activeQuizId: string | null;
+  /** Global user-specific settings. */
   preferences: {
+    /** Whether to disable decorative animations. */
     reducedMotion: boolean;
+    /** Simulation filter to apply to the UI (e.g., 'deuteranopia'). */
     colorBlindnessMode: string | null;
   };
 }
 
+/** Actions that can be dispatched to update the global state. */
 type Action =
   | { type: 'NAVIGATE'; view: View }
   | { type: 'START_LESSON'; lessonId: string }
@@ -26,6 +35,7 @@ type Action =
   | { type: 'SET_PREFERENCE'; key: string; value: string | boolean | null }
   | { type: 'RESET_PROGRESS' };
 
+/** Initialize state from localStorage or defaults. */
 function createInitialState(): AppState {
   const { progress, preferences } = loadState();
   return {
@@ -37,6 +47,10 @@ function createInitialState(): AppState {
   };
 }
 
+/**
+ * Reducer for managing application state updates.
+ * Most completion actions are idempotent to prevent duplicate entries.
+ */
 function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'NAVIGATE':
@@ -115,6 +129,10 @@ function appReducer(state: AppState, action: Action): AppState {
 const AppStateContext = createContext<AppState | null>(null);
 const AppDispatchContext = createContext<React.Dispatch<Action> | null>(null);
 
+/**
+ * Root state provider for the application.
+ * Syncs specific state slices to localStorage on every change.
+ */
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, undefined, createInitialState);
 
@@ -145,6 +163,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
 }
 
+/** Access the global application state. */
 export function useAppState(): AppState {
   const context = useContext(AppStateContext);
   if (!context) {
@@ -153,6 +172,7 @@ export function useAppState(): AppState {
   return context;
 }
 
+/** Access the global dispatch function for state updates. */
 export function useAppDispatch(): React.Dispatch<Action> {
   const context = useContext(AppDispatchContext);
   if (!context) {

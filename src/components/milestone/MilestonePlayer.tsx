@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import type { MilestoneConfig } from '../../types/milestone.ts';
 import { useAppDispatch } from '../../state/app-context.tsx';
 import { units } from '../../data/units.ts';
+import { ChallengeRenderer } from './ChallengeRenderer.tsx';
 import { InterfaceMockup } from './InterfaceMockup.tsx';
 import styles from './MilestonePlayer.module.css';
 
@@ -10,11 +11,15 @@ interface MilestonePlayerProps {
   milestone: MilestoneConfig;
 }
 
-type Phase = 'question' | 'part-summary' | 'complete';
+type Phase = 'question' | 'challenge' | 'part-summary' | 'complete';
 
 interface Answer {
   questionId: string;
   isCorrect: boolean;
+}
+
+function phaseForPart(milestone: MilestoneConfig, index: number): Extract<Phase, 'question' | 'challenge'> {
+  return milestone.parts[index]?.kind === 'challenge' ? 'challenge' : 'question';
 }
 
 export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
@@ -24,24 +29,41 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [answers, setAnswers] = useState<Answer[]>([]);
-  const [phase, setPhase] = useState<Phase>('question');
+  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+  const [phase, setPhase] = useState<Phase>(() => phaseForPart(milestone, 0));
 
   const currentPart = milestone.parts[partIndex];
-  const currentQuestion = phase === 'question' ? currentPart.questions[questionIndex] : null;
+  const currentQuestion = phase === 'question' && currentPart.kind === 'quiz'
+    ? currentPart.questions[questionIndex]
+    : null;
 
-  const totalQuestions = milestone.parts.reduce((acc, p) => acc + p.questions.length, 0);
+  const totalQuestions = milestone.parts.reduce((acc, p) => acc + (p.kind === 'quiz' ? p.questions.length : 0), 0);
+  const totalChallengePoints = milestone.parts.reduce((acc, p) => acc + (p.kind === 'challenge' ? p.pointValue : 0), 0);
+  const totalPossiblePoints = totalQuestions + totalChallengePoints;
   const totalCorrect = answers.filter((a) => a.isCorrect).length;
-  const passed = totalCorrect >= milestone.passThreshold;
+  const challengePointsEarned = milestone.parts.reduce((acc, p) => {
+    if (p.kind !== 'challenge') return acc;
+    return completedChallenges.includes(p.id) ? acc + p.pointValue : acc;
+  }, 0);
+  const totalScore = totalCorrect + challengePointsEarned;
+  const passed = totalScore >= milestone.passThreshold;
 
   // How many questions completed before the current part
   const questionsBeforePart = milestone.parts
     .slice(0, partIndex)
-    .reduce((acc, p) => acc + p.questions.length, 0);
+    .reduce((acc, p) => acc + (p.kind === 'quiz' ? p.questions.length : 0), 0);
   const globalQuestionNumber = questionsBeforePart + questionIndex + 1;
 
   // Correct count within the current part only (for part-summary)
-  const partQuestionIds = new Set(currentPart.questions.map((q) => q.id));
-  const partCorrect = answers.filter((a) => partQuestionIds.has(a.questionId) && a.isCorrect).length;
+  const partQuestionIds = currentPart.kind === 'quiz'
+    ? new Set(currentPart.questions.map((q) => q.id))
+    : null;
+  const partCorrect = currentPart.kind === 'quiz'
+    ? answers.filter((a) => partQuestionIds?.has(a.questionId) && a.isCorrect).length
+    : completedChallenges.includes(currentPart.id)
+      ? currentPart.pointValue
+      : 0;
+  const partMaxScore = currentPart.kind === 'quiz' ? currentPart.questions.length : currentPart.pointValue;
 
   // Next unit's first lesson (for the complete screen)
   const currentUnitIndex = units.findIndex((u) => u.id === milestone.unitId);
@@ -65,6 +87,8 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
   }
 
   function handleNext() {
+    if (currentPart.kind !== 'quiz') return;
+
     const isLastQuestion = questionIndex >= currentPart.questions.length - 1;
     const isLastPart = partIndex >= milestone.parts.length - 1;
 
@@ -82,11 +106,27 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
   }
 
   function handleNextPart() {
-    setPartIndex((i) => i + 1);
+    const nextPartIndex = partIndex + 1;
+
+    setPartIndex(nextPartIndex);
     setQuestionIndex(0);
     setSelectedChoice(null);
     setSubmitted(false);
-    setPhase('question');
+    setPhase(phaseForPart(milestone, nextPartIndex));
+  }
+
+  function handleCompleteChallenge() {
+    if (currentPart.kind !== 'challenge') return;
+    setCompletedChallenges((prev) => prev.includes(currentPart.id) ? prev : [...prev, currentPart.id]);
+
+    const isLastPart = partIndex >= milestone.parts.length - 1;
+    if (isLastPart) {
+      dispatch({ type: 'COMPLETE_MILESTONE', milestoneId: milestone.id });
+      setPhase('complete');
+      return;
+    }
+
+    setPhase('part-summary');
   }
 
   function handleRetry() {
@@ -95,7 +135,8 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
     setSelectedChoice(null);
     setSubmitted(false);
     setAnswers([]);
-    setPhase('question');
+    setCompletedChallenges([]);
+    setPhase(phaseForPart(milestone, 0));
   }
 
   // Determine right-panel content
@@ -192,7 +233,7 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
                 </button>
               ) : (
                 <button className={styles.btnPrimary} onClick={handleNext}>
-                  {questionIndex < currentPart.questions.length - 1
+                  {currentPart.kind === 'quiz' && questionIndex < currentPart.questions.length - 1
                     ? 'next →'
                     : partIndex < milestone.parts.length - 1
                       ? 'finish part →'
@@ -200,6 +241,19 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
                 </button>
               )}
             </div>
+          </div>
+        )}
+
+        {phase === 'challenge' && currentPart.kind === 'challenge' && (
+          <div className={styles.stepContent}>
+            <div className={styles.questionMeta}>
+              <span className={styles.partLabel}>
+                Part {partIndex + 1} of {milestone.parts.length} — {currentPart.title}
+              </span>
+              <span className={styles.questionCounter}>Challenge · {currentPart.pointValue} point{currentPart.pointValue === 1 ? '' : 's'}</span>
+            </div>
+
+            <p className={styles.questionPrompt}>{currentPart.briefing}</p>
           </div>
         )}
 
@@ -211,8 +265,13 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
             </span>
             <p className={styles.partSummaryTitle}>{currentPart.title}</p>
             <p className={styles.partSummaryScore}>
-              {partCorrect} of {currentPart.questions.length} correct
+              {currentPart.kind === 'quiz'
+                ? `${partCorrect} of ${partMaxScore} correct`
+                : `${partCorrect} of ${partMaxScore} points earned`}
             </p>
+            {currentPart.kind === 'challenge' && (
+              <p className={styles.explanation}>{currentPart.successMessage}</p>
+            )}
             <div className={styles.stepActions}>
               <button className={styles.btnPrimary} onClick={handleNextPart}>
                 next part →
@@ -231,7 +290,7 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
             </span>
             <p className={styles.completeTitle}>{milestone.title}</p>
             <p className={styles.completeScore}>
-              {totalCorrect} / {totalQuestions} correct
+              {totalScore} / {totalPossiblePoints} points
               {passed
                 ? ` — you passed (needed ${milestone.passThreshold})`
                 : ` — needed ${milestone.passThreshold} to pass`}
@@ -258,7 +317,12 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
 
       {/* ── Right context panel ── */}
       <div className={styles.contextPanel}>
-        {swatchColor ? (
+        {phase === 'challenge' && currentPart.kind === 'challenge' ? (
+          <ChallengeRenderer
+            challengeType={currentPart.challengeType}
+            onComplete={handleCompleteChallenge}
+          />
+        ) : swatchColor ? (
           <div className={styles.swatchPanel}>
             <span className={styles.swatchLabel}>target color</span>
             <div

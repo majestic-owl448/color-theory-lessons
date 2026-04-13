@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { hexToRgb, colorDistance, simulateDeuteranopia } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
 interface ChartTunerToolProps {
@@ -10,26 +11,7 @@ const SERIES = ['Revenue', 'Expenses', 'Profit', 'Forecast'];
 
 const DEFAULTS = ['#3b82f6', '#ef4444', '#22c55e', '#f59e0b'];
 
-// Simple deuteranopia approximation matrix applied via canvas-less approximation
-function simulateDeuteranopia(hex: string): string {
-  const r = parseInt(hex.slice(1, 3), 16) / 255;
-  const g = parseInt(hex.slice(3, 5), 16) / 255;
-  const b = parseInt(hex.slice(5, 7), 16) / 255;
-  const sr = Math.min(1, r * 0.367 + g * 0.861 - b * 0.228);
-  const sg = Math.min(1, r * 0.280 + g * 0.673 + b * 0.047);
-  const sb = Math.min(1, -r * 0.012 + g * 0.043 + b * 0.969);
-  const toHex = (v: number) => Math.round(Math.min(255, v * 255)).toString(16).padStart(2, '0');
-  return `#${toHex(sr)}${toHex(sg)}${toHex(sb)}`;
-}
-
-function hexToRgb(hex: string) {
-  return { r: parseInt(hex.slice(1, 3), 16), g: parseInt(hex.slice(3, 5), 16), b: parseInt(hex.slice(5, 7), 16) };
-}
-
-function colorDiff(a: string, b: string): number {
-  const ra = hexToRgb(a), rb = hexToRgb(b);
-  return Math.sqrt((ra.r - rb.r) ** 2 + (ra.g - rb.g) ** 2 + (ra.b - rb.b) ** 2);
-}
+const colorDiff = (a: string, b: string) => colorDistance(hexToRgb(a), hexToRgb(b));
 
 const CHART_DATA = [
   [80, 60, 20, 75],
@@ -71,11 +53,20 @@ function ChartBars({ colors, simulated }: { colors: string[]; simulated: boolean
 
 function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }
 
+/**
+ * An interactive tool for testing and repairing chart color palettes.
+ * It simulates deuteranopia (green-blindness) and calculates the perceptual 
+ * distance between series to ensure they are distinguishable.
+ */
 export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerToolProps) {
   const [colors, setColors] = useState<string[]>(DEFAULTS);
   const [simulated, setSimulated] = useState(false);
   const completed = useRef(false);
 
+  /**
+   * Updates a specific series color and checks if the new palette passes 
+   * the distinguishability threshold (MIN_DIFF) in both normal and CVD views.
+   */
   function update(i: number, val: string) {
     if (!interactive) return;
     const next = [...colors];

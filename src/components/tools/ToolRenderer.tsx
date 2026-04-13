@@ -37,13 +37,25 @@ import { ChartTunerTool } from './ChartTunerTool.tsx';
 import { SystemStressTestTool } from './SystemStressTestTool.tsx';
 import shellStyles from './ToolShell.module.css';
 
+/** Props for the ToolRenderer component. */
 interface ToolRendererProps {
+  /** The full configuration of the lesson using this tool. */
   lesson: LessonConfig;
+  /** The current active phase of the LessonPlayer. */
   phase: 'steps' | 'challenge' | 'quiz' | 'complete';
+  /** Whether the tool is open for interaction (unlocked after steps are read). */
   toolUnlocked: boolean;
+  /** Callback triggered when the tool's challenge condition is met. */
   onChallengeComplete: () => void;
 }
 
+/**
+ * A dynamic factory component that renders the correct interactive tool 
+ * based on the lesson's interactionType.
+ * 
+ * It acts as the bridge between the generic LessonPlayer and the 
+ * specific logic of 30+ different tools.
+ */
 export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete }: ToolRendererProps) {
   const isChallenge = phase === 'challenge';
 

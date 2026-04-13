@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { simulateDeuteranopia } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
 interface SystemStressTestToolProps {
@@ -26,22 +27,16 @@ const CHECKS: Check[] = [
   { id: 'cvd-robustness', label: 'CVD robustness', description: 'Interface communicates meaning through shape, text, or icons in addition to color, and palette is legible under deuteranopia simulation.', failNote: 'Error icons are removed — only color distinguishes error from success in the notification row.' },
 ];
 
-function simulateDeuteranopia(hex: string): string {
-  const r = parseInt(hex.slice(1, 3), 16) / 255;
-  const g = parseInt(hex.slice(3, 5), 16) / 255;
-  const b = parseInt(hex.slice(5, 7), 16) / 255;
-  const sr = Math.min(1, r * 0.367 + g * 0.861 - b * 0.228);
-  const sg = Math.min(1, r * 0.280 + g * 0.673 + b * 0.047);
-  const sb = Math.min(1, -r * 0.012 + g * 0.043 + b * 0.969);
-  const toHex = (v: number) => Math.round(Math.min(255, v * 255)).toString(16).padStart(2, '0');
-  return `#${toHex(sr)}${toHex(sg)}${toHex(sb)}`;
-}
-
 const SYSTEM_COLORS = {
   light: { bg: '#f9fafb', surface: '#ffffff', action: '#1e40af', success: '#16a34a', warning: '#b45309', error: '#dc2626', text: '#111827' },
   dark: { bg: '#0f172a', surface: '#1e293b', action: '#3b82f6', success: '#4ade80', warning: '#fbbf24', error: '#f87171', text: '#f1f5f9' },
 };
 
+/**
+ * A comprehensive audit tool that simulates a "color system stress test."
+ * Users must review a palette across light mode, dark mode, and CVD 
+ * simulations, marking each system quality check as 'pass' or 'fail'.
+ */
 export function SystemStressTestTool({ interactive = false, onComplete }: SystemStressTestToolProps) {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
   const [cvd, setCvd] = useState(false);
@@ -54,6 +49,7 @@ export function SystemStressTestTool({ interactive = false, onComplete }: System
   const palette = SYSTEM_COLORS[mode];
   const display = (hex: string) => cvd ? simulateDeuteranopia(hex) : hex;
 
+  /** Marks a specific quality check as Pass or Fail. Triggers onComplete when all are marked. */
   function mark(id: CheckId, result: 'pass' | 'fail') {
     if (!interactive) return;
     setFindings(prev => {
