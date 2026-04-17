@@ -21,6 +21,8 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
+  height: calc(100dvh - var(--header-height) - 3rem);
+  overflow: hidden;
 }
 
 .lessonMeta {
@@ -68,6 +70,7 @@
 /* ── Step content ─────────────────────────────────────────────────────── */
 .stepContent {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -80,6 +83,9 @@
 }
 
 .stepText {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
   font-size: 1.05rem;
   line-height: 1.6;
   color: var(--primary-foreground);
@@ -137,6 +143,9 @@
 
 /* ── Challenge panel ──────────────────────────────────────────────────── */
 .challengePrompt {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
   font-size: 1rem;
   line-height: 1.55;
   color: var(--primary-foreground);
@@ -177,6 +186,9 @@
 }
 
 .choices {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
