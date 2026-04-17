@@ -1,7 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { units } from '../data/units.ts';
-import { loadLessonsByIds } from '../lessons/lesson-loader.ts';
-import type { LessonConfig } from '../types/lesson.ts';
+import { useMemo } from 'react';
+import { lessonRegistry } from '../lessons/lesson-registry.ts';
 import { useAppState } from '../state/app-context.tsx';
 import styles from './ReviewPage.module.css';
 
@@ -43,35 +41,14 @@ interface ReviewEntry {
   keyPoints: string[];
 }
 
-type ReviewLesson = Pick<LessonConfig, 'id' | 'title' | 'keyPoints' | 'reviewTags'>;
-
 export function ReviewPage() {
   const { completedLessons } = useAppState();
-  const [lessons, setLessons] = useState<ReviewLesson[]>([]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function run() {
-      const orderedIds = units
-        .flatMap((unit) => unit.lessons)
-        .filter((id) => completedLessons.includes(id));
-      const loaded = await loadLessonsByIds(orderedIds);
-      if (!cancelled) {
-        setLessons(loaded);
-      }
-    }
-
-    run();
-    return () => {
-      cancelled = true;
-    };
-  }, [completedLessons]);
 
   const topicMap = useMemo(() => {
     const map = new Map<string, ReviewEntry[]>();
 
-    for (const lesson of lessons) {
+    for (const lesson of lessonRegistry) {
+      if (!completedLessons.includes(lesson.id)) continue;
       if (!lesson.keyPoints || lesson.keyPoints.length === 0) continue;
 
       const entry: ReviewEntry = {
@@ -93,7 +70,7 @@ export function ReviewPage() {
       const labelB = TAG_LABELS[b] ?? b;
       return labelA.localeCompare(labelB);
     });
-  }, [lessons]);
+  }, [completedLessons]);
 
   return (
     <div className={styles.container}>
