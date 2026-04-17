@@ -106,9 +106,9 @@ export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolP
             <span className={styles.swatchLabel}>target</span>
             <div className={styles.swatch} style={{ backgroundColor: hslString(target.target) }} />
             <span className={styles.hslValue}>
-              {target.locked === 'h' ? `H:${target.target.h}` : `H:?`}{' '}
-              {target.locked === 's' ? `S:${target.target.s}%` : `S:?`}{' '}
-              {target.locked === 'l' ? `L:${target.target.l}%` : `L:?`}
+              {target.locked === 'h' ? `H:?` : `H:${target.target.h}`}{' '}
+              {target.locked === 's' ? `S:?` : `S:${target.target.s}%`}{' '}
+              {target.locked === 'l' ? `L:?` : `L:${target.target.l}%`}
             </span>
           </div>
         </div>
