@@ -22,7 +22,6 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
   const dispatch = useAppDispatch();
   const [phase, setPhase] = useState<Phase>('steps');
   const [stepIndex, setStepIndex] = useState(0);
-  const [toolUnlocked, setToolUnlocked] = useState(false);
   const [challengeDone, setChallengeDone] = useState(false);
   const [quizIndex, setQuizIndex] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
@@ -33,7 +32,6 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
     if (stepIndex < lesson.steps.length - 1) {
       setStepIndex((i) => i + 1);
     } else {
-      setToolUnlocked(true);
       setPhase('challenge');
     }
   }
@@ -59,7 +57,6 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
   function handleRedo() {
     setPhase('steps');
     setStepIndex(0);
-    setToolUnlocked(false);
     setChallengeDone(false);
     setQuizIndex(0);
     setAnswers([]);
@@ -165,7 +162,7 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
                 back
               </button>
               <button className={styles.btnPrimary} onClick={handleNextStep}>
-                {stepIndex < lesson.steps.length - 1 ? 'next' : 'try it →'}
+                next
               </button>
             </div>
           </div>
@@ -302,7 +299,6 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       <ToolRenderer
         lesson={lesson}
         phase={phase}
-        toolUnlocked={toolUnlocked}
         onChallengeComplete={() => setChallengeDone(true)}
       />
     </div>

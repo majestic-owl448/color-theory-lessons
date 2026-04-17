@@ -43,8 +43,6 @@ interface ToolRendererProps {
   lesson: LessonConfig;
   /** The current active phase of the LessonPlayer. */
   phase: 'steps' | 'challenge' | 'quiz' | 'complete';
-  /** Whether the tool is open for interaction (unlocked after steps are read). */
-  toolUnlocked: boolean;
   /** Callback triggered when the tool's challenge condition is met. */
   onChallengeComplete: () => void;
 }
@@ -56,7 +54,7 @@ interface ToolRendererProps {
  * It acts as the bridge between the generic LessonPlayer and the 
  * specific logic of 30+ different tools.
  */
-export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete }: ToolRendererProps) {
+export function ToolRenderer({ lesson, phase, onChallengeComplete }: ToolRendererProps) {
   const isChallenge = phase === 'challenge';
 
   let tool: ReactNode;
@@ -66,138 +64,138 @@ export function ToolRenderer({ lesson, phase, toolUnlocked, onChallengeComplete 
       tool = (
         <BeforeAfterTool
           variant={lesson.id === 'u1-l5' ? 'hierarchy' : 'color-function'}
-          interactive={toolUnlocked}
+          interactive={true}
           onComplete={isChallenge ? onChallengeComplete : undefined}
         />
       );
       break;
 
     case 'slider-explore':
-      tool = <HSLSliderTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <HSLSliderTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'contrast-checker':
-      tool = <ContrastTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ContrastTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'palette-builder':
-      tool = <TemperatureSorterTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <TemperatureSorterTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'color-wheel':
-      tool = <ColorWheelTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ColorWheelTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'additive-sort':
-      tool = <AdditiveSortTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <AdditiveSortTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'rgb-mixer':
-      tool = <RGBMixerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <RGBMixerTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'mismatch-explainer':
-      tool = <MismatchExplainerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <MismatchExplainerTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'background-shift':
-      tool = <BackgroundShiftTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <BackgroundShiftTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'interface-tuner':
-      tool = <InterfaceTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <InterfaceTunerTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'format-reveal':
-      tool = <FormatRevealTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <FormatRevealTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'hex-rgb-editor':
-      tool = <HexRgbEditorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <HexRgbEditorTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'hsl-playground':
-      tool = <HslPlaygroundTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <HslPlaygroundTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'alpha-layer':
-      tool = <AlphaLayerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <AlphaLayerTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'theme-sandbox':
-      tool = <ThemeSandboxTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ThemeSandboxTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'token-map':
-      tool = <TokenMapTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <TokenMapTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'color-space-lab':
-      tool = <ColorSpaceLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ColorSpaceLabTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'eye-diagram':
-      tool = <EyeDiagramTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <EyeDiagramTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'vision-cards':
-      tool = <VisionCardsTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <VisionCardsTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'interface-gallery':
-      tool = <InterfaceGalleryTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <InterfaceGalleryTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'color-only-detector':
-      tool = <ColorOnlyDetectorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ColorOnlyDetectorTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'state-workshop':
-      tool = <StateWorkshopTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <StateWorkshopTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'inclusive-review':
-      tool = <InclusiveReviewTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <InclusiveReviewTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'text-contrast-lab':
-      tool = <TextContrastLabTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <TextContrastLabTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'component-checker':
-      tool = <ComponentCheckerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ComponentCheckerTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'audit-flow':
-      tool = <AuditFlowTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <AuditFlowTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'pattern-repair':
-      tool = <PatternRepairTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <PatternRepairTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'system-comparison':
-      tool = <SystemComparisonTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <SystemComparisonTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'role-builder':
-      tool = <RoleBuilderTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <RoleBuilderTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'brand-pressure':
-      tool = <BrandPressureTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <BrandPressureTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'dark-translator':
-      tool = <DarkTranslatorTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <DarkTranslatorTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'chart-tuner':
-      tool = <ChartTunerTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <ChartTunerTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     case 'system-stress':
-      tool = <SystemStressTestTool interactive={toolUnlocked} onComplete={isChallenge ? onChallengeComplete : undefined} />;
+      tool = <SystemStressTestTool interactive={true} onComplete={isChallenge ? onChallengeComplete : undefined} />;
       break;
 
     default:
