@@ -9,13 +9,13 @@ export const lesson3_1: LessonConfig = {
   learningGoal:
     'Explain why coded color formats matter and identify where designers encounter them.',
   estimatedMinutes: 13,
-  prerequisites: ['u2-l5'],
+  prerequisites: ['u2-l6'],
   conceptsIntroduced: [
     'color value',
     'color format',
-    'HEX notation',
-    'RGB notation',
-    'HSL notation',
+    'HEX',
+    'RGB',
+    'HSL',
     'implementation',
     'token',
   ],
@@ -34,7 +34,7 @@ export const lesson3_1: LessonConfig = {
     },
     {
       id: 's3',
-      text: 'Three formats are especially common: HEX, RGB, and HSL. You already know RGB as the additive light model from Unit 2, and hue, saturation, and lightness as visible properties from Unit 1. This unit focuses on how those ideas become written color values in code. HEX is compact and common in CSS. RGB notation maps directly to the channel values you practiced. HSL notation matches how designers describe adjustments.',
+      text: 'Three formats are especially common: HEX, RGB, and HSL. They all describe the same visible colors — just in different ways. HEX is compact and common in CSS. RGB maps directly to screen light channels. HSL matches how designers often describe adjustments.',
       highlights: ['HEX', 'RGB', 'HSL'],
     },
     {

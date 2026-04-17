@@ -5,7 +5,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'accent color',
     definition: 'A color used sparingly to draw attention to a specific element, such as a button or link. Works best when it contrasts clearly with surrounding surface and neutral colors.',
-    relatedLessons: ['u1-l5', 'u2-l4'],
+    relatedLessons: ['u1-l5', 'u2-l5'],
   },
   {
     term: 'analogous',
@@ -90,12 +90,12 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'muted',
     definition: 'A color with reduced saturation. Muted colors feel calm and understated and are commonly used for body text, secondary labels, and placeholder content.',
-    relatedLessons: ['u1-l2', 'u2-l5'],
+    relatedLessons: ['u1-l2', 'u2-l6'],
   },
   {
     term: 'neutral',
     definition: 'A color with very low saturation — grays, off-whites, and near-blacks. Neutrals dominate most UI surfaces and allow higher-saturation accent colors to stand out.',
-    relatedLessons: ['u1-l4', 'u2-l5'],
+    relatedLessons: ['u1-l4', 'u2-l6'],
   },
   {
     term: 'palette',
@@ -160,7 +160,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'vivid',
     definition: 'A color with high saturation, appearing pure and intense. Vivid colors attract attention and are best used for accents, calls-to-action, and status indicators rather than large surfaces.',
-    relatedLessons: ['u1-l2', 'u2-l5'],
+    relatedLessons: ['u1-l2', 'u2-l6'],
   },
   {
     term: 'warm',
@@ -172,7 +172,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'absorption',
     definition: 'The process by which a material takes in certain wavelengths of light rather than reflecting them. Pigments produce color through selective absorption — a red pigment absorbs most wavelengths and reflects only red.',
-    relatedLessons: ['u2-l3'],
+    relatedLessons: ['u2-l4'],
   },
   {
     term: 'additive color',
@@ -192,7 +192,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'channel',
     definition: 'One of the three independent color components in the RGB model: red, green, and blue. Each channel is a number from 0 to 255, and the combination of all three channels produces a specific color.',
-    relatedLessons: ['u2-l2', 'u3-l2'],
+    relatedLessons: ['u3-l2'],
   },
   {
     term: 'channel intensity',
@@ -202,12 +202,12 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'color gamut',
     definition: 'The full range of colors a device or medium can reproduce. Screens generally have a wider gamut than print, which means some screen colors cannot be accurately reproduced in ink.',
-    relatedLessons: ['u2-l3'],
+    relatedLessons: ['u2-l4'],
   },
   {
     term: 'dark interface',
     definition: 'A UI in which the primary surface is near-black or very dark. On dark interfaces, even mid-level saturation colors can appear vivid because the dark background amplifies perceived brightness.',
-    relatedLessons: ['u2-l4'],
+    relatedLessons: ['u2-l5'],
   },
   {
     term: 'green channel',
@@ -217,22 +217,22 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'luminous color',
     definition: 'Color produced by emitted light rather than reflected light. Screen colors are luminous — they glow from within — which is why they can appear more vivid than pigment-based equivalents.',
-    relatedLessons: ['u2-l4'],
+    relatedLessons: ['u2-l5'],
   },
   {
     term: 'mental model',
     definition: 'An internal framework a person uses to understand how something works. In color design, many beginners apply a paint-based mental model to screens, which leads to incorrect expectations about how colors mix.',
-    relatedLessons: ['u2-l1'],
+    relatedLessons: ['u2-l3'],
   },
   {
     term: 'paint logic',
     definition: 'The intuitive but incorrect assumption that screen colors mix like paints or pigments. In paint, mixing colors produces darker results (subtractive). On screens, adding colors produces lighter results (additive).',
-    relatedLessons: ['u2-l1'],
+    relatedLessons: ['u2-l3'],
   },
   {
     term: 'palette balance',
     definition: 'The intentional distribution of neutrals, supporting colors, and accent colors in a UI palette. A common approach is to use a large neutral base, a moderate supporting color, and a small amount of accent.',
-    relatedLessons: ['u2-l5'],
+    relatedLessons: ['u2-l6'],
   },
   {
     term: 'pigment',
@@ -242,7 +242,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'pixel',
     definition: 'The smallest addressable unit of a screen display. Each pixel contains sub-elements that emit red, green, and blue light independently, allowing any screen color to be produced at that point.',
-    relatedLessons: ['u2-l4'],
+    relatedLessons: ['u2-l5'],
   },
   {
     term: 'red channel',
@@ -252,7 +252,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'reflection',
     definition: 'The process by which a surface bounces certain wavelengths of light back toward the viewer. The wavelengths reflected determine the color the eye perceives.',
-    relatedLessons: ['u2-l3'],
+    relatedLessons: ['u2-l4'],
   },
   {
     term: 'RGBA',
@@ -267,12 +267,12 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'screen logic',
     definition: 'The correct mental model for how screen colors behave: adding light makes colors lighter, and combining all three RGB primaries at full intensity produces white. Opposite of paint logic.',
-    relatedLessons: ['u2-l1'],
+    relatedLessons: ['u2-l3'],
   },
   {
     term: 'screen-first decision',
     definition: 'A color choice made with screen rendering as the primary context. Screen-first thinking considers how colors will look on backlit displays rather than assuming print or physical material behavior.',
-    relatedLessons: ['u2-l5'],
+    relatedLessons: ['u2-l6'],
   },
   {
     term: 'shorthand HEX',
@@ -287,12 +287,12 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'subtractive primary',
     definition: 'One of the base colors in the subtractive model: cyan, magenta, and yellow (CMY). In print, these inks are combined to reproduce a wide range of colors by absorbing different wavelengths.',
-    relatedLessons: ['u2-l3'],
+    relatedLessons: ['u2-l4'],
   },
   {
     term: 'surface color',
     definition: 'The color used for the main background or container areas of a UI. Surface colors are usually low-saturation neutrals that let foreground content and accent colors stand out.',
-    relatedLessons: ['u2-l5'],
+    relatedLessons: ['u2-l6'],
   },
 
   // ── Unit 3 ──────────────────────────────────────────────────────────────────
@@ -436,37 +436,37 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'sRGB',
     definition: 'The standard color space for most web and screen work. sRGB defines the range of colors that virtually all displays can reproduce and is the default for CSS color functions.',
-    relatedLessons: ['u6-l6'],
+    relatedLessons: ['u3-l7'],
   },
   {
     term: 'Display P3',
     definition: 'A wider color space available on many modern screens (especially Apple devices) that can represent more vivid colors than sRGB. Colors outside sRGB may be clipped on devices that do not support P3.',
-    relatedLessons: ['u6-l6'],
+    relatedLessons: ['u3-l7'],
   },
   {
     term: 'color space',
     definition: 'A defined range of colors that a system can represent. sRGB and Display P3 are two common color spaces for digital design. Wider spaces can represent more vivid colors but may not be universally supported.',
-    relatedLessons: ['u6-l6'],
+    relatedLessons: ['u3-l7'],
   },
   {
     term: 'Canvas',
     definition: 'An HTML element that provides a drawing surface for graphics rendered via JavaScript. Canvas uses explicit color values for fills and strokes and is commonly used for charts, games, and custom visualizations.',
-    relatedLessons: ['u6-l6'],
+    relatedLessons: ['u3-l7'],
   },
   {
     term: 'SVG',
     definition: 'Scalable Vector Graphics — an XML-based format for vector images in the browser. SVG elements use fill and stroke attributes with color values in HEX, RGB, HSL, or named colors.',
-    relatedLessons: ['u6-l6'],
+    relatedLessons: ['u3-l7'],
   },
   {
     term: 'WebGL',
     definition: 'A JavaScript API for rendering 3D and 2D graphics in the browser. WebGL uses explicit color values for surfaces, lights, and materials. Color decisions in WebGL still need accessibility consideration.',
-    relatedLessons: ['u6-l6'],
+    relatedLessons: ['u3-l7'],
   },
   {
     term: 'contrast checker',
     definition: 'A tool that calculates the contrast ratio between a foreground and background color and reports whether the pair meets WCAG accessibility thresholds. Essential for verifying readability.',
-    relatedLessons: ['u6-l6'],
+    relatedLessons: ['u3-l7'],
   },
   // ── Unit 4 ──────────────────────────────────────────────────────────────────
   {
@@ -612,102 +612,87 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'use of color',
     definition: 'WCAG 1.4.1 — a principle that color must not be the only visual means of conveying information, indicating an action, prompting a response, or distinguishing a visual element.',
-    relatedLessons: ['u5-l3'],
-  },
-  {
-    term: 'color-dependent meaning',
-    definition: 'Any instance where the meaning of an interface element relies primarily or entirely on hue difference. Fragile under CVD and other low-color conditions.',
-    relatedLessons: ['u4-l4'],
-  },
-  {
-    term: 'ambiguous element',
-    definition: 'An interface element whose purpose or state becomes unclear when color perception varies — typically because hue is its only distinguishing feature.',
-    relatedLessons: ['u4-l4'],
-  },
-  {
-    term: 'perceptual robustness',
-    definition: 'The quality of a design that remains understandable across different color perception conditions, achieved by pairing color with non-color cues.',
     relatedLessons: ['u4-l4'],
   },
   {
     term: 'annotation',
     definition: 'A text or symbol note added directly to a chart or diagram to label data points without requiring the viewer to cross-reference a separate legend.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'chart series',
     definition: 'A single data set in a multi-series chart. Series are typically differentiated by color, but robust charts also use patterns, direct labels, or different line styles.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'direct label',
     definition: 'A label placed adjacent to a data line or bar, eliminating the need for a separate legend. Direct labels are more readable and more CVD-robust than color-coded legends.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'error state',
     definition: 'A UI state indicating that an action failed or a field contains invalid input. Should be communicated through color + icon + text, not color alone.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'info state',
     definition: 'A UI state conveying neutral informational context. Should use icon + color, not color alone.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'pattern fill',
     definition: 'A repeating texture or hatch pattern applied to a chart bar, area, or region to make it distinguishable from adjacent elements without relying solely on hue.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'success state',
     definition: 'A UI state confirming that an action completed correctly. Should include a success icon and confirmation text, not just a green color change.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'validation feedback',
     definition: 'Visual and textual messages that inform users whether their input is valid or what correction is needed. Effective feedback combines border state, icon, and a clear error message.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'warning state',
     definition: 'A UI state alerting the user to a potential problem that has not yet caused failure. Should use a warning icon and text alongside a color indicator.',
-    relatedLessons: ['u5-l3'],
+    relatedLessons: ['u4-l5'],
   },
   {
     term: 'approximation',
     definition: 'In the context of CVD simulation, a computed transformation of colors that resembles what a CVD viewer might see. Useful but not identical to actual human perception.',
-    relatedLessons: ['u5-l6'],
+    relatedLessons: ['u4-l6'],
   },
   {
     term: 'inclusive design',
     definition: 'An approach to design that proactively considers a wide range of human abilities and situations, rather than designing for an assumed default user.',
-    relatedLessons: ['u5-l6'],
+    relatedLessons: ['u4-l6'],
   },
   {
     term: 'review pass',
     definition: 'A structured inspection of a design artifact against a specific set of criteria — such as color robustness, contrast, or label coverage.',
-    relatedLessons: ['u5-l5'],
+    relatedLessons: ['u4-l6'],
   },
   {
     term: 'robustness',
     definition: 'The quality of a design that remains usable and understandable across a wide range of conditions and user differences.',
-    relatedLessons: ['u5-l6'],
+    relatedLessons: ['u4-l6'],
   },
   {
     term: 'task check',
     definition: 'A method of reviewing an interface by asking whether a user can complete a specific task, rather than asking only whether visual elements look correct.',
-    relatedLessons: ['u5-l5'],
+    relatedLessons: ['u4-l6'],
   },
   {
     term: 'user test',
     definition: 'A method of evaluating a design by observing real users attempting to complete tasks. More accurate than simulation alone for assessing CVD robustness.',
-    relatedLessons: ['u5-l6'],
+    relatedLessons: ['u4-l6'],
   },
   {
     term: 'workflow',
     definition: 'A repeatable sequence of steps used to accomplish a design task. In inclusive design, a workflow for color review includes simulation, task-checking, and redundant cue verification.',
-    relatedLessons: ['u5-l6'],
+    relatedLessons: ['u4-l6'],
   },
 
   // ── Unit 5 ──────────────────────────────────────────────────────────────────
@@ -719,7 +704,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'alert',
     definition: 'A UI pattern that delivers time-sensitive or important information, such as a success confirmation, warning notice, or error message. Should combine color, icon, and structured text.',
-    relatedLessons: ['u5-l4'],
+    relatedLessons: ['u5-l6'],
   },
   {
     term: 'audit',
@@ -729,12 +714,12 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'boundary',
     definition: 'The edge or border of a UI component that defines its visible extent and helps users identify it as interactive. A low-contrast boundary makes a control harder to locate.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l3'],
   },
   {
     term: 'chart palette',
     definition: 'A set of colors chosen for a data visualization. Accessible chart palettes maintain distinguishability under CVD simulation, use sufficient contrast between adjacent series, and are supplemented by direct labels or patterns.',
-    relatedLessons: ['u5-l4'],
+    relatedLessons: ['u5-l6'],
   },
   {
     term: 'checker',
@@ -754,82 +739,82 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'contrast ratio',
     definition: 'A number from 1:1 (no contrast) to 21:1 (maximum contrast) expressing the luminance difference between two colors. Used to evaluate color pair accessibility.',
-    relatedLessons: ['u5-l1'],
+    relatedLessons: ['u5-l2'],
   },
   {
     term: 'dashboard',
     definition: 'A screen layout that presents multiple data summaries, often using charts, indicators, and status panels. Dashboards often contain multiple accessibility risks including color-only charts and low-contrast small labels.',
-    relatedLessons: ['u5-l4'],
+    relatedLessons: ['u5-l6'],
   },
   {
     term: 'fail',
     definition: 'A contrast pair that falls below the target ratio. A failing pair may cause readability or usability problems for users with low vision or CVD.',
-    relatedLessons: ['u5-l1'],
+    relatedLessons: ['u5-l2'],
   },
   {
     term: 'focus indicator',
     definition: 'A visible outline or highlight that shows which interactive element is currently focused during keyboard navigation. Must be clearly visible to support keyboard accessibility.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l3'],
   },
   {
     term: 'form validation',
     definition: 'The process and visual design of informing users whether their form input meets requirements, and providing clear guidance for correction. Accessible validation combines color, icon, and text.',
-    relatedLessons: ['u5-l4'],
+    relatedLessons: ['u5-l6'],
   },
   {
     term: 'graphical object',
     definition: 'A visual element — icon, chart mark, or meaningful image — that conveys information not conveyed in text. Graphical objects need sufficient contrast when they carry essential meaning.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l3'],
   },
   {
     term: 'icon contrast',
     definition: 'The contrast between a meaningful icon and its background. Icons that communicate important information — such as a warning or a download action — need sufficient contrast to be reliably identified.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l3'],
   },
   {
     term: 'inline error',
     definition: 'An error message displayed adjacent to the specific form field where the error occurred, rather than in a general banner. Should include icon, field reference, and actionable description.',
-    relatedLessons: ['u5-l4'],
+    relatedLessons: ['u5-l6'],
   },
   {
     term: 'large text',
     definition: 'Text at 18pt or above in regular weight, or 14pt and above in bold weight. Large text can meet a lower contrast threshold of 3:1 because its size supports legibility.',
-    relatedLessons: ['u5-l1'],
+    relatedLessons: ['u5-l2'],
   },
   {
     term: 'link distinction',
     definition: 'The visual difference between a hyperlink and surrounding non-link text. Links in body text should be identified by underline or another non-color cue to avoid color-only identification.',
-    relatedLessons: ['u5-l4'],
+    relatedLessons: ['u5-l6'],
   },
   {
     term: 'non-text contrast',
     definition: 'The contrast requirement for user interface components and graphical objects that are not text — such as input borders, icons, focus rings, and chart marks. The practical target is 3:1 against adjacent colors.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l3'],
   },
   {
     term: 'normal text',
     definition: 'Body-sized text — typically under 18pt regular weight or under 14pt bold — which requires a minimum contrast ratio of 4.5:1 in typical accessibility guidance.',
-    relatedLessons: ['u5-l1'],
+    relatedLessons: ['u5-l2'],
   },
   {
     term: 'notification',
     definition: 'A message that informs the user of a relevant event or change, such as a new message, task completion, or system update. Should be identifiable beyond background color alone.',
-    relatedLessons: ['u5-l4'],
+    relatedLessons: ['u5-l6'],
   },
   {
     term: 'outline',
     definition: 'A visual stroke around an element. Used as a focus indicator, active state, or input border. Outlines need sufficient contrast to be seen reliably.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l3'],
   },
   {
     term: 'pass',
     definition: 'A contrast pair that meets or exceeds the target ratio for its use case. A passing pair is reliably readable or identifiable for most users.',
-    relatedLessons: ['u5-l1'],
+    relatedLessons: ['u5-l2'],
   },
   {
     term: 'pattern library',
     definition: 'A shared collection of reusable, defined interface patterns with specified visual rules. Accessible pattern libraries embed contrast and redundancy rules into each component definition, scaling accessibility across an entire product.',
-    relatedLessons: ['u5-l4'],
+    relatedLessons: ['u5-l6'],
   },
   {
     term: 'priority element',
@@ -839,7 +824,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'redundant cue',
     definition: 'A design approach in which the same meaning is communicated through two or more channels — color plus icon, plus label, plus shape — so that the meaning survives if any one channel is unavailable.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l4'],
   },
   {
     term: 'state indicator',
@@ -849,22 +834,22 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'state visibility',
     definition: 'The clarity with which different states of a component — default, hover, active, focus, error, success — are visually distinguishable from one another.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l3'],
   },
   {
     term: 'status message',
     definition: 'A short text that communicates the outcome of an action or the current state of a system. A status message is more robust than a color-only indicator.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l4'],
   },
   {
     term: 'text contrast',
     definition: 'The measured luminance difference between text and its background, expressed as a ratio. Determines readability for a given text size and weight.',
-    relatedLessons: ['u5-l1'],
+    relatedLessons: ['u5-l2'],
   },
   {
     term: 'user interface component',
     definition: 'An interactive control in a digital interface, such as a button, input, checkbox, toggle, or dropdown. Components need sufficient contrast between their boundaries and adjacent backgrounds.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l3'],
   },
   {
     term: 'usability',
@@ -874,7 +859,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'validation state',
     definition: 'The visual treatment applied to a form field or input to indicate whether the value meets requirements. Should include color, icon, and text message — not color alone.',
-    relatedLessons: ['u5-l2'],
+    relatedLessons: ['u5-l4'],
   },
   {
     term: 'verification',
@@ -926,7 +911,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'consistency audit',
     definition: 'A review process that checks whether a color role is applied uniformly across all screens and components, identifying instances where the same role uses different values.',
-    relatedLessons: ['u6-l7'],
+    relatedLessons: ['u6-l6'],
   },
   {
     term: 'context effect',
@@ -1006,7 +991,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'stress test',
     definition: 'A systematic review of a color system across multiple contexts (light, dark, charts, alerts, CVD simulation) to reveal weaknesses that are invisible in any single view.',
-    relatedLessons: ['u6-l7'],
+    relatedLessons: ['u6-l6'],
   },
   {
     term: 'supporting palette',
@@ -1021,7 +1006,7 @@ export const glossary: GlossaryTerm[] = [
   {
     term: 'system review',
     definition: 'A structured evaluation of a color system after launch or feature additions, checking for consistency drift, contrast failures, and semantic dilution.',
-    relatedLessons: ['u6-l7'],
+    relatedLessons: ['u6-l6'],
   },
   {
     term: 'theme pairing',

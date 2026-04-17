@@ -11,18 +11,22 @@ export const lesson3_2: LessonConfig = {
   estimatedMinutes: 16,
   prerequisites: ['u3-l1'],
   conceptsIntroduced: [
-    'RGB notation',
+    'RGB',
     'RGBA',
-    'HEX notation',
+    'HEX',
+    'channel',
+    'red channel',
+    'green channel',
+    'blue channel',
     'shorthand HEX',
   ],
   interactionType: 'hex-rgb-editor',
-  glossaryTerms: ['HEX', 'RGBA', 'shorthand HEX'],
+  glossaryTerms: ['channel', 'HEX', 'RGBA', 'shorthand HEX'],
   reviewTags: ['formats', 'HEX', 'RGB'],
   steps: [
     {
       id: 's1',
-      text: 'Unit 2 covered how red, green, and blue light channels combine on screen. RGB notation writes those same channels as a code value: rgb(red, green, blue), each from 0 to 255. So rgb(0, 0, 0) is black and rgb(255, 255, 255) is white — the same additive logic, now expressed as a typed format.',
+      text: 'RGB describes a color by stating how much red, green, and blue light to mix. Each channel runs from 0 (none) to 255 (full). rgb(0, 0, 0) is no light at all — black. rgb(255, 255, 255) is all three channels at full — white.',
       highlights: ['red', 'green', 'blue', 'channel'],
     },
     {
@@ -32,7 +36,7 @@ export const lesson3_2: LessonConfig = {
     },
     {
       id: 's3',
-      text: 'You already know that equal channel values produce neutral grays. In notation, that means rgb(120, 120, 120) writes as a mid-gray and #787878 does the same in HEX. Recognizing neutrals in both formats is a practical reading skill — when you see identical channel pairs in HEX, you can immediately tell the color is a neutral.',
+      text: 'When all three RGB channels are equal — like rgb(120, 120, 120) — the result is always a neutral gray. No single channel dominates, so no hue appears. The same is true for #808080 or any HEX where both pairs in each channel match.',
       highlights: ['neutral'],
     },
     {
@@ -42,7 +46,7 @@ export const lesson3_2: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'RGBA adds a fourth value — the alpha channel — to RGB. In this lesson, treat it as a format preview: 0 is fully transparent and 1 is fully opaque. The next lesson focuses on how that same value behaves in layered interfaces.',
+      text: 'RGBA adds a fourth value — the alpha channel — to RGB. It controls opacity, from 0 (fully transparent) to 1 (fully opaque). When you see rgba(30, 64, 175, 0.5), the color is that same blue at 50% opacity.',
       highlights: ['RGBA', 'alpha channel'],
     },
   ],
@@ -50,7 +54,7 @@ export const lesson3_2: LessonConfig = {
     {
       id: 'c1',
       prompt:
-        'Match three target UI colors by typing HEX values. Use what you know about channel pairs to build the right hex code — the sliders are locked for this challenge.',
+        'Use the editor to match three target UI colors. Adjust the sliders or type a HEX value. Load each preset to explore how values map to visible results.',
       type: 'identify-problem',
       hints: [
         'Start with the preset closest to the target, then fine-tune.',
@@ -63,35 +67,35 @@ export const lesson3_2: LessonConfig = {
   quizItems: [
     {
       id: 'q1',
-      prompt: 'A designer sees #4A4A4A in a stylesheet. Without converting to decimal, what can they immediately tell about this color?',
+      prompt: 'What do equal RGB channel values always produce?',
       choices: [
         {
           id: 'a',
-          label: 'It is a neutral — all three channel pairs are the same',
+          label: 'A neutral gray (or white or black)',
           isCorrect: true,
           explanation:
-            'When all three HEX pairs are identical (4A, 4A, 4A), no channel dominates. The result is a neutral gray. Recognizing matching pairs is a quick way to spot neutrals in HEX.',
+            'When R, G, and B are equal, no single channel dominates and no hue appears. The result is a neutral — ranging from black at 0,0,0 to white at 255,255,255.',
         },
         {
           id: 'b',
-          label: 'It is a dark blue — 4A is in the blue range',
+          label: 'A saturated color with medium brightness',
           isCorrect: false,
           explanation:
-            'HEX digits are not mapped to specific hues. 4A appears in all three channel positions equally, making this a neutral, not a blue.',
+            'Equal channel values suppress all hue. Only when channels differ does a color appear.',
         },
         {
           id: 'c',
-          label: 'It is invalid — HEX values must use digits 0-9 only',
+          label: 'A very dark color',
           isCorrect: false,
           explanation:
-            'HEX uses base-16, which includes digits 0-9 and letters A-F. 4A is a valid two-digit hex value.',
+            'Low equal values give a dark neutral, but equal values at higher settings produce lighter neutrals. The key result is always neutral, not always dark.',
         },
         {
           id: 'd',
-          label: 'Nothing — you must convert to RGB first to understand a HEX value',
+          label: 'An error — RGB must have at least one dominant channel',
           isCorrect: false,
           explanation:
-            'You can read structural patterns directly in HEX. Matching pairs across all three channels immediately tells you the color is a neutral.',
+            'There is no such rule. Equal channel values are perfectly valid and produce neutrals.',
         },
       ],
     },
@@ -199,10 +203,10 @@ export const lesson3_2: LessonConfig = {
     },
   ],
   keyPoints: [
-    'RGB notation writes the three channel values you learned in Unit 2 as rgb(red, green, blue) — a format browsers and design tools can use directly.',
+    'RGB describes color as three channel values — red, green, blue — each from 0 (none) to 255 (full).',
+    'Equal channel values always produce a neutral: rgb(0,0,0) is black, rgb(255,255,255) is white, anything in between with equal values is a gray.',
     'HEX encodes the same three channels as base-16 pairs: the first two digits are red, next two green, last two blue.',
-    'Matching HEX pairs (e.g. #4A4A4A) signal a neutral — a quick reading shortcut that applies the equal-channels principle from Unit 2.',
     'Shorthand HEX (#ABC) is valid only when each pair in the full six-character form is a repeated digit — #ABC expands to #AABBCC.',
-    'RGBA adds a fourth value (0–1) for opacity; this lesson introduces the notation, and the next lesson covers layered behavior in depth.',
+    'RGBA adds a fourth value (0–1) for opacity; rgba(30, 64, 175, 0.5) is that same blue at 50% transparency.',
   ],
 };
