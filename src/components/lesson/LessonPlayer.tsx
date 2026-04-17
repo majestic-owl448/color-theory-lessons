@@ -127,7 +127,7 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
           ))}
           <span
             className={`${styles.progressDot} ${
-              phase === 'challenge' ? styles.current : phase === 'quiz' || phase === 'complete' ? styles.done : ''
+              challengeDone || phase === 'quiz' || phase === 'complete' || phase === 'challenge' ? styles.done : ''
             }`}
           />
           {lesson.quizItems.map((_, i) => (
@@ -153,6 +153,17 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
               {stepIndex + 1} / {lesson.steps.length}
             </span>
             <p className={styles.stepText}>{currentStep.text}</p>
+            {stepIndex === lesson.steps.length - 1 && challenge && (
+              <>
+                <p className={styles.challengePrompt}>{challenge.prompt}</p>
+                <div className={styles.hints}>
+                  <span className={styles.hintsLabel}>hints</span>
+                  {challenge.hints.map((h, i) => (
+                    <p key={i} className={styles.hint}>{h}</p>
+                  ))}
+                </div>
+              </>
+            )}
             <div className={styles.stepActions}>
               <button
                 className={styles.btnSecondary}
@@ -161,9 +172,15 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
               >
                 back
               </button>
-              <button className={styles.btnPrimary} onClick={handleNextStep}>
-                next
-              </button>
+              {stepIndex < lesson.steps.length - 1 ? (
+                <button className={styles.btnPrimary} onClick={handleNextStep}>
+                  next
+                </button>
+              ) : challengeDone ? (
+                <button className={styles.btnPrimary} onClick={handleChallengeComplete}>
+                  {lesson.quizItems.length > 0 ? 'take the quiz →' : 'finish lesson →'}
+                </button>
+              ) : null}
             </div>
           </div>
         )}
@@ -298,7 +315,6 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       {/* ── Right tool panel ── */}
       <ToolRenderer
         lesson={lesson}
-        phase={phase}
         toolUnlocked={phase !== 'steps' || stepIndex === lesson.steps.length - 1}
         onChallengeComplete={() => setChallengeDone(true)}
       />
