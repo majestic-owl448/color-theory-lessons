@@ -149,21 +149,23 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
         {/* ── Steps phase ── */}
         {phase === 'steps' && (
           <div className={styles.stepContent}>
-            <span className={styles.stepNumber}>
-              {stepIndex + 1} / {lesson.steps.length}
-            </span>
-            <p className={styles.stepText}>{currentStep.text}</p>
-            {stepIndex === lesson.steps.length - 1 && challenge && (
-              <>
-                <p className={styles.challengePrompt}>{challenge.prompt}</p>
-                <div className={styles.hints}>
-                  <span className={styles.hintsLabel}>hints</span>
-                  {challenge.hints.map((h, i) => (
-                    <p key={i} className={styles.hint}>{h}</p>
-                  ))}
-                </div>
-              </>
-            )}
+            <div className={styles.scrollArea}>
+              <span className={styles.stepNumber}>
+                {stepIndex + 1} / {lesson.steps.length}
+              </span>
+              <p className={styles.stepText}>{currentStep.text}</p>
+              {stepIndex === lesson.steps.length - 1 && challenge && (
+                <>
+                  <p className={styles.challengePrompt}>{challenge.prompt}</p>
+                  <div className={styles.hints}>
+                    <span className={styles.hintsLabel}>hints</span>
+                    {challenge.hints.map((h, i) => (
+                      <p key={i} className={styles.hint}>{h}</p>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
             <div className={styles.stepActions}>
               <button
                 className={styles.btnSecondary}
@@ -188,13 +190,15 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
         {/* ── Challenge phase ── */}
         {phase === 'challenge' && challenge && (
           <div className={styles.stepContent}>
-            <span className={styles.stepNumber}>challenge</span>
-            <p className={styles.challengePrompt}>{challenge.prompt}</p>
-            <div className={styles.hints}>
-              <span className={styles.hintsLabel}>hints</span>
-              {challenge.hints.map((h, i) => (
-                <p key={i} className={styles.hint}>{h}</p>
-              ))}
+            <div className={styles.scrollArea}>
+              <span className={styles.stepNumber}>challenge</span>
+              <p className={styles.challengePrompt}>{challenge.prompt}</p>
+              <div className={styles.hints}>
+                <span className={styles.hintsLabel}>hints</span>
+                {challenge.hints.map((h, i) => (
+                  <p key={i} className={styles.hint}>{h}</p>
+                ))}
+              </div>
             </div>
             {challengeDone && (
               <div className={styles.stepActions}>
@@ -209,41 +213,43 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
         {/* ── Quiz phase ── */}
         {phase === 'quiz' && question && (
           <div className={styles.stepContent}>
-            <span className={styles.quizHeader}>
-              question {quizIndex + 1} of {lesson.quizItems.length}
-            </span>
-            <p className={styles.quizPrompt}>{question.prompt}</p>
-            <div className={styles.choices}>
-              {question.choices.map((choice) => {
-                const isSelected = selectedChoice === choice.id;
-                const showResult = submitted;
-                return (
-                  <button
-                    key={choice.id}
-                    className={`${styles.choice} ${
-                      showResult && choice.isCorrect
-                        ? styles.correct
-                        : showResult && isSelected && !choice.isCorrect
-                          ? styles.incorrect
-                          : isSelected && !showResult
-                            ? styles.chosen
-                            : ''
-                    }`}
-                    onClick={() => handleChoiceSelect(choice.id)}
-                    disabled={submitted && !choice.isCorrect && selectedChoice !== choice.id}
-                  >
-                    <span className={styles.choiceKey}>{choice.id}.</span>
-                    <span>{choice.label}</span>
-                  </button>
-                );
-              })}
-            </div>
+            <div className={styles.scrollArea}>
+              <span className={styles.quizHeader}>
+                question {quizIndex + 1} of {lesson.quizItems.length}
+              </span>
+              <p className={styles.quizPrompt}>{question.prompt}</p>
+              <div className={styles.choices}>
+                {question.choices.map((choice) => {
+                  const isSelected = selectedChoice === choice.id;
+                  const showResult = submitted;
+                  return (
+                    <button
+                      key={choice.id}
+                      className={`${styles.choice} ${
+                        showResult && choice.isCorrect
+                          ? styles.correct
+                          : showResult && isSelected && !choice.isCorrect
+                            ? styles.incorrect
+                            : isSelected && !showResult
+                              ? styles.chosen
+                              : ''
+                      }`}
+                      onClick={() => handleChoiceSelect(choice.id)}
+                      disabled={submitted && !choice.isCorrect && selectedChoice !== choice.id}
+                    >
+                      <span className={styles.choiceKey}>{choice.id}.</span>
+                      <span>{choice.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-            {submitted && question.choices.find((c) => c.id === selectedChoice)?.explanation && (
-              <p className={styles.explanation}>
-                {question.choices.find((c) => c.id === selectedChoice)!.explanation}
-              </p>
-            )}
+              {submitted && question.choices.find((c) => c.id === selectedChoice)?.explanation && (
+                <p className={styles.explanation}>
+                  {question.choices.find((c) => c.id === selectedChoice)!.explanation}
+                </p>
+              )}
+            </div>
 
             <div className={styles.stepActions}>
               {!submitted ? (
