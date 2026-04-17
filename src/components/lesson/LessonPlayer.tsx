@@ -157,11 +157,13 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
             </span>
             <p className={styles.stepText}>{currentStep.text}</p>
             <div className={styles.stepActions}>
-              {stepIndex > 0 && (
-                <button className={styles.btnSecondary} onClick={handlePrevStep}>
-                  back
-                </button>
-              )}
+              <button
+                className={styles.btnSecondary}
+                onClick={handlePrevStep}
+                disabled={stepIndex === 0}
+              >
+                back
+              </button>
               <button className={styles.btnPrimary} onClick={handleNextStep}>
                 {stepIndex < lesson.steps.length - 1 ? 'next' : 'try it →'}
               </button>

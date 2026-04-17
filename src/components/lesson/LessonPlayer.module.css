@@ -125,6 +125,16 @@
   color: var(--primary-foreground);
 }
 
+.btnSecondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btnSecondary:disabled:hover {
+  border-color: var(--border);
+  color: var(--secondary-foreground);
+}
+
 /* ── Challenge panel ──────────────────────────────────────────────────── */
 .challengePrompt {
   font-size: 1rem;
