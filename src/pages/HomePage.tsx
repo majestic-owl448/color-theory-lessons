@@ -101,7 +101,9 @@ export function HomePage() {
                   onClick={canExpand ? toggleExpand : undefined}
                   role={canExpand ? 'button' : undefined}
                   tabIndex={canExpand ? 0 : undefined}
-                  onKeyDown={(e) => canExpand && e.key === 'Enter' && toggleExpand()}
+                  aria-label={canExpand ? `${unit.title} — click to ${isExpanded ? 'collapse' : 'expand'}` : undefined}
+                  aria-expanded={canExpand ? isExpanded : undefined}
+                  onKeyDown={(e) => canExpand && (e.key === 'Enter' || e.key === ' ') && toggleExpand()}
                   style={{ cursor: canExpand ? 'pointer' : 'default' }}
                 >
                   <span className={styles.unitIndex}>{String(i + 1).padStart(2, '0')}</span>

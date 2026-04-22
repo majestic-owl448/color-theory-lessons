@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './state/app-provider.tsx';
 import { AppShell } from './components/layout/AppShell.tsx';
+import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 
 const HomePage = lazy(() => import('./pages/HomePage.tsx').then((m) => ({ default: m.HomePage })));
 const LessonPage = lazy(() => import('./pages/LessonPage.tsx').then((m) => ({ default: m.LessonPage })));
@@ -17,6 +18,7 @@ export function App() {
     <AppProvider>
       <BrowserRouter>
         <AppShell>
+          <ErrorBoundary>
           <Suspense fallback={<p style={{ color: 'var(--muted)', fontFamily: 'var(--font-mono)' }}>loading...</p>}>
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -34,6 +36,7 @@ export function App() {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
+          </ErrorBoundary>
         </AppShell>
       </BrowserRouter>
     </AppProvider>
