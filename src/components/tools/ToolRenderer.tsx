@@ -36,6 +36,7 @@ const BrandPressureTool = lazy(() => import('./BrandPressureTool.tsx').then((m) 
 const DarkTranslatorTool = lazy(() => import('./DarkTranslatorTool.tsx').then((m) => ({ default: m.DarkTranslatorTool })));
 const ChartTunerTool = lazy(() => import('./ChartTunerTool.tsx').then((m) => ({ default: m.ChartTunerTool })));
 const SystemStressTestTool = lazy(() => import('./SystemStressTestTool.tsx').then((m) => ({ default: m.SystemStressTestTool })));
+const LogicFixerTool = lazy(() => import('./LogicFixerTool.tsx').then((m) => ({ default: m.LogicFixerTool })));
 
 /** Props for the ToolRenderer component. */
 interface ToolRendererProps {
@@ -194,6 +195,10 @@ export function ToolRenderer({ lesson, toolUnlocked, onChallengeComplete }: Tool
 
     case 'system-stress':
       tool = <SystemStressTestTool interactive={toolUnlocked} onComplete={toolUnlocked ? onChallengeComplete : undefined} />;
+      break;
+
+    case 'logic-fixer':
+      tool = <LogicFixerTool interactive={toolUnlocked} onComplete={toolUnlocked ? onChallengeComplete : undefined} />;
       break;
 
     default:
