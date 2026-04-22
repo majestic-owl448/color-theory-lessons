@@ -11,6 +11,7 @@ const SettingsPage = lazy(() => import('./pages/SettingsPage.tsx').then((m) => (
 const GlossaryPage = lazy(() => import('./pages/GlossaryPage.tsx').then((m) => ({ default: m.GlossaryPage })));
 const ReviewPage = lazy(() => import('./pages/ReviewPage.tsx').then((m) => ({ default: m.ReviewPage })));
 const PaletteBuilderPage = lazy(() => import('./pages/PaletteBuilderPage.tsx').then((m) => ({ default: m.PaletteBuilderPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage.tsx').then((m) => ({ default: m.NotFoundPage })));
 
 export function App() {
   return (
@@ -40,6 +41,7 @@ export function App() {
                 element={<Navigate to="/milestone/milestone-6" replace />}
               />
               <Route path="/settings" element={<SettingsPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
         </AppShell>
