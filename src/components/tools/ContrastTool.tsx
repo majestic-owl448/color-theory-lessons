@@ -14,7 +14,7 @@ interface ProblemArea {
 const AREAS: ProblemArea[] = [
   { id: 'heading', label: 'Section label', textColor: '#858591', bgColor: '#2a2a40', fixBg: false, minL: 75 },
   { id: 'helper', label: 'Helper text below input', textColor: '#5a5a6e', bgColor: '#2a2a40', fixBg: false, minL: 65 },
-  { id: 'button', label: 'Submit button', textColor: '#ffffff', bgColor: '#4a4a60', fixBg: true, minL: 35 },
+  { id: 'button', label: 'Submit button', textColor: '#ffffff', bgColor: '#8080a8', fixBg: true, minL: 35 },
 ];
 
 interface ContrastToolProps {
@@ -29,6 +29,7 @@ export function ContrastTool({ interactive = true, onComplete }: ContrastToolPro
     button: hexToHsl(AREAS[2].bgColor).l,
   });
   const [completed, setCompleted] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   function isFixed(area: ProblemArea) {
     const l = lightness[area.id];
@@ -37,20 +38,20 @@ export function ContrastTool({ interactive = true, onComplete }: ContrastToolPro
 
   function handleChange(id: string, val: number) {
     if (completed || !interactive) return;
-    setLightness((prev) => {
-      const next = { ...prev, [id]: val };
-      const nextAllFixed = AREAS.every((area) => {
-        const l = next[area.id];
-        return area.fixBg ? l <= area.minL : l >= area.minL;
-      });
+    setLightness((prev) => ({ ...prev, [id]: val }));
+  }
 
-      if (nextAllFixed) {
-        setCompleted(true);
-        onComplete?.();
-      }
+  function handleCheck() {
+    const allFixed = AREAS.every((area) => isFixed(area));
+    setChecked(true);
+    if (allFixed) {
+      setCompleted(true);
+      onComplete?.();
+    }
+  }
 
-      return next;
-    });
+  function handleRetry() {
+    setChecked(false);
   }
 
   return (
@@ -152,6 +153,49 @@ export function ContrastTool({ interactive = true, onComplete }: ContrastToolPro
           );
         })}
       </div>
+
+      {interactive && !completed && !checked && (
+        <button
+          onClick={handleCheck}
+          style={{
+            alignSelf: 'flex-start',
+            padding: '0.4rem 1rem',
+            background: 'var(--yellow)',
+            color: 'var(--gray-90)',
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 700,
+            fontSize: '0.8rem',
+            borderRadius: 'var(--radius-sm)',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          check
+        </button>
+      )}
+
+      {checked && !completed && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--red)' }}>
+            not there yet — keep adjusting
+          </p>
+          <button
+            onClick={handleRetry}
+            style={{
+              padding: '0.3rem 0.75rem',
+              background: 'transparent',
+              color: 'var(--secondary-foreground)',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.8rem',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border)',
+              cursor: 'pointer',
+            }}
+          >
+            retry
+          </button>
+        </div>
+      )}
 
       {completed && (
         <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--green)' }}>

@@ -34,7 +34,7 @@ export const lesson1_2: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'Use the sliders to explore each dimension. Lock two values, change the third, and notice what shifts and what stays the same.',
+      text: 'Use the sliders to explore each dimension. Only one slider is unlocked at a time — adjust it and notice what shifts and what stays the same.',
     },
   ],
   challenges: [

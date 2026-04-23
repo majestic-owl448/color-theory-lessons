@@ -33,7 +33,7 @@ export const lesson2_3: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'In the challenge, you will see statements where a designer is reasoning about screen color using paint logic. For each one, pick the rewrite that corrects the explanation using additive, screen-first thinking.',
+      text: 'Each statement below shows a designer reasoning about screen color using paint logic. For each one, pick the rewrite that corrects the explanation using additive, screen-first thinking.',
     },
   ],
   challenges: [
