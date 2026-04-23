@@ -134,10 +134,6 @@ export function HomePage() {
                           locked
                         </span>
                       )
-                    ) : (
-                      <span className={styles.unitBadge} style={{ color: 'var(--muted)', borderColor: 'var(--border)' }}>
-                        coming soon
-                      </span>
                     )}
                     {canExpand && (
                       <span className={styles.expandChevron}>{isExpanded ? '▲' : '▼'}</span>
