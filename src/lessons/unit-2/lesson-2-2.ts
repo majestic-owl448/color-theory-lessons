@@ -21,15 +21,18 @@ export const lesson2_2: LessonConfig = {
     {
       id: 's2',
       text: 'With all channels at zero, you get black — no light at all. With all three at full intensity, you get white. This is additive color: more light means brighter, and combining all three at maximum is the brightest possible result.',
+      panel: { type: 'rgb-mixer-preview', mode: 'extremes' },
     },
     {
       id: 's3',
       text: 'Channel pairs create predictable results. Red and green together produce yellow. Green and blue together produce cyan. Red and blue together produce magenta. These are the additive secondaries — worth knowing by feel, not just memorization.',
       highlights: ['yellow', 'cyan', 'magenta'],
+      panel: { type: 'rgb-mixer-preview', mode: 'channel-pairs' },
     },
     {
       id: 's4',
       text: 'Equal values across all three channels produce neutral grays. Low equal values make dark gray. High equal values make light gray. Even a small difference between channels gives the neutral a color cast — useful for warm or cool surfaces.',
+      panel: { type: 'rgb-mixer-preview', mode: 'neutral-grays' },
     },
     {
       id: 's5',

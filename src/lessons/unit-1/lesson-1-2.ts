@@ -21,16 +21,19 @@ export const lesson1_2: LessonConfig = {
       id: 's2',
       text: 'Hue answers: which color family is it? Red, orange, yellow, green, blue, purple — hue is the quality we name when we say "it\'s a blue" or "it\'s a red."',
       highlights: ['hue'],
+      panel: { type: 'hsl-slider-preview', dimension: 'h' },
     },
     {
       id: 's3',
       text: 'Saturation answers: how intense or muted is it? A highly saturated color looks vivid and strong. A low-saturation color looks washed out, grayish, or soft.',
       highlights: ['saturation', 'muted', 'vivid'],
+      panel: { type: 'hsl-slider-preview', dimension: 's' },
     },
     {
       id: 's4',
       text: 'Lightness (also called value) answers: how light or dark is it? A tint is a lighter version of a hue. A shade is a darker version. Lightness contrast is often more important for readability than hue difference.',
       highlights: ['lightness', 'value', 'tint', 'shade'],
+      panel: { type: 'hsl-slider-preview', dimension: 'l' },
     },
     {
       id: 's5',

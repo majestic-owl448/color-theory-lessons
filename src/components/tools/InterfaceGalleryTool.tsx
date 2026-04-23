@@ -32,10 +32,11 @@ const MODES: { id: SimMode; label: string; filter: string }[] = [
 interface InterfaceGalleryToolProps {
   interactive?: boolean;
   onComplete?: () => void;
+  previewSimulation?: SimMode;
 }
 
-export function InterfaceGalleryTool({ interactive = false, onComplete }: InterfaceGalleryToolProps) {
-  const [mode, setMode] = useState<SimMode>('normal');
+export function InterfaceGalleryTool({ interactive = false, onComplete, previewSimulation }: InterfaceGalleryToolProps) {
+  const [mode, setMode] = useState<SimMode>(previewSimulation ?? 'normal');
   const [seen, setSeen] = useState<Set<SimMode>>(new Set(['normal']));
   const [completed, setCompleted] = useState(false);
 

@@ -63,10 +63,13 @@ const CARDS: CardData[] = [
 interface VisionCardsToolProps {
   interactive?: boolean;
   onComplete?: () => void;
+  previewExpandedNames?: string[];
 }
 
-export function VisionCardsTool({ interactive = false, onComplete }: VisionCardsToolProps) {
-  const [expanded, setExpanded] = useState<boolean[]>(CARDS.map(() => false));
+export function VisionCardsTool({ interactive = false, onComplete, previewExpandedNames }: VisionCardsToolProps) {
+  const [expanded, setExpanded] = useState<boolean[]>(
+    CARDS.map((c) => previewExpandedNames?.includes(c.name) ?? false)
+  );
   const [everExpanded, setEverExpanded] = useState<boolean[]>(CARDS.map(() => false));
   const [completed, setCompleted] = useState(false);
 

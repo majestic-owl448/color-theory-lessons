@@ -39,9 +39,10 @@ const CHANNEL_META = [
 interface RGBMixerToolProps {
   interactive?: boolean;
   onComplete?: () => void;
+  previewMode?: 'extremes' | 'channel-pairs' | 'neutral-grays';
 }
 
-export function RGBMixerTool({ interactive = true, onComplete }: RGBMixerToolProps) {
+export function RGBMixerTool({ interactive = true, onComplete, previewMode }: RGBMixerToolProps) {
   const [targetIdx, setTargetIdx] = useState(0);
   const [current, setCurrent] = useState<RGB>({ r: 0, g: 0, b: 0 });
   const [checked, setChecked] = useState(false);
@@ -75,6 +76,40 @@ export function RGBMixerTool({ interactive = true, onComplete }: RGBMixerToolPro
   function handleRetry() {
     setCurrent({ r: 0, g: 0, b: 0 });
     setChecked(false);
+  }
+
+  if (previewMode) {
+    type Swatch = { label: string; rgb: RGB; caption: string };
+    const PREVIEW_SWATCHES: Record<string, Swatch[]> = {
+      extremes: [
+        { label: 'black', rgb: { r: 0, g: 0, b: 0 }, caption: 'rgb(0, 0, 0) — all channels off' },
+        { label: 'white', rgb: { r: 255, g: 255, b: 255 }, caption: 'rgb(255, 255, 255) — all channels full' },
+      ],
+      'channel-pairs': [
+        { label: 'yellow', rgb: { r: 255, g: 255, b: 0 }, caption: 'red + green = yellow' },
+        { label: 'cyan', rgb: { r: 0, g: 255, b: 255 }, caption: 'green + blue = cyan' },
+        { label: 'magenta', rgb: { r: 255, g: 0, b: 255 }, caption: 'red + blue = magenta' },
+      ],
+      'neutral-grays': [
+        { label: 'dark gray', rgb: { r: 64, g: 64, b: 64 }, caption: 'rgb(64, 64, 64)' },
+        { label: 'mid gray', rgb: { r: 128, g: 128, b: 128 }, caption: 'rgb(128, 128, 128)' },
+        { label: 'light gray', rgb: { r: 210, g: 210, b: 210 }, caption: 'rgb(210, 210, 210)' },
+      ],
+    };
+    const swatches = PREVIEW_SWATCHES[previewMode];
+    return (
+      <div className={shellStyles.shell}>
+        <span className={shellStyles.toolLabel}>RGB light mixer</span>
+        <div style={{ display: 'flex', gap: 'var(--spacing-md)', flexWrap: 'wrap' }}>
+          {swatches.map((sw) => (
+            <div key={sw.label} style={{ display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, minWidth: '80px' }}>
+              <div style={{ height: '64px', borderRadius: 'var(--radius-sm)', backgroundColor: rgbString(sw.rgb), border: '1px solid rgba(255,255,255,0.08)' }} />
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted)' }}>{sw.caption}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (

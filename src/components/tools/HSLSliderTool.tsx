@@ -37,9 +37,10 @@ const TOLERANCE = 8;
 interface HSLSliderToolProps {
   interactive?: boolean;
   onComplete?: () => void;
+  previewDimension?: 'h' | 's' | 'l';
 }
 
-export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolProps) {
+export function HSLSliderTool({ interactive = true, onComplete, previewDimension }: HSLSliderToolProps) {
   const [targetIdx, setTargetIdx] = useState(0);
   const [current, setCurrent] = useState<HSL>({ ...TARGETS[0].start });
   const [checked, setChecked] = useState(false);
@@ -87,6 +88,51 @@ export function HSLSliderTool({ interactive = true, onComplete }: HSLSliderToolP
 
   const satGradient = `linear-gradient(to right, hsl(${current.h},0%,${current.l}%), hsl(${current.h},100%,${current.l}%))`;
   const lightGradient = `linear-gradient(to right, hsl(${current.h},${current.s}%,0%), hsl(${current.h},${current.s}%,50%), hsl(${current.h},${current.s}%,100%))`;
+
+  if (previewDimension) {
+    const preview: HSL = { h: 200, s: 70, l: 55 };
+    const pHueGrad = `linear-gradient(to right, hsl(0,${preview.s}%,${preview.l}%), hsl(60,${preview.s}%,${preview.l}%), hsl(120,${preview.s}%,${preview.l}%), hsl(180,${preview.s}%,${preview.l}%), hsl(240,${preview.s}%,${preview.l}%), hsl(300,${preview.s}%,${preview.l}%), hsl(360,${preview.s}%,${preview.l}%))`;
+    const pSatGrad = `linear-gradient(to right, hsl(${preview.h},0%,${preview.l}%), hsl(${preview.h},100%,${preview.l}%))`;
+    const pLightGrad = `linear-gradient(to right, hsl(${preview.h},${preview.s}%,0%), hsl(${preview.h},${preview.s}%,50%), hsl(${preview.h},${preview.s}%,100%))`;
+    const gradients = { h: pHueGrad, s: pSatGrad, l: pLightGrad };
+    const labels = { h: 'Hue', s: 'Saturation', l: 'Lightness' };
+    const maxes = { h: 360, s: 100, l: 100 };
+    const units = { h: '°', s: '%', l: '%' };
+    return (
+      <div className={shellStyles.shell}>
+        <span className={shellStyles.toolLabel}>HSL color lab</span>
+        <div className={styles.root}>
+          <div className={styles.swatchRow}>
+            <div className={styles.swatchBox}>
+              <span className={styles.swatchLabel}>color</span>
+              <div className={styles.swatch} style={{ backgroundColor: hslString(preview) }} />
+              <span className={styles.hslValue}>H:{preview.h} S:{preview.s}% L:{preview.l}%</span>
+            </div>
+          </div>
+          <div className={styles.sliders}>
+            {(['h', 's', 'l'] as const).map((ch) => (
+              <div key={ch} className={styles.sliderRow}>
+                <div className={styles.sliderHeader}>
+                  <span className={styles.sliderName} style={{ color: ch === previewDimension ? 'var(--yellow)' : undefined }}>{labels[ch]}</span>
+                  <span className={styles.sliderVal}>{preview[ch]}{units[ch]}</span>
+                </div>
+                <input
+                  type="range"
+                  className={styles.slider}
+                  min={0}
+                  max={maxes[ch]}
+                  value={preview[ch]}
+                  disabled
+                  style={{ background: gradients[ch], opacity: ch === previewDimension ? 1 : 0.4 }}
+                  aria-label={`${labels[ch]}: ${preview[ch]}${units[ch]}`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={shellStyles.shell}>

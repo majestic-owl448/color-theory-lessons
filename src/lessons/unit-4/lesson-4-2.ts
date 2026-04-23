@@ -44,16 +44,19 @@ export const lesson4_2: LessonConfig = {
       id: 's2',
       text: 'CVD is grouped by which cone type is affected. Protan types involve the red-sensitive cone; deutan types involve the green-sensitive cone; tritan types involve the blue-sensitive cone. The suffix "-opia" indicates absence or very low function; "-anomaly" indicates reduced sensitivity.',
       highlights: ['protanopia', 'deuteranopia', 'tritanopia'],
+      panel: { type: 'vision-cards-preview', expandedNames: ['Protanopia', 'Deuteranopia', 'Tritanopia'] },
     },
     {
       id: 's3',
       text: 'Deuteranomaly — reduced green cone sensitivity — is the most common form of CVD, affecting roughly 5–8% of males with Northern European ancestry. Deuteranopia (absent green cones) and protanopia (absent red cones) are less common. Tritan types are rare.',
       highlights: ['deuteranomaly', 'protanomaly'],
+      panel: { type: 'vision-cards-preview', expandedNames: ['Deuteranomaly', 'Protanomaly'] },
     },
     {
       id: 's4',
       text: 'Achromatopsia is a rare condition where very limited or no cone function is present. Individuals with achromatopsia perceive only brightness — all hues appear as shades of gray. This is distinct from the partial cone differences that characterize most CVD types.',
       highlights: ['achromatopsia'],
+      panel: { type: 'vision-cards-preview', expandedNames: ['Achromatopsia'] },
     },
     {
       id: 's5',

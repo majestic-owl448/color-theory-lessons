@@ -64,7 +64,12 @@ export type InteractionType =
   | 'none';
 
 export type StepPanelConfig =
-  | { type: 'color-wheel-preview'; relationship: 'analogous' | 'complementary' | 'triadic' };
+  | { type: 'color-wheel-preview'; relationship: 'analogous' | 'complementary' | 'triadic' }
+  | { type: 'hsl-slider-preview'; dimension: 'h' | 's' | 'l' }
+  | { type: 'rgb-mixer-preview'; mode: 'extremes' | 'channel-pairs' | 'neutral-grays' }
+  | { type: 'hsl-playground-preview' }
+  | { type: 'vision-cards-preview'; expandedNames: string[] }
+  | { type: 'interface-gallery-preview'; simulation: 'normal' | 'deuteranopia' | 'protanopia' | 'tritanopia' | 'achromatopsia' };
 
 export interface LessonStep {
   id: string;

@@ -30,15 +30,18 @@ export const lesson4_3: LessonConfig = {
       id: 's2',
       text: 'Under protan and deutan simulation, red and green hues converge — becoming hard to tell apart. A traffic-light status system (red = error, green = success) becomes ambiguous. The colors that relied on the red-green axis to carry meaning lose their distinction.',
       highlights: ['protan', 'deutan'],
+      panel: { type: 'interface-gallery-preview', simulation: 'protanopia' },
     },
     {
       id: 's3',
       text: 'Under tritan simulation, blue and yellow converge. A yellow warning badge on a blue interface may become hard to distinguish. Blue links on certain backgrounds can lose their visual contrast.',
       highlights: ['tritan'],
+      panel: { type: 'interface-gallery-preview', simulation: 'tritanopia' },
     },
     {
       id: 's4',
       text: 'Charts and maps are especially at risk. When a bar chart uses only green and red to distinguish series, protan or deutan simulation may make both bars look the same. Text paragraphs are usually less affected because they rely on lightness contrast, not hue distinction.',
+      panel: { type: 'interface-gallery-preview', simulation: 'deuteranopia' },
     },
     {
       id: 's5',

@@ -30,10 +30,12 @@ export const lesson3_3: LessonConfig = {
       id: 's2',
       text: 'Hue is a degree on the color wheel (0-360). Saturation is a percentage — 0% is fully muted gray, 100% is fully vivid. Lightness is also a percentage — 0% is black, 100% is white, 50% is the purest version of that hue.',
       highlights: ['hue', 'saturation', 'lightness'],
+      panel: { type: 'hsl-playground-preview' },
     },
     {
       id: 's3',
       text: 'HSL is often easier for design tasks because each property maps to a visible change. Want to mute a color? Lower saturation. Want a lighter version? Raise lightness. Want a nearby color? Shift hue. In RGB, these same adjustments often require changing multiple channels.',
+      panel: { type: 'hsl-playground-preview' },
     },
     {
       id: 's4',
