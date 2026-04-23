@@ -120,20 +120,18 @@ export function HomePage() {
                       <span className={styles.unitBadge}>
                         {done}/{total}
                       </span>
-                    ) : total > 0 ? (
-                      firstLesson && isUnlocked ? (
-                        <Link
-                          to={`/lesson/${firstLesson}`}
-                          className={styles.unitStart}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          start →
-                        </Link>
-                      ) : (
-                        <span className={styles.unitBadge} style={{ color: 'var(--muted)', borderColor: 'var(--border)' }}>
-                          locked
-                        </span>
-                      )
+                    ) : firstLesson && isUnlocked ? (
+                      <Link
+                        to={`/lesson/${firstLesson}`}
+                        className={styles.unitStart}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        start →
+                      </Link>
+                    ) : (
+                      <span className={styles.unitBadge} style={{ color: 'var(--muted)', borderColor: 'var(--border)' }}>
+                        locked
+                      </span>
                     )}
                     {canExpand && (
                       <span className={styles.expandChevron}>{isExpanded ? '▲' : '▼'}</span>
