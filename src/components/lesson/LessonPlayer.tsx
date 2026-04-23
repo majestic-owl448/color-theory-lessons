@@ -4,6 +4,7 @@ import type { LessonConfig } from '../../types/lesson.ts';
 import { useAppDispatch } from '../../state/app-context.tsx';
 import { units } from '../../data/units.ts';
 import { ToolRenderer } from '../tools/ToolRenderer.tsx';
+import StepPanelRenderer from './StepPanelRenderer.tsx';
 import styles from './LessonPlayer.module.css';
 
 interface LessonPlayerProps {
@@ -319,11 +320,14 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       </aside>
 
       {/* ── Right tool panel ── */}
-      <ToolRenderer
-        lesson={lesson}
-        toolUnlocked={phase !== 'steps' || stepIndex === lesson.steps.length - 1}
-        onChallengeComplete={() => setChallengeDone(true)}
-      />
+      {phase === 'steps' && stepIndex < lesson.steps.length - 1
+        ? <StepPanelRenderer panel={lesson.steps[stepIndex]?.panel} />
+        : <ToolRenderer
+            lesson={lesson}
+            toolUnlocked={true}
+            onChallengeComplete={() => setChallengeDone(true)}
+          />
+      }
     </div>
   );
 }

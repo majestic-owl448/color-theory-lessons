@@ -63,10 +63,14 @@ export type InteractionType =
   | 'system-stress'
   | 'none';
 
+export type StepPanelConfig =
+  | { type: 'color-wheel-preview'; relationship: 'analogous' | 'complementary' | 'triadic' };
+
 export interface LessonStep {
   id: string;
   text: string;
   highlights?: string[];
+  panel?: StepPanelConfig | null;
 }
 
 export interface Challenge {

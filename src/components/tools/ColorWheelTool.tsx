@@ -87,11 +87,12 @@ function ColorWheel({ baseH, relatedH, interactive, onChange }: ColorWheelProps)
 interface ColorWheelToolProps {
   interactive?: boolean;
   onComplete?: () => void;
+  previewRelationship?: Relationship;
 }
 
-export function ColorWheelTool({ interactive = true, onComplete }: ColorWheelToolProps) {
+export function ColorWheelTool({ interactive = true, onComplete, previewRelationship }: ColorWheelToolProps) {
   const [baseH, setBaseH] = useState(210);
-  const [relationship, setRelationship] = useState<Relationship>('complementary');
+  const [relationship, setRelationship] = useState<Relationship>(previewRelationship ?? 'complementary');
   const [palette, setPalette] = useState<{ dominant: number; support: number; accent: number } | null>(null);
   const [paletteDone, setPaletteDone] = useState(false);
 
@@ -192,8 +193,8 @@ export function ColorWheelTool({ interactive = true, onComplete }: ColorWheelToo
         </div>
       </div>
 
-      {/* Build palette task */}
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: 'var(--spacing-md)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
+      {/* Build palette task — hidden in preview mode */}
+      {!previewRelationship && <div style={{ borderTop: '1px solid var(--border)', paddingTop: 'var(--spacing-md)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase' }}>build your starter palette</span>
         <p style={{ fontSize: '0.9rem', color: 'var(--secondary-foreground)' }}>
           Choose a relationship, adjust the base hue, then lock in your palette.
@@ -240,7 +241,7 @@ export function ColorWheelTool({ interactive = true, onComplete }: ColorWheelToo
             )}
           </div>
         )}
-      </div>
+      </div>}
     </div>
   );
 }

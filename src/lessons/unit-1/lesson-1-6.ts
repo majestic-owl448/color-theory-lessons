@@ -21,16 +21,19 @@ export const lesson1_6: LessonConfig = {
       id: 's2',
       text: 'Analogous colors sit next to each other on the color wheel. They share a hue family and feel cohesive and calm. Most monochromatic-feeling interfaces use analogous relationships.',
       highlights: ['analogous'],
+      panel: { type: 'color-wheel-preview', relationship: 'analogous' },
     },
     {
       id: 's3',
       text: 'Complementary colors sit opposite each other. They create strong contrast and energy. In UI design, a small complementary accent on a base hue creates immediate visual pop.',
       highlights: ['complementary'],
+      panel: { type: 'color-wheel-preview', relationship: 'complementary' },
     },
     {
       id: 's4',
       text: 'Triadic palettes use three hues equally spaced around the wheel. They can feel dynamic, but in interfaces they require careful restraint — only one hue should dominate.',
       highlights: ['triadic'],
+      panel: { type: 'color-wheel-preview', relationship: 'triadic' },
     },
     {
       id: 's5',
