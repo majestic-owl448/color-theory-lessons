@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Relationship } from '../../utils/color.ts';
 import { hslToHex, getRelatedHues } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
@@ -95,6 +95,12 @@ export function ColorWheelTool({ interactive = true, onComplete, previewRelation
   const [relationship, setRelationship] = useState<Relationship>(previewRelationship ?? 'complementary');
   const [palette, setPalette] = useState<{ dominant: number; support: number; accent: number } | null>(null);
   const [paletteDone, setPaletteDone] = useState(false);
+  const [validationAnswer, setValidationAnswer] = useState<string | null>(null);
+  const [validationSubmitted, setValidationSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (previewRelationship) setRelationship(previewRelationship);
+  }, [previewRelationship]);
 
   const relatedH = getRelatedHues(baseH, relationship);
 
@@ -226,14 +232,90 @@ export function ColorWheelTool({ interactive = true, onComplete, previewRelation
             <p style={{ fontSize: '0.8rem', color: 'var(--secondary-foreground)' }}>
               Relationship: <strong style={{ color: 'var(--primary-foreground)' }}>{relationship}</strong>. The accent creates the strongest visual signal.
             </p>
-            {interactive && !paletteDone && (
-              <button
-                onClick={handleFinish}
-                style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', background: 'var(--yellow)', color: 'var(--gray-90)', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.85rem', borderRadius: 'var(--radius-sm)', border: 'none', cursor: 'pointer' }}
-              >
-                done →
-              </button>
-            )}
+            {interactive && !paletteDone && (() => {
+              const VALIDATION: Record<Relationship, { question: string; choices: { id: string; label: string; isCorrect: boolean }[]; feedback: string }> = {
+                analogous: {
+                  question: 'What does analogous typically bring to this palette?',
+                  choices: [
+                    { id: 'a', label: 'Adjacent hues — creates cohesion and visual calm', isCorrect: true },
+                    { id: 'b', label: 'Creates tension through contrast', isCorrect: false },
+                    { id: 'c', label: 'Adds three distinct accent points', isCorrect: false },
+                  ],
+                  feedback: 'Good for calm briefs — cohesion without tension.',
+                },
+                complementary: {
+                  question: 'What does complementary typically bring to this palette?',
+                  choices: [
+                    { id: 'a', label: 'Creates visual cohesion and calm', isCorrect: false },
+                    { id: 'b', label: 'Opposite hues — creates contrast and visual energy', isCorrect: true },
+                    { id: 'c', label: 'Evenly spaces three hues for variety', isCorrect: false },
+                  ],
+                  feedback: 'Creates strong pop — great for CTAs, but high-energy for a calming app.',
+                },
+                triadic: {
+                  question: 'What does triadic typically bring to this palette?',
+                  choices: [
+                    { id: 'a', label: 'Adjacent hues — creates cohesion', isCorrect: false },
+                    { id: 'b', label: 'One opposite hue for maximum contrast', isCorrect: false },
+                    { id: 'c', label: 'Three evenly spaced hues — dynamic, needs restraint', isCorrect: true },
+                  ],
+                  feedback: 'Dynamic and versatile — keeps it interesting, but requires careful restraint for calm interfaces.',
+                },
+              };
+              const v = VALIDATION[relationship];
+              const selected = validationAnswer;
+              const correct = v.choices.find((c) => c.isCorrect);
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)', borderTop: '1px solid var(--border)', paddingTop: 'var(--spacing-sm)' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase' }}>reflect</span>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--secondary-foreground)', margin: 0 }}>{v.question}</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {v.choices.map((choice) => {
+                      const isSelected = selected === choice.id;
+                      const showResult = validationSubmitted;
+                      const borderColor = showResult
+                        ? choice.isCorrect ? 'var(--green)' : isSelected ? 'var(--red)' : 'var(--border)'
+                        : isSelected ? 'var(--yellow)' : 'var(--border)';
+                      const bg = showResult
+                        ? choice.isCorrect ? 'color-mix(in srgb, var(--green) 10%, var(--surface))' : isSelected ? 'color-mix(in srgb, var(--red) 10%, var(--surface))' : 'var(--surface)'
+                        : isSelected ? 'color-mix(in srgb, var(--yellow) 10%, var(--surface))' : 'var(--surface)';
+                      return (
+                        <button
+                          key={choice.id}
+                          disabled={validationSubmitted}
+                          onClick={() => !validationSubmitted && setValidationAnswer(choice.id)}
+                          style={{ padding: '0.45rem 0.75rem', background: bg, border: `1px solid ${borderColor}`, borderRadius: 'var(--radius-sm)', color: 'var(--primary-foreground)', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', textAlign: 'left', cursor: validationSubmitted ? 'default' : 'pointer', transition: 'border-color 0.15s, background 0.15s' }}
+                        >
+                          {choice.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {!validationSubmitted && (
+                    <button
+                      disabled={!selected}
+                      onClick={() => selected && setValidationSubmitted(true)}
+                      style={{ alignSelf: 'flex-start', padding: '0.4rem 1rem', background: selected ? 'var(--yellow)' : 'var(--border)', color: 'var(--gray-90)', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.8rem', borderRadius: 'var(--radius-sm)', border: 'none', cursor: selected ? 'pointer' : 'not-allowed' }}
+                    >
+                      check
+                    </button>
+                  )}
+                  {validationSubmitted && (
+                    <>
+                      <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: validationAnswer === correct?.id ? 'var(--green)' : 'var(--yellow)', margin: 0 }}>
+                        {validationAnswer === correct?.id ? '✓ ' : '→ '}{v.feedback}
+                      </p>
+                      <button
+                        onClick={handleFinish}
+                        style={{ alignSelf: 'flex-start', padding: '0.5rem 1.25rem', background: 'var(--yellow)', color: 'var(--gray-90)', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.85rem', borderRadius: 'var(--radius-sm)', border: 'none', cursor: 'pointer' }}
+                      >
+                        done →
+                      </button>
+                    </>
+                  )}
+                </div>
+              );
+            })()}
             {paletteDone && (
               <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--green)' }}>
                 ✓ palette built. Moving on.
