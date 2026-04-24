@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import styles from './ReadInterfaceChallenge.module.css';
+import { InterfaceMockup } from '../InterfaceMockup.tsx';
 
 interface ReadInterfaceChallengeProps {
   onComplete: () => void;
@@ -45,6 +46,8 @@ export function ReadInterfaceChallenge({ onComplete }: ReadInterfaceChallengePro
 
   return (
     <div className={styles.panel}>
+      <InterfaceMockup />
+
       <div className={styles.meta}>
         <span>Label 5 interface regions</span>
         <span className={styles.score}>{correctCount} / 5 correct</span>
