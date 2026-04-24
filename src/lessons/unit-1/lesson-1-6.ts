@@ -43,7 +43,7 @@ export const lesson1_6: LessonConfig = {
   challenges: [
     {
       id: 'c1',
-      prompt: 'Build a 3-color starter palette: one dominant hue direction, one supporting color, one accent. The relationship should be intentional — analogous, complementary, or triadic. Neutrals are added automatically.',
+      prompt: 'A wellness startup wants a calm, trust-building UI palette — think healthcare, finance, or mindfulness. Build a 3-color starter palette using a relationship that supports that mood. When your palette is locked, you will be asked to explain your choice.',
       type: 'build-palette',
       hints: [
         'Start with a dominant hue you like, then let the relationship type guide your other choices.',

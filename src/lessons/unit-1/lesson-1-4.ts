@@ -33,7 +33,7 @@ export const lesson1_4: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'Sort the swatches below into warm, cool, or neutral. Then see how your choices affect the overall tone of a simple interface.',
+      text: 'On the right, you can sort swatches and see how warm, cool, and neutral combinations affect the mood of a simple interface. Give it a try, then take on the challenge.',
     },
   ],
   challenges: [

@@ -34,7 +34,7 @@ export const lesson1_5: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'Below are three buttons that all look the same — no hierarchy, no focal point. Your job is to assign each one a role: primary, secondary, or tertiary. One accent, one outline, one text link.',
+      text: 'The tool on the right shows three identical buttons — no hierarchy at all. Use it to assign each one a role and create a clear visual order before the challenge.',
     },
   ],
   challenges: [

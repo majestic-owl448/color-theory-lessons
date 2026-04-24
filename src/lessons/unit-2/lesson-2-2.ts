@@ -36,7 +36,7 @@ export const lesson2_2: LessonConfig = {
     },
     {
       id: 's5',
-      text: 'Use the RGB mixer on the right to explore these relationships. Adjust the sliders and watch the color update. When the challenge unlocks, you will be given five interface colors to recreate — get each channel close enough to match.',
+      text: 'Use the RGB mixer on the right to explore how channels combine. The challenge asks you to recreate five interface colors — think through which channels should be high, low, or equal before reaching for the slider.',
     },
   ],
   challenges: [

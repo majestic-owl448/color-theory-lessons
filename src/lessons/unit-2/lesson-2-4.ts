@@ -67,12 +67,12 @@ export const lesson2_4: LessonConfig = {
     },
     {
       id: 'q2',
-      prompt: 'A designer previews a vivid teal on their monitor. The printed version arrives looking duller and slightly different. What is the most likely explanation?',
+      prompt: 'A designer is shipping a brand color to both a website and a printed packaging run. What is the most reliable way to ensure both versions look intentionally matched?',
       choices: [
-        { id: 'a', label: 'The printer made an error and should be recalibrated.', isCorrect: false, explanation: 'Printers can be miscalibrated, but the more fundamental reason is that screens emit light while print can only reflect it — some screen colors are outside the print gamut.' },
-        { id: 'b', label: 'The screen\'s emitted light cannot be matched by ink reflecting ambient light.', isCorrect: true, explanation: 'This is the core reason. Vivid screen colors often exceed what ink can reflect — the print gamut is narrower than the screen gamut for many saturated colors.' },
-        { id: 'c', label: 'Teal is not a printable color.', isCorrect: false, explanation: 'Teal is printable, but some specific teal values — especially very vivid ones — may fall outside the print gamut.' },
-        { id: 'd', label: 'The designer should have used CMYK values on screen.', isCorrect: false, explanation: 'Screen design uses RGB. The solution is to understand that a gap will exist, not to design in CMYK on a screen.' },
+        { id: 'a', label: 'Export the same hex value to the print file.', isCorrect: false, explanation: 'Hex values describe RGB light. Print uses ink and a different gamut — the same hex will look different in print, not the same.' },
+        { id: 'b', label: 'Use a physical color standard like a Pantone swatch as the shared reference.', isCorrect: true, explanation: 'A numbered physical swatch looks the same regardless of which screen was used to design it. It gives everyone in the production chain a shared ground truth.' },
+        { id: 'c', label: 'Adjust screen brightness until the screen matches the print sample by eye.', isCorrect: false, explanation: 'Monitor brightness affects perception but does not change the print output. The gap is in the medium, not the display setting.' },
+        { id: 'd', label: 'Use a slightly different hue in print to compensate for the expected dullness.', isCorrect: false, explanation: 'This creates two mismatched brand colors instead of one reliable reference. A color standard is the right tool for cross-media consistency.' },
       ],
     },
     {
