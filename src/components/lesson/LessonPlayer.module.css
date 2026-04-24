@@ -1,14 +1,43 @@
 .layout {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-lg);
   min-height: 60vh;
 }
 
 @media (min-width: 1000px) {
   .layout {
-    grid-template-columns: 340px 1fr;
+    flex-direction: row;
     align-items: stretch;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .layout .panel {
+    flex: 0 0 340px;
+  }
+
+  .rightPanel {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-width: 0;
+    opacity: 1;
+    margin-left: var(--spacing-lg);
+    overflow: visible;
+    pointer-events: auto;
+    transition: flex-grow 0.4s ease, opacity 0.35s ease, margin-left 0.4s ease;
+  }
+
+  .rightPanelHidden {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-left: 0;
+    pointer-events: none;
+    transition: flex-grow 0.4s ease, opacity 0.35s ease, margin-left 0.4s ease;
   }
 }
 

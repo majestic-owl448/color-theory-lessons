@@ -99,6 +99,13 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
   const challenge = lesson.challenges[0] ?? null;
   const currentStep = lesson.steps[stepIndex];
 
+  const hasRightPanel =
+    phase !== 'quiz' && (
+      phase !== 'steps' ||
+      stepIndex === lesson.steps.length - 1 ||
+      !!currentStep?.panel
+    );
+
   return (
     <div className={styles.layout}>
       {/* ── Left instruction panel ── */}
@@ -320,14 +327,18 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       </aside>
 
       {/* ── Right tool panel ── */}
-      {phase === 'steps' && stepIndex < lesson.steps.length - 1
-        ? <StepPanelRenderer panel={lesson.steps[stepIndex]?.panel} />
-        : <ToolRenderer
-            lesson={lesson}
-            toolUnlocked={true}
-            onChallengeComplete={() => setChallengeDone(true)}
-          />
-      }
+      <div className={hasRightPanel ? styles.rightPanel : styles.rightPanelHidden}>
+        {phase === 'steps' && stepIndex < lesson.steps.length - 1
+          ? <StepPanelRenderer panel={currentStep?.panel} />
+          : phase !== 'quiz'
+            ? <ToolRenderer
+                lesson={lesson}
+                toolUnlocked={true}
+                onChallengeComplete={() => setChallengeDone(true)}
+              />
+            : null
+        }
+      </div>
     </div>
   );
 }
