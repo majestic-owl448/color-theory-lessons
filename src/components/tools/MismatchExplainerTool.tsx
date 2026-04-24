@@ -32,8 +32,8 @@ const SCENARIOS: Scenario[] = [
     screenColor: '#00b450',
     reasons: [
       { id: 'a', label: 'Paint pigments absorb and reflect light differently than RGB screen channels.', isCorrect: true },
-      { id: 'b', label: 'The wall surface and finish affect how ambient light reflects off the color.', isCorrect: true },
-      { id: 'c', label: 'Phones always show color more accurately than any other medium.', isCorrect: false },
+      { id: 'b', label: 'Phones always show color more accurately than any other medium.', isCorrect: false },
+      { id: 'c', label: 'The wall surface and finish affect how ambient light reflects off the color.', isCorrect: true },
       { id: 'd', label: 'The two phones were calibrated to the same color profile, so they agreed on the result.', isCorrect: false },
     ],
   },
@@ -42,9 +42,9 @@ const SCENARIOS: Scenario[] = [
     description: 'A vivid orange used as the app\'s accent color arrives on printed packaging looking less saturated and slightly brownish.',
     screenColor: '#e85a10',
     reasons: [
-      { id: 'a', label: 'The screen gamut includes saturated oranges that fall outside what most print inks can reproduce.', isCorrect: true },
-      { id: 'b', label: 'Subtractive ink mixing absorbs some of the orange wavelengths, shifting the result.', isCorrect: true },
-      { id: 'c', label: 'The packaging printer made a calibration error.', isCorrect: false },
+      { id: 'a', label: 'The packaging printer made a calibration error.', isCorrect: false },
+      { id: 'b', label: 'The screen gamut includes saturated oranges that fall outside what most print inks can reproduce.', isCorrect: true },
+      { id: 'c', label: 'Subtractive ink mixing absorbs some of the orange wavelengths, shifting the result.', isCorrect: true },
       { id: 'd', label: 'Orange cannot be mixed from CMYK inks at all.', isCorrect: false },
     ],
   },
