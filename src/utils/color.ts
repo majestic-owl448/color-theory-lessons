@@ -232,6 +232,6 @@ export function simulateDeuteranopia(hex: string): string {
   const sr = Math.min(1, r * 0.367 + g * 0.861 - b * 0.228);
   const sg = Math.min(1, r * 0.280 + g * 0.673 + b * 0.047);
   const sb = Math.min(1, -r * 0.012 + g * 0.043 + b * 0.969);
-  const toHex = (v: number) => Math.round(Math.min(255, v * 255)).toString(16).padStart(2, '0');
+  const toHex = (v: number) => Math.round(Math.max(0, Math.min(255, v * 255))).toString(16).padStart(2, '0');
   return `#${toHex(sr)}${toHex(sg)}${toHex(sb)}`;
 }
