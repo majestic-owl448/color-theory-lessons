@@ -92,6 +92,10 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
     if (lesson.glossaryTerms.length > 0) {
       dispatch({ type: 'ADD_GLOSSARY_TERMS', terms: lesson.glossaryTerms });
     }
+    if (lesson.quizItems.length > 0) {
+      const correctCount = answers.filter((a) => a.isCorrect).length;
+      dispatch({ type: 'COMPLETE_QUIZ', quizId: lesson.id, score: Math.round((correctCount / lesson.quizItems.length) * 100) });
+    }
     setPhase('complete');
   }
 

@@ -101,6 +101,9 @@ export function prefetchToolByInteractionType(interactionType: InteractionType):
     case 'system-stress':
       void import('./SystemStressTestTool.tsx');
       break;
+    case 'logic-fixer':
+      void import('./LogicFixerTool.tsx');
+      break;
     case 'none':
       break;
   }
