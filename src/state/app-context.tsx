@@ -2,17 +2,8 @@ import { createContext, useContext } from 'react';
 import type { ProgressState } from '../types/progress.ts';
 import { loadState } from './persistence.ts';
 
-/** All possible route views in the application. */
-type View = 'home' | 'lesson' | 'sandbox' | 'quiz' | 'glossary' | 'settings' | 'review' | 'capstone';
-
-/** Combined global state including progress and active UI context. */
+/** Combined global state including progress and user preferences. */
 interface AppState extends ProgressState {
-  /** The current active page/view. */
-  view: View;
-  /** The ID of the lesson currently being played, if any. */
-  activeLessonId: string | null;
-  /** The ID of the quiz currently being played, if any. */
-  activeQuizId: string | null;
   /** Global user-specific settings. */
   preferences: {
     /** Whether to disable decorative animations. */
@@ -24,14 +15,11 @@ interface AppState extends ProgressState {
 
 /** Actions that can be dispatched to update the global state. */
 type Action =
-  | { type: 'NAVIGATE'; view: View }
-  | { type: 'START_LESSON'; lessonId: string }
   | { type: 'COMPLETE_LESSON'; lessonId: string }
-  | { type: 'START_QUIZ'; quizId: string }
   | { type: 'COMPLETE_QUIZ'; quizId: string; score: number }
   | { type: 'COMPLETE_MILESTONE'; milestoneId: string }
   | { type: 'ADD_GLOSSARY_TERMS'; terms: string[] }
-  | { type: 'SET_PREFERENCE'; key: string; value: string | boolean | null }
+  | { type: 'SET_PREFERENCE'; key: keyof AppState['preferences']; value: string | boolean | null }
   | { type: 'RESET_PROGRESS' };
 
 /** Initialize state from localStorage or defaults. */
@@ -39,9 +27,6 @@ export function createInitialState(): AppState {
   const { progress, preferences } = loadState();
   return {
     ...progress,
-    view: 'home',
-    activeLessonId: null,
-    activeQuizId: null,
     preferences,
   };
 }
@@ -52,21 +37,12 @@ export function createInitialState(): AppState {
  */
 export function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
-    case 'NAVIGATE':
-      return { ...state, view: action.view };
-
-    case 'START_LESSON':
-      return { ...state, view: 'lesson', activeLessonId: action.lessonId };
-
     case 'COMPLETE_LESSON':
       if (state.completedLessons.includes(action.lessonId)) return state;
       return {
         ...state,
         completedLessons: [...state.completedLessons, action.lessonId],
       };
-
-    case 'START_QUIZ':
-      return { ...state, view: 'quiz', activeQuizId: action.quizId };
 
     case 'COMPLETE_QUIZ': {
       const alreadyCompleted = state.completedQuizzes.includes(action.quizId);

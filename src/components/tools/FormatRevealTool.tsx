@@ -109,7 +109,7 @@ export function FormatRevealTool({ interactive = true, onComplete }: FormatRevea
               onClick={() => handleSelect('nav-bg')}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && handleSelect('nav-bg')}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSelect('nav-bg')}
               aria-label="Nav background"
             >
               <span
@@ -118,7 +118,7 @@ export function FormatRevealTool({ interactive = true, onComplete }: FormatRevea
                 onClick={(e) => { e.stopPropagation(); handleSelect('nav-text'); }}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && (e.stopPropagation(), handleSelect('nav-text'))}
+                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.stopPropagation(), handleSelect('nav-text'))}
                 aria-label="Nav text"
               >
                 site.ui
@@ -132,7 +132,7 @@ export function FormatRevealTool({ interactive = true, onComplete }: FormatRevea
               onClick={() => handleSelect('hero-bg')}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && handleSelect('hero-bg')}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSelect('hero-bg')}
               aria-label="Hero surface"
             >
               <p className={styles.heroTitle}>The design tool for developers.</p>
@@ -146,9 +146,6 @@ export function FormatRevealTool({ interactive = true, onComplete }: FormatRevea
                   className={`${selectedId === 'cta-text' ? styles.selected : ''} ${revealed.has('cta-text') ? styles.visited : ''}`}
                   style={{ color: '#ffffff' }}
                   onClick={(e) => { e.stopPropagation(); handleSelect('cta-text'); }}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => e.key === 'Enter' && (e.stopPropagation(), handleSelect('cta-text'))}
                   aria-label="Button text"
                 >
                   Try it free →
@@ -163,7 +160,7 @@ export function FormatRevealTool({ interactive = true, onComplete }: FormatRevea
               onClick={() => handleSelect('card-bg')}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && handleSelect('card-bg')}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSelect('card-bg')}
               aria-label="Card background"
             >
               <div
@@ -171,7 +168,7 @@ export function FormatRevealTool({ interactive = true, onComplete }: FormatRevea
                 onClick={(e) => { e.stopPropagation(); handleSelect('card-border'); }}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && (e.stopPropagation(), handleSelect('card-border'))}
+                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.stopPropagation(), handleSelect('card-border'))}
                 aria-label="Card border"
               >
                 border →
@@ -182,7 +179,7 @@ export function FormatRevealTool({ interactive = true, onComplete }: FormatRevea
                 onClick={(e) => { e.stopPropagation(); handleSelect('accent'); }}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && (e.stopPropagation(), handleSelect('accent'))}
+                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.stopPropagation(), handleSelect('accent'))}
                 aria-label="Success accent"
               >
                 ✓ success

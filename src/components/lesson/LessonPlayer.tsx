@@ -83,17 +83,17 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
     if (quizIndex < lesson.quizItems.length - 1) {
       setQuizIndex((i) => i + 1);
     } else {
-      finishLesson();
+      finishLesson(answers);
     }
   }
 
-  function finishLesson() {
+  function finishLesson(finalAnswers: QuizAnswer[] = answers) {
     dispatch({ type: 'COMPLETE_LESSON', lessonId: lesson.id });
     if (lesson.glossaryTerms.length > 0) {
       dispatch({ type: 'ADD_GLOSSARY_TERMS', terms: lesson.glossaryTerms });
     }
     if (lesson.quizItems.length > 0) {
-      const correctCount = answers.filter((a) => a.isCorrect).length;
+      const correctCount = finalAnswers.filter((a) => a.isCorrect).length;
       dispatch({ type: 'COMPLETE_QUIZ', quizId: lesson.id, score: Math.round((correctCount / lesson.quizItems.length) * 100) });
     }
     setPhase('complete');
@@ -337,7 +337,6 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
           : phase !== 'quiz'
             ? <ToolRenderer
                 lesson={lesson}
-                toolUnlocked={true}
                 onChallengeComplete={() => setChallengeDone(true)}
               />
             : null
