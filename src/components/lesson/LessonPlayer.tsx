@@ -212,13 +212,15 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
                 ))}
               </div>
             </div>
-            {challengeDone && (
-              <div className={styles.stepActions}>
-                <button className={styles.btnPrimary} onClick={handleChallengeComplete}>
-                  {lesson.quizItems.length > 0 ? 'take the quiz →' : 'finish lesson →'}
-                </button>
-              </div>
-            )}
+            <div aria-live="polite">
+              {challengeDone && (
+                <div className={styles.stepActions}>
+                  <button className={styles.btnPrimary} onClick={handleChallengeComplete}>
+                    {lesson.quizItems.length > 0 ? 'take the quiz →' : 'finish lesson →'}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -256,11 +258,13 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
                 })}
               </div>
 
-              {submitted && question.choices.find((c) => c.id === selectedChoice)?.explanation && (
-                <p className={styles.explanation}>
-                  {question.choices.find((c) => c.id === selectedChoice)!.explanation}
-                </p>
-              )}
+              <div aria-live="polite" aria-atomic="true">
+                {submitted && question.choices.find((c) => c.id === selectedChoice)?.explanation && (
+                  <p className={styles.explanation}>
+                    {question.choices.find((c) => c.id === selectedChoice)!.explanation}
+                  </p>
+                )}
+              </div>
             </div>
 
             <div className={styles.stepActions}>
