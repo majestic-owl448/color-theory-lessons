@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { MilestoneConfig } from '../../types/milestone.ts';
-import { useAppDispatch } from '../../state/app-context.tsx';
+import { useMilestoneCompletion } from '../../hooks/useMilestoneCompletion.ts';
 import { units } from '../../data/units.ts';
 import { ChallengeRenderer } from './ChallengeRenderer.tsx';
 import { InterfaceMockup } from './InterfaceMockup.tsx';
@@ -23,7 +23,7 @@ function phaseForPart(milestone: MilestoneConfig, index: number): Extract<Phase,
 }
 
 export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
-  const dispatch = useAppDispatch();
+  const { completeMilestone } = useMilestoneCompletion(milestone.id);
   const [partIndex, setPartIndex] = useState(0);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
@@ -100,7 +100,7 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
       setPhase('part-summary');
     } else {
       // Last question of last part — complete the milestone
-      dispatch({ type: 'COMPLETE_MILESTONE', milestoneId: milestone.id });
+      completeMilestone();
       setPhase('complete');
     }
   }
@@ -121,7 +121,7 @@ export function MilestonePlayer({ milestone }: MilestonePlayerProps) {
 
     const isLastPart = partIndex >= milestone.parts.length - 1;
     if (isLastPart) {
-      dispatch({ type: 'COMPLETE_MILESTONE', milestoneId: milestone.id });
+      completeMilestone();
       setPhase('complete');
       return;
     }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { LessonConfig } from '../../types/lesson.ts';
-import { useAppDispatch } from '../../state/app-context.tsx';
+import { useLessonCompletion, type QuizAnswer } from '../../hooks/useLessonCompletion.ts';
 import { units } from '../../data/units.ts';
 import { ToolRenderer } from '../tools/ToolRenderer.tsx';
 import StepPanelRenderer from './StepPanelRenderer.tsx';
@@ -13,14 +13,8 @@ interface LessonPlayerProps {
 
 type Phase = 'steps' | 'challenge' | 'quiz' | 'complete';
 
-interface QuizAnswer {
-  questionId: string;
-  choiceId: string;
-  isCorrect: boolean;
-}
-
 export function LessonPlayer({ lesson }: LessonPlayerProps) {
-  const dispatch = useAppDispatch();
+  const { completeLesson } = useLessonCompletion(lesson);
   const [phase, setPhase] = useState<Phase>('steps');
   const [stepIndex, setStepIndex] = useState(0);
   const [challengeDone, setChallengeDone] = useState(false);
@@ -46,7 +40,8 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
     if (lesson.quizItems.length > 0) {
       setPhase('quiz');
     } else {
-      finishLesson();
+      completeLesson([]);
+      setPhase('complete');
     }
   }
 
@@ -83,20 +78,9 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
     if (quizIndex < lesson.quizItems.length - 1) {
       setQuizIndex((i) => i + 1);
     } else {
-      finishLesson(answers);
+      completeLesson(answers);
+      setPhase('complete');
     }
-  }
-
-  function finishLesson(finalAnswers: QuizAnswer[] = answers) {
-    dispatch({ type: 'COMPLETE_LESSON', lessonId: lesson.id });
-    if (lesson.glossaryTerms.length > 0) {
-      dispatch({ type: 'ADD_GLOSSARY_TERMS', terms: lesson.glossaryTerms });
-    }
-    if (lesson.quizItems.length > 0) {
-      const correctCount = finalAnswers.filter((a) => a.isCorrect).length;
-      dispatch({ type: 'COMPLETE_QUIZ', quizId: lesson.id, score: Math.round((correctCount / lesson.quizItems.length) * 100) });
-    }
-    setPhase('complete');
   }
 
   const question = phase === 'quiz' ? lesson.quizItems[quizIndex] : null;
