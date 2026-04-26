@@ -54,7 +54,7 @@ export const lesson4_2: LessonConfig = {
     },
     {
       id: 's4',
-      text: 'Achromatopsia is a rare condition where very limited or no cone function is present. Individuals with achromatopsia perceive only brightness — all hues appear as shades of gray. This is distinct from the partial cone differences that characterize most CVD types.',
+      text: 'Achromatopsia is a rare condition (affecting roughly 1 in 30,000 people) where very limited or no cone function is present. Individuals with achromatopsia perceive only brightness — all hues appear as shades of gray. This is distinct from the partial cone differences that characterize most CVD types.',
       highlights: ['achromatopsia'],
       panel: { type: 'vision-cards-preview', expandedNames: ['Achromatopsia'] },
     },

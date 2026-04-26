@@ -500,6 +500,11 @@ export const glossary: GlossaryTerm[] = [
     relatedLessons: ['u4-l1'],
   },
   {
+    term: 'simultaneous contrast',
+    definition: 'A perceptual effect where the same color appears different depending on its surrounding colors. A neutral gray looks warmer on a cool background and cooler on a warm one. This means color decisions must be tested in real layouts, not isolated swatches.',
+    relatedLessons: ['u4-l1', 'u6-l6'],
+  },
+  {
     term: 'visual system',
     definition: 'The network of eye, optic nerve, and brain regions that together process incoming light and construct the experience of vision, including color.',
     relatedLessons: ['u4-l1'],
@@ -740,6 +745,11 @@ export const glossary: GlossaryTerm[] = [
     term: 'contrast ratio',
     definition: 'A number from 1:1 (no contrast) to 21:1 (maximum contrast) expressing the luminance difference between two colors. Used to evaluate color pair accessibility.',
     relatedLessons: ['u5-l2'],
+  },
+  {
+    term: 'luminance',
+    definition: 'The relative brightness of a color as perceived by the human eye, calculated from its RGB values. Contrast ratio is based on the luminance difference between two colors, not their hue difference.',
+    relatedLessons: ['u5-l1', 'u5-l2'],
   },
   {
     term: 'dashboard',
