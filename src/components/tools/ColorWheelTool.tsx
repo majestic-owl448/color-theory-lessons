@@ -11,6 +11,7 @@ interface ColorWheelProps {
 }
 
 function ColorWheel({ baseH, relatedH, interactive, onChange }: ColorWheelProps) {
+  const [focused, setFocused] = useState(false);
   const size = 200;
   const cx = size / 2;
   const cy = size / 2;
@@ -57,6 +58,16 @@ function ColorWheel({ baseH, relatedH, interactive, onChange }: ColorWheelProps)
     onChange(((Math.round(angle) + 360) % 360));
   }
 
+  function handleKeyDown(e: React.KeyboardEvent<SVGSVGElement>) {
+    if (!interactive) return;
+    const delta = e.key === 'ArrowRight' || e.key === 'ArrowUp' ? 5
+      : e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? -5
+      : 0;
+    if (delta === 0) return;
+    e.preventDefault();
+    onChange((baseH + delta + 360) % 360);
+  }
+
   const baseDot = hueToXY(baseH, r - 14);
   const relatedDots = relatedH.map((h) => hueToXY(h, r - 14));
 
@@ -66,9 +77,20 @@ function ColorWheel({ baseH, relatedH, interactive, onChange }: ColorWheelProps)
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       onClick={interactive ? handleClick : undefined}
-      style={{ cursor: interactive ? 'crosshair' : 'default', flexShrink: 0 }}
-      aria-label="Color wheel — click to select base hue"
+      onKeyDown={handleKeyDown}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      tabIndex={interactive ? 0 : -1}
+      role="slider"
+      aria-valuemin={0}
+      aria-valuemax={359}
+      aria-valuenow={baseH}
+      aria-label={`Color wheel hue selector — ${baseH}°`}
+      style={{ cursor: interactive ? 'crosshair' : 'default', flexShrink: 0, outline: 'none' }}
     >
+      {focused && interactive && (
+        <circle cx={cx} cy={cy} r={r + 8} fill="none" stroke="var(--accent-cta)" strokeWidth={2} strokeDasharray="4 3" />
+      )}
       {segments.map((seg, i) => (
         <path key={i} d={seg.d} fill={`hsl(${seg.hue}, 80%, 55%)`} />
       ))}

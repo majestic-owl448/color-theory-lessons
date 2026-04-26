@@ -88,8 +88,14 @@ export function HSLSliderTool({ interactive = true, onComplete, previewDimension
     [current.s, current.l],
   );
 
-  const satGradient = `linear-gradient(to right, hsl(${current.h},0%,${current.l}%), hsl(${current.h},100%,${current.l}%))`;
-  const lightGradient = `linear-gradient(to right, hsl(${current.h},${current.s}%,0%), hsl(${current.h},${current.s}%,50%), hsl(${current.h},${current.s}%,100%))`;
+  const satGradient = useMemo(
+    () => `linear-gradient(to right, hsl(${current.h},0%,${current.l}%), hsl(${current.h},100%,${current.l}%))`,
+    [current.h, current.l],
+  );
+  const lightGradient = useMemo(
+    () => `linear-gradient(to right, hsl(${current.h},${current.s}%,0%), hsl(${current.h},${current.s}%,50%), hsl(${current.h},${current.s}%,100%))`,
+    [current.h, current.s],
+  );
 
   if (previewDimension) {
     const preview: HSL = { h: 200, s: 70, l: 55 };

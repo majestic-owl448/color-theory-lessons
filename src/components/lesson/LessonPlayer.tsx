@@ -261,7 +261,7 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
               <div aria-live="polite" aria-atomic="true">
                 {submitted && question.choices.find((c) => c.id === selectedChoice)?.explanation && (
                   <p className={styles.explanation}>
-                    {question.choices.find((c) => c.id === selectedChoice)!.explanation}
+                    {question.choices.find((c) => c.id === selectedChoice)?.explanation}
                   </p>
                 )}
               </div>

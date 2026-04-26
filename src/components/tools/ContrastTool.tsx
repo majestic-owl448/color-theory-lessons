@@ -17,6 +17,13 @@ const AREAS: ProblemArea[] = [
   { id: 'button', label: 'Submit button', textColor: '#ffffff', bgColor: '#8080a8', fixBg: true, minL: 35 },
 ];
 
+const AREA_GRADIENTS: Record<string, string> = Object.fromEntries(
+  AREAS.map((area) => {
+    const { h, s } = area.fixBg ? hexToHsl(area.bgColor) : hexToHsl(area.textColor);
+    return [area.id, `linear-gradient(to right, hsl(${h},${s}%,5%), hsl(${h},${s}%,50%), hsl(${h},${s}%,95%))`];
+  }),
+);
+
 interface ContrastToolProps {
   interactive?: boolean;
   onComplete?: () => void;
@@ -75,7 +82,7 @@ export function ContrastTool({ interactive = true, onComplete }: ContrastToolPro
           const textColor = area.fixBg ? area.textColor : displayedColor;
           const bgColor = area.fixBg ? displayedColor : area.bgColor;
 
-          const gradient = `linear-gradient(to right, hsl(${baseHSL.h},${baseHSL.s}%,5%), hsl(${baseHSL.h},${baseHSL.s}%,50%), hsl(${baseHSL.h},${baseHSL.s}%,95%))`;
+          const gradient = AREA_GRADIENTS[area.id];
 
           return (
             <div
