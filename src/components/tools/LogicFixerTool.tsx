@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Choice {
@@ -52,6 +52,8 @@ export function LogicFixerTool({ interactive = true, onComplete }: LogicFixerToo
   const [selected, setSelected] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timerRef.current !== null) clearTimeout(timerRef.current); }, []);
 
   const scenario = SCENARIOS[scenarioIdx];
   const correctId = scenario.choices.find((c) => c.isCorrect)?.id ?? '';
@@ -66,7 +68,7 @@ export function LogicFixerTool({ interactive = true, onComplete }: LogicFixerToo
     if (!selected) return;
     setChecked(true);
     if (isCorrect && scenarioIdx === SCENARIOS.length - 1) {
-      setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         setCompleted(true);
         onComplete?.();
       }, 600);

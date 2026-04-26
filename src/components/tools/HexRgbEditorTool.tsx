@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { RGB } from '../../utils/color.ts';
 import { rgbToHex, parseHex, rgbString, colorDistance } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
@@ -50,6 +50,8 @@ export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEdito
   const [targetIdx, setTargetIdx] = useState(0);
   const [checked, setChecked] = useState(false);
   const [allDone, setAllDone] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timerRef.current !== null) clearTimeout(timerRef.current); }, []);
 
   const target = TARGETS[targetIdx];
   const isClose = colorDistance(current, target.rgb) <= MATCH_THRESHOLD;
@@ -95,12 +97,12 @@ export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEdito
     if (isClose) {
       const next = targetIdx + 1;
       if (next < TARGETS.length) {
-        setTimeout(() => {
+        timerRef.current = setTimeout(() => {
           setTargetIdx(next);
           setChecked(false);
         }, 800);
       } else {
-        setTimeout(() => {
+        timerRef.current = setTimeout(() => {
           setAllDone(true);
           onComplete?.();
         }, 800);

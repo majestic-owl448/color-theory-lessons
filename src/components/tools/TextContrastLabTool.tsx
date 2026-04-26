@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { contrastRatio, hexToRgb } from '../../utils/color.ts';
+import { contrastRatioWcag, hexToRgb } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
 interface Pair {
@@ -19,7 +19,7 @@ const PAIRS: Pair[] = [
 
 function calcRatio(text: string, bg: string): number {
   try {
-    return contrastRatio(hexToRgb(text), hexToRgb(bg));
+    return contrastRatioWcag(hexToRgb(text), hexToRgb(bg));
   } catch {
     return 1;
   }

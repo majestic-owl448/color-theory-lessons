@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface RGB { r: number; g: number; b: number }
@@ -47,6 +47,8 @@ export function RGBMixerTool({ interactive = true, onComplete, previewMode }: RG
   const [current, setCurrent] = useState<RGB>({ r: 0, g: 0, b: 0 });
   const [checked, setChecked] = useState(false);
   const [allDone, setAllDone] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timerRef.current !== null) clearTimeout(timerRef.current); }, []);
 
   const target = TARGETS[targetIdx];
   const close = isMatch(current, target.value);
@@ -59,7 +61,7 @@ export function RGBMixerTool({ interactive = true, onComplete, previewMode }: RG
   function handleCheck() {
     setChecked(true);
     if (close) {
-      setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         if (targetIdx < TARGETS.length - 1) {
           const next = targetIdx + 1;
           setTargetIdx(next);

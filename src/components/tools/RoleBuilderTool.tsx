@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { hexToRgb, contrastRatio, hexToHsl } from '../../utils/color.ts';
+import { hexToRgb, contrastRatioWcag, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
 interface RoleBuilderToolProps {
@@ -32,7 +32,7 @@ const ROLE_LABELS: Record<RoleKey, string> = {
 };
 
 function getContrast(fg: string, bg: string): number {
-  try { return contrastRatio(hexToRgb(fg), hexToRgb(bg)); } catch { return 1; }
+  try { return contrastRatioWcag(hexToRgb(fg), hexToRgb(bg)); } catch { return 1; }
 }
 
 function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }

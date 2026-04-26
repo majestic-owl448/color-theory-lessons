@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Reason {
@@ -65,6 +65,8 @@ export function MismatchExplainerTool({ interactive = true, onComplete }: Mismat
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [checked, setChecked] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timerRef.current !== null) clearTimeout(timerRef.current); }, []);
 
   const scenario = SCENARIOS[scenarioIdx];
   const correctIds = new Set(scenario.reasons.filter((r) => r.isCorrect).map((r) => r.id));
@@ -87,7 +89,7 @@ export function MismatchExplainerTool({ interactive = true, onComplete }: Mismat
     setChecked(true);
     if (isPerfect) {
       if (scenarioIdx === SCENARIOS.length - 1) {
-        setTimeout(() => onComplete?.(), 600);
+        timerRef.current = setTimeout(() => onComplete?.(), 600);
       }
     }
   }
