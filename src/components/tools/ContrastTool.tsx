@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -29,7 +29,7 @@ interface ContrastToolProps {
   onComplete?: () => void;
 }
 
-export function ContrastTool({ interactive = true, onComplete }: ContrastToolProps) {
+export const ContrastTool = memo(function ContrastTool({ interactive = true, onComplete }: ContrastToolProps) {
   const [lightness, setLightness] = useState<Record<string, number>>({
     heading: hexToHsl(AREAS[0].textColor).l,
     helper: hexToHsl(AREAS[1].textColor).l,
@@ -211,4 +211,4 @@ export function ContrastTool({ interactive = true, onComplete }: ContrastToolPro
       )}
     </div>
   );
-}
+});

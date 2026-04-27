@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hexToRgb, contrastRatio } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -27,7 +27,7 @@ interface ThemeSandboxToolProps {
   onComplete?: () => void;
 }
 
-export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandboxToolProps) {
+export const ThemeSandboxTool = memo(function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandboxToolProps) {
   const [colors, setColors] = useState<Record<string, string>>(
     Object.fromEntries(ROLES.map((r) => [r.key, r.defaultValue]))
   );
@@ -184,4 +184,4 @@ export function ThemeSandboxTool({ interactive = false, onComplete }: ThemeSandb
       )}
     </div>
   );
-}
+});

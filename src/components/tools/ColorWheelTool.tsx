@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { memo, useState, useMemo } from 'react';
 import type { Relationship } from '../../utils/color.ts';
 import { hslToHex, getRelatedHues } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
@@ -91,14 +91,14 @@ function ColorWheel({ baseH, relatedH, interactive, onChange }: ColorWheelProps)
       {focused && interactive && (
         <circle cx={cx} cy={cy} r={r + 8} fill="none" stroke="var(--accent-cta)" strokeWidth={2} strokeDasharray="4 3" />
       )}
-      {segments.map((seg, i) => (
-        <path key={i} d={seg.d} fill={`hsl(${seg.hue}, 80%, 55%)`} />
+      {segments.map((seg) => (
+        <path key={seg.hue} d={seg.d} fill={`hsl(${seg.hue}, 80%, 55%)`} />
       ))}
       {/* Center */}
       <circle cx={cx} cy={cy} r={r - 28} fill="var(--surface)" />
       {/* Related hue dots */}
       {relatedDots.map((dot, i) => (
-        <circle key={i} cx={dot.x} cy={dot.y} r={dotR - 2} fill={`hsl(${relatedH[i]}, 80%, 60%)`} stroke="var(--gray-00)" strokeWidth={2} />
+        <circle key={relatedH[i]} cx={dot.x} cy={dot.y} r={dotR - 2} fill={`hsl(${relatedH[i]}, 80%, 60%)`} stroke="var(--gray-00)" strokeWidth={2} />
       ))}
       {/* Base hue dot */}
       <circle cx={baseDot.x} cy={baseDot.y} r={dotR} fill={`hsl(${baseH}, 80%, 55%)`} stroke="var(--gray-00)" strokeWidth={2} />
@@ -112,17 +112,14 @@ interface ColorWheelToolProps {
   previewRelationship?: Relationship;
 }
 
-export function ColorWheelTool({ interactive = true, onComplete, previewRelationship }: ColorWheelToolProps) {
+export const ColorWheelTool = memo(function ColorWheelTool({ interactive = true, onComplete, previewRelationship }: ColorWheelToolProps) {
   const [baseH, setBaseH] = useState(210);
-  const [relationship, setRelationship] = useState<Relationship>(previewRelationship ?? 'complementary');
+  const [internalRelationship, setInternalRelationship] = useState<Relationship>(previewRelationship ?? 'complementary');
+  const relationship = previewRelationship ?? internalRelationship;
   const [palette, setPalette] = useState<{ dominant: number; support: number; accent: number } | null>(null);
   const [paletteDone, setPaletteDone] = useState(false);
   const [validationAnswer, setValidationAnswer] = useState<string | null>(null);
   const [validationSubmitted, setValidationSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (previewRelationship) setRelationship(previewRelationship);
-  }, [previewRelationship]);
 
   const relatedH = getRelatedHues(baseH, relationship);
 
@@ -186,7 +183,7 @@ export function ColorWheelTool({ interactive = true, onComplete, previewRelation
             {(['analogous', 'complementary', 'triadic'] as Relationship[]).map((r) => (
               <button
                 key={r}
-                onClick={() => interactive && setRelationship(r)}
+                onClick={() => interactive && setInternalRelationship(r)}
                 disabled={!interactive}
                 style={{
                   padding: '0.4rem 0.75rem',
@@ -212,7 +209,7 @@ export function ColorWheelTool({ interactive = true, onComplete, previewRelation
             <div style={{ display: 'flex', gap: '4px' }}>
               <div title={`Base: hsl(${baseH}, 70%, 50%)`} style={{ flex: 3, height: '40px', borderRadius: 'var(--radius-sm)', backgroundColor: baseColor }} />
               {relatedColors.map((c, i) => (
-                <div key={i} title={`Related: hsl(${relatedH[i]}, 70%, 50%)`} style={{ flex: 1, height: '40px', borderRadius: 'var(--radius-sm)', backgroundColor: c }} />
+                <div key={c} title={`Related: hsl(${relatedH[i]}, 70%, 50%)`} style={{ flex: 1, height: '40px', borderRadius: 'var(--radius-sm)', backgroundColor: c }} />
               ))}
               <div style={{ flex: 1, height: '40px', borderRadius: 'var(--radius-sm)', backgroundColor: 'var(--gray-80)' }} title="Neutral" />
             </div>
@@ -348,4 +345,4 @@ export function ColorWheelTool({ interactive = true, onComplete, previewRelation
       </div>}
     </div>
   );
-}
+});

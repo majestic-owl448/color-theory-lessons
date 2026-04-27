@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface StateConfig {
@@ -23,7 +23,7 @@ interface StateWorkshopToolProps {
   onComplete?: () => void;
 }
 
-export function StateWorkshopTool({ interactive = false, onComplete }: StateWorkshopToolProps) {
+export const StateWorkshopTool = memo(function StateWorkshopTool({ interactive = false, onComplete }: StateWorkshopToolProps) {
   const [cues, setCues] = useState<Record<string, Record<CueKey, boolean>>>(
     Object.fromEntries(STATES.map((s) => [s.name, { icon: false, label: false, border: false }])),
   );
@@ -143,4 +143,4 @@ export function StateWorkshopTool({ interactive = false, onComplete }: StateWork
       )}
     </div>
   );
-}
+});

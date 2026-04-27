@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { memo, useState, useEffect, useRef, useMemo } from 'react';
 import type { HSL } from '../../utils/color.ts';
 import { hslString } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
@@ -40,7 +40,7 @@ interface HSLSliderToolProps {
   previewDimension?: 'h' | 's' | 'l';
 }
 
-export function HSLSliderTool({ interactive = true, onComplete, previewDimension }: HSLSliderToolProps) {
+export const HSLSliderTool = memo(function HSLSliderTool({ interactive = true, onComplete, previewDimension }: HSLSliderToolProps) {
   const [targetIdx, setTargetIdx] = useState(0);
   const [current, setCurrent] = useState<HSL>({ ...TARGETS[0].start });
   const [checked, setChecked] = useState(false);
@@ -272,4 +272,4 @@ export function HSLSliderTool({ interactive = true, onComplete, previewDimension
       </div>
     </div>
   );
-}
+});

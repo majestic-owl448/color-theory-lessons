@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import type { RGB } from '../../utils/color.ts';
 import { rgbToHex, parseHex, rgbString, colorDistance } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
@@ -41,7 +41,7 @@ interface HexRgbEditorToolProps {
   onComplete?: () => void;
 }
 
-export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEditorToolProps) {
+export const HexRgbEditorTool = memo(function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEditorToolProps) {
   const [current, setCurrent] = useState<RGB>({ r: 99, g: 102, b: 241 });
   const [hexInput, setHexInput] = useState<string>(rgbToHex({ r: 99, g: 102, b: 241 }));
   const [hexError, setHexError] = useState(false);
@@ -255,4 +255,4 @@ export function HexRgbEditorTool({ interactive = true, onComplete }: HexRgbEdito
       </div>
     </div>
   );
-}
+});

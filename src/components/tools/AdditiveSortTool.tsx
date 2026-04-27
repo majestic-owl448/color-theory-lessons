@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 type Model = 'additive' | 'subtractive';
@@ -79,9 +79,9 @@ function MixingDiagram({ mode }: { mode: Model }) {
           isolation: 'isolate',
         }}
       >
-        {circles.map((c, i) => (
+        {circles.map((c) => (
           <div
-            key={i}
+            key={c.color}
             style={{
               position: 'absolute',
               width: '100px',
@@ -117,7 +117,7 @@ interface AdditiveSortToolProps {
   onComplete?: () => void;
 }
 
-export function AdditiveSortTool({ interactive = true, onComplete }: AdditiveSortToolProps) {
+export const AdditiveSortTool = memo(function AdditiveSortTool({ interactive = true, onComplete }: AdditiveSortToolProps) {
   const [assignments, setAssignments] = useState<Record<string, Model | ''>>(() =>
     Object.fromEntries(ITEMS.map((item) => [item.id, ''])),
   );
@@ -265,4 +265,4 @@ export function AdditiveSortTool({ interactive = true, onComplete }: AdditiveSor
       )}
     </div>
   );
-}
+});

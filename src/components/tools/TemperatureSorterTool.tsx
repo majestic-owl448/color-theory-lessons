@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Swatch {
@@ -33,7 +33,7 @@ interface TemperatureSorterToolProps {
   onComplete?: () => void;
 }
 
-export function TemperatureSorterTool({ interactive = true, onComplete }: TemperatureSorterToolProps) {
+export const TemperatureSorterTool = memo(function TemperatureSorterTool({ interactive = true, onComplete }: TemperatureSorterToolProps) {
   const [swatchAnswers, setSwatchAnswers] = useState<Record<string, Temperature | ''>>(() =>
     Object.fromEntries(SWATCHES.map((s) => [s.id, ''])),
   );
@@ -212,4 +212,4 @@ export function TemperatureSorterTool({ interactive = true, onComplete }: Temper
       )}
     </div>
   );
-}
+});

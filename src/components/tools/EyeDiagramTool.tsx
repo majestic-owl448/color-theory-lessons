@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Step {
@@ -43,7 +43,7 @@ interface EyeDiagramToolProps {
   onComplete?: () => void;
 }
 
-export function EyeDiagramTool({ interactive = false, onComplete }: EyeDiagramToolProps) {
+export const EyeDiagramTool = memo(function EyeDiagramTool({ interactive = false, onComplete }: EyeDiagramToolProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [explored, setExplored] = useState<boolean[]>(STEPS.map(() => false));
   const [completed, setCompleted] = useState(false);
@@ -158,4 +158,4 @@ export function EyeDiagramTool({ interactive = false, onComplete }: EyeDiagramTo
       )}
     </div>
   );
-}
+});

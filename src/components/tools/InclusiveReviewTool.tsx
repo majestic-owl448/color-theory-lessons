@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 type Assessment = 'pass' | 'needs-work' | null;
@@ -48,7 +48,7 @@ interface InclusiveReviewToolProps {
   onComplete?: () => void;
 }
 
-export function InclusiveReviewTool({ interactive = false, onComplete }: InclusiveReviewToolProps) {
+export const InclusiveReviewTool = memo(function InclusiveReviewTool({ interactive = false, onComplete }: InclusiveReviewToolProps) {
   const [answers, setAnswers] = useState<Record<string, Assessment>>(
     Object.fromEntries(CHECKLIST.map((c) => [c.id, null])),
   );
@@ -89,8 +89,8 @@ export function InclusiveReviewTool({ interactive = false, onComplete }: Inclusi
             <span style={{ background: '#ef4444', color: '#fff', padding: '0.15rem 0.4rem', borderRadius: 99 }}>Error</span>
           </div>
           <div style={{ display: 'flex', gap: '0.3rem', alignItems: 'flex-end', height: 36 }}>
-            {[{ h: 80, c: '#22c55e' }, { h: 50, c: '#ef4444' }, { h: 65, c: '#3b82f6' }].map((b, i) => (
-              <div key={i} style={{ flex: 1, height: `${b.h}%`, background: b.c, borderRadius: '2px 2px 0 0' }} />
+            {[{ h: 80, c: '#22c55e' }, { h: 50, c: '#ef4444' }, { h: 65, c: '#3b82f6' }].map((b) => (
+              <div key={b.c} style={{ flex: 1, height: `${b.h}%`, background: b.c, borderRadius: '2px 2px 0 0' }} />
             ))}
           </div>
           <input readOnly value="bad-input" style={{ padding: '0.2rem 0.35rem', border: '2px solid #ef4444', borderRadius: 3, background: '#fff', color: '#111', width: '100%', boxSizing: 'border-box' }} />
@@ -166,4 +166,4 @@ export function InclusiveReviewTool({ interactive = false, onComplete }: Inclusi
       )}
     </div>
   );
-}
+});

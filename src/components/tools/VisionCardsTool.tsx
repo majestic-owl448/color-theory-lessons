@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface CardData {
@@ -66,7 +66,7 @@ interface VisionCardsToolProps {
   previewExpandedNames?: string[];
 }
 
-export function VisionCardsTool({ interactive = false, onComplete, previewExpandedNames }: VisionCardsToolProps) {
+export const VisionCardsTool = memo(function VisionCardsTool({ interactive = false, onComplete, previewExpandedNames }: VisionCardsToolProps) {
   const [expanded, setExpanded] = useState<boolean[]>(
     CARDS.map((c) => previewExpandedNames?.includes(c.name) ?? false)
   );
@@ -174,4 +174,4 @@ export function VisionCardsTool({ interactive = false, onComplete, previewExpand
       )}
     </div>
   );
-}
+});

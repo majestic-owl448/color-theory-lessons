@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hexToRgb, contrastRatioWcag } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -35,7 +35,7 @@ function getContrast(fg: string, bg: string): number {
 
 function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }
 
-export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTranslatorToolProps) {
+export const DarkTranslatorTool = memo(function DarkTranslatorTool({ interactive = false, onComplete }: DarkTranslatorToolProps) {
   const [dark, setDark] = useState<Record<RoleKey, string>>(DARK_DEFAULTS);
   const [preview, setPreview] = useState<'light' | 'dark'>('light');
   const [completed, setCompleted] = useState(false);
@@ -175,4 +175,4 @@ export function DarkTranslatorTool({ interactive = false, onComplete }: DarkTran
       )}
     </div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hexToRgb, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -34,7 +34,7 @@ interface ColorSpaceLabToolProps {
   onComplete?: () => void;
 }
 
-export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpaceLabToolProps) {
+export const ColorSpaceLabTool = memo(function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpaceLabToolProps) {
   const [accentIdx, setAccentIdx] = useState(0);
   const [sortAnswers, setSortAnswers] = useState<Record<string, string>>({});
   const [sortChecked, setSortChecked] = useState(false);
@@ -219,4 +219,4 @@ export function ColorSpaceLabTool({ interactive = false, onComplete }: ColorSpac
       )}
     </div>
   );
-}
+});

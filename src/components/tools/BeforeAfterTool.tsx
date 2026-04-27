@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 import styles from './BeforeAfterTool.module.css';
 
@@ -61,7 +61,7 @@ interface BeforeAfterToolProps {
   onComplete?: () => void;
 }
 
-export function BeforeAfterTool({ variant = 'color-function', interactive = true, onComplete }: BeforeAfterToolProps) {
+export const BeforeAfterTool = memo(function BeforeAfterTool({ variant = 'color-function', interactive = true, onComplete }: BeforeAfterToolProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [results, setResults] = useState<Record<string, boolean | null>>({});
   const [triedAnswer, setTriedAnswer] = useState<string | null>(null);
@@ -246,7 +246,7 @@ export function BeforeAfterTool({ variant = 'color-function', interactive = true
       </div>}
     </div>
   );
-}
+});
 
 /* ── Hierarchy demo (lesson 5) ────────────────────────────────────────── */
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 /* ── Pixel zoom explorer ─────────────────────────────────────────────── */
@@ -239,7 +239,7 @@ interface BackgroundShiftToolProps {
   onComplete?: () => void;
 }
 
-export function BackgroundShiftTool({ interactive = true, onComplete }: BackgroundShiftToolProps) {
+export const BackgroundShiftTool = memo(function BackgroundShiftTool({ interactive = true, onComplete }: BackgroundShiftToolProps) {
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -503,4 +503,4 @@ export function BackgroundShiftTool({ interactive = true, onComplete }: Backgrou
       )}
     </div>
   );
-}
+});

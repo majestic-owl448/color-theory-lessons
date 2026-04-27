@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Module {
@@ -119,15 +119,15 @@ const MODULES: Module[] = [
     minRepairs: 1,
     brokenPreview: (
       <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'flex-end', height: 60 }}>
-        {[{ h: 75, color: '#22c55e' }, { h: 50, color: '#ef4444' }].map((bar, i) => (
-          <div key={i} style={{ flex: 1, height: `${bar.h}%`, background: bar.color, borderRadius: '3px 3px 0 0' }} />
+        {[{ h: 75, color: '#22c55e' }, { h: 50, color: '#ef4444' }].map((bar) => (
+          <div key={bar.color} style={{ flex: 1, height: `${bar.h}%`, background: bar.color, borderRadius: '3px 3px 0 0' }} />
         ))}
       </div>
     ),
     repairedPreview: (checked) => (
       <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'flex-end', height: 70 }}>
-        {[{ h: 75, color: '#22c55e', label: 'Series A', val: '75' }, { h: 50, color: '#ef4444', label: 'Series B', val: '50' }].map((bar, i) => (
-          <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
+        {[{ h: 75, color: '#22c55e', label: 'Series A', val: '75' }, { h: 50, color: '#ef4444', label: 'Series B', val: '50' }].map((bar) => (
+          <div key={bar.color} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
             {checked.includes('Add value labels at top') && (
               <span style={{ fontSize: '0.65rem', color: '#333', marginBottom: '0.1rem' }}>{bar.val}</span>
             )}
@@ -156,7 +156,7 @@ interface PatternRepairToolProps {
   onComplete?: () => void;
 }
 
-export function PatternRepairTool({ interactive = false, onComplete }: PatternRepairToolProps) {
+export const PatternRepairTool = memo(function PatternRepairTool({ interactive = false, onComplete }: PatternRepairToolProps) {
   const [checked, setChecked] = useState<Record<string, string[]>>(
     Object.fromEntries(MODULES.map((m) => [m.id, []])),
   );
@@ -262,4 +262,4 @@ export function PatternRepairTool({ interactive = false, onComplete }: PatternRe
       )}
     </div>
   );
-}
+});

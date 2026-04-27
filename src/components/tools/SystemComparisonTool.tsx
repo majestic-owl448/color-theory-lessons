@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface SystemComparisonToolProps {
@@ -13,7 +13,7 @@ const INCONSISTENCIES = [
   { id: 'text-weight', label: 'Secondary text lightness', explanation: 'Secondary text in the first card is #9ca3af (very light) while muted text in the second card is #6b7280. Fix: assign one secondary-text role with a single value used across all components.' },
 ];
 
-export function SystemComparisonTool({ interactive = false, onComplete }: SystemComparisonToolProps) {
+export const SystemComparisonTool = memo(function SystemComparisonTool({ interactive = false, onComplete }: SystemComparisonToolProps) {
   const [found, setFound] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState<string | null>(null);
   const [completed, setCompleted] = useState(false);
@@ -132,4 +132,4 @@ export function SystemComparisonTool({ interactive = false, onComplete }: System
       )}
     </div>
   );
-}
+});

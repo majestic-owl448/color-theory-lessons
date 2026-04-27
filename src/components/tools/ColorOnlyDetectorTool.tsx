@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Example {
@@ -21,9 +21,9 @@ const EXAMPLES: Example[] = [
           { color: '#ef4444' },
           { color: '#22c55e' },
           { color: '#f59e0b' },
-        ].map((dot, i) => (
+        ].map((dot) => (
           <span
-            key={i}
+            key={dot.color}
             style={{
               width: 12, height: 12, borderRadius: '50%',
               background: dot.color, display: 'inline-block',
@@ -63,9 +63,9 @@ const EXAMPLES: Example[] = [
           { h: 80, color: '#22c55e' },
           { h: 55, color: '#ef4444' },
           { h: 70, color: '#f59e0b' },
-        ].map((bar, i) => (
+        ].map((bar) => (
           <div
-            key={i}
+            key={bar.color}
             style={{
               flex: 1, height: `${bar.h}%`, background: bar.color,
               borderRadius: '3px 3px 0 0',
@@ -149,7 +149,7 @@ interface ColorOnlyDetectorToolProps {
   onComplete?: () => void;
 }
 
-export function ColorOnlyDetectorTool({ interactive = false, onComplete }: ColorOnlyDetectorToolProps) {
+export const ColorOnlyDetectorTool = memo(function ColorOnlyDetectorTool({ interactive = false, onComplete }: ColorOnlyDetectorToolProps) {
   const [feedback, setFeedback] = useState<Record<string, 'correct' | 'incorrect' | null>>({});
   const [identified, setIdentified] = useState<Set<string>>(new Set());
   const [completed, setCompleted] = useState(false);
@@ -232,4 +232,4 @@ export function ColorOnlyDetectorTool({ interactive = false, onComplete }: Color
       )}
     </div>
   );
-}
+});

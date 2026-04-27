@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 const SVG_FILTERS = `
@@ -35,7 +35,7 @@ interface InterfaceGalleryToolProps {
   previewSimulation?: SimMode;
 }
 
-export function InterfaceGalleryTool({ interactive = false, onComplete, previewSimulation }: InterfaceGalleryToolProps) {
+export const InterfaceGalleryTool = memo(function InterfaceGalleryTool({ interactive = false, onComplete, previewSimulation }: InterfaceGalleryToolProps) {
   const [mode, setMode] = useState<SimMode>(previewSimulation ?? 'normal');
   const [seen, setSeen] = useState<Set<SimMode>>(new Set(['normal']));
   const [completed, setCompleted] = useState(false);
@@ -111,8 +111,8 @@ export function InterfaceGalleryTool({ interactive = false, onComplete, previewS
                 { h: 80, color: '#22c55e' },
                 { h: 50, color: '#ef4444' },
                 { h: 65, color: '#3b82f6' },
-              ].map((bar, i) => (
-                <div key={i} style={{ flex: 1, height: `${bar.h}%`, background: bar.color, borderRadius: '3px 3px 0 0' }} />
+              ].map((bar) => (
+                <div key={bar.color} style={{ flex: 1, height: `${bar.h}%`, background: bar.color, borderRadius: '3px 3px 0 0' }} />
               ))}
             </div>
           </div>
@@ -146,4 +146,4 @@ export function InterfaceGalleryTool({ interactive = false, onComplete, previewS
       )}
     </div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hslToHex, hexToRgb, hslString } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -31,7 +31,7 @@ interface HslPlaygroundToolProps {
   onComplete?: () => void;
 }
 
-export function HslPlaygroundTool({ interactive = false, onComplete }: HslPlaygroundToolProps) {
+export const HslPlaygroundTool = memo(function HslPlaygroundTool({ interactive = false, onComplete }: HslPlaygroundToolProps) {
   const [h, setH] = useState(200);
   const [s, setS] = useState(50);
   const [l, setL] = useState(50);
@@ -149,4 +149,4 @@ export function HslPlaygroundTool({ interactive = false, onComplete }: HslPlaygr
       )}
     </div>
   );
-}
+});

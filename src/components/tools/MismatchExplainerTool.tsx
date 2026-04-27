@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Reason {
@@ -61,7 +61,7 @@ interface MismatchExplainerToolProps {
   onComplete?: () => void;
 }
 
-export function MismatchExplainerTool({ interactive = true, onComplete }: MismatchExplainerToolProps) {
+export const MismatchExplainerTool = memo(function MismatchExplainerTool({ interactive = true, onComplete }: MismatchExplainerToolProps) {
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [checked, setChecked] = useState(false);
@@ -277,4 +277,4 @@ export function MismatchExplainerTool({ interactive = true, onComplete }: Mismat
       )}
     </div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface RGB { r: number; g: number; b: number }
@@ -42,7 +42,7 @@ interface RGBMixerToolProps {
   previewMode?: 'extremes' | 'channel-pairs' | 'neutral-grays';
 }
 
-export function RGBMixerTool({ interactive = true, onComplete, previewMode }: RGBMixerToolProps) {
+export const RGBMixerTool = memo(function RGBMixerTool({ interactive = true, onComplete, previewMode }: RGBMixerToolProps) {
   const [targetIdx, setTargetIdx] = useState(0);
   const [current, setCurrent] = useState<RGB>({ r: 0, g: 0, b: 0 });
   const [checked, setChecked] = useState(false);
@@ -238,4 +238,4 @@ export function RGBMixerTool({ interactive = true, onComplete, previewMode }: RG
       )}
     </div>
   );
-}
+});

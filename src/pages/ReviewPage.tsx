@@ -95,8 +95,8 @@ export function ReviewPage() {
                   <div key={`${tag}-${entry.lessonId}`} className={styles.entry}>
                     <span className={styles.entryTitle}>{entry.title}</span>
                     <ul className={styles.pointList}>
-                      {entry.keyPoints.map((point, i) => (
-                        <li key={i} className={styles.point}>{point}</li>
+                      {entry.keyPoints.map((point) => (
+                        <li key={point} className={styles.point}>{point}</li>
                       ))}
                     </ul>
                   </div>

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { memo, useState, useRef } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface OverlayContext {
@@ -73,7 +73,7 @@ interface AlphaLayerToolProps {
   onComplete?: () => void;
 }
 
-export function AlphaLayerTool({ interactive = false, onComplete }: AlphaLayerToolProps) {
+export const AlphaLayerTool = memo(function AlphaLayerTool({ interactive = false, onComplete }: AlphaLayerToolProps) {
   const [ctxIdx, setCtxIdx] = useState(0);
   const [alpha, setAlpha] = useState(0.5);
   const [isDark, setIsDark] = useState(true);
@@ -219,4 +219,4 @@ export function AlphaLayerTool({ interactive = false, onComplete }: AlphaLayerTo
       )}
     </div>
   );
-}
+});

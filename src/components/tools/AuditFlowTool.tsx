@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface AuditStage {
@@ -74,7 +74,7 @@ interface AuditFlowToolProps {
   onComplete?: () => void;
 }
 
-export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowToolProps) {
+export const AuditFlowTool = memo(function AuditFlowTool({ interactive = false, onComplete }: AuditFlowToolProps) {
   const [currentStage, setCurrentStage] = useState(0);
   const [multiSelected, setMultiSelected] = useState<string[]>([]);
   const [singleSelected, setSingleSelected] = useState<string | null>(null);
@@ -240,4 +240,4 @@ export function AuditFlowTool({ interactive = false, onComplete }: AuditFlowTool
       )}
     </div>
   );
-}
+});

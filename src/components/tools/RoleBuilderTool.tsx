@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hexToRgb, contrastRatioWcag, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -67,7 +67,7 @@ function validateRoles(roles: Record<RoleKey, string>) {
   return { primaryContrast, secondaryContrast, actionContrast, primaryOk, secondaryOk, actionOk, statusDistinct, allPass };
 }
 
-export function RoleBuilderTool({ interactive = false, onComplete }: RoleBuilderToolProps) {
+export const RoleBuilderTool = memo(function RoleBuilderTool({ interactive = false, onComplete }: RoleBuilderToolProps) {
   const [roles, setRoles] = useState<Record<RoleKey, string>>(DEFAULTS);
   const [completed, setCompleted] = useState(false);
 
@@ -165,4 +165,4 @@ export function RoleBuilderTool({ interactive = false, onComplete }: RoleBuilder
       )}
     </div>
   );
-}
+});

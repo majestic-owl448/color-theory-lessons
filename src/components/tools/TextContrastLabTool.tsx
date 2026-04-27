@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { contrastRatioWcag, hexToRgb } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -34,7 +34,7 @@ interface TextContrastLabToolProps {
   onComplete?: () => void;
 }
 
-export function TextContrastLabTool({ interactive = false, onComplete }: TextContrastLabToolProps) {
+export const TextContrastLabTool = memo(function TextContrastLabTool({ interactive = false, onComplete }: TextContrastLabToolProps) {
   const [activePair, setActivePair] = useState(0);
   const [textColors, setTextColors] = useState<Record<string, string>>(
     Object.fromEntries(PAIRS.map((p) => [p.id, p.defaultText])),
@@ -219,4 +219,4 @@ export function TextContrastLabTool({ interactive = false, onComplete }: TextCon
       )}
     </div>
   );
-}
+});

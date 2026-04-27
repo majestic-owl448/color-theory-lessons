@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hexToRgb, colorDistance, simulateDeuteranopia } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -58,7 +58,7 @@ function isValidHex(h: string) { return /^#[0-9a-fA-F]{6}$/.test(h); }
  * It simulates deuteranopia (green-blindness) and calculates the perceptual 
  * distance between series to ensure they are distinguishable.
  */
-export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerToolProps) {
+export const ChartTunerTool = memo(function ChartTunerTool({ interactive = false, onComplete }: ChartTunerToolProps) {
   const [colors, setColors] = useState<string[]>(DEFAULTS);
   const [simulated, setSimulated] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -157,4 +157,4 @@ export function ChartTunerTool({ interactive = false, onComplete }: ChartTunerTo
       )}
     </div>
   );
-}
+});

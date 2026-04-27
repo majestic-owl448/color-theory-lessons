@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { simulateDeuteranopia } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -37,7 +37,7 @@ const SYSTEM_COLORS = {
  * Users must review a palette across light mode, dark mode, and CVD 
  * simulations, marking each system quality check as 'pass' or 'fail'.
  */
-export function SystemStressTestTool({ interactive = false, onComplete }: SystemStressTestToolProps) {
+export const SystemStressTestTool = memo(function SystemStressTestTool({ interactive = false, onComplete }: SystemStressTestToolProps) {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
   const [cvd, setCvd] = useState(false);
   const [findings, setFindings] = useState<Record<CheckId, 'pass' | 'fail' | null>>({
@@ -149,4 +149,4 @@ export function SystemStressTestTool({ interactive = false, onComplete }: System
       )}
     </div>
   );
-}
+});

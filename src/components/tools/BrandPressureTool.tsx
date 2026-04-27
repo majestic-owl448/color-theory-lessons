@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hexToRgb, contrastRatioWcag } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -59,7 +59,7 @@ function brandPressurePercent(roles: Record<RoleKey, string>): number {
   return Math.round((brandCount / total) * 100);
 }
 
-export function BrandPressureTool({ interactive = false, onComplete }: BrandPressureToolProps) {
+export const BrandPressureTool = memo(function BrandPressureTool({ interactive = false, onComplete }: BrandPressureToolProps) {
   const defaults = interactive ? INTERACTIVE_DEFAULTS : NON_INTERACTIVE_DEFAULTS;
   const [roles, setRoles] = useState<Record<RoleKey, string>>(defaults);
   const [completed, setCompleted] = useState(false);
@@ -188,4 +188,4 @@ export function BrandPressureTool({ interactive = false, onComplete }: BrandPres
       )}
     </div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import shellStyles from './ToolShell.module.css';
 
 interface Choice {
@@ -47,7 +47,7 @@ interface LogicFixerToolProps {
   onComplete?: () => void;
 }
 
-export function LogicFixerTool({ interactive = true, onComplete }: LogicFixerToolProps) {
+export const LogicFixerTool = memo(function LogicFixerTool({ interactive = true, onComplete }: LogicFixerToolProps) {
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
@@ -288,4 +288,4 @@ export function LogicFixerTool({ interactive = true, onComplete }: LogicFixerToo
       )}
     </div>
   );
-}
+});

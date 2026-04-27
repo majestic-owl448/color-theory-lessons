@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { contrastRatio, hexToRgb } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -95,7 +95,7 @@ interface ComponentCheckerToolProps {
   onComplete?: () => void;
 }
 
-export function ComponentCheckerTool({ interactive = false, onComplete }: ComponentCheckerToolProps) {
+export const ComponentCheckerTool = memo(function ComponentCheckerTool({ interactive = false, onComplete }: ComponentCheckerToolProps) {
   const [colors, setColors] = useState<Record<string, string>>(
     Object.fromEntries(COMPONENTS.map((c) => [c.id, c.defaultColor])),
   );
@@ -195,4 +195,4 @@ export function ComponentCheckerTool({ interactive = false, onComplete }: Compon
       )}
     </div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hslToHex, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 
@@ -47,7 +47,7 @@ interface TokenMapToolProps {
   onComplete?: () => void;
 }
 
-export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolProps) {
+export const TokenMapTool = memo(function TokenMapTool({ interactive = false, onComplete }: TokenMapToolProps) {
   const [baseHue, setBaseHue] = useState(220);
   const [baseSat, setBaseSat] = useState(70);
   const [sortAnswers, setSortAnswers] = useState<Record<string, string>>({});
@@ -227,4 +227,4 @@ export function TokenMapTool({ interactive = false, onComplete }: TokenMapToolPr
       )}
     </div>
   );
-}
+});

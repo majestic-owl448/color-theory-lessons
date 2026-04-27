@@ -109,7 +109,7 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
         <div className={styles.progress} aria-label="Lesson progress">
           {lesson.steps.map((_, i) => (
             <span
-              key={i}
+              key={`step-${i}`}
               className={`${styles.progressDot} ${
                 phase === 'steps' && i < stepIndex
                   ? styles.done
@@ -155,8 +155,8 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
                   <p className={styles.challengePrompt}>{challenge.prompt}</p>
                   <div className={styles.hints}>
                     <span className={styles.hintsLabel}>hints</span>
-                    {challenge.hints.map((h, i) => (
-                      <p key={i} className={styles.hint}>{h}</p>
+                    {challenge.hints.map((h) => (
+                      <p key={h} className={styles.hint}>{h}</p>
                     ))}
                   </div>
                 </>

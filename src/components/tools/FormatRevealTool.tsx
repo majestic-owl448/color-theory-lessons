@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { hexToRgb, hexToHsl } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
 import styles from './FormatRevealTool.module.css';
@@ -66,7 +66,7 @@ interface FormatRevealToolProps {
   onComplete?: () => void;
 }
 
-export function FormatRevealTool({ interactive = true, onComplete }: FormatRevealToolProps) {
+export const FormatRevealTool = memo(function FormatRevealTool({ interactive = true, onComplete }: FormatRevealToolProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [revealed, setRevealed] = useState<Set<string>>(new Set());
   const [done, setDone] = useState(false);
@@ -245,4 +245,4 @@ export function FormatRevealTool({ interactive = true, onComplete }: FormatRevea
       </div>
     </div>
   );
-}
+});

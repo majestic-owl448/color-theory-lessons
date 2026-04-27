@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import type { RGB } from '../../utils/color.ts';
 import { rgbString, luminance, contrastRatio as contrast, channelSpread } from '../../utils/color.ts';
 import shellStyles from './ToolShell.module.css';
@@ -203,7 +203,7 @@ const DEFAULT_ACCENT:  RGB = { r: 220, g: 50,  b: 50  }; // too red, too close t
 const DEFAULT_SURFACE: RGB = { r: 180, g: 60,  b: 60  }; // too saturated, too close to accent
 const DEFAULT_NEUTRAL: RGB = { r: 120, g: 100, b: 100 }; // passable but low contrast on surface
 
-export function InterfaceTunerTool({ interactive = true, onComplete }: InterfaceTunerToolProps) {
+export const InterfaceTunerTool = memo(function InterfaceTunerTool({ interactive = true, onComplete }: InterfaceTunerToolProps) {
   const [accent,  setAccent]  = useState<RGB>(DEFAULT_ACCENT);
   const [surface, setSurface] = useState<RGB>(DEFAULT_SURFACE);
   const [neutral, setNeutral] = useState<RGB>(DEFAULT_NEUTRAL);
@@ -329,4 +329,4 @@ export function InterfaceTunerTool({ interactive = true, onComplete }: Interface
       )}
     </div>
   );
-}
+});
