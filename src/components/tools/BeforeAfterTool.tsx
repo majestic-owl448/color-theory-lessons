@@ -98,18 +98,23 @@ export const BeforeAfterTool = memo(function BeforeAfterTool({ variant = 'color-
 
   if (previewMockup) {
     return (
-      <div className={`${styles.mockup} ${previewMockup === 'purposeful' ? styles.mockupGood : styles.mockupBad}`}>
-        <div className={styles.nav}>
-          <span className={styles.navLogo}>color-theory-course$</span>
-          <span className={styles.navLink}>settings</span>
+      <div className={styles.previewFrame}>
+        <span className={styles.previewLabel}>
+          {previewMockup === 'purposeful' ? 'example — purposeful color' : 'example — noisy color'}
+        </span>
+        <div className={`${styles.mockup} ${previewMockup === 'purposeful' ? styles.mockupGood : styles.mockupBad}`}>
+          <div className={styles.nav}>
+            <span className={styles.navLogo}>color-theory-course$</span>
+            <span className={styles.navLink}>settings</span>
+          </div>
+          <div className={styles.hero}>
+            <span className={styles.heroHeading}>Learn color theory</span>
+            <span className={styles.heroSub}>Six interactive units for developers.</span>
+            <span className={styles.cta}>start learning</span>
+          </div>
+          <span className={styles.successBadge}>✓ Unit 1 complete</span>
+          <div className={styles.card}>Lesson 2: Hue, saturation, and lightness →</div>
         </div>
-        <div className={styles.hero}>
-          <span className={styles.heroHeading}>Learn color theory</span>
-          <span className={styles.heroSub}>Six interactive units for developers.</span>
-          <span className={styles.cta}>start learning</span>
-        </div>
-        <span className={styles.successBadge}>✓ Unit 1 complete</span>
-        <div className={styles.card}>Lesson 2: Hue, saturation, and lightness →</div>
       </div>
     );
   }

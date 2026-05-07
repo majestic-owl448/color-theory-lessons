@@ -4,6 +4,31 @@
   gap: var(--spacing-md);
 }
 
+.previewFrame {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.previewLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.3rem var(--spacing-sm);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.previewFrame .mockup {
+  border: none;
+  border-radius: 0;
+}
+
 .pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
