@@ -99,9 +99,6 @@ export const BeforeAfterTool = memo(function BeforeAfterTool({ variant = 'color-
   if (previewMockup) {
     return (
       <div className={styles.previewFrame}>
-        <span className={styles.previewLabel}>
-          {previewMockup === 'purposeful' ? 'example — purposeful color' : 'example — noisy color'}
-        </span>
         <div className={`${styles.mockup} ${previewMockup === 'purposeful' ? styles.mockupGood : styles.mockupBad}`}>
           <div className={styles.nav}>
             <span className={styles.navLogo}>color-theory-course$</span>

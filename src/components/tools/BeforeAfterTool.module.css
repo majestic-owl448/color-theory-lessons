@@ -13,16 +13,6 @@
   overflow: hidden;
 }
 
-.previewLabel {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.3rem var(--spacing-sm);
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
 
 .previewFrame .mockup {
   border: none;
