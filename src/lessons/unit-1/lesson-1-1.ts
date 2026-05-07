@@ -16,24 +16,28 @@ export const lesson1_1: LessonConfig = {
     {
       id: 's1',
       text: 'Designers do not use color only to make things look nice. In digital products, color helps users notice what matters first.',
+      panel: { type: 'before-after-preview', mockup: 'purposeful' },
     },
     {
       id: 's2',
       text: 'Color can group related items and separate sections, making it easier to scan a page without reading every word.',
       highlights: ['grouping', 'separate sections'],
+      panel: { type: 'before-after-preview', mockup: 'purposeful' },
     },
     {
       id: 's3',
       text: 'Color communicates status: green often means success, red means error, yellow means caution. These patterns are learned expectations.',
       highlights: ['status'],
+      panel: { type: 'before-after-preview', mockup: 'purposeful' },
     },
     {
       id: 's4',
       text: 'Color used without a purpose — just to add variety — can make an interface feel noisy and harder to use. Every color choice should earn its place.',
+      panel: { type: 'before-after-preview', mockup: 'noisy' },
     },
     {
       id: 's5',
-      text: 'Look at the two interfaces on the right. One uses color purposefully. The other uses it randomly. Click each colored element in the purposeful version and identify what its color is doing.',
+      text: 'Click each colored element in the interface and identify what its color is doing.',
     },
   ],
   challenges: [

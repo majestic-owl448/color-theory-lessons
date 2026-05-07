@@ -69,7 +69,8 @@ export type StepPanelConfig =
   | { type: 'rgb-mixer-preview'; mode: 'extremes' | 'channel-pairs' | 'neutral-grays' }
   | { type: 'hsl-playground-preview' }
   | { type: 'vision-cards-preview'; expandedNames: string[] }
-  | { type: 'interface-gallery-preview'; simulation: 'normal' | 'deuteranopia' | 'protanopia' | 'tritanopia' | 'achromatopsia' };
+  | { type: 'interface-gallery-preview'; simulation: 'normal' | 'deuteranopia' | 'protanopia' | 'tritanopia' | 'achromatopsia' }
+  | { type: 'before-after-preview'; mockup: 'purposeful' | 'noisy' };
 
 export interface LessonStep {
   id: string;

@@ -5,6 +5,7 @@ import { RGBMixerTool } from '../tools/RGBMixerTool.tsx';
 import { HslPlaygroundTool } from '../tools/HslPlaygroundTool.tsx';
 import { VisionCardsTool } from '../tools/VisionCardsTool.tsx';
 import { InterfaceGalleryTool } from '../tools/InterfaceGalleryTool.tsx';
+import { BeforeAfterTool } from '../tools/BeforeAfterTool.tsx';
 
 interface Props {
   panel: StepPanelConfig | null | undefined;
@@ -25,6 +26,8 @@ export default function StepPanelRenderer({ panel }: Props) {
       return <VisionCardsTool interactive={false} previewExpandedNames={panel.expandedNames} />;
     case 'interface-gallery-preview':
       return <InterfaceGalleryTool interactive={false} previewSimulation={panel.simulation} />;
+    case 'before-after-preview':
+      return <BeforeAfterTool interactive={false} previewMockup={panel.mockup} />;
     default:
       return null;
   }

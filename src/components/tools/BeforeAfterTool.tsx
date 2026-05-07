@@ -58,10 +58,11 @@ const REGIONS: Region[] = [
 interface BeforeAfterToolProps {
   variant?: 'color-function' | 'hierarchy';
   interactive?: boolean;
+  previewMockup?: 'purposeful' | 'noisy';
   onComplete?: () => void;
 }
 
-export const BeforeAfterTool = memo(function BeforeAfterTool({ variant = 'color-function', interactive = true, onComplete }: BeforeAfterToolProps) {
+export const BeforeAfterTool = memo(function BeforeAfterTool({ variant = 'color-function', interactive = true, previewMockup, onComplete }: BeforeAfterToolProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [results, setResults] = useState<Record<string, boolean | null>>({});
   const [triedAnswer, setTriedAnswer] = useState<string | null>(null);
@@ -95,6 +96,24 @@ export const BeforeAfterTool = memo(function BeforeAfterTool({ variant = 'color-
     setTriedAnswer(null);
   }
 
+  if (previewMockup) {
+    return (
+      <div className={`${styles.mockup} ${previewMockup === 'purposeful' ? styles.mockupGood : styles.mockupBad}`}>
+        <div className={styles.nav}>
+          <span className={styles.navLogo}>color-theory-course$</span>
+          <span className={styles.navLink}>settings</span>
+        </div>
+        <div className={styles.hero}>
+          <span className={styles.heroHeading}>Learn color theory</span>
+          <span className={styles.heroSub}>Six interactive units for developers.</span>
+          <span className={styles.cta}>start learning</span>
+        </div>
+        <span className={styles.successBadge}>✓ Unit 1 complete</span>
+        <div className={styles.card}>Lesson 2: Hue, saturation, and lightness →</div>
+      </div>
+    );
+  }
+
   if (variant === 'hierarchy') {
     return (
       <div className={shellStyles.shell}>
@@ -113,8 +132,8 @@ export const BeforeAfterTool = memo(function BeforeAfterTool({ variant = 'color-
         {interactive ? 'click each colored area — what is it doing?' : 'before / after comparison'}
       </span>
 
-      <div className={styles.pair}>
-        {/* Good mockup — interactive when ready */}
+      <div>
+        {/* Purposeful mockup — interactive */}
         <div className={styles.panel}>
           <span className={styles.panelLabel}>purposeful color</span>
           <div className={`${styles.mockup} ${styles.mockupGood}`}>
@@ -169,25 +188,6 @@ export const BeforeAfterTool = memo(function BeforeAfterTool({ variant = 'color-
             </div>
           </div>
           {interactive && <p className={styles.hint}>Click each colored element ↑</p>}
-        </div>
-
-        {/* Bad mockup — static reference */}
-        <div className={styles.panel}>
-          <span className={styles.panelLabel}>noisy color</span>
-          <div className={`${styles.mockup} ${styles.mockupBad}`}>
-            <div className={styles.nav}>
-              <span className={styles.navLogo}>color-theory-course$</span>
-              <span className={styles.navLink}>settings</span>
-            </div>
-            <div className={styles.hero}>
-              <span className={styles.heroHeading}>Learn color theory</span>
-              <span className={styles.heroSub}>Six interactive units for developers.</span>
-              <span className={styles.cta}>start learning</span>
-            </div>
-            <span className={styles.successBadge}>✓ Unit 1 complete</span>
-            <div className={styles.card}>Lesson 2: Hue, saturation, and lightness →</div>
-          </div>
-          <p className={styles.hint}>Reference only — what happens without purpose</p>
         </div>
       </div>
 
