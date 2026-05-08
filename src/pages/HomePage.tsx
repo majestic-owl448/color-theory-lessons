@@ -3,12 +3,19 @@ import { Link } from 'react-router-dom';
 import { units } from '../data/units.ts';
 import { getMilestoneById } from '../data/milestones.ts';
 import { LESSON_TITLES } from '../data/lessonTitles.ts';
-import { useAppState } from '../state/app-context.tsx';
+import { useAppState, useAppDispatch } from '../state/app-context.tsx';
 import styles from './HomePage.module.css';
 
 export function HomePage() {
   const { completedLessons, completedMilestones } = useAppState();
+  const dispatch = useAppDispatch();
   const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
+
+  function handleResetProgress() {
+    if (window.confirm('Reset all progress? This cannot be undone.')) {
+      dispatch({ type: 'RESET_PROGRESS' });
+    }
+  }
 
   // Find the first lesson the user hasn't completed yet
   const allLessonIds = units.flatMap((u) => u.lessons);
@@ -156,6 +163,12 @@ export function HomePage() {
             );
           })}
         </div>
+      </section>
+
+      <section className={styles.resetSection}>
+        <button className={styles.resetBtn} onClick={handleResetProgress}>
+          reset progress
+        </button>
       </section>
     </>
   );

@@ -50,11 +50,19 @@ export const TemperatureSorterTool = memo(function TemperatureSorterTool({ inter
     SWATCHES.every((s) => swatchAnswers[s.id] !== '') &&
     INTERFACE_GOALS.every((g) => goalAnswers[g.id] !== '');
 
+  const passed = checked && totalCorrect >= totalItems * 0.7;
+
   function handleCheck() {
     setChecked(true);
     if (totalCorrect >= totalItems * 0.7) {
       onComplete?.();
     }
+  }
+
+  function handleRetry() {
+    setSwatchAnswers(Object.fromEntries(SWATCHES.map((s) => [s.id, ''])));
+    setGoalAnswers(Object.fromEntries(INTERFACE_GOALS.map((g) => [g.id, ''])));
+    setChecked(false);
   }
 
   const tempColor = (t: Temperature | '') =>
@@ -205,10 +213,29 @@ export const TemperatureSorterTool = memo(function TemperatureSorterTool({ inter
       )}
 
       {checked && (
-        <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: totalCorrect >= totalItems * 0.7 ? 'var(--green)' : 'var(--yellow)' }}>
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: passed ? 'var(--green)' : 'var(--yellow)' }}>
           {totalCorrect} / {totalItems} correct
-          {totalCorrect >= totalItems * 0.7 ? ' — well done!' : ' — review the incorrect ones.'}
+          {passed ? ' — well done!' : ' — review the incorrect ones.'}
         </p>
+      )}
+
+      {checked && !passed && (
+        <button
+          onClick={handleRetry}
+          style={{
+            alignSelf: 'flex-start',
+            padding: '0.5rem 1.25rem',
+            background: 'transparent',
+            color: 'var(--secondary-foreground)',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.85rem',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius-sm)',
+            cursor: 'pointer',
+          }}
+        >
+          try again
+        </button>
       )}
     </div>
   );

@@ -7,7 +7,6 @@ import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 const HomePage = lazy(() => import('./pages/HomePage.tsx').then((m) => ({ default: m.HomePage })));
 const LessonPage = lazy(() => import('./pages/LessonPage.tsx').then((m) => ({ default: m.LessonPage })));
 const MilestonePage = lazy(() => import('./pages/MilestonePage.tsx').then((m) => ({ default: m.MilestonePage })));
-const SettingsPage = lazy(() => import('./pages/SettingsPage.tsx').then((m) => ({ default: m.SettingsPage })));
 const GlossaryPage = lazy(() => import('./pages/GlossaryPage.tsx').then((m) => ({ default: m.GlossaryPage })));
 const ReviewPage = lazy(() => import('./pages/ReviewPage.tsx').then((m) => ({ default: m.ReviewPage })));
 const PaletteBuilderPage = lazy(() => import('./pages/PaletteBuilderPage.tsx').then((m) => ({ default: m.PaletteBuilderPage })));
@@ -32,7 +31,7 @@ export function App() {
                 path="/capstone"
                 element={<Navigate to="/milestone/milestone-6" replace />}
               />
-              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/settings" element={<Navigate to="/" replace />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>

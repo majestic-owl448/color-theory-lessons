@@ -278,6 +278,53 @@
   line-height: 1.5;
 }
 
+/* ── Right panel example label ───────────────────────────────────────── */
+.panelExampleLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ── Quiz colour swatches ─────────────────────────────────────────────── */
+.quizSwatches {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--primary-background);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.swatchItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.swatchColor {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.swatchLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-align: center;
+  max-width: 64px;
+  line-height: 1.3;
+}
+
 /* ── Complete state ───────────────────────────────────────────────────── */
 .complete {
   display: flex;

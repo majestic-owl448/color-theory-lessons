@@ -103,6 +103,7 @@ export type ChallengeType =
 export interface QuizItem {
   id: string;
   prompt: string;
+  colorSwatches?: { label: string; color: string }[];
   choices: { id: string; label: string; isCorrect: boolean; explanation?: string }[];
 }
 

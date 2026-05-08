@@ -17,7 +17,7 @@ export default function StepPanelRenderer({ panel }: Props) {
     case 'color-wheel-preview':
       return <ColorWheelTool interactive={false} previewRelationship={panel.relationship} />;
     case 'hsl-slider-preview':
-      return <HSLSliderTool interactive={false} previewDimension={panel.dimension} />;
+      return <HSLSliderTool interactive={true} previewDimension={panel.dimension} />;
     case 'rgb-mixer-preview':
       return <RGBMixerTool interactive={false} previewMode={panel.mode} />;
     case 'hsl-playground-preview':

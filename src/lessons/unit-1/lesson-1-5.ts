@@ -65,8 +65,8 @@ export const lesson1_5: LessonConfig = {
       id: 'q2',
       prompt: 'Which revision best supports a single primary action on a screen?',
       choices: [
-        { id: 'a', label: 'Make all buttons the same bright color so they all get attention.', isCorrect: false, explanation: 'Equal emphasis means no emphasis. The user still cannot tell which action matters most.' },
-        { id: 'b', label: 'Use the accent color only for the primary button; make others gray or outlined.', isCorrect: true, explanation: 'Reserving the accent for one element immediately signals its importance.' },
+        { id: 'a', label: 'Use the accent color only for the primary button; make others gray or outlined.', isCorrect: true, explanation: 'Reserving the accent for one element immediately signals its importance.' },
+        { id: 'b', label: 'Make all buttons the same bright color so they all get attention.', isCorrect: false, explanation: 'Equal emphasis means no emphasis. The user still cannot tell which action matters most.' },
         { id: 'c', label: 'Add more colors to make secondary actions more interesting.', isCorrect: false, explanation: 'More colors create more visual noise, not clearer hierarchy.' },
         { id: 'd', label: 'Reduce all button contrast so nothing stands out too much.', isCorrect: false, explanation: 'Reducing all contrast makes every action feel equally unimportant.' },
       ],
@@ -76,9 +76,9 @@ export const lesson1_5: LessonConfig = {
       prompt: 'On a well-designed screen, the primary CTA uses the accent color. What should the secondary actions typically look like?',
       choices: [
         { id: 'a', label: 'More saturated than the primary to create balance.', isCorrect: false, explanation: 'More saturation would challenge the primary for attention, not support it.' },
-        { id: 'b', label: 'Outlined, muted, or text-only — visually subordinate.', isCorrect: true, explanation: 'Secondary actions need to be available without competing. Lower contrast and less visual weight keep them supportive.' },
-        { id: 'c', label: 'The same color as the primary but smaller.', isCorrect: false, explanation: 'Same color means the same emphasis signal — size alone does not create enough hierarchy difference.' },
-        { id: 'd', label: 'Bright red so users notice there is a secondary option.', isCorrect: false, explanation: 'Red carries a danger/destructive meaning and would create the wrong signal for a neutral secondary action.' },
+        { id: 'b', label: 'The same color as the primary but smaller.', isCorrect: false, explanation: 'Same color means the same emphasis signal — size alone does not create enough hierarchy difference.' },
+        { id: 'c', label: 'Bright red so users notice there is a secondary option.', isCorrect: false, explanation: 'Red carries a danger/destructive meaning and would create the wrong signal for a neutral secondary action.' },
+        { id: 'd', label: 'Outlined, muted, or text-only — visually subordinate.', isCorrect: true, explanation: 'Secondary actions need to be available without competing. Lower contrast and less visual weight keep them supportive.' },
       ],
     },
   ],

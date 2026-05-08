@@ -215,6 +215,16 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
               <span className={styles.quizHeader}>
                 question {quizIndex + 1} of {lesson.quizItems.length}
               </span>
+              {question.colorSwatches && question.colorSwatches.length > 0 && (
+                <div className={styles.quizSwatches}>
+                  {question.colorSwatches.map((swatch) => (
+                    <div key={swatch.label} className={styles.swatchItem}>
+                      <div className={styles.swatchColor} style={{ backgroundColor: swatch.color }} />
+                      <span className={styles.swatchLabel}>{swatch.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
               <p className={styles.quizPrompt}>{question.prompt}</p>
               <div className={styles.choices}>
                 {question.choices.map((choice) => {
@@ -321,7 +331,10 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       {/* ── Right tool panel ── */}
       <div className={hasRightPanel ? styles.rightPanel : styles.rightPanelHidden}>
         {phase === 'steps' && stepIndex < lesson.steps.length - 1
-          ? <StepPanelRenderer panel={currentStep?.panel} />
+          ? <>
+              <p className={styles.panelExampleLabel}>example</p>
+              <StepPanelRenderer panel={currentStep?.panel} />
+            </>
           : phase !== 'quiz'
             ? <ToolRenderer
                 lesson={lesson}

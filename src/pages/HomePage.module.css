@@ -219,3 +219,26 @@
   font-size: 0.7rem;
   width: auto;
 }
+
+.resetSection {
+  margin-top: var(--spacing-2xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border);
+}
+
+.resetBtn {
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.resetBtn:hover {
+  color: var(--accent-danger);
+  border-color: var(--accent-danger);
+}

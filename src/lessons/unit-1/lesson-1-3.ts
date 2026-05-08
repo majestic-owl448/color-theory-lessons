@@ -25,7 +25,7 @@ export const lesson1_3: LessonConfig = {
     },
     {
       id: 's3',
-      text: 'Lightness difference between foreground and background is the strongest driver of readable contrast. Two hues at similar lightness levels can be almost impossible to read against each other.',
+      text: 'Lightness difference between foreground and background is the strongest driver of readable contrast. Two hues at similar lightness levels can be almost impossible to read against each other. The WCAG standard measures this as a ratio: body text needs at least 4.5:1, and large text (18 pt or 14 pt bold) needs at least 3:1.',
       highlights: ['foreground', 'background', 'lightness'],
     },
     {
@@ -55,8 +55,8 @@ export const lesson1_3: LessonConfig = {
       id: 'q1',
       prompt: 'True or false: two very different hues always have strong, readable contrast.',
       choices: [
-        { id: 'a', label: 'True', isCorrect: false, explanation: 'Hue alone does not determine contrast. Red and green at the same lightness can have very weak readable contrast.' },
-        { id: 'b', label: 'False', isCorrect: true, explanation: 'Readability depends on lightness difference, not hue difference. Two colors can share a very similar lightness level and be nearly unreadable together.' },
+        { id: 'a', label: 'False', isCorrect: true, explanation: 'Readability depends on lightness difference, not hue difference. Two colors can share a very similar lightness level and be nearly unreadable together.' },
+        { id: 'b', label: 'True', isCorrect: false, explanation: 'Hue alone does not determine contrast. Red and green at the same lightness can have very weak readable contrast.' },
       ],
     },
     {
@@ -74,9 +74,9 @@ export const lesson1_3: LessonConfig = {
       prompt: 'A designer says the interface looks great because the palette is vibrant and colorful. But users struggle to read it. What is the most likely cause?',
       choices: [
         { id: 'a', label: 'Too many warm colors', isCorrect: false, explanation: 'Color temperature does not directly determine readability.' },
-        { id: 'b', label: 'Insufficient lightness contrast between text and background', isCorrect: true, explanation: 'Vibrant palettes often use similar lightness levels for multiple colors, which can make text hard to distinguish from its background.' },
-        { id: 'c', label: 'Too much hue variety', isCorrect: false, explanation: 'Using many hues does not automatically cause readability problems.' },
-        { id: 'd', label: 'The font is too small', isCorrect: false, explanation: 'Font size affects legibility, but the question points to a color issue, not a size issue.' },
+        { id: 'b', label: 'Too much hue variety', isCorrect: false, explanation: 'Using many hues does not automatically cause readability problems.' },
+        { id: 'c', label: 'The font is too small', isCorrect: false, explanation: 'Font size affects legibility, but the question points to a color issue, not a size issue.' },
+        { id: 'd', label: 'Insufficient lightness contrast between text and background', isCorrect: true, explanation: 'Vibrant palettes often use similar lightness levels for multiple colors, which can make text hard to distinguish from its background.' },
       ],
     },
   ],

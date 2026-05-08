@@ -38,16 +38,6 @@ export function TopNav() {
             review
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              isActive ? `${styles.link} ${styles.active}` : styles.link
-            }
-          >
-            settings
-          </NavLink>
-        </li>
       </ul>
     </nav>
   );

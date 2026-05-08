@@ -79,9 +79,9 @@ export const lesson1_6: LessonConfig = {
       prompt: 'Which palette description fits a beginner UI most reliably?',
       choices: [
         { id: 'a', label: 'Six hues, all equally saturated, used freely throughout.', isCorrect: false, explanation: 'Equal saturation everywhere and no dominant direction produces a noisy, hierarchy-free design.' },
-        { id: 'b', label: 'One dominant hue, one complementary accent, one or two neutrals.', isCorrect: true, explanation: 'A controlled palette with a clear dominant direction and a single intentional accent is easier to keep coherent, especially for beginners.' },
-        { id: 'c', label: 'A rainbow of tints so nothing feels too strong.', isCorrect: false, explanation: 'Softening everything does not solve the problem — it just removes all hierarchy.' },
-        { id: 'd', label: 'Fully monochromatic with no accent at all.', isCorrect: false, explanation: 'Monochromatic palettes are valid but they make it harder to create clear emphasis without an accent.' },
+        { id: 'b', label: 'A rainbow of tints so nothing feels too strong.', isCorrect: false, explanation: 'Softening everything does not solve the problem — it just removes all hierarchy.' },
+        { id: 'c', label: 'Fully monochromatic with no accent at all.', isCorrect: false, explanation: 'Monochromatic palettes are valid but they make it harder to create clear emphasis without an accent.' },
+        { id: 'd', label: 'One dominant hue, one complementary accent, one or two neutrals.', isCorrect: true, explanation: 'A controlled palette with a clear dominant direction and a single intentional accent is easier to keep coherent, especially for beginners.' },
       ],
     },
   ],
