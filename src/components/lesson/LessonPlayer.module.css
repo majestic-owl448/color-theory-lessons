@@ -278,16 +278,22 @@
   line-height: 1.5;
 }
 
-/* ── Right panel example label ───────────────────────────────────────── */
+/* ── Right panel example wrapper ─────────────────────────────────────── */
+.examplePanel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin: 0;
+  min-width: 0;
+}
+
 .panelExampleLabel {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding-bottom: var(--spacing-xs);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: var(--spacing-sm);
+  padding: 0 var(--spacing-xs);
 }
 
 /* ── Quiz colour swatches ─────────────────────────────────────────────── */

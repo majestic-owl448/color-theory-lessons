@@ -331,10 +331,10 @@ export function LessonPlayer({ lesson }: LessonPlayerProps) {
       {/* ── Right tool panel ── */}
       <div className={hasRightPanel ? styles.rightPanel : styles.rightPanelHidden}>
         {phase === 'steps' && stepIndex < lesson.steps.length - 1
-          ? <>
-              <p className={styles.panelExampleLabel}>example</p>
+          ? <fieldset className={styles.examplePanel}>
+              <legend className={styles.panelExampleLabel}>example</legend>
               <StepPanelRenderer panel={currentStep?.panel} />
-            </>
+            </fieldset>
           : phase !== 'quiz'
             ? <ToolRenderer
                 lesson={lesson}
